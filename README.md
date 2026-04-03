@@ -13,9 +13,6 @@ A Coming Soon and Maintenance Mode plugin to manage your site's availability wit
 
 The Coming Soon and Maintenance Mode plugin enables WordPress users to set up a temporary landing page or a maintenance screen while working on their site. This tool helps site administrators manage visitor access during website construction, updates, or downtime.
 
-- Pro Version Demo: **[Coming Soon Maintenance Mode Demo](https://wpfrank.com/demo/coming-soon-maintenance-mode-pro)**
-- Buy Pro Version: **[Buy Coming Soon Maintenance Mode](https://wpfrank.com/wordpress-plugins/coming-soon-maintenance-mode-pro/)**
-
 Detailed configuration options are available to customize the look and feel of your coming soon page without writing code. The plugin is designed to be responsive, ensuring that your temporary page looks functional on various devices, including desktops, tablets, and mobile phones.
 
 Search engine optimization is a key consideration for this plugin. It allows search engines to crawl your coming soon page, which can help maintain your site's presence even when the main content is not yet visible. 
