@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       Coming Soon Maintenance Mode
  * Plugin URI:        https://wpfrank.com/
  * Description:       One of the most recommended and crucial plugin to start your website projects.
- * Version:           1.1.7
+ * Version:           1.1.8
  * Requires at least: 5.0
  * Requires PHP:      5.6
  * Author:            WP Frank

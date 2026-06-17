@@ -3,7 +3,7 @@ Contributors: awordpresslife, razipathhan, hanif0991, muhammadshahid, fkfaisalkh
 Tags: coming soon, maintenance mode, landing page, under construction page, SEO friendly
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -173,6 +173,9 @@ For support questions, please visit the WordPress.org support forum for this plu
 10. Social Media Settings
 
 == Changelog ==
+
+= 1.1.8 =
+*   Update: Overhauled responsive layouts, fixed vertical centering bugs, and perfected mobile spacing and font scaling for Templates 3, 4, and 5 (June 17, 2026).
 
 = 1.1.7 =
 *   Update: Added default countdown date to current date + 1 month on plugin activation.
