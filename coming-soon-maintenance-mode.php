@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       Coming Soon Maintenance Mode
  * Plugin URI:        https://wpfrank.com/
  * Description:       One of the most recommended and crucial plugin to start your website projects.
- * Version:           1.1.6
+ * Version:           1.1.7
  * Requires at least: 5.0
  * Requires PHP:      5.6
  * Author:            WP Frank
@@ -164,7 +164,7 @@ function comisoma_admin_scripts() {
 				);
 
 				// CSS
-				wp_enqueue_style( 'comisoma-admin-style-css', plugin_dir_url( __FILE__ ) . 'admin/assets/css/style.css', array(), '1.1.6' );
+				wp_enqueue_style( 'comisoma-admin-style-css', plugin_dir_url( __FILE__ ) . 'admin/assets/css/style.css', array(), '1.1.7' );
 				wp_enqueue_style( 'comisoma-bootstrap-admin-css', plugin_dir_url( __FILE__ ) . 'admin/assets/bootstrap-5.2.3-dist/css/bootstrap.css', array(), '5.2.3' );
 				wp_enqueue_style( 'comisoma-fontawesome-admin-css', plugin_dir_url( __FILE__ ) . 'admin/assets/fontawesome-free-6.2.1-web/css/all.css', array(), '6.2.1' );
 
@@ -175,7 +175,7 @@ function comisoma_admin_scripts() {
 				wp_enqueue_script( 'comisoma-bootstrap-bundle-js', plugin_dir_url( __FILE__ ) . 'admin/assets/bootstrap-5.2.3-dist/js/bootstrap.bundle.js', array( 'jquery' ), '5.2.3', true );
 
 				// Admin page main JS (extracted from inline script)
-				wp_enqueue_script( 'comisoma-admin-js', plugin_dir_url( __FILE__ ) . 'admin/assets/js/comisoma-admin.js', array( 'jquery', 'jquery-effects-shake' ), '1.1.6', true );
+				wp_enqueue_script( 'comisoma-admin-js', plugin_dir_url( __FILE__ ) . 'admin/assets/js/comisoma-admin.js', array( 'jquery', 'jquery-effects-shake' ), '1.1.7', true );
 				wp_localize_script(
 					'comisoma-admin-js',
 					'ComisomaAdmin',
@@ -251,10 +251,10 @@ add_action('admin_notices', 'comisoma_admin_notice');
 
 function comisoma_admin_notice_script() {
     // Enqueue notice CSS.
-    wp_enqueue_style( 'comisoma-notice-css', plugin_dir_url( __FILE__ ) . 'admin/assets/css/comisoma-notice.css', array(), '1.1.6' );
+    wp_enqueue_style( 'comisoma-notice-css', plugin_dir_url( __FILE__ ) . 'admin/assets/css/comisoma-notice.css', array(), '1.1.7' );
 
     // Enqueue notice JS.
-    wp_enqueue_script( 'comisoma-notice-js', plugin_dir_url( __FILE__ ) . 'admin/assets/js/comisoma-notice.js', array( 'jquery' ), '1.1.6', true );
+    wp_enqueue_script( 'comisoma-notice-js', plugin_dir_url( __FILE__ ) . 'admin/assets/js/comisoma-notice.js', array( 'jquery' ), '1.1.7', true );
     wp_localize_script(
         'comisoma-notice-js',
         'ComisomaNotice',
