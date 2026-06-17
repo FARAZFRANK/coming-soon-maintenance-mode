@@ -69,6 +69,19 @@ function comisoma_activation() {
 		}
 	}
 	
+	// Set default countdown date to current date + 1 month
+	$comisoma_content = get_option('comisoma_content');
+	if ( ! is_array( $comisoma_content ) ) {
+		$comisoma_content = array();
+	}
+	if ( empty( $comisoma_content['countdown_date'] ) ) {
+		$comisoma_content['countdown_date'] = gmdate('Y-m-d', strtotime('+1 month'));
+	}
+	if ( empty( $comisoma_content['countdown_time'] ) ) {
+		$comisoma_content['countdown_time'] = '10:00';
+	}
+	update_option('comisoma_content', $comisoma_content);
+	
 	// reset admin notice
 	delete_user_meta(get_current_user_id(), 'dismissed_custom_notice');
 }
