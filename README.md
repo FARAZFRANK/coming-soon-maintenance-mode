@@ -4,7 +4,7 @@ A Coming Soon and Maintenance Mode plugin to manage your site's availability wit
 
 - **Requires at least:** 5.0
 - **Tested up to:** 6.9
-- **Stable tag:** 1.1.8
+- **Stable tag:** 1.2.0
 - **Requires PHP:** 5.6
 - **License:** GPLv2 or later
 - **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
@@ -120,6 +120,14 @@ Yes, the plugin is compatible with WordPress multisite installations and can be 
 Yes, the plugin includes countdown timer functionality. You can set a launch date and the timer will automatically count down to that moment.
 
 ## Changelog
+
+### 1.2.0
+*   New: Added dedicated "Our Plugins" and "Our Themes" dashboard pages with responsive showcase grids (June 29, 2026).
+*   Security: Bundled SweetAlert2 locally to eliminate remote CDN script execution for WP.org compliance (June 29, 2026).
+*   Update: Modernized admin banner action buttons with custom gradients and icon designs (June 29, 2026).
+*   Fixed: Resolved countdown date default initialization on plugin reset and activation to current date + 1 month (June 29, 2026).
+*   Cleaned: Completely removed deprecated "More Products" page and cleaned up legacy assets (June 29, 2026).
+*   Cleaned: Removed custom promo notice banner and updated Pro version pricing to $19.00 (June 29, 2026).
 
 ### 1.1.9
 *   New: Added a dedicated Tools tab with Factory Reset and Import/Export configuration capabilities (June 17, 2026).
