@@ -87,7 +87,7 @@ usort( $themes, function ( $a, $b ) {
                     <div class="ag-plugin-content">
                         <h2><?php echo esc_html( $theme['name'] ); ?></h2>
                         <div class="ag-plugin-description">
-							<?php echo esc_html( wp_trim_words( strip_tags($theme['description']), 20 ) ); ?>
+							<?php echo esc_html( wp_trim_words( wp_strip_all_tags($theme['description']), 20 ) ); ?>
                         </div>
 
                         <div class="ag-plugin-meta">
