@@ -16,41 +16,81 @@ const getRestConfig = () => {
 };
 
 /**
+ * Accurately build REST URLs supporting both plain (?rest_route=) and pretty permalinks.
+ */
+const buildUrl = (endpoint, params = {}) => {
+  const { restUrl } = getRestConfig();
+  const base = restUrl.endsWith('/') ? restUrl : restUrl + '/';
+  let fullUrl = base + endpoint;
+
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      searchParams.append(key, String(value));
+    }
+  });
+
+  const queryString = searchParams.toString();
+  if (queryString) {
+    const separator = fullUrl.includes('?') ? '&' : '?';
+    fullUrl += separator + queryString;
+  }
+
+  return fullUrl;
+};
+
+/**
  * Robust JSON fetch wrapper that handles unexpected HTML prefixes.
  */
 const fetchJson = async (url, options = {}) => {
-  const res = await fetch(url, options);
+  const res = await fetch(url, {
+    credentials: 'same-origin',
+    ...options,
+  });
   const text = await res.text();
 
+  let data;
   try {
-    return JSON.parse(text);
+    data = JSON.parse(text);
   } catch (err) {
     // Try to extract JSON if server prefixed with PHP warning/notice HTML
     const jsonStart = text.indexOf('{');
     const jsonArrayStart = text.indexOf('[');
-    const start = jsonStart !== -1 && jsonArrayStart !== -1 ? Math.min(jsonStart, jsonArrayStart) : Math.max(jsonStart, jsonArrayStart);
+    let start = -1;
+    if (jsonStart !== -1 && jsonArrayStart !== -1) {
+      start = Math.min(jsonStart, jsonArrayStart);
+    } else {
+      start = Math.max(jsonStart, jsonArrayStart);
+    }
 
     if (start !== -1) {
       try {
-        return JSON.parse(text.substring(start));
+        data = JSON.parse(text.substring(start));
       } catch (e) {
         // fall through
       }
     }
-
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-    }
-    throw new Error('Server returned invalid response format.');
   }
+
+  if (data !== undefined) {
+    if (!res.ok && data.message) {
+      throw new Error(data.message);
+    }
+    return data;
+  }
+
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+  }
+  throw new Error('Server returned invalid response.');
 };
 
 export const api = {
   getConfig: getRestConfig,
 
   async getSettings() {
-    const { restUrl, nonce } = getRestConfig();
-    return fetchJson(`${restUrl}settings`, {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('settings'), {
       headers: {
         'X-WP-Nonce': nonce,
       },
@@ -58,8 +98,8 @@ export const api = {
   },
 
   async saveSettings(settings) {
-    const { restUrl, nonce } = getRestConfig();
-    return fetchJson(`${restUrl}settings`, {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('settings'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -70,13 +110,13 @@ export const api = {
   },
 
   async getSubscribers(page = 1, perPage = 15, search = '') {
-    const { restUrl, nonce } = getRestConfig();
-    const params = new URLSearchParams({
+    const { nonce } = getRestConfig();
+    const url = buildUrl('subscribers', {
       page: String(page),
       per_page: String(perPage),
       search: search || '',
     });
-    return fetchJson(`${restUrl}subscribers?${params.toString()}`, {
+    return fetchJson(url, {
       headers: {
         'X-WP-Nonce': nonce,
       },
@@ -84,8 +124,8 @@ export const api = {
   },
 
   async deleteSubscriber(id) {
-    const { restUrl, nonce } = getRestConfig();
-    return fetchJson(`${restUrl}subscribers/${id}`, {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl(`subscribers/${id}`), {
       method: 'DELETE',
       headers: {
         'X-WP-Nonce': nonce,
@@ -94,8 +134,8 @@ export const api = {
   },
 
   async getTemplates() {
-    const { restUrl, nonce } = getRestConfig();
-    return fetchJson(`${restUrl}templates`, {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('templates'), {
       headers: {
         'X-WP-Nonce': nonce,
       },
@@ -103,8 +143,8 @@ export const api = {
   },
 
   async getTargetItems() {
-    const { restUrl, nonce } = getRestConfig();
-    return fetchJson(`${restUrl}target-items`, {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('target-items'), {
       headers: {
         'X-WP-Nonce': nonce,
       },
