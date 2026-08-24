@@ -20,15 +20,17 @@ import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
 import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
 import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
 
-export default function GeneralSettingsTab({ settings, onChange, targetItems }) {
-  const websiteMode = settings.website_mode || 3;
+export default function GeneralSettingsTab({ settings = {}, onChange, targetItems = {} }) {
+  const currentSettings = settings || {};
+  const currentTargetItems = targetItems || { pages: [], posts: [], roles: [] };
+  const websiteMode = currentSettings.website_mode || 3;
 
   const handleModeSelect = (mode) => {
     onChange('website_mode', mode);
   };
 
   const handleOtherPageToggle = (slug) => {
-    const current = settings.selected_other_pages || [];
+    const current = currentSettings.selected_other_pages || [];
     const updated = current.includes(slug)
       ? current.filter((item) => item !== slug)
       : [...current, slug];
@@ -85,16 +87,16 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
                       cursor: 'pointer',
                       borderRadius: '10px !important',
                       border: '2px solid',
-                      borderColor: isSelected ? m.color : '#e2e8f0',
-                      backgroundColor: isSelected ? `${m.color}08` : '#ffffff',
+                      borderColor: isSelected ? m.color : 'divider',
+                      backgroundColor: isSelected ? `${m.color}14` : 'background.paper',
                       transition: 'all 0.2s ease-in-out',
                       display: 'flex',
                       flexDirection: 'column',
                       position: 'relative',
                       '&:hover': {
-                        borderColor: isSelected ? m.color : '#cbd5e1',
+                        borderColor: isSelected ? m.color : 'text.secondary',
                         transform: 'translateY(-2px)',
-                        boxShadow: '0 6px 16px rgba(0,0,0,0.05)',
+                        boxShadow: '0 6px 16px rgba(0,0,0,0.08)',
                       },
                     }}
                   >
@@ -103,10 +105,10 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
                       {isSelected ? (
                         <CheckCircleRoundedIcon sx={{ color: m.color, fontSize: 24 }} />
                       ) : (
-                        <Box sx={{ width: 20, height: 20, borderRadius: '50%', border: '2px solid #cbd5e1' }} />
+                        <Box sx={{ width: 20, height: 20, borderRadius: '50%', border: '2px solid #94a3b8' }} />
                       )}
                     </Box>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#0f172a', mb: 0.5, fontSize: '1rem' }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1rem' }}>
                       {m.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.45, fontSize: '0.875rem' }}>
@@ -139,7 +141,7 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
             </Alert>
 
             {/* Standard Archives */}
-            <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#334155' }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>
               Standard WordPress Sections:
             </Typography>
             <FormGroup row sx={{ gap: 2, mb: 2.5 }}>
@@ -154,7 +156,7 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
                   key={item.id}
                   control={
                     <Checkbox
-                      checked={(settings.selected_other_pages || []).includes(item.id)}
+                      checked={(currentSettings.selected_other_pages || []).includes(item.id)}
                       onChange={() => handleOtherPageToggle(item.id)}
                       color="primary"
                     />
@@ -169,15 +171,15 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
             {/* Target Pages */}
             <Grid container spacing={2.5}>
               <Grid item xs={12} md={6}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#334155' }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>
                   Target Specific Pages:
                 </Typography>
                 <Autocomplete
                   multiple
-                  options={targetItems.pages || []}
+                  options={currentTargetItems.pages || []}
                   getOptionLabel={(option) => option.title || ''}
-                  value={(targetItems.pages || []).filter((p) =>
-                    (settings.selected_pages || []).includes(p.id)
+                  value={(currentTargetItems.pages || []).filter((p) =>
+                    (currentSettings.selected_pages || []).includes(p.id)
                   )}
                   onChange={(_, newValue) => {
                     onChange(
@@ -211,15 +213,15 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
 
               {/* Target Posts */}
               <Grid item xs={12} md={6}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#334155' }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>
                   Target Specific Posts:
                 </Typography>
                 <Autocomplete
                   multiple
-                  options={targetItems.posts || []}
+                  options={currentTargetItems.posts || []}
                   getOptionLabel={(option) => option.title || ''}
-                  value={(targetItems.posts || []).filter((p) =>
-                    (settings.selected_posts || []).includes(p.id)
+                  value={(currentTargetItems.posts || []).filter((p) =>
+                    (currentSettings.selected_posts || []).includes(p.id)
                   )}
                   onChange={(_, newValue) => {
                     onChange(

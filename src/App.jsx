@@ -57,7 +57,16 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <Paper elevation={0} sx={{ p: 4, my: 2, borderRadius: '10px !important', border: '1px solid #fee2e2', backgroundColor: '#fff5f5' }}>
+        <Paper
+          elevation={0}
+          sx={{
+            p: 4,
+            my: 2,
+            borderRadius: '10px !important',
+            border: '1px solid #ef4444',
+            backgroundColor: 'background.paper',
+          }}
+        >
           <Alert severity="error" sx={{ borderRadius: '8px' }}>
             <Typography variant="subtitle1" fontWeight={700}>
               Something went wrong in this section.
@@ -125,16 +134,19 @@ export default function App() {
           api.getTargetItems(),
         ]);
 
-        if (settingsRes.success) {
+        if (settingsRes && settingsRes.success && settingsRes.data) {
           setSettings(settingsRes.data);
+        } else {
+          setSettings({});
         }
-        if (templatesRes.success) {
+        if (templatesRes && templatesRes.success && templatesRes.data) {
           setTemplates(templatesRes.data);
         }
-        if (targetRes.success) {
+        if (targetRes && targetRes.success && targetRes.data) {
           setTargetItems(targetRes.data);
         }
       } catch (err) {
+        setSettings({});
         showNotification('Failed to load plugin data: ' + err.message, 'error');
       } finally {
         setLoading(false);
