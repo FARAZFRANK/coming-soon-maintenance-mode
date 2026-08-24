@@ -20,6 +20,10 @@ import {
   Tab,
   Stack,
   Alert,
+  MenuItem,
+  Paper,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
 import MarkEmailReadRoundedIcon from '@mui/icons-material/MarkEmailReadRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
@@ -31,7 +35,11 @@ import ForwardToInboxRoundedIcon from '@mui/icons-material/ForwardToInboxRounded
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
 import ContactMailRoundedIcon from '@mui/icons-material/ContactMailRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import PaletteRoundedIcon from '@mui/icons-material/PaletteRounded';
+import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
+import PhoneIphoneRoundedIcon from '@mui/icons-material/PhoneIphoneRounded';
+import LaptopRoundedIcon from '@mui/icons-material/LaptopRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { api } from '../api';
 
 export default function IntegrationsTab({ data, onChange, onNotify }) {
@@ -62,9 +70,18 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
     welcome_email_enabled: true,
     welcome_email_subject: 'Thank you for subscribing to {site_name}! 🚀',
     welcome_email_body: "<h2>Welcome to {site_name}!</h2>\n<p>Hi there,</p>\n<p>Thank you for subscribing to our newsletter! We are currently working hard behind the scenes to launch our brand new website.</p>\n<p>You'll be the very first to know when we go live on <strong>{launch_date}</strong>!</p>\n<p>Best regards,<br>The {site_name} Team</p>",
+    email_header_title: '{site_name}',
+    email_header_bg: '#2563eb',
+    email_header_color: '#ffffff',
+    email_bg_color: '#f8fafc',
+    email_card_bg: '#ffffff',
+    email_text_color: '#1e293b',
+    email_footer_text: '© {year} {site_name}. All rights reserved.',
+    email_footer_bg: '#f1f5f9',
+    email_footer_color: '#64748b',
   };
 
-  const [emailSubTab, setEmailSubTab] = useState(0); // 0: Admin Alert, 1: Welcome Email
+  const [emailSubTab, setEmailSubTab] = useState(0); // 0: Admin Alert, 1: Welcome Email, 2: Template Styling & Branding
 
   // Testing states
   const [testingMailchimp, setTestingMailchimp] = useState(false);
@@ -84,6 +101,11 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
   const [testEmailRecipient, setTestEmailRecipient] = useState('');
   const [testEmailType, setTestEmailType] = useState('welcome');
   const [sendingTestEmail, setSendingTestEmail] = useState(false);
+
+  // Live Email Preview Modal State
+  const [previewModalOpen, setPreviewModalOpen] = useState(false);
+  const [previewType, setPreviewType] = useState('welcome'); // 'admin' or 'welcome'
+  const [previewDevice, setPreviewDevice] = useState('desktop'); // 'desktop' or 'mobile'
 
   const updateIntegration = (field, val) => {
     onChange('integrations', {
@@ -213,6 +235,76 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
   const insertPlaceholder = (tag, field) => {
     const currentVal = integrations[field] || '';
     updateIntegration(field, currentVal + ' ' + tag);
+  };
+
+  // Render Simulated HTML for Live Preview
+  const generatePreviewHtml = (type) => {
+    const siteTitle = data.title || 'My Brand';
+    const siteUrl = data.site_url || 'https://example.com';
+    const currentYear = new Date().getFullYear();
+    const launchDate = data.countdown_date ? new Date(data.countdown_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'November 30, 2026';
+
+    const headerTitle = (integrations.email_header_title || '{site_name}')
+      .replace(/{site_name}/g, siteTitle);
+
+    const headerBg = integrations.email_header_bg || '#2563eb';
+    const headerColor = integrations.email_header_color || '#ffffff';
+    const bgColor = integrations.email_bg_color || '#f8fafc';
+    const cardBg = integrations.email_card_bg || '#ffffff';
+    const textColor = integrations.email_text_color || '#1e293b';
+    const footerBg = integrations.email_footer_bg || '#f1f5f9';
+    const footerColor = integrations.email_footer_color || '#64748b';
+
+    let bodyTemplate = type === 'admin' ? integrations.admin_email_body : integrations.welcome_email_body;
+    if (!bodyTemplate) {
+      bodyTemplate = type === 'admin'
+        ? "<h2>New Subscriber Lead!</h2>\n<p>A new visitor has subscribed to your Coming Soon newsletter:</p>\n<p><strong>Email:</strong> {subscriber_email}<br><strong>IP Address:</strong> {ip_address}<br><strong>Date:</strong> {date}</p>"
+        : "<h2>Welcome to {site_name}!</h2>\n<p>Hi there,</p>\n<p>Thank you for subscribing to our newsletter! We are currently working hard behind the scenes to launch our brand new website.</p>\n<p>You'll be the very first to know when we go live on <strong>{launch_date}</strong>!</p>\n<p>Best regards,<br>The {site_name} Team</p>";
+    }
+
+    const replacedBody = bodyTemplate
+      .replace(/{site_name}/g, siteTitle)
+      .replace(/{site_url}/g, siteUrl)
+      .replace(/{subscriber_email}/g, 'sarah.johnson@example.com')
+      .replace(/{launch_date}/g, launchDate)
+      .replace(/{countdown_time}/g, data.countdown_time || '10:00')
+      .replace(/{date}/g, new Date().toLocaleString())
+      .replace(/{ip_address}/g, '192.168.1.105')
+      .replace(/\n/g, '<br>');
+
+    const defaultFooter = `© ${currentYear} ${siteTitle}. All rights reserved.`;
+    const footerText = (integrations.email_footer_text || defaultFooter)
+      .replace(/{site_name}/g, siteTitle)
+      .replace(/{site_url}/g, siteUrl)
+      .replace(/{year}/g, currentYear);
+
+    return `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: ${bgColor}; margin: 0; padding: 24px; color: ${textColor}; }
+.card { max-width: 560px; margin: 0 auto; background: ${cardBg}; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
+.header { background: ${headerBg}; color: ${headerColor}; padding: 24px; text-align: center; }
+.header h1 { margin: 0; font-size: 20px; font-weight: 700; color: ${headerColor}; }
+.body { padding: 28px 24px; line-height: 1.65; font-size: 15px; color: ${textColor}; }
+.body h2 { margin-top: 0; color: ${textColor}; }
+.footer { background: ${footerBg}; padding: 16px 24px; text-align: center; font-size: 12px; color: ${footerColor}; border-top: 1px solid #e2e8f0; }
+.footer a { color: ${headerBg}; text-decoration: none; font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="card">
+<div class="header">
+<h1>${headerTitle}</h1>
+</div>
+<div class="body">${replacedBody}</div>
+<div class="footer">
+<p style="margin: 0; color: ${footerColor};">${footerText}</p>
+</div>
+</div>
+</body>
+</html>`;
   };
 
   return (
@@ -560,7 +652,7 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
         </CardContent>
       </Card>
 
-      {/* 5. Custom SMTP Server Configuration */}
+      {/* 5. Custom SMTP Server Configuration (FIXED DOUBLE CARET) */}
       <Card sx={{ borderRadius: '10px' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
@@ -621,6 +713,7 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
               />
             </Grid>
             <Grid item xs={12} md={3}>
+              {/* FIXED DOUBLE CARET BY USING MUI MenuItem */}
               <TextField
                 fullWidth
                 select
@@ -628,11 +721,10 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
                 value={integrations.smtp_encryption || 'tls'}
                 onChange={(e) => updateIntegration('smtp_encryption', e.target.value)}
                 disabled={!integrations.smtp_enabled}
-                SelectProps={{ native: true }}
               >
-                <option value="tls">TLS (Port 587)</option>
-                <option value="ssl">SSL (Port 465)</option>
-                <option value="none">None (Port 25)</option>
+                <MenuItem value="tls">TLS (Port 587)</MenuItem>
+                <MenuItem value="ssl">SSL (Port 465)</MenuItem>
+                <MenuItem value="none">None (Port 25)</MenuItem>
               </TextField>
             </Grid>
 
@@ -682,19 +774,34 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
         </CardContent>
       </Card>
 
-      {/* 6. Email Notification Engine & Template Customizer */}
+      {/* 6. Email Notification Engine & Full Template Customizer with Live Preview */}
       <Card sx={{ borderRadius: '10px' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
-            <EmailRoundedIcon sx={{ color: '#059669', fontSize: 28 }} />
-            <Box>
-              <Typography variant="h6" fontWeight={700}>
-                Automated Email Templates & Delivery
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Configure instant admin lead alerts and subscriber welcome emails with dynamic tags.
-              </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2, mb: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <EmailRoundedIcon sx={{ color: '#059669', fontSize: 28 }} />
+              <Box>
+                <Typography variant="h6" fontWeight={700}>
+                  Automated Email Templates, Branding & Live Preview
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Configure dynamic lead alerts, welcome emails, custom header/footer branding, colors, and live test previews.
+                </Typography>
+              </Box>
             </Box>
+
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<VisibilityRoundedIcon />}
+              onClick={() => {
+                setPreviewType(emailSubTab === 0 ? 'admin' : 'welcome');
+                setPreviewModalOpen(true);
+              }}
+              sx={{ borderRadius: '8px', fontWeight: 700 }}
+            >
+              Live Preview Template
+            </Button>
           </Box>
 
           <Divider sx={{ my: 2 }} />
@@ -710,6 +817,7 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
           >
             <Tab icon={<ForwardToInboxRoundedIcon sx={{ mr: 1 }} />} iconPosition="start" label="Admin Lead Alert" />
             <Tab icon={<EmailRoundedIcon sx={{ mr: 1 }} />} iconPosition="start" label="Subscriber Welcome Email" />
+            <Tab icon={<PaletteRoundedIcon sx={{ mr: 1 }} />} iconPosition="start" label="🎨 Template Header, Footer & Colors" />
           </Tabs>
 
           {/* TAB 0: Admin Alert */}
@@ -778,16 +886,29 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button
-                    variant="outlined"
-                    color="success"
-                    startIcon={<SendRoundedIcon />}
-                    onClick={() => openTestEmailModal('admin')}
-                    disabled={!integrations.admin_email_enabled}
-                    sx={{ borderRadius: '8px' }}
-                  >
-                    Send Test Admin Email
-                  </Button>
+                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      startIcon={<SendRoundedIcon />}
+                      onClick={() => openTestEmailModal('admin')}
+                      disabled={!integrations.admin_email_enabled}
+                      sx={{ borderRadius: '8px' }}
+                    >
+                      Send Test Admin Email
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      startIcon={<VisibilityRoundedIcon />}
+                      onClick={() => {
+                        setPreviewType('admin');
+                        setPreviewModalOpen(true);
+                      }}
+                      sx={{ borderRadius: '8px' }}
+                    >
+                      Live Preview Admin Email
+                    </Button>
+                  </Box>
                 </Grid>
               </Grid>
             </Box>
@@ -849,15 +970,182 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
                   />
                 </Grid>
                 <Grid item xs={12}>
+                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      startIcon={<SendRoundedIcon />}
+                      onClick={() => openTestEmailModal('welcome')}
+                      disabled={!integrations.welcome_email_enabled}
+                      sx={{ borderRadius: '8px' }}
+                    >
+                      Send Test Welcome Email
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      startIcon={<VisibilityRoundedIcon />}
+                      onClick={() => {
+                        setPreviewType('welcome');
+                        setPreviewModalOpen(true);
+                      }}
+                      sx={{ borderRadius: '8px' }}
+                    >
+                      Live Preview Welcome Email
+                    </Button>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          )}
+
+          {/* TAB 2: Template Header, Footer & Colors Customizer */}
+          {emailSubTab === 2 && (
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+              <Alert severity="info" sx={{ borderRadius: '8px' }}>
+                Customize the colors, header branding, and footer copyright to perfectly match your website's look & feel.
+              </Alert>
+
+              <Grid container spacing={2.5}>
+                {/* Header Branding */}
+                <Grid item xs={12}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0f172a' }}>
+                    Header Section Branding
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    label="Email Header Title / Brand Name"
+                    placeholder="{site_name}"
+                    value={integrations.email_header_title || ''}
+                    onChange={(e) => updateIntegration('email_header_title', e.target.value)}
+                    helperText="Supports {site_name} tag or custom text"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="color"
+                    label="Header Background"
+                    value={integrations.email_header_bg || '#2563eb'}
+                    onChange={(e) => updateIntegration('email_header_bg', e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="color"
+                    label="Header Text Color"
+                    value={integrations.email_header_color || '#ffffff'}
+                    onChange={(e) => updateIntegration('email_header_color', e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+
+                {/* Body Canvas & Card Colors */}
+                <Grid item xs={12}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0f172a' }}>
+                    Email Body & Canvas Styling
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="color"
+                    label="Outer Background Color"
+                    value={integrations.email_bg_color || '#f8fafc'}
+                    onChange={(e) => updateIntegration('email_bg_color', e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="color"
+                    label="Card Background Color"
+                    value={integrations.email_card_bg || '#ffffff'}
+                    onChange={(e) => updateIntegration('email_card_bg', e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="color"
+                    label="Main Text Color"
+                    value={integrations.email_text_color || '#1e293b'}
+                    onChange={(e) => updateIntegration('email_text_color', e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+
+                {/* Footer Section */}
+                <Grid item xs={12}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0f172a' }}>
+                    Footer Section Styling
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    label="Footer Copyright Text"
+                    placeholder="© {year} {site_name}. All rights reserved."
+                    value={integrations.email_footer_text || ''}
+                    onChange={(e) => updateIntegration('email_footer_text', e.target.value)}
+                    helperText="Supports {site_name}, {year}, {site_url}"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="color"
+                    label="Footer Background"
+                    value={integrations.email_footer_bg || '#f1f5f9'}
+                    onChange={(e) => updateIntegration('email_footer_bg', e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="color"
+                    label="Footer Text Color"
+                    value={integrations.email_footer_color || '#64748b'}
+                    onChange={(e) => updateIntegration('email_footer_color', e.target.value)}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
                   <Button
-                    variant="outlined"
-                    color="success"
-                    startIcon={<SendRoundedIcon />}
-                    onClick={() => openTestEmailModal('welcome')}
-                    disabled={!integrations.welcome_email_enabled}
-                    sx={{ borderRadius: '8px' }}
+                    variant="contained"
+                    color="primary"
+                    startIcon={<VisibilityRoundedIcon />}
+                    onClick={() => {
+                      setPreviewType('welcome');
+                      setPreviewModalOpen(true);
+                    }}
+                    sx={{ borderRadius: '8px', fontWeight: 700 }}
                   >
-                    Send Test Welcome Email
+                    Open Live Template Preview
                   </Button>
                 </Grid>
               </Grid>
@@ -866,7 +1154,126 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
         </CardContent>
       </Card>
 
-      {/* SEND TEST EMAIL DIALOG */}
+      {/* 7. LIVE EMAIL TEMPLATE PREVIEW MODAL */}
+      <Dialog
+        open={previewModalOpen}
+        onClose={() => setPreviewModalOpen(false)}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: '14px',
+            overflow: 'hidden',
+            backgroundColor: '#f8fafc',
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            fontWeight: 700,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderBottom: '1px solid #e2e8f0',
+            backgroundColor: '#ffffff',
+            py: 2,
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+            <VisibilityRoundedIcon sx={{ color: '#2563eb' }} />
+            <Typography variant="h6" fontWeight={700}>
+              Live Email Template Preview
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Tabs
+              value={previewType}
+              onChange={(e, val) => setPreviewType(val)}
+              size="small"
+              sx={{ minHeight: 34, '& .MuiTab-root': { minHeight: 34, py: 0.5, px: 1.5, fontSize: '0.82rem', textTransform: 'none', fontWeight: 700 } }}
+            >
+              <Tab value="welcome" label="Welcome Email" />
+              <Tab value="admin" label="Admin Alert" />
+            </Tabs>
+
+            <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+
+            <Tooltip title="Desktop View">
+              <IconButton
+                size="small"
+                color={previewDevice === 'desktop' ? 'primary' : 'default'}
+                onClick={() => setPreviewDevice('desktop')}
+              >
+                <LaptopRoundedIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Mobile View">
+              <IconButton
+                size="small"
+                color={previewDevice === 'mobile' ? 'primary' : 'default'}
+                onClick={() => setPreviewDevice('mobile')}
+              >
+                <PhoneIphoneRoundedIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+
+            <IconButton size="small" onClick={() => setPreviewModalOpen(false)}>
+              <CloseRoundedIcon fontSize="small" />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+
+        <DialogContent sx={{ p: 3, display: 'flex', justifyContent: 'center', backgroundColor: '#f1f5f9' }}>
+          <Box
+            sx={{
+              width: previewDevice === 'mobile' ? 380 : '100%',
+              maxWidth: 600,
+              transition: 'all 0.3s ease',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+            }}
+          >
+            <iframe
+              title="Live Email Preview"
+              srcDoc={generatePreviewHtml(previewType)}
+              style={{
+                width: '100%',
+                height: 520,
+                border: 'none',
+                display: 'block',
+                backgroundColor: integrations.email_bg_color || '#f8fafc',
+              }}
+            />
+          </Box>
+        </DialogContent>
+
+        <DialogActions sx={{ p: 2, backgroundColor: '#ffffff', borderTop: '1px solid #e2e8f0', justifyContent: 'space-between' }}>
+          <Typography variant="caption" color="text.secondary">
+            Simulating live dynamic tags: {previewType === 'welcome' ? 'Subscriber Welcome Email' : 'Admin Lead Alert'}.
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1.5 }}>
+            <Button
+              variant="outlined"
+              color="success"
+              startIcon={<SendRoundedIcon />}
+              onClick={() => {
+                setPreviewModalOpen(false);
+                openTestEmailModal(previewType);
+              }}
+              sx={{ borderRadius: '8px', fontWeight: 600 }}
+            >
+              Send Live Test
+            </Button>
+            <Button onClick={() => setPreviewModalOpen(false)} sx={{ borderRadius: '8px' }}>
+              Close Preview
+            </Button>
+          </Box>
+        </DialogActions>
+      </Dialog>
+
+      {/* 8. SEND TEST EMAIL DIALOG */}
       <Dialog
         open={testEmailDialogOpen}
         onClose={() => setTestEmailDialogOpen(false)}
@@ -879,7 +1286,7 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
         </DialogTitle>
         <DialogContent sx={{ pt: 2 }}>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Enter a destination email address. A test email with all placeholder tags parsed will be dispatched immediately using your site's mail configuration.
+            Enter a destination email address. A test email with all customized colors, header/footer styling, and placeholder tags will be dispatched immediately.
           </Typography>
           <TextField
             autoFocus

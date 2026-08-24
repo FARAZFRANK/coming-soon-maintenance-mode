@@ -546,28 +546,41 @@ class CSMM_Integrations {
 		$site_url   = esc_url( home_url( '/' ) );
 		$year       = gmdate( 'Y' );
 
+		// Custom Template Colors & Styling
+		$header_title = ! empty( $integrations['email_header_title'] ) ? self::parse_email_placeholders( $integrations['email_header_title'] ) : $site_title;
+		$header_bg    = ! empty( $integrations['email_header_bg'] ) ? sanitize_hex_color( $integrations['email_header_bg'] ) : '#2563eb';
+		$header_color = ! empty( $integrations['email_header_color'] ) ? sanitize_hex_color( $integrations['email_header_color'] ) : '#ffffff';
+		$bg_color     = ! empty( $integrations['email_bg_color'] ) ? sanitize_hex_color( $integrations['email_bg_color'] ) : '#f8fafc';
+		$card_bg      = ! empty( $integrations['email_card_bg'] ) ? sanitize_hex_color( $integrations['email_card_bg'] ) : '#ffffff';
+		$text_color   = ! empty( $integrations['email_text_color'] ) ? sanitize_hex_color( $integrations['email_text_color'] ) : '#1e293b';
+		$footer_bg    = ! empty( $integrations['email_footer_bg'] ) ? sanitize_hex_color( $integrations['email_footer_bg'] ) : '#f1f5f9';
+		$footer_color = ! empty( $integrations['email_footer_color'] ) ? sanitize_hex_color( $integrations['email_footer_color'] ) : '#64748b';
+
+		$default_footer = '&copy; ' . $year . ' <a href="' . $site_url . '" style="color: ' . $header_bg . '; text-decoration: none;">' . $site_title . '</a>. All rights reserved.';
+		$footer_text    = ! empty( $integrations['email_footer_text'] ) ? self::parse_email_placeholders( $integrations['email_footer_text'] ) : $default_footer;
+
 		$full_html = '<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <style>
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 20px; color: #1e293b; }
-.card { max-width: 580px; margin: 0 auto; background: #ffffff; border-radius: 10px; border: 1px solid #e2e8f0; overflow: hidden; }
-.header { background: #2563eb; color: #ffffff; padding: 24px; text-align: center; }
-.header h1 { margin: 0; font-size: 20px; font-weight: 700; }
-.body { padding: 30px 24px; line-height: 1.6; font-size: 15px; }
-.footer { background: #f1f5f9; padding: 16px 24px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #e2e8f0; }
-.footer a { color: #2563eb; text-decoration: none; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: ' . $bg_color . '; margin: 0; padding: 24px; color: ' . $text_color . '; }
+.card { max-width: 580px; margin: 0 auto; background: ' . $card_bg . '; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
+.header { background: ' . $header_bg . '; color: ' . $header_color . '; padding: 24px; text-align: center; }
+.header h1 { margin: 0; font-size: 20px; font-weight: 700; color: ' . $header_color . '; }
+.body { padding: 30px 24px; line-height: 1.65; font-size: 15px; color: ' . $text_color . '; }
+.footer { background: ' . $footer_bg . '; padding: 16px 24px; text-align: center; font-size: 12px; color: ' . $footer_color . '; border-top: 1px solid #e2e8f0; }
+.footer a { color: ' . $header_bg . '; text-decoration: none; font-weight: 500; }
 </style>
 </head>
 <body>
 <div class="card">
 <div class="header">
-<h1>' . $site_title . '</h1>
+<h1>' . esc_html( $header_title ) . '</h1>
 </div>
 <div class="body">' . $body_html . '</div>
 <div class="footer">
-<p>&copy; ' . $year . ' <a href="' . $site_url . '">' . $site_title . '</a>. All rights reserved.</p>
+<p style="margin: 0; color: ' . $footer_color . ';">' . $footer_text . '</p>
 </div>
 </div>
 </body>

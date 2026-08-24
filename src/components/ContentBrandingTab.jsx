@@ -13,6 +13,7 @@ import {
   Divider,
   Paper,
   Alert,
+  MenuItem,
 } from '@mui/material';
 import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
@@ -431,12 +432,11 @@ export default function ContentBrandingTab({ settings, onChange }) {
                     robots_meta: e.target.value,
                   })
                 }
-                SelectProps={{ native: true }}
                 helperText="Smart Auto indexes Coming Soon & protects SEO during Maintenance"
               >
-                <option value="auto">Smart Auto (Index Coming Soon / Noindex Maintenance)</option>
-                <option value="index">Always Index (index, follow)</option>
-                <option value="noindex">Never Index (noindex, nofollow)</option>
+                <MenuItem value="auto">Smart Auto (Index Coming Soon / Noindex Maintenance)</MenuItem>
+                <MenuItem value="index">Always Index (index, follow)</MenuItem>
+                <MenuItem value="noindex">Never Index (noindex, nofollow)</MenuItem>
               </TextField>
             </Grid>
 
