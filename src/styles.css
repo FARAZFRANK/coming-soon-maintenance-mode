@@ -1,8 +1,31 @@
 /* CSMM Admin Scoped CSS Reset for WordPress Admin */
 
+/* Full-bleed dark mode canvas covering WordPress admin body and wraps */
+body.csmm-dark-page,
+body.csmm-dark-page #wpwrap,
+body.csmm-dark-page #wpcontent,
+body.csmm-dark-page #wpbody,
+body.csmm-dark-page #wpbody-content,
+body.csmm-dark-page #wpfooter {
+  background-color: #0b0f19 !important;
+  color: #f8fafc !important;
+}
+
+body.csmm-light-page,
+body.csmm-light-page #wpwrap,
+body.csmm-light-page #wpcontent,
+body.csmm-light-page #wpbody,
+body.csmm-light-page #wpbody-content,
+body.csmm-light-page #wpfooter {
+  background-color: #f8fafc !important;
+}
+
 #csmm-react-root {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   color: #0f172a;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 100vh !important;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 

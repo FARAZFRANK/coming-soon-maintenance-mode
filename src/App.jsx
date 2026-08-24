@@ -108,12 +108,14 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('csmm_theme_mode', themeMode);
     const root = document.getElementById('csmm-react-root');
-    if (root) {
-      if (themeMode === 'dark') {
-        root.classList.add('csmm-dark');
-      } else {
-        root.classList.remove('csmm-dark');
-      }
+    if (themeMode === 'dark') {
+      document.body.classList.add('csmm-dark-page');
+      document.body.classList.remove('csmm-light-page');
+      if (root) root.classList.add('csmm-dark');
+    } else {
+      document.body.classList.add('csmm-light-page');
+      document.body.classList.remove('csmm-dark-page');
+      if (root) root.classList.remove('csmm-dark');
     }
   }, [themeMode]);
 
@@ -134,16 +136,21 @@ export default function App() {
           api.getTargetItems(),
         ]);
 
-        if (settingsRes && settingsRes.success && settingsRes.data) {
-          setSettings(settingsRes.data);
+        const settingsData = settingsRes?.data || settingsRes;
+        if (settingsData && typeof settingsData === 'object' && Object.keys(settingsData).length > 0) {
+          setSettings(settingsData);
         } else {
           setSettings({});
         }
-        if (templatesRes && templatesRes.success && templatesRes.data) {
-          setTemplates(templatesRes.data);
+
+        const templatesData = templatesRes?.data || templatesRes;
+        if (Array.isArray(templatesData)) {
+          setTemplates(templatesData);
         }
-        if (targetRes && targetRes.success && targetRes.data) {
-          setTargetItems(targetRes.data);
+
+        const targetData = targetRes?.data || targetRes;
+        if (targetData && typeof targetData === 'object') {
+          setTargetItems(targetData);
         }
       } catch (err) {
         setSettings({});
@@ -187,7 +194,7 @@ export default function App() {
     }
   };
 
-  if (loading) {
+  if (loading || !settings) {
     return (
       <ThemeProvider theme={currentTheme}>
         <CssBaseline />
@@ -196,7 +203,7 @@ export default function App() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            minHeight: 'calc(100vh - 60px)',
+            minHeight: '100vh',
             backgroundColor: 'background.default',
             p: 2,
           }}
@@ -255,8 +262,8 @@ export default function App() {
   return (
     <ThemeProvider theme={currentTheme}>
       <CssBaseline />
-      <Box sx={{ pb: 6, pt: 2, backgroundColor: 'background.default', minHeight: '100vh', transition: 'background-color 0.25s ease' }}>
-        <Container maxWidth="xl">
+      <Box sx={{ pb: 6, pt: 1, backgroundColor: 'background.default', minHeight: '100vh', transition: 'background-color 0.25s ease' }}>
+        <Container maxWidth={false} sx={{ px: { xs: 1.5, sm: 2.5, md: 3.5 } }}>
           {/* Top Header Card */}
           <Paper
             elevation={0}
