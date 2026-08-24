@@ -133,8 +133,8 @@ export default function SocialMediaTab({ settings, onChange }) {
                   placeholder={p.placeholder}
                   size="small"
                   InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
+                    endAdornment: (
+                      <InputAdornment position="end">
                         {p.icon}
                       </InputAdornment>
                     ),
@@ -180,19 +180,19 @@ export default function SocialMediaTab({ settings, onChange }) {
               borderStyle: 'dashed',
             }}
           >
-            <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ display: 'block', mb: 1 }}>
-              ⚡ 1-Click Quick Add Presets:
+            <Typography variant="caption" sx={{ fontWeight: 700, color: '#475569', display: 'block', mb: 1.2 }}>
+              ⚡ 1-Click Popular Platform Presets:
             </Typography>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {quickPresets.map((preset) => (
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              {PRESET_PLATFORMS.map((preset) => (
                 <Chip
                   key={preset.name}
                   label={preset.name}
-                  icon={<AddRoundedIcon sx={{ fontSize: 16 }} />}
-                  clickable
                   onClick={() => handleAddCustomChannel(preset)}
                   size="small"
+                  clickable
                   variant="outlined"
+                  icon={<StarsRoundedIcon sx={{ fontSize: '15px !important', color: '#2563eb' }} />}
                   sx={{
                     borderRadius: '6px',
                     fontWeight: 600,
@@ -201,14 +201,29 @@ export default function SocialMediaTab({ settings, onChange }) {
                   }}
                 />
               ))}
-            </Box>
+            </Stack>
           </Paper>
 
           {/* Custom Channels List */}
           {customChannels.length === 0 ? (
-            <Alert severity="info" sx={{ borderRadius: '8px' }}>
-              No custom channels added yet. Click <strong>"Add Custom Channel"</strong> or any <strong>1-Click Quick Preset</strong> above to add Discord, Telegram, GitHub, Threads, or your custom links!
-            </Alert>
+            <Paper
+              variant="outlined"
+              sx={{
+                p: 3.5,
+                textAlign: 'center',
+                borderRadius: '8px !important',
+                backgroundColor: '#f8fafc',
+                borderStyle: 'dashed',
+              }}
+            >
+              <ShareRoundedIcon sx={{ fontSize: 36, color: '#94a3b8', mb: 1 }} />
+              <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#334155' }}>
+                No Custom Channels Added Yet
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                Click a 1-Click Preset above (Discord, Telegram, GitHub, Threads) or click "Add Custom Channel" to create your own.
+              </Typography>
+            </Paper>
           ) : (
             <Stack spacing={2}>
               {customChannels.map((channel, index) => (
@@ -216,7 +231,7 @@ export default function SocialMediaTab({ settings, onChange }) {
                   key={channel.id || index}
                   variant="outlined"
                   sx={{
-                    p: 2.5,
+                    p: 2,
                     borderRadius: '10px !important',
                     borderColor: '#e2e8f0',
                     backgroundColor: '#ffffff',
@@ -245,8 +260,8 @@ export default function SocialMediaTab({ settings, onChange }) {
                         value={channel.icon || ''}
                         onChange={(e) => handleUpdateCustomChannel(channel.id, 'icon', e.target.value)}
                         InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
+                          endAdornment: (
+                            <InputAdornment position="end">
                               <Box
                                 sx={{
                                   width: 24,
@@ -276,8 +291,8 @@ export default function SocialMediaTab({ settings, onChange }) {
                         value={channel.url || ''}
                         onChange={(e) => handleUpdateCustomChannel(channel.id, 'url', e.target.value)}
                         InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
+                          endAdornment: (
+                            <InputAdornment position="end">
                               <LinkRoundedIcon sx={{ color: '#64748b', fontSize: 18 }} />
                             </InputAdornment>
                           ),

@@ -58,10 +58,9 @@ function ColorPickerField({ label, value, defaultValue = '#ffffff', onChange, he
       onChange={(e) => onChange(e.target.value)}
       placeholder="#ffffff"
       helperText={helperText || ' '}
-      InputLabelProps={{ shrink: true }}
       InputProps={{
-        startAdornment: (
-          <InputAdornment position="start" sx={{ mr: 0.75 }}>
+        endAdornment: (
+          <InputAdornment position="end">
             <Box
               component="label"
               sx={{
