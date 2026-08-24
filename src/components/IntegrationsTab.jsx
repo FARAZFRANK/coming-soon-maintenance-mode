@@ -863,8 +863,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
           >
             <Tab icon={<ForwardToInboxRoundedIcon sx={{ mr: 1 }} />} iconPosition="start" label="Admin Lead Alert" />
             <Tab icon={<EmailRoundedIcon sx={{ mr: 1 }} />} iconPosition="start" label="Subscriber Welcome Email" />
-            <Tab icon={<RocketLaunchRoundedIcon sx={{ mr: 1, color: '#2563eb' }} />} iconPosition="start" label="🚀 Site Live Announcement Email" />
-            <Tab icon={<PaletteRoundedIcon sx={{ mr: 1 }} />} iconPosition="start" label="🎨 Template Header, Footer & Colors" />
+            <Tab icon={<RocketLaunchRoundedIcon sx={{ mr: 1, color: '#2563eb' }} />} iconPosition="start" label="Site Live Announcement Email" />
+            <Tab icon={<PaletteRoundedIcon sx={{ mr: 1 }} />} iconPosition="start" label="Template Header, Footer & Colors" />
           </Tabs>
 
           {/* TAB 0: Admin Alert */}
@@ -1307,7 +1307,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
               sx={{ minHeight: 34, '& .MuiTab-root': { minHeight: 34, py: 0.5, px: 1.5, fontSize: '0.82rem', textTransform: 'none', fontWeight: 700 } }}
             >
               <Tab value="welcome" label="Welcome Email" />
-              <Tab value="launch" label="Site Live Email 🚀" />
+              <Tab value="launch" label="Site Live Email" />
               <Tab value="admin" label="Admin Alert" />
             </Tabs>
 
