@@ -1,0 +1,48 @@
+Coming Soon Maintenance Mode
+
+= 3.1.0 = 28 Oct 2025
+* Added 20 new templates.
+
+= 3.0.4 = 4 Feb 2025
+* Favicon Icon bug fixed
+
+= 3.0.3 = 1 January 2025
+* Add 6 New Templates
+
+
+= 3.0.2 = 24 January 2024
+* Adding Following language translation
+- Arabic (ar)
+- Chinese (zh_CN)
+- Finnish (fi) - Suomi
+- French (fr_FR) - Français
+- German (de_DE) - Deutsch
+- Hindi (hi_IN)
+- Hungarian (hu_HU) - Magyar
+- Italian (it_IT) - Italiano
+- Indonesian (id_ID) - Bahasa Indonesia
+- Japanese (ja_JP) - 日本語
+- Dutch (nl_NL) - Nederlands
+- Russian (ru_RU) -Русский
+- Spanish (es_ES) - Español
+- Polish (pl_PL)
+- Portuguese (pt_PT)
+* Subscriber page warnning fix
+
+= 3.0.1 = 
+* 23 May 2023
+* Social media icon mobile display fixed
+* Templates are now more mobile friendly
+* Docs tab added
+
+= 3.0.0 =
+* 3 Website Modes
+* 10 Pre build Templates
+* Template Global Settings
+* Susbscriber Feature
+
+==
+* FIXED - all templates has preload issue on f5 refresh + fix on hard refresh
+* DONE - Template Numbering 
+* FIXED - Date Comparision
+* Show Website Mode Live

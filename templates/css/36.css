@@ -1,0 +1,124 @@
+/* Custom styles for the postcard theme */
+body {
+	font-family: 'Poppins', sans-serif;
+	background-color: #F0EAD6; /* Sandy beige background */
+	color: #4A4A4A;
+}
+
+/* Main postcard container */
+.postcard {
+	background-color: #FFFFFF;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+	animation: floatIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+	opacity: 0;
+	transform: translateY(40px) rotate(-1deg);
+}
+
+@keyframes floatIn {
+	to {
+		opacity: 1;
+		transform: translateY(0) rotate(0deg);
+	}
+}
+
+/* Image container */
+.image-container img {
+	transition: transform 0.5s ease-out;
+}
+.postcard:hover .image-container img {
+	transform: scale(1.05);
+}
+
+/* Custom font for titles */
+.title-font {
+	font-family: 'Caveat', cursive;
+	font-weight: 700;
+	color: #0077B6; /* Ocean Blue */
+}
+
+/* Countdown timer styling */
+.countdown-number {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 600;
+	color: #1A202C;
+	line-height: 1;
+}
+.countdown-label {
+	color: #718096;
+	font-size: 0.7rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+/* Subscription form styling */
+.subscribe-input {
+	background: #F7FAFC;
+	border: 1px solid #E2E8F0;
+	color: #2D3748;
+	transition: all 0.3s ease;
+}
+.subscribe-input::placeholder {
+	color: #A0AEC0;
+}
+.subscribe-input:focus {
+	outline: none;
+	border-color: #0077B6;
+	box-shadow: 0 0 0 2px rgba(0, 119, 182, 0.2);
+}
+.subscribe-btn {
+	background-color: #0077B6;
+	color: #fff;
+	border: none;
+	transition: all 0.3s ease;
+	font-weight: 600;
+}
+.subscribe-btn:hover {
+	background-color: #023E8A;
+}
+
+/* ------------------------------------------------------------------- 
+ * ## home social - (_site-layout.scss) 
+ * ------------------------------------------------------------------- */
+.home-social {
+  list-style: none;
+  font-family: var(--thm-font);
+}
+
+.home-social a {
+  color: #CACACA;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social li {
+  position: relative;
+  display: inline-block;
+}
+
+.home-social li a {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social i,
+.home-social span {
+  position: absolute;
+  top: 0;
+  line-height: 36px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social i {
+  right: 0;
+  text-align: center;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social a:hover  {
+	color: #000;
+	transition: color 0.2s ease;
+}

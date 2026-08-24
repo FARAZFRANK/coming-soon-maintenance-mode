@@ -1,0 +1,179 @@
+/* Custom styles for the character select theme */
+body {
+	font-family: 'VT323', monospace;
+	font-size: 1.2rem;
+	background-color: #1a1a2e;
+	background-image: 
+		linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+	background-size: 2rem 2rem;
+	color: #fff;
+	overflow-x: hidden;
+}
+
+/* Main content container */
+.main-content {
+	animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom font for titles */
+.title-font {
+	font-family: 'Press Start 2P', cursive;
+	color: #fff;
+	text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 2px 2px 0px #00ffff;
+	animation: flicker 3s infinite linear;
+}
+
+@keyframes flicker {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.8; }
+}
+
+/* Character card styling */
+.char-card {
+	background: rgba(0,0,0,0.3);
+	border: 2px solid #444;
+	clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+	transition: all 0.3s ease;
+	position: relative;
+}
+
+.char-card:hover {
+	border-color: #ff00ff;
+	transform: scale(1.05);
+	z-index: 10;
+}
+
+.char-card .char-name {
+	background: #ff00ff;
+	color: #fff;
+	text-shadow: 1px 1px 0 #000;
+	clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+}
+
+.char-card .char-icon {
+	filter: grayscale(1) brightness(0.5);
+	transition: all 0.3s ease;
+}
+
+.char-card:hover .char-icon {
+	filter: grayscale(0) brightness(1);
+}
+
+.char-card .char-desc {
+	position: absolute;
+	bottom: -60px;
+	left: 0;
+	right: 0;
+	background: rgba(0,0,0,0.8);
+	padding: 0.5rem;
+	font-size: 0.9rem;
+	opacity: 0;
+	transition: all 0.3s ease;
+	border: 1px solid #ff00ff;
+}
+
+.char-card:hover .char-desc {
+	opacity: 1;
+	bottom: -70px;
+}
+
+/* Countdown timer styling */
+.timer-box {
+	background: #000;
+	border: 2px solid #fff;
+	padding: 0.5rem 1.5rem;
+	box-shadow: 0 0 15px #fff;
+}
+.timer-number {
+	font-family: 'Press Start 2P', cursive;
+	color: #ffff00;
+	line-height: 1;
+	text-shadow: 0 0 5px #ffff00;
+}
+
+/* Subscription form styling */
+.subscribe-input {
+	background: #222;
+	border: 2px solid #555;
+	color: #fff;
+	transition: all 0.3s ease;
+	font-size: 1.2rem;
+	padding: 0.75rem;
+}
+.subscribe-input::placeholder {
+	color: #888;
+}
+.subscribe-input:focus {
+	outline: none;
+	border-color: #00ffff;
+}
+.subscribe-btn {
+	background-color: #00ffff;
+	color: #1a1a2e;
+	border: 2px solid #00c0c0;
+	transition: all 0.3s ease;
+	font-family: 'Press Start 2P', cursive;
+	font-size: 0.9rem;
+	box-shadow: 0 5px 0 #00c0c0;
+	padding: 1rem;
+}
+.subscribe-btn:hover {
+	background-color: #80ffff;
+}
+.subscribe-btn:active {
+	transform: translateY(3px);
+	box-shadow: 0 2px 0 #00c0c0;
+}
+
+/* ------------------------------------------------------------------- 
+ * ## home social - (_site-layout.scss) 
+ * ------------------------------------------------------------------- */
+.home-social {
+  list-style: none;
+  font-family: var(--thm-font);
+}
+
+.home-social a {
+  color: #fff;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social li {
+  position: relative;
+  display: inline-block;
+}
+
+.home-social li a {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social i,
+.home-social span {
+  position: absolute;
+  top: 0;
+  line-height: 36px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social i {
+  right: 0;
+  text-align: center;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social a:hover  {
+  color: #FEFB04;
+	transition: color 0.2s ease;
+}

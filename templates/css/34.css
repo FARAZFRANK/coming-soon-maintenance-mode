@@ -1,0 +1,158 @@
+/* Custom styles for the real estate theme */
+body {
+	font-family: 'Montserrat', sans-serif;
+	background-color: #F8F8F8;
+	color: #333;
+}
+
+.split-layout {
+	display: grid;
+	grid-template-columns: 1fr;
+	min-height: 100vh;
+}
+
+@media (min-width: 1024px) {
+	.split-layout {
+		grid-template-columns: 60% 40%;
+	}
+}
+
+/* Left side with the image */
+.image-side {
+	background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop');
+	background-size: cover;
+	background-position: center;
+	min-height: 40vh;
+	animation: fadeInImage 2s ease-out;
+}
+
+@keyframes fadeInImage {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+/* Right side with the content */
+.content-side {
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	text-align: left;
+	animation: fadeInContent 1.5s 0.5s ease-out forwards;
+	opacity: 0;
+}
+
+@keyframes fadeInContent {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom font for titles */
+.title-font {
+	font-family: 'Cormorant Garamond', serif;
+	font-weight: 700;
+}
+
+.brand-logo {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 300;
+	letter-spacing: 0.4em;
+	text-transform: uppercase;
+	color: #A0AEC0;
+}
+
+.divider {
+	height: 2px;
+	width: 60px;
+	background-color: #C0A062; /* Muted Gold */
+	margin: 1.5rem 0;
+}
+
+/* Countdown timer styling */
+.countdown-number {
+	font-family: 'Cormorant Garamond', serif;
+	color: #1A202C;
+	line-height: 1;
+}
+.countdown-label {
+	color: #718096;
+	font-size: 0.7rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+/* Subscription form styling */
+.subscribe-input {
+	background: #F7FAFC;
+	border: 1px solid #E2E8F0;
+	color: #2D3748;
+	transition: all 0.3s ease;
+}
+.subscribe-input::placeholder {
+	color: #A0AEC0;
+}
+.subscribe-input:focus {
+	outline: none;
+	border-color: #C0A062;
+	box-shadow: 0 0 0 2px rgba(192, 160, 98, 0.2);
+}
+.subscribe-btn {
+	background-color: #1A202C;
+	color: #fff;
+	border: 1px solid #1A202C;
+	transition: all 0.3s ease;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}
+.subscribe-btn:hover {
+	background-color: #fff;
+	color: #1A202C;
+}
+/* ------------------------------------------------------------------- 
+ * ## home social - (_site-layout.scss) 
+ * ------------------------------------------------------------------- */
+.home-social {
+  list-style: none;
+  font-family: var(--thm-font);
+}
+
+.home-social a {
+  color: #000;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social li {
+  position: relative;
+  display: inline-block;
+}
+
+.home-social li a {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social i,
+.home-social span {
+  position: absolute;
+  top: 0;
+  line-height: 36px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social i {
+  right: 0;
+  text-align: center;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social a:hover  {
+	color: #C0A062;
+	transition: color 0.2s ease;
+}

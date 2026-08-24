@@ -1,0 +1,169 @@
+ body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #F4F7FC; /* Light, clean background */
+	position: relative;
+	overflow-x: hidden;
+}
+
+/* Animated background with shapes */
+.background-shapes {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	overflow: hidden;
+}
+
+.shape {
+	position: absolute;
+	background-color: rgba(0, 122, 255, 0.08);
+	border-radius: 50%;
+	animation: float 20s infinite linear;
+}
+
+.shape1 { width: 200px; height: 200px; top: 10%; left: 5%; animation-duration: 25s; }
+.shape2 { width: 100px; height: 100px; top: 20%; left: 80%; animation-duration: 18s; }
+.shape3 { width: 50px; height: 50px; top: 70%; left: 15%; animation-duration: 22s; }
+.shape4 { width: 150px; height: 150px; top: 80%; left: 90%; animation-duration: 20s; }
+.shape5 { width: 80px; height: 80px; top: 50%; left: 50%; animation-duration: 15s; }
+
+@keyframes float {
+	0% { transform: translateY(0) rotate(0deg); }
+	50% { transform: translateY(-20px) rotate(180deg); }
+	100% { transform: translateY(0) rotate(360deg); }
+}
+
+/* Main content fade-in animation */
+.main-content {
+	animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom font for titles */
+.title-font {
+	font-family: 'Poppins', sans-serif;
+	color: #1a202c;
+}
+
+.highlight {
+	color: #007AFF; /* Professional Blue */
+}
+
+/* Countdown timer styling */
+.countdown-box {
+	background: #ffffff;
+	border: 1px solid #E2E8F0;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+.countdown-number {
+	font-family: 'Poppins', sans-serif;
+	color: #007AFF;
+	line-height: 1;
+}
+.countdown-label {
+	color: #4A5568;
+	font-weight: 500;
+}
+
+/* Subscription form styling */
+.subscribe-input {
+	background: #ffffff;
+	border: 1px solid #CBD5E0;
+	color: #2D3748;
+	transition: all 0.3s ease;
+}
+.subscribe-input::placeholder {
+	color: #A0AEC0;
+}
+.subscribe-input:focus {
+	outline: none;
+	border-color: #007AFF;
+	box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+}
+.subscribe-btn {
+	background-color: #007AFF;
+	color: #fff;
+	border: none;
+	transition: all 0.3s ease;
+	font-weight: 600;
+}
+.subscribe-btn:hover {
+	background-color: #0056b3;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+}
+
+/* Feature section styling */
+.feature-box {
+	background: #fff;
+	border-radius: 0.5rem;
+	padding: 1.5rem;
+	text-align: center;
+	border: 1px solid #E2E8F0;
+	transition: all 0.3s ease;
+}
+.feature-box:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.07);
+}
+.feature-icon {
+	background-color: #EBF4FF;
+	color: #007AFF;
+	border-radius: 50%;
+	padding: 0.75rem;
+	display: inline-flex;
+	margin-bottom: 1rem;
+}
+
+/* ------------------------------------------------------------------- 
+ * ## home social - (_site-layout.scss) 
+ * ------------------------------------------------------------------- */
+.home-social {
+  list-style: none;
+  font-family: var(--thm-font);
+}
+
+.home-social a {
+  color: #007AFF;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social li {
+  position: relative;
+  display: inline-block;
+}
+
+.home-social li a {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social i,
+.home-social span {
+  position: absolute;
+  top: 0;
+  line-height: 36px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social i {
+  right: 0;
+  text-align: center;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social a:hover  {
+  color: #000;
+	transition: color 0.2s ease;
+}

@@ -1,0 +1,154 @@
+/* Custom styles for the e-commerce theme */
+body {
+	font-family: 'Inter', sans-serif;
+	background-color: #F8F8F8;
+	color: #333;
+}
+
+.split-layout {
+	display: grid;
+	grid-template-columns: 1fr;
+	min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+	.split-layout {
+		grid-template-columns: 55% 45%;
+	}
+}
+
+/* Left side with the background image */
+.image-side {
+	background-image: url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop');
+	background-size: cover;
+	background-position: center;
+	min-height: 40vh;
+	animation: fadeInImage 2s ease-out;
+}
+
+@keyframes fadeInImage {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+/* Right side with the content */
+.content-side {
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	text-align: left;
+	animation: fadeInContent 1.5s 0.5s ease-out forwards;
+	opacity: 0;
+}
+
+@keyframes fadeInContent {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom font for titles */
+.title-font {
+	font-family: 'DM Serif Display', serif;
+	font-weight: 400;
+}
+
+.brand-logo {
+	font-family: 'Inter', sans-serif;
+	font-weight: 500;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+	color: #888;
+}
+
+/* Countdown timer styling */
+.countdown-number {
+	font-family: 'DM Serif Display', serif;
+	color: #111;
+	line-height: 1;
+}
+.countdown-label {
+	color: #888;
+	font-size: 0.7rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+/* Subscription form styling */
+.subscribe-input {
+	background: #F0F0F0;
+	border: 1px solid #ddd;
+	color: #333;
+	transition: all 0.3s ease;
+	border-radius: 0;
+}
+.subscribe-input::placeholder {
+	color: #aaa;
+}
+.subscribe-input:focus {
+	outline: none;
+	border-color: #333;
+	background: #fff;
+}
+.subscribe-btn {
+	background-color: #333;
+	color: #fff;
+	border: 1px solid #333;
+	transition: all 0.3s ease;
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	border-radius: 0;
+}
+.subscribe-btn:hover {
+	background-color: #fff;
+	color: #333;
+}
+
+/* ------------------------------------------------------------------- 
+ * ## home social - (_site-layout.scss) 
+ * ------------------------------------------------------------------- */
+.home-social {
+  list-style: none;
+  font-family: var(--thm-font);
+}
+
+.home-social a {
+  color: #CACACA;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social li {
+  position: relative;
+  display: inline-block;
+}
+
+.home-social li a {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social i,
+.home-social span {
+  position: absolute;
+  top: 0;
+  line-height: 36px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social i {
+  right: 0;
+  text-align: center;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social a:hover  {
+	color: #000;
+	transition: color 0.2s ease;
+}

@@ -1,0 +1,149 @@
+/* Custom styles for the green energy theme */
+body {
+	font-family: 'Poppins', sans-serif;
+	background-color: #F0FDF4; /* Very light green */
+	color: #1F2937; /* Dark Gray */
+	position: relative;
+	overflow: hidden;
+}
+
+/* Background Image */
+.background-image {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -2;
+	background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2070&auto=format&fit=crop');
+	background-size: cover;
+	background-position: center;
+}
+
+/* Color overlay for better text readability */
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(to top, rgba(240, 253, 244, 1) 0%, rgba(240, 253, 244, 0.7) 50%, rgba(240, 253, 244, 1) 100%);
+	z-index: -1;
+}
+
+canvas {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 0;
+	pointer-events: none;
+}
+
+/* Main content container */
+.main-content {
+	animation: fadeIn 2s ease-out;
+	position: relative;
+	z-index: 1;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom font for titles */
+.title-font {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 600;
+}
+
+.highlight {
+	color: #10B981; /* Emerald Green */
+}
+
+/* Countdown timer styling */
+.countdown-number {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	color: #111827;
+	line-height: 1;
+}
+.countdown-label {
+	color: #4B5563;
+	font-size: 0.75rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+/* Subscription form styling */
+.subscribe-input {
+	background: #FFFFFF;
+	border: 1px solid #D1D5DB;
+	color: #1F2937;
+	transition: all 0.3s ease;
+}
+.subscribe-input::placeholder {
+	color: #9CA3AF;
+}
+.subscribe-input:focus {
+	outline: none;
+	border-color: #10B981;
+	box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+.subscribe-btn {
+	background-color: #10B981;
+	color: #fff;
+	border: none;
+	transition: all 0.3s ease;
+	font-weight: 600;
+}
+.subscribe-btn:hover {
+	background-color: #059669;
+}
+
+/* ------------------------------------------------------------------- 
+ * ## home social - (_site-layout.scss) 
+ * ------------------------------------------------------------------- */
+.home-social {
+  list-style: none;
+  font-family: var(--thm-font);
+}
+
+.home-social a {
+  color: #000;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social li {
+  position: relative;
+  display: inline-block;
+}
+
+.home-social li a {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social i,
+.home-social span {
+  position: absolute;
+  top: 0;
+  line-height: 36px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social i {
+  right: 0;
+  text-align: center;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social a:hover  {
+  color: #47B881;
+	transition: color 0.2s ease;
+}

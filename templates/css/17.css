@@ -1,0 +1,164 @@
+/* Custom styles for the prospectus theme */
+body {
+	font-family: 'Poppins', sans-serif;
+	background-color: #F1F1F1; /* Light gray textured background */
+	color: #1A202C;
+}
+
+/* Main content card */
+.prospectus-card {
+	background-color: #FFFFFF;
+	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+	animation: floatIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+	opacity: 0;
+	transform: translateY(40px);
+}
+
+@keyframes floatIn {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Image container with mask */
+.image-container {
+	clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+	animation: revealImage 1.5s 0.5s ease-out forwards;
+	opacity: 0;
+}
+
+@keyframes revealImage {
+	from {
+		opacity: 0;
+		transform: scale(1.05);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.image-container img {
+	transition: transform 0.5s ease-out;
+}
+
+.prospectus-card:hover .image-container img {
+	transform: scale(1.05);
+}
+
+/* Custom font for titles */
+.title-font {
+	font-family: 'Playfair Display', serif;
+	font-weight: 600;
+	color: #1A202C;
+}
+
+.highlight {
+	color: #B79457; /* Muted Gold */
+}
+
+.stagger-animation > * {
+	animation: fadeInChild 1s 1s ease-out forwards;
+	opacity: 0;
+	transform: translateY(10px);
+}
+
+.stagger-animation > *:nth-child(2) { animation-delay: 1.2s; }
+.stagger-animation > *:nth-child(3) { animation-delay: 1.4s; }
+.stagger-animation > *:nth-child(4) { animation-delay: 1.6s; }
+
+@keyframes fadeInChild {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Countdown timer styling */
+.countdown-number {
+	font-family: 'Playfair Display', serif;
+	color: #1A202C;
+	line-height: 1;
+}
+.countdown-label {
+	color: #718096;
+	font-size: 0.7rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+/* Subscription form styling */
+.subscribe-input {
+	background: #F7FAFC;
+	border: 1px solid #E2E8F0;
+	color: #2D3748;
+	transition: all 0.3s ease;
+}
+.subscribe-input::placeholder {
+	color: #A0AEC0;
+}
+.subscribe-input:focus {
+	outline: none;
+	border-color: #B79457;
+	box-shadow: 0 0 0 2px rgba(183, 148, 87, 0.2);
+}
+.subscribe-btn {
+	background-color: #1A202C;
+	color: #fff;
+	border: none;
+	transition: all 0.3s ease;
+	font-weight: 600;
+}
+.subscribe-btn:hover {
+	background-color: #B79457;
+	color: #fff;
+}
+
+
+/* ------------------------------------------------------------------- 
+ * ## home social - (_site-layout.scss) 
+ * ------------------------------------------------------------------- */
+.home-social {
+  list-style: none;
+  font-family: var(--thm-font);
+}
+
+.home-social a {
+  color: #B79457;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social li {
+  position: relative;
+  display: inline-block;
+}
+
+.home-social li a {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+.home-social i,
+.home-social span {
+  position: absolute;
+  top: 0;
+  line-height: 36px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.home-social i {
+  right: 0;
+  text-align: center;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  font-size: 1.45rem;
+}
+
+.home-social li:hover i {
+ color: var(--thm-primary);
+}

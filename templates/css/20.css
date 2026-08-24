@@ -1,0 +1,134 @@
+ /* Custom styles for the construction theme */
+body {
+	font-family: 'Roboto Condensed', sans-serif;
+	overflow: hidden; /* Prevent scrollbars from the layout */
+}
+
+/* Main container for the split layout */
+.split-layout {
+	display: grid;
+	grid-template-columns: 1fr; /* Single column on mobile */
+	height: 100vh;
+}
+
+@media (min-width: 768px) {
+	.split-layout {
+		grid-template-columns: 45% 55%; /* Asymmetrical split on desktop */
+	}
+}
+
+/* Left side with the background image */
+.image-side {
+	background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop');
+	background-size: cover;
+	background-position: center;
+	position: relative;
+	min-height: 250px; /* Ensure visibility on mobile */
+}
+
+/* Diagonal line effect */
+.image-side::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: -1px; /* Overlap slightly to avoid gaps */
+	width: 50px;
+	height: 100%;
+	background: linear-gradient(to top right, #111827 49.5%, transparent 50%);
+	display: none; /* Hide on mobile */
+}
+
+@media (min-width: 768px) {
+	.image-side::after {
+		display: block;
+	}
+}
+
+/* Right side with the content */
+.content-side {
+	background-color: #111827; /* Dark blue-gray */
+	color: #F3F4F6;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow-y: auto; /* Allow scrolling if content overflows on small screens */
+	animation: slideInFromRight 1s ease-out;
+}
+
+@keyframes slideInFromRight {
+	from { transform: translateX(50px); opacity: 0; }
+	to { transform: translateX(0); opacity: 1; }
+}
+
+/* Custom font for titles */
+.title-font {
+	font-family: 'Oswald', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.highlight {
+	color: #FBBF24; /* Amber/Yellow */
+	text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
+}
+
+/* Countdown timer styling */
+.countdown-box {
+	text-align: left;
+}
+.countdown-number {
+	font-family: 'Oswald', sans-serif;
+	color: #ffffff;
+	line-height: 1;
+}
+.countdown-label {
+	color: #9CA3AF;
+	font-size: 0.875rem;
+	text-transform: uppercase;
+}
+
+/* Subscription form styling */
+.subscribe-input {
+	background: rgba(255, 255, 255, 0.05);
+	border: 1px solid #374151;
+	color: #ffffff;
+	transition: all 0.3s ease;
+}
+.subscribe-input::placeholder {
+	color: #6B7280;
+}
+.subscribe-input:focus {
+	outline: none;
+	border-color: #FBBF24;
+	background: rgba(255, 255, 255, 0.1);
+}
+.subscribe-btn {
+	background-color: #FBBF24;
+	color: #111827;
+	border: none;
+	transition: all 0.3s ease;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+.subscribe-btn:hover {
+	background-color: #F59E0B; /* Darker amber */
+}
+
+/* Social media icons styling */
+.social-icon {
+	color: #9CA3AF;
+	transition: color 0.3s ease, transform 0.3s ease;
+}
+.social-icon:hover {
+	color: #FBBF24;
+	transform: translateY(-3px);
+}
+
+.home-social i {
+  right: 0;
+  text-align: center;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+}
