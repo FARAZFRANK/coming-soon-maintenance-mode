@@ -9,6 +9,28 @@
   box-sizing: border-box;
 }
 
+/* Ensure Outlined Input Container has proper comfortable height and flex alignment */
+#csmm-react-root .MuiOutlinedInput-root {
+  min-height: 48px !important;
+  border-radius: 8px !important;
+  background-color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  padding: 0 14px !important;
+}
+
+#csmm-react-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall {
+  min-height: 44px !important;
+  padding: 0 12px !important;
+}
+
+#csmm-react-root .MuiOutlinedInput-root.MuiInputBase-multiline {
+  min-height: auto !important;
+  padding: 12px 14px !important;
+  align-items: flex-start !important;
+}
+
 /* Reset WordPress core input styling inside CSMM */
 #csmm-react-root input[type="text"],
 #csmm-react-root input[type="email"],
@@ -17,30 +39,50 @@
 #csmm-react-root input[type="search"],
 #csmm-react-root input[type="date"],
 #csmm-react-root input[type="time"],
-#csmm-react-root input[type="number"],
+#csmm-react-root input[type="number"] {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: transparent !important;
+  margin: 0 !important;
+  font-size: 0.95rem !important;
+  color: #0f172a !important;
+  height: 24px !important;
+  line-height: 24px !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  flex: 1 1 auto !important;
+}
+
 #csmm-react-root textarea {
   border: none !important;
   box-shadow: none !important;
   outline: none !important;
-  background-color: transparent !important;
+  background: transparent !important;
   margin: 0 !important;
   font-size: 0.95rem !important;
   color: #0f172a !important;
-  min-height: unset !important;
-  max-width: 100% !important;
-}
-
-#csmm-react-root .MuiOutlinedInput-input {
-  padding: 12px 14px !important;
-  line-height: 1.4 !important;
-}
-
-#csmm-react-root .MuiInputBase-sizeSmall .MuiOutlinedInput-input {
-  padding: 8.5px 14px !important;
-}
-
-#csmm-react-root textarea.MuiOutlinedInput-input {
   padding: 0 !important;
+  line-height: 1.5 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Fix Adornment Icon spacing & alignment */
+#csmm-react-root .MuiInputAdornment-root {
+  display: flex !important;
+  align-items: center !important;
+  margin-right: 10px !important;
+  margin-left: 0 !important;
+  color: #64748b !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+#csmm-react-root .MuiInputAdornment-root svg {
+  font-size: 20px !important;
 }
 
 /* Fix WordPress Admin breaking MUI Fieldset Legend (Label cutout overflow) */
@@ -81,30 +123,34 @@
   visibility: visible !important;
 }
 
-/* Ensure Floating Label is cleanly visible and background-masked */
+/* Floating Label Positioning */
+#csmm-react-root .MuiInputLabel-outlined {
+  z-index: 2 !important;
+  font-size: 0.95rem !important;
+  color: #64748b !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 #csmm-react-root .MuiInputLabel-outlined.MuiInputLabel-shrink {
   background-color: #ffffff !important;
   padding: 0 6px !important;
   border-radius: 4px !important;
-  transform: translate(14px, -8px) scale(0.75) !important;
-  z-index: 2 !important;
-  line-height: 1.2 !important;
-  max-width: calc(100% - 24px) !important;
+  transform: translate(14px, -7px) scale(0.75) !important;
 }
 
 #csmm-react-root .MuiInputLabel-outlined:not(.MuiInputLabel-shrink) {
-  transform: translate(14px, 12px) scale(1) !important;
-  z-index: 1 !important;
+  transform: translate(14px, 14px) scale(1) !important;
 }
 
 #csmm-react-root .MuiInputLabel-sizeSmall:not(.MuiInputLabel-shrink) {
-  transform: translate(14px, 8.5px) scale(1) !important;
+  transform: translate(14px, 12px) scale(1) !important;
 }
 
-/* Fix Adornment Icon spacing */
-#csmm-react-root .MuiInputAdornment-root {
-  margin-right: 8px !important;
-  color: #64748b !important;
+/* When input has startAdornment, adjust non-shrunk label position */
+#csmm-react-root .MuiInputLabel-outlined.MuiInputLabel-shrink {
+  transform: translate(14px, -7px) scale(0.75) !important;
 }
 
 /* Global 10px Border Radius on cards and papers */
