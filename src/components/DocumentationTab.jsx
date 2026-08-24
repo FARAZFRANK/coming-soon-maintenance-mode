@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   Typography,
-  Grid,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -15,19 +14,18 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
-import SecurityRoundedIcon from '@mui/icons-material/SecurityRounded';
 import LaunchRoundedIcon from '@mui/icons-material/LaunchRounded';
 
 export default function DocumentationTab() {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
       {/* Overview Card */}
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-            <AutoAwesomeRoundedIcon color="primary" sx={{ fontSize: 28 }} />
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+            <AutoAwesomeRoundedIcon color="primary" sx={{ fontSize: 26 }} />
             <div>
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
                 Coming Soon Maintenance Mode Pro v3.2.0
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -39,11 +37,11 @@ export default function DocumentationTab() {
       </Card>
 
       {/* Frequently Asked Questions */}
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2.5 }}>
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 2 }}>
             <HelpOutlineRoundedIcon color="secondary" />
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
               Knowledge Base & Helpful Tips
             </Typography>
           </Box>
@@ -106,16 +104,16 @@ export default function DocumentationTab() {
       </Card>
 
       {/* Changelog Card */}
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, fontSize: '1.1rem' }}>
             Version History
           </Typography>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                <Chip label="v3.2.0" color="primary" size="small" sx={{ fontWeight: 700 }} />
+                <Chip label="v3.2.0" color="primary" size="small" sx={{ fontWeight: 700, borderRadius: '6px' }} />
                 <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                   Major Architecture Overhaul & React 18 Admin
                 </Typography>
@@ -127,7 +125,7 @@ export default function DocumentationTab() {
                 <li>Added custom database table <code>wp_csmm_subscribers</code> with automated zero-loss migration.</li>
                 <li>Implemented secure authenticated CSV streaming export.</li>
                 <li>Added HTTP 503 SEO headers for Maintenance Mode.</li>
-                <li>Fixed template override debug code in template loader.</li>
+                <li>Fixed template loader debug override issue.</li>
               </Typography>
             </Box>
 
@@ -135,7 +133,7 @@ export default function DocumentationTab() {
 
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-                <Chip label="v3.1.0" size="small" sx={{ fontWeight: 700 }} />
+                <Chip label="v3.1.0" size="small" sx={{ fontWeight: 700, borderRadius: '6px' }} />
                 <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
                   20 New Templates Addition
                 </Typography>
@@ -149,8 +147,8 @@ export default function DocumentationTab() {
       </Card>
 
       {/* Credits Card */}
-      <Card elevation={0} sx={{ backgroundColor: '#f8fafc' }}>
-        <CardContent sx={{ p: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Card elevation={0} sx={{ backgroundColor: '#f8fafc', borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
               Developed by FARAZFRANK
@@ -166,6 +164,7 @@ export default function DocumentationTab() {
             href="https://wpfrank.com/"
             target="_blank"
             endIcon={<LaunchRoundedIcon />}
+            sx={{ borderRadius: '6px' }}
           >
             Visit WPFrank.com
           </Button>

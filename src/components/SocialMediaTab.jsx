@@ -46,17 +46,17 @@ export default function SocialMediaTab({ settings, onChange }) {
   ];
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1.1rem' }}>
             Social Media Channels
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
             Connect your audience with your active social profiles. Leave any platform URL empty to automatically hide its icon from the frontend page.
           </Typography>
 
-          <Alert severity="info" sx={{ mb: 3, borderRadius: 2 }}>
+          <Alert severity="info" sx={{ mb: 2.5, borderRadius: '8px' }}>
             Icons will appear in the footer or social section of your chosen coming soon template.
           </Alert>
 

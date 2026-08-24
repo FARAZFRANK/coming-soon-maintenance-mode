@@ -82,26 +82,29 @@ export const theme = createTheme({
             boxShadow: '0 4px 12px rgba(37, 99, 235, 0.15)',
           },
         },
-        containedPrimary: {
-          '&:hover': {
-            backgroundColor: '#1d4ed8',
-          },
-        },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: 10,
           border: '1px solid #e2e8f0',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03)',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
         },
       },
     },
     MuiPaper: {
       styleOverrides: {
         root: {
+          borderRadius: 10,
           backgroundImage: 'none',
+        },
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: 10,
         },
       },
     },
@@ -112,6 +115,60 @@ export const theme = createTheme({
           fontWeight: 600,
           fontSize: '0.95rem',
           minHeight: 48,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+          backgroundColor: '#ffffff',
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#cbd5e1',
+          },
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#94a3b8',
+          },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#2563eb',
+            borderWidth: '2px',
+          },
+          // Fix WordPress admin styles breaking legend notch
+          '& .MuiOutlinedInput-notchedOutline legend': {
+            float: 'none !important',
+            margin: '0 !important',
+            border: 'none !important',
+            padding: '0 !important',
+          },
+        },
+        input: {
+          padding: '12px 14px',
+        },
+        inputSizeSmall: {
+          padding: '8.5px 14px',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: '0.95rem',
+          color: '#64748b',
+          // Ensure label position is not pushed by WP admin line-height
+          lineHeight: '1.2',
+        },
+        outlined: {
+          transform: 'translate(14px, 12px) scale(1)',
+          '&.MuiInputLabel-sizeSmall': {
+            transform: 'translate(14px, 9px) scale(1)',
+          },
+          '&.MuiInputLabel-shrink': {
+            transform: 'translate(14px, -8px) scale(0.75)',
+            backgroundColor: '#ffffff',
+            padding: '0 6px',
+            borderRadius: '4px',
+            zIndex: 1,
+          },
         },
       },
     },

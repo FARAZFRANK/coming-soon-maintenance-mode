@@ -91,18 +91,18 @@ export default function ContentBrandingTab({ settings, onChange }) {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
       {/* Brand Identity & Main Content */}
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5 }}>
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1.1rem' }}>
             Branding & Core Content
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
             Customize your website logo, headline message, and descriptive teaser.
           </Typography>
 
-          <Grid container spacing={3}>
+          <Grid container spacing={2.5}>
             {/* Logo Section */}
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1 }}>
@@ -111,9 +111,9 @@ export default function ContentBrandingTab({ settings, onChange }) {
               <Paper
                 variant="outlined"
                 sx={{
-                  p: 2.5,
+                  p: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: '10px !important',
                   backgroundColor: '#f8fafc',
                   display: 'flex',
                   flexDirection: 'column',
@@ -134,7 +134,7 @@ export default function ContentBrandingTab({ settings, onChange }) {
                         justifyContent: 'center',
                         p: 1,
                         backgroundColor: '#1e293b',
-                        borderRadius: 2,
+                        borderRadius: '8px',
                       }}
                     >
                       <img
@@ -144,17 +144,17 @@ export default function ContentBrandingTab({ settings, onChange }) {
                       />
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1 }}>
-                      <Button size="small" variant="outlined" onClick={handleLogoUpload}>
+                      <Button size="small" variant="outlined" onClick={handleLogoUpload} sx={{ borderRadius: '6px' }}>
                         Change
                       </Button>
-                      <Button size="small" color="error" variant="outlined" onClick={handleLogoRemove}>
+                      <Button size="small" color="error" variant="outlined" onClick={handleLogoRemove} sx={{ borderRadius: '6px' }}>
                         Remove
                       </Button>
                     </Box>
                   </>
                 ) : (
                   <>
-                    <CloudUploadRoundedIcon sx={{ fontSize: 40, color: '#94a3b8' }} />
+                    <CloudUploadRoundedIcon sx={{ fontSize: 36, color: '#94a3b8' }} />
                     <Typography variant="body2" color="text.secondary">
                       No custom logo selected
                     </Typography>
@@ -163,6 +163,7 @@ export default function ContentBrandingTab({ settings, onChange }) {
                       variant="contained"
                       startIcon={<CloudUploadRoundedIcon />}
                       onClick={handleLogoUpload}
+                      sx={{ borderRadius: '6px' }}
                     >
                       Upload Logo
                     </Button>
@@ -201,13 +202,13 @@ export default function ContentBrandingTab({ settings, onChange }) {
       </Card>
 
       {/* Countdown Timer Settings */}
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
               <AccessTimeRoundedIcon color="primary" />
               <div>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
                   Launch Countdown Timer
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
@@ -229,7 +230,7 @@ export default function ContentBrandingTab({ settings, onChange }) {
           </Box>
 
           {String(settings.countdown) === '1' && (
-            <Grid container spacing={3} sx={{ mt: 0.5 }}>
+            <Grid container spacing={2.5} sx={{ mt: 0.5 }}>
               <Grid item xs={12} md={4}>
                 <TextField
                   label="Countdown Title"
@@ -263,7 +264,7 @@ export default function ContentBrandingTab({ settings, onChange }) {
               </Grid>
 
               <Grid item xs={12}>
-                <Alert severity="success" sx={{ borderRadius: 2 }}>
+                <Alert severity="success" sx={{ borderRadius: '8px' }}>
                   <strong>Auto-Launch Feature:</strong> When the countdown clock reaches zero, the website mode will automatically switch to <strong>Live / Disabled</strong> so your visitors can access your live website immediately!
                 </Alert>
               </Grid>
@@ -273,14 +274,14 @@ export default function ContentBrandingTab({ settings, onChange }) {
       </Card>
 
       {/* Lead Capture & Video Background */}
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
-          <Grid container spacing={3}>
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
+          <Grid container spacing={2.5}>
             {/* Newsletter Subscription */}
             <Grid item xs={12} md={6}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 1 }}>
                 <MarkEmailReadRoundedIcon color="secondary" />
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
                   Email Lead Capture
                 </Typography>
               </Box>
@@ -301,9 +302,9 @@ export default function ContentBrandingTab({ settings, onChange }) {
 
             {/* Video Background */}
             <Grid item xs={12} md={6}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 1 }}>
                 <VideocamRoundedIcon color="primary" />
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
                   Video Background URL
                 </Typography>
               </Box>
@@ -320,7 +321,7 @@ export default function ContentBrandingTab({ settings, onChange }) {
             </Grid>
           </Grid>
 
-          <Divider sx={{ my: 3 }} />
+          <Divider sx={{ my: 2.5 }} />
 
           {/* Background Slides */}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -337,6 +338,7 @@ export default function ContentBrandingTab({ settings, onChange }) {
               variant="outlined"
               startIcon={<AddPhotoAlternateRoundedIcon />}
               onClick={handleAddSlide}
+              sx={{ borderRadius: '6px' }}
             >
               Add Images
             </Button>
@@ -350,7 +352,7 @@ export default function ContentBrandingTab({ settings, onChange }) {
                   sx={{
                     position: 'relative',
                     height: 100,
-                    borderRadius: 2,
+                    borderRadius: '8px !important',
                     overflow: 'hidden',
                     backgroundColor: '#1e293b',
                   }}
@@ -389,11 +391,11 @@ export default function ContentBrandingTab({ settings, onChange }) {
       </Card>
 
       {/* Custom CSS Editor */}
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 1 }}>
             <CodeRoundedIcon color="secondary" />
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
               Custom CSS Overrides
             </Typography>
           </Box>
@@ -411,7 +413,7 @@ export default function ContentBrandingTab({ settings, onChange }) {
             InputProps={{
               sx: {
                 fontFamily: 'monospace',
-                fontSize: '0.9rem',
+                fontSize: '0.875rem',
                 backgroundColor: '#f8fafc',
               },
             }}

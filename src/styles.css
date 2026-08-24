@@ -1,0 +1,117 @@
+/* CSMM Admin Scoped CSS Reset for WordPress Admin */
+
+#csmm-react-root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  color: #0f172a;
+}
+
+#csmm-react-root * {
+  box-sizing: border-box;
+}
+
+/* Reset WordPress core input styling inside CSMM */
+#csmm-react-root input[type="text"],
+#csmm-react-root input[type="email"],
+#csmm-react-root input[type="url"],
+#csmm-react-root input[type="password"],
+#csmm-react-root input[type="search"],
+#csmm-react-root input[type="date"],
+#csmm-react-root input[type="time"],
+#csmm-react-root input[type="number"],
+#csmm-react-root textarea {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background-color: transparent !important;
+  margin: 0 !important;
+  font-size: 0.95rem !important;
+  color: #0f172a !important;
+  min-height: unset !important;
+  max-width: 100% !important;
+}
+
+#csmm-react-root .MuiOutlinedInput-input {
+  padding: 12px 14px !important;
+  line-height: 1.4 !important;
+}
+
+#csmm-react-root .MuiInputBase-sizeSmall .MuiOutlinedInput-input {
+  padding: 8.5px 14px !important;
+}
+
+#csmm-react-root textarea.MuiOutlinedInput-input {
+  padding: 0 !important;
+}
+
+/* Fix WordPress Admin breaking MUI Fieldset Legend (Label cutout overflow) */
+#csmm-react-root fieldset.MuiOutlinedInput-notchedOutline {
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color: #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 0 8px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#csmm-react-root .Mui-focused fieldset.MuiOutlinedInput-notchedOutline {
+  border-color: #2563eb !important;
+  border-width: 2px !important;
+}
+
+#csmm-react-root fieldset.MuiOutlinedInput-notchedOutline legend {
+  all: unset !important;
+  float: none !important;
+  width: auto !important;
+  max-width: 100% !important;
+  display: block !important;
+  padding: 0 !important;
+  height: 11px !important;
+  font-size: 0.75em !important;
+  visibility: hidden !important;
+  border: none !important;
+  margin: 0 !important;
+}
+
+#csmm-react-root fieldset.MuiOutlinedInput-notchedOutline legend > span {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  display: inline-block !important;
+  opacity: 0 !important;
+  visibility: visible !important;
+}
+
+/* Ensure Floating Label is cleanly visible and background-masked */
+#csmm-react-root .MuiInputLabel-outlined.MuiInputLabel-shrink {
+  background-color: #ffffff !important;
+  padding: 0 6px !important;
+  border-radius: 4px !important;
+  transform: translate(14px, -8px) scale(0.75) !important;
+  z-index: 2 !important;
+  line-height: 1.2 !important;
+  max-width: calc(100% - 24px) !important;
+}
+
+#csmm-react-root .MuiInputLabel-outlined:not(.MuiInputLabel-shrink) {
+  transform: translate(14px, 12px) scale(1) !important;
+  z-index: 1 !important;
+}
+
+#csmm-react-root .MuiInputLabel-sizeSmall:not(.MuiInputLabel-shrink) {
+  transform: translate(14px, 8.5px) scale(1) !important;
+}
+
+/* Fix Adornment Icon spacing */
+#csmm-react-root .MuiInputAdornment-root {
+  margin-right: 8px !important;
+  color: #64748b !important;
+}
+
+/* Global 10px Border Radius on cards and papers */
+#csmm-react-root .MuiPaper-rounded {
+  border-radius: 10px !important;
+}
+
+#csmm-react-root .MuiCard-root {
+  border-radius: 10px !important;
+}

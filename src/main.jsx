@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from './theme';
 import App from './App';
+import './styles.css';
 
 const rootEl = document.getElementById('csmm-react-root');
 if (rootEl) {

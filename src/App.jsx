@@ -8,7 +8,6 @@ import {
   Typography,
   Button,
   Chip,
-  IconButton,
   Snackbar,
   Alert,
   CircularProgress,
@@ -126,7 +125,7 @@ export default function App() {
   if (loading) {
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', py: 12 }}>
-        <CircularProgress size={48} thickness={4} />
+        <CircularProgress size={44} thickness={4} />
         <Typography variant="h6" sx={{ mt: 2, fontWeight: 600, color: '#334155' }}>
           Loading Coming Soon Maintenance Mode Pro...
         </Typography>
@@ -136,9 +135,9 @@ export default function App() {
 
   const getModeBadge = () => {
     const mode = settings ? settings.website_mode : 3;
-    if (mode === 1) return <Chip label="Coming Soon Active" color="primary" size="small" sx={{ fontWeight: 700 }} />;
-    if (mode === 2) return <Chip label="Maintenance Mode Active" color="warning" size="small" sx={{ fontWeight: 700 }} />;
-    return <Chip label="Website Live (Disabled)" color="success" size="small" sx={{ fontWeight: 700 }} />;
+    if (mode === 1) return <Chip label="Coming Soon Active" color="primary" size="small" sx={{ fontWeight: 700, borderRadius: '6px' }} />;
+    if (mode === 2) return <Chip label="Maintenance Mode Active" color="warning" size="small" sx={{ fontWeight: 700, borderRadius: '6px' }} />;
+    return <Chip label="Website Live (Disabled)" color="success" size="small" sx={{ fontWeight: 700, borderRadius: '6px' }} />;
   };
 
   return (
@@ -148,9 +147,9 @@ export default function App() {
         <Paper
           elevation={0}
           sx={{
-            p: { xs: 2, md: 2.5 },
-            mb: 3,
-            borderRadius: 3,
+            p: { xs: 2, md: 2.2 },
+            mb: 2.5,
+            borderRadius: '10px !important',
             border: '1px solid #e2e8f0',
             backgroundColor: '#ffffff',
             display: 'flex',
@@ -164,27 +163,27 @@ export default function App() {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Box
               sx={{
-                width: 44,
-                height: 44,
-                borderRadius: 2.5,
+                width: 42,
+                height: 42,
+                borderRadius: '8px',
                 backgroundColor: '#2563eb',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#ffffff',
-                boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
+                boxShadow: '0 3px 10px rgba(37, 99, 235, 0.25)',
               }}
             >
-              <AccessTimeFilledRoundedIcon sx={{ fontSize: 26 }} />
+              <AccessTimeFilledRoundedIcon sx={{ fontSize: 24 }} />
             </Box>
             <div>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 800, color: '#0f172a' }}>
+                <Typography variant="h5" sx={{ fontWeight: 700, color: '#0f172a', fontSize: '1.25rem' }}>
                   Coming Soon Maintenance Mode Pro
                 </Typography>
-                <Chip label="v3.2.0" size="small" sx={{ fontWeight: 700, backgroundColor: '#e2e8f0', color: '#334155' }} />
+                <Chip label="v3.2.0" size="small" sx={{ fontWeight: 700, backgroundColor: '#e2e8f0', color: '#334155', borderRadius: '6px' }} />
               </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 0.5 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 0.4 }}>
                 {getModeBadge()}
                 <Typography variant="caption" color="text.secondary">
                   by FARAZFRANK
@@ -202,7 +201,7 @@ export default function App() {
               component="a"
               href={settings?.preview_url || '#'}
               target="_blank"
-              sx={{ borderColor: '#cbd5e1', fontWeight: 600 }}
+              sx={{ borderColor: '#cbd5e1', fontWeight: 600, borderRadius: '8px' }}
             >
               Live Preview
             </Button>
@@ -214,7 +213,7 @@ export default function App() {
                 startIcon={saving ? <CircularProgress size={18} color="inherit" /> : <SaveRoundedIcon />}
                 onClick={handleSave}
                 disabled={saving}
-                sx={{ px: 3, fontWeight: 700 }}
+                sx={{ px: 3, fontWeight: 700, borderRadius: '8px' }}
               >
                 {saving ? 'Saving Changes...' : 'Save Changes'}
               </Button>
@@ -226,8 +225,8 @@ export default function App() {
         <Paper
           elevation={0}
           sx={{
-            mb: 3,
-            borderRadius: 3,
+            mb: 2.5,
+            borderRadius: '10px !important',
             border: '1px solid #e2e8f0',
             backgroundColor: '#ffffff',
           }}
@@ -239,14 +238,14 @@ export default function App() {
             scrollButtons="auto"
             textColor="primary"
             indicatorColor="primary"
-            sx={{ px: 2 }}
+            sx={{ px: 1.5 }}
           >
-            <Tab icon={<TuneRoundedIcon sx={{ fontSize: 20 }} />} iconPosition="start" label="Website Mode & Targeting" />
-            <Tab icon={<DashboardCustomizeRoundedIcon sx={{ fontSize: 20 }} />} iconPosition="start" label="Templates (36)" />
-            <Tab icon={<PaletteRoundedIcon sx={{ fontSize: 20 }} />} iconPosition="start" label="Content & Branding" />
-            <Tab icon={<ShareRoundedIcon sx={{ fontSize: 20 }} />} iconPosition="start" label="Social Channels" />
-            <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 20 }} />} iconPosition="start" label="Subscribers Leads" />
-            <Tab icon={<MenuBookRoundedIcon sx={{ fontSize: 20 }} />} iconPosition="start" label="Documentation" />
+            <Tab icon={<TuneRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Website Mode & Targeting" />
+            <Tab icon={<DashboardCustomizeRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Templates (36)" />
+            <Tab icon={<PaletteRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Content & Branding" />
+            <Tab icon={<ShareRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Social Channels" />
+            <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Subscribers Leads" />
+            <Tab icon={<MenuBookRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Documentation" />
           </Tabs>
         </Paper>
 
@@ -306,7 +305,7 @@ export default function App() {
           onClose={() => setNotification((prev) => ({ ...prev, open: false }))}
           severity={notification.severity}
           variant="filled"
-          sx={{ width: '100%', borderRadius: 2, fontWeight: 600 }}
+          sx={{ width: '100%', borderRadius: '8px', fontWeight: 600 }}
         >
           {notification.message}
         </Alert>

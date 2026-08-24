@@ -88,15 +88,15 @@ export default function SubscribersTab({ onNotify }) {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
       {/* Top Stat Card */}
-      <Grid container spacing={3}>
+      <Grid container spacing={2.5}>
         <Grid item xs={12} sm={6} md={4}>
           <Card
             elevation={0}
             sx={{
               p: 2.5,
-              borderRadius: 3,
+              borderRadius: '10px !important',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -108,30 +108,30 @@ export default function SubscribersTab({ onNotify }) {
               <Typography variant="body2" sx={{ opacity: 0.85, fontWeight: 500 }}>
                 Total Email Leads Captured
               </Typography>
-              <Typography variant="h4" sx={{ fontWeight: 800, mt: 0.5 }}>
+              <Typography variant="h4" sx={{ fontWeight: 800, mt: 0.5, fontSize: '1.75rem' }}>
                 {total}
               </Typography>
             </div>
             <Box
               sx={{
-                width: 52,
-                height: 52,
-                borderRadius: 2.5,
+                width: 48,
+                height: 48,
+                borderRadius: '8px',
                 backgroundColor: 'rgba(255,255,255,0.15)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <PeopleAltRoundedIcon sx={{ fontSize: 30 }} />
+              <PeopleAltRoundedIcon sx={{ fontSize: 26 }} />
             </Box>
           </Card>
         </Grid>
       </Grid>
 
       {/* Main Table Card */}
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
           {/* Header Controls */}
           <Box
             sx={{
@@ -140,7 +140,7 @@ export default function SubscribersTab({ onNotify }) {
               justifyContent: 'space-between',
               alignItems: { xs: 'stretch', sm: 'center' },
               gap: 2,
-              mb: 3,
+              mb: 2.5,
             }}
           >
             <Box
@@ -162,13 +162,13 @@ export default function SubscribersTab({ onNotify }) {
                   ),
                 }}
               />
-              <Button type="submit" variant="outlined" size="small">
+              <Button type="submit" variant="outlined" size="small" sx={{ borderRadius: '6px' }}>
                 Search
               </Button>
             </Box>
 
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <IconButton onClick={fetchSubscribers} title="Refresh list" size="small" sx={{ border: '1px solid #e2e8f0' }}>
+              <IconButton onClick={fetchSubscribers} title="Refresh list" size="small" sx={{ border: '1px solid #e2e8f0', borderRadius: '6px' }}>
                 <RefreshRoundedIcon fontSize="small" />
               </IconButton>
 
@@ -178,6 +178,7 @@ export default function SubscribersTab({ onNotify }) {
                 startIcon={<DownloadRoundedIcon />}
                 onClick={handleDownloadCsv}
                 disabled={total === 0}
+                sx={{ borderRadius: '8px' }}
               >
                 Export CSV
               </Button>
@@ -185,7 +186,7 @@ export default function SubscribersTab({ onNotify }) {
           </Box>
 
           {/* Table */}
-          <TableContainer component={Paper} variant="outlined" sx={{ borderRadius: 2 }}>
+          <TableContainer component={Paper} variant="outlined" sx={{ borderRadius: '8px !important' }}>
             <Table size="medium">
               <TableHead sx={{ backgroundColor: '#f8fafc' }}>
                 <TableRow>
@@ -221,7 +222,7 @@ export default function SubscribersTab({ onNotify }) {
                         </Box>
                       </TableCell>
                       <TableCell>
-                        <Chip label={item.ip_address || '127.0.0.1'} size="small" variant="outlined" sx={{ fontSize: '0.75rem' }} />
+                        <Chip label={item.ip_address || '127.0.0.1'} size="small" variant="outlined" sx={{ fontSize: '0.75rem', borderRadius: '4px' }} />
                       </TableCell>
                       <TableCell sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
                         {item.created_at}
@@ -232,6 +233,7 @@ export default function SubscribersTab({ onNotify }) {
                           color="error"
                           onClick={() => setDeleteId(item.id)}
                           title="Delete subscriber"
+                          sx={{ borderRadius: '6px' }}
                         >
                           <DeleteOutlineRoundedIcon fontSize="small" />
                         </IconButton>
@@ -241,7 +243,7 @@ export default function SubscribersTab({ onNotify }) {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={5} sx={{ textAlign: 'center', py: 6 }}>
-                      <PeopleAltRoundedIcon sx={{ fontSize: 44, color: '#cbd5e1', mb: 1 }} />
+                      <PeopleAltRoundedIcon sx={{ fontSize: 40, color: '#cbd5e1', mb: 1 }} />
                       <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#334155' }}>
                         No subscribers found
                       </Typography>
@@ -272,7 +274,7 @@ export default function SubscribersTab({ onNotify }) {
       </Card>
 
       {/* Delete Confirmation Modal */}
-      <Dialog open={Boolean(deleteId)} onClose={() => setDeleteId(null)} maxWidth="xs" fullWidth>
+      <Dialog open={Boolean(deleteId)} onClose={() => setDeleteId(null)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: '10px !important' } }}>
         <DialogTitle sx={{ fontWeight: 700 }}>Confirm Deletion</DialogTitle>
         <DialogContent>
           <Typography variant="body2" color="text.secondary">
@@ -280,10 +282,10 @@ export default function SubscribersTab({ onNotify }) {
           </Typography>
         </DialogContent>
         <DialogActions sx={{ p: 2, pt: 0 }}>
-          <Button onClick={() => setDeleteId(null)} disabled={deleting}>
+          <Button onClick={() => setDeleteId(null)} disabled={deleting} sx={{ borderRadius: '6px' }}>
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirm} color="error" variant="contained" disabled={deleting}>
+          <Button onClick={handleDeleteConfirm} color="error" variant="contained" disabled={deleting} sx={{ borderRadius: '6px' }}>
             {deleting ? 'Deleting...' : 'Delete Permanently'}
           </Button>
         </DialogActions>

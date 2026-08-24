@@ -22,7 +22,7 @@ import TabletMacRoundedIcon from '@mui/icons-material/TabletMacRounded';
 import PhoneIphoneRoundedIcon from '@mui/icons-material/PhoneIphoneRounded';
 import LaunchRoundedIcon from '@mui/icons-material/LaunchRounded';
 
-export default function TemplatesTab({ settings, onChange, templates, previewUrlBase }) {
+export default function TemplatesTab({ settings, onChange, templates }) {
   const selectedTemplateId = Number(settings.template_id) || 1;
   const [previewTemplate, setPreviewTemplate] = useState(null);
   const [deviceMode, setDeviceMode] = useState('desktop'); // desktop | tablet | mobile
@@ -38,12 +38,12 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2.5 }}>
             <div>
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
                 Choose Pre-Built Template
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -54,11 +54,11 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
               label={`Active: Template #${String(selectedTemplateId).padStart(2, '0')}`}
               color="primary"
               variant="filled"
-              sx={{ fontWeight: 700, px: 1 }}
+              sx={{ fontWeight: 700, px: 1, borderRadius: '6px' }}
             />
           </Box>
 
-          <Grid container spacing={3}>
+          <Grid container spacing={2.5}>
             {templates.map((tpl) => {
               const isSelected = selectedTemplateId === tpl.id;
               return (
@@ -66,17 +66,17 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
                   <Paper
                     elevation={0}
                     sx={{
-                      borderRadius: 3,
+                      borderRadius: '10px !important',
                       overflow: 'hidden',
                       border: '2px solid',
                       borderColor: isSelected ? '#2563eb' : '#e2e8f0',
-                      transition: 'all 0.25s ease-in-out',
+                      transition: 'all 0.2s ease-in-out',
                       backgroundColor: '#ffffff',
                       display: 'flex',
                       flexDirection: 'column',
                       '&:hover': {
-                        transform: 'translateY(-4px)',
-                        boxShadow: '0 12px 24px rgba(0,0,0,0.08)',
+                        transform: 'translateY(-3px)',
+                        boxShadow: '0 8px 20px rgba(0,0,0,0.06)',
                         borderColor: isSelected ? '#2563eb' : '#94a3b8',
                       },
                     }}
@@ -88,6 +88,9 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
                         height: 180,
                         backgroundColor: '#0f172a',
                         overflow: 'hidden',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                       }}
                     >
                       <img
@@ -97,39 +100,40 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          transition: 'transform 0.3s ease',
+                          display: 'block',
                         }}
                         onError={(e) => {
-                          e.target.style.display = 'none';
+                          e.target.onerror = null;
+                          e.target.style.opacity = '0.4';
                         }}
                       />
                       {isSelected && (
                         <Box
                           sx={{
                             position: 'absolute',
-                            top: 10,
-                            right: 10,
+                            top: 8,
+                            right: 8,
                             backgroundColor: '#2563eb',
                             color: '#ffffff',
                             borderRadius: '50%',
                             display: 'flex',
-                            p: 0.5,
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                            p: 0.4,
+                            boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
                           }}
                         >
-                          <CheckCircleRoundedIcon sx={{ fontSize: 20 }} />
+                          <CheckCircleRoundedIcon sx={{ fontSize: 18 }} />
                         </Box>
                       )}
                     </Box>
 
                     {/* Card Footer Actions */}
-                    <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                    <Box sx={{ p: 1.8, display: 'flex', flexDirection: 'column', gap: 1.2 }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                           {tpl.name}
                         </Typography>
                         {isSelected && (
-                          <Chip label="Selected" size="small" color="primary" sx={{ height: 20, fontSize: '0.75rem' }} />
+                          <Chip label="Selected" size="small" color="primary" sx={{ height: 20, fontSize: '0.75rem', borderRadius: '4px' }} />
                         )}
                       </Box>
 
@@ -140,7 +144,7 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
                           variant={isSelected ? 'contained' : 'outlined'}
                           color="primary"
                           onClick={() => handleSelect(tpl.id)}
-                          sx={{ fontWeight: 600 }}
+                          sx={{ fontWeight: 600, borderRadius: '6px' }}
                         >
                           {isSelected ? 'Activated' : 'Activate'}
                         </Button>
@@ -148,7 +152,7 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
                           size="small"
                           color="default"
                           onClick={() => setPreviewTemplate(tpl)}
-                          sx={{ border: '1px solid #e2e8f0', borderRadius: 1.5 }}
+                          sx={{ border: '1px solid #e2e8f0', borderRadius: '6px' }}
                           title="Live Preview"
                         >
                           <VisibilityRoundedIcon fontSize="small" />
@@ -172,7 +176,7 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
         PaperProps={{
           sx: {
             height: '92vh',
-            borderRadius: 3,
+            borderRadius: '10px !important',
             display: 'flex',
             flexDirection: 'column',
           },
@@ -180,8 +184,8 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
       >
         <DialogTitle
           sx={{
-            p: 2,
-            px: 3,
+            p: 1.5,
+            px: 2.5,
             borderBottom: '1px solid #e2e8f0',
             display: 'flex',
             alignItems: 'center',
@@ -189,14 +193,15 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
               {previewTemplate ? previewTemplate.name : 'Template Preview'}
             </Typography>
-            <ButtonGroup size="small" variant="outlined" sx={{ ml: 2 }}>
+            <ButtonGroup size="small" variant="outlined" sx={{ ml: 1 }}>
               <Button
                 variant={deviceMode === 'desktop' ? 'contained' : 'outlined'}
                 onClick={() => setDeviceMode('desktop')}
                 startIcon={<DesktopWindowsRoundedIcon />}
+                sx={{ borderRadius: '6px' }}
               >
                 Desktop
               </Button>
@@ -211,6 +216,7 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
                 variant={deviceMode === 'mobile' ? 'contained' : 'outlined'}
                 onClick={() => setDeviceMode('mobile')}
                 startIcon={<PhoneIphoneRoundedIcon />}
+                sx={{ borderRadius: '6px' }}
               >
                 Mobile
               </Button>
@@ -227,6 +233,7 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
                   handleSelect(previewTemplate.id);
                   setPreviewTemplate(null);
                 }}
+                sx={{ borderRadius: '6px' }}
               >
                 Use This Template
               </Button>
@@ -238,11 +245,12 @@ export default function TemplatesTab({ settings, onChange, templates, previewUrl
                 href={previewTemplate.preview_url}
                 target="_blank"
                 title="Open in new tab"
+                sx={{ borderRadius: '6px' }}
               >
                 <LaunchRoundedIcon fontSize="small" />
               </IconButton>
             )}
-            <IconButton size="small" onClick={() => setPreviewTemplate(null)}>
+            <IconButton size="small" onClick={() => setPreviewTemplate(null)} sx={{ borderRadius: '6px' }}>
               <CloseRoundedIcon />
             </IconButton>
           </Box>

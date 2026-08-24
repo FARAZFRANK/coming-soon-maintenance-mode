@@ -5,7 +5,6 @@ import {
   CardContent,
   Typography,
   Grid,
-  Radio,
   FormControlLabel,
   FormGroup,
   Checkbox,
@@ -42,37 +41,37 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
       title: 'Disabled (Live Website)',
       subtitle: 'Your website is visible to all visitors normally.',
       color: '#10b981',
-      icon: <PublicRoundedIcon sx={{ fontSize: 36, color: '#10b981' }} />,
+      icon: <PublicRoundedIcon sx={{ fontSize: 32, color: '#10b981' }} />,
     },
     {
       id: 1,
       title: 'Coming Soon Mode',
       subtitle: 'Show a coming soon landing page to all non-logged-in visitors (HTTP 200).',
       color: '#2563eb',
-      icon: <RocketLaunchRoundedIcon sx={{ fontSize: 36, color: '#2563eb' }} />,
+      icon: <RocketLaunchRoundedIcon sx={{ fontSize: 32, color: '#2563eb' }} />,
     },
     {
       id: 2,
       title: 'Maintenance Mode',
       subtitle: 'Show maintenance screen with HTTP 503 SEO header and selective targeting.',
       color: '#f59e0b',
-      icon: <ConstructionRoundedIcon sx={{ fontSize: 36, color: '#f59e0b' }} />,
+      icon: <ConstructionRoundedIcon sx={{ fontSize: 32, color: '#f59e0b' }} />,
     },
   ];
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
       {/* Website Mode Cards */}
-      <Card elevation={0}>
-        <CardContent sx={{ p: 3 }}>
-          <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 700 }}>
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
+          <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 700, fontSize: '1.1rem' }}>
             Website Status Mode
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
             Choose how visitors view your website. Logged-in administrators will always see the live site.
           </Typography>
 
-          <Grid container spacing={2.5}>
+          <Grid container spacing={2}>
             {modes.map((m) => {
               const isSelected = websiteMode === m.id;
               return (
@@ -81,10 +80,10 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
                     elevation={0}
                     onClick={() => handleModeSelect(m.id)}
                     sx={{
-                      p: 2.5,
+                      p: 2.2,
                       height: '100%',
                       cursor: 'pointer',
-                      borderRadius: 3,
+                      borderRadius: '10px !important',
                       border: '2px solid',
                       borderColor: isSelected ? m.color : '#e2e8f0',
                       backgroundColor: isSelected ? `${m.color}08` : '#ffffff',
@@ -95,22 +94,22 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
                       '&:hover': {
                         borderColor: isSelected ? m.color : '#cbd5e1',
                         transform: 'translateY(-2px)',
-                        boxShadow: '0 8px 20px rgba(0,0,0,0.06)',
+                        boxShadow: '0 6px 16px rgba(0,0,0,0.05)',
                       },
                     }}
                   >
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.2 }}>
                       {m.icon}
                       {isSelected ? (
-                        <CheckCircleRoundedIcon sx={{ color: m.color, fontSize: 26 }} />
+                        <CheckCircleRoundedIcon sx={{ color: m.color, fontSize: 24 }} />
                       ) : (
-                        <Box sx={{ width: 22, height: 22, borderRadius: '50%', border: '2px solid #cbd5e1' }} />
+                        <Box sx={{ width: 20, height: 20, borderRadius: '50%', border: '2px solid #cbd5e1' }} />
                       )}
                     </Box>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#0f172a', mb: 0.5 }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#0f172a', mb: 0.5, fontSize: '1rem' }}>
                       {m.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.5 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.45, fontSize: '0.875rem' }}>
                       {m.subtitle}
                     </Typography>
                   </Paper>
@@ -123,19 +122,19 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
 
       {/* Selective Targeting (Only in Maintenance Mode) */}
       {websiteMode === 2 && (
-        <Card elevation={0}>
-          <CardContent sx={{ p: 3 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+        <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+          <CardContent sx={{ p: 2.5 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 1 }}>
               <ConstructionRoundedIcon color="warning" />
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
                 Selective Maintenance Targeting
               </Typography>
             </Box>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
               Leave all selections empty to apply maintenance mode <strong>site-wide</strong>, or pick specific pages/posts to restrict maintenance to only those URLs.
             </Typography>
 
-            <Alert severity="info" sx={{ mb: 3, borderRadius: 2 }}>
+            <Alert severity="info" sx={{ mb: 2.5, borderRadius: '8px' }}>
               Search engines (Google/Bing) will receive an <strong>HTTP 503 (Service Unavailable)</strong> response header to protect your search engine indexing and rankings.
             </Alert>
 
@@ -143,7 +142,7 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
             <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#334155' }}>
               Standard WordPress Sections:
             </Typography>
-            <FormGroup row sx={{ gap: 2, mb: 3 }}>
+            <FormGroup row sx={{ gap: 2, mb: 2.5 }}>
               {[
                 { id: 'front', label: 'Front Page' },
                 { id: 'home', label: 'Blog Index / Home' },
@@ -165,10 +164,10 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
               ))}
             </FormGroup>
 
-            <Divider sx={{ my: 2.5 }} />
+            <Divider sx={{ my: 2 }} />
 
             {/* Target Pages */}
-            <Grid container spacing={3}>
+            <Grid container spacing={2.5}>
               <Grid item xs={12} md={6}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#334155' }}>
                   Target Specific Pages:
@@ -202,6 +201,7 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
                         size="small"
                         color="primary"
                         variant="outlined"
+                        sx={{ borderRadius: '6px' }}
                         key={option.id}
                       />
                     ))
@@ -243,6 +243,7 @@ export default function GeneralSettingsTab({ settings, onChange, targetItems }) 
                         size="small"
                         color="primary"
                         variant="outlined"
+                        sx={{ borderRadius: '6px' }}
                         key={option.id}
                       />
                     ))

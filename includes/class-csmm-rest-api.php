@@ -347,10 +347,50 @@ class CSMM_REST_API {
 	 * Get list of 36 templates with metadata.
 	 */
 	public function get_templates() {
+		$image_map = array(
+			1  => '1.webp',
+			2  => '2.webp',
+			3  => '3.webp',
+			4  => '4.webp',
+			5  => '5.webp',
+			6  => '6.webp',
+			7  => '7.webp',
+			8  => '8.webp',
+			9  => '9.webp',
+			10 => '10.webp',
+			11 => '11.webp',
+			12 => '12.webp',
+			13 => '13.webp',
+			14 => '14.webp',
+			15 => '15.webp',
+			16 => '16.webp',
+			17 => '17-academy.webp',
+			18 => '18-beauty.webp',
+			19 => '19-Celebrate.webp',
+			20 => '20-construction.webp',
+			21 => '21-construction2.webp',
+			22 => '22-education.webp',
+			23 => '23-event.webp',
+			24 => '24-fashion.webp',
+			25 => '25-food.webp',
+			26 => '26-future.webp',
+			27 => '27-gaming.webp',
+			28 => '28-green.webp',
+			29 => '29-gym.webp',
+			30 => '30-health.webp',
+			31 => '31-kids.webp',
+			32 => '32-podcast.webp',
+			33 => '33-portfolio.webp',
+			34 => '34-realestate.webp',
+			35 => '35-shopping.webp',
+			36 => '36-travel.webp',
+		);
+
 		$templates = array();
 		for ( $i = 1; $i <= 36; $i++ ) {
-			$preview_thumb = CSMM_URL . "templates/images/temp-$i.webp";
-			// fallback check
+			$img_file      = isset( $image_map[ $i ] ) ? $image_map[ $i ] : "$i.webp";
+			$preview_thumb = CSMM_URL . "admin/assets/img/$img_file";
+
 			$templates[] = array(
 				'id'          => $i,
 				'name'        => sprintf( __( 'Template #%02d', 'coming-soon-maintenance-mode' ), $i ),
