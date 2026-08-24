@@ -21,14 +21,32 @@ class CSMM_Subscribers {
 	 */
 	public static function ensure_table_exists() {
 		global $wpdb;
-		$table = self::get_table_name();
+		static $checked = false;
+		if ( $checked ) {
+			return;
+		}
 
-		// Check if table exists
-		$exists = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) );
-		if ( $exists !== $table ) {
-			CSMM_Activator::create_tables();
+		$table           = self::get_table_name();
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS `{$table}` (
+				`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+				`email` VARCHAR(255) NOT NULL,
+				`ip_address` VARCHAR(45) NOT NULL DEFAULT '',
+				`referer` VARCHAR(255) NOT NULL DEFAULT '',
+				`created_at` DATETIME NOT NULL,
+				PRIMARY KEY (`id`),
+				UNIQUE KEY `email` (`email`)
+			) {$charset_collate};"
+		);
+
+		// Migrate legacy data if table was just created
+		if ( ! get_option( 'csmm_legacy_migrated' ) ) {
 			CSMM_Activator::migrate_legacy_data();
 		}
+
+		$checked = true;
 	}
 
 	/**
@@ -53,7 +71,7 @@ class CSMM_Subscribers {
 
 		// Check if exists
 		$exists = $wpdb->get_var(
-			$wpdb->prepare( "SELECT id FROM $table WHERE email = %s", $email )
+			$wpdb->prepare( "SELECT id FROM `{$table}` WHERE email = %s", $email )
 		);
 
 		if ( $exists ) {
@@ -98,7 +116,7 @@ class CSMM_Subscribers {
 	}
 
 	/**
-	 * Get paginated list of subscribers with fallback to wp_options.
+	 * Get paginated list of subscribers.
 	 *
 	 * @param int $page Page number.
 	 * @param int $per_page Per page items.
@@ -110,68 +128,43 @@ class CSMM_Subscribers {
 
 		self::ensure_table_exists();
 
-		$table  = self::get_table_name();
-		$offset = ( max( 1, intval( $page ) ) - 1 ) * intval( $per_page );
+		$table    = self::get_table_name();
+		$page     = max( 1, intval( $page ) );
+		$per_page = max( 1, min( 100, intval( $per_page ) ) );
+		$offset   = ( $page - 1 ) * $per_page;
 
-		$where  = 'WHERE 1=1';
+		$where  = '';
 		$params = array();
 
 		if ( ! empty( $search ) ) {
-			$where   .= ' AND email LIKE %s';
+			$where    = 'WHERE email LIKE %s';
 			$params[] = '%' . $wpdb->esc_like( sanitize_text_field( $search ) ) . '%';
 		}
 
-		$total = 0;
-		$items = array();
-
-		// Safe query with suppressed errors
-		$suppress = $wpdb->suppress_errors( true );
-
-		$total_sql = "SELECT COUNT(*) FROM $table $where";
-		$total_res = ! empty( $params ) ? $wpdb->get_var( $wpdb->prepare( $total_sql, $params ) ) : $wpdb->get_var( $total_sql );
-
-		if ( null !== $total_res ) {
-			$total = intval( $total_res );
-
-			$query_sql      = "SELECT id, email, ip_address, created_at FROM $table $where ORDER BY id DESC LIMIT %d OFFSET %d";
-			$query_params   = $params;
-			$query_params[] = intval( $per_page );
-			$query_params[] = intval( $offset );
-
-			$results = $wpdb->get_results( $wpdb->prepare( $query_sql, $query_params ), ARRAY_A );
-			if ( is_array( $results ) ) {
-				$items = $results;
-			}
+		// Count total
+		if ( ! empty( $params ) ) {
+			$total = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM `{$table}` {$where}", $params ) ) );
 		} else {
-			// Fallback to options if table not accessible
-			$legacy = get_option( 'cmss_subscriber_list', array() );
-			if ( is_array( $legacy ) ) {
-				$filtered = array();
-				$id_count = 1;
-				foreach ( $legacy as $row ) {
-					$em = is_array( $row ) ? ( isset( $row[0] ) ? $row[0] : '' ) : strval( $row );
-					$em = trim( $em );
-					if ( ! empty( $em ) && ( empty( $search ) || stripos( $em, $search ) !== false ) ) {
-						$filtered[] = array(
-							'id'         => $id_count++,
-							'email'      => $em,
-							'ip_address' => '127.0.0.1',
-							'created_at' => current_time( 'mysql' ),
-						);
-					}
-				}
-				$total = count( $filtered );
-				$items = array_slice( array_reverse( $filtered ), $offset, $per_page );
-			}
+			$total = intval( $wpdb->get_var( "SELECT COUNT(*) FROM `{$table}`" ) );
 		}
 
-		$wpdb->suppress_errors( $suppress );
+		// Items query
+		$query_params   = $params;
+		$query_params[] = $per_page;
+		$query_params[] = $offset;
+
+		$query = "SELECT id, email, ip_address, created_at FROM `{$table}` {$where} ORDER BY id DESC LIMIT %d OFFSET %d";
+		$items = $wpdb->get_results( $wpdb->prepare( $query, $query_params ), ARRAY_A );
+
+		if ( ! is_array( $items ) ) {
+			$items = array();
+		}
 
 		return array(
 			'items'        => $items,
 			'total'        => $total,
-			'total_pages'  => ceil( $total / max( 1, intval( $per_page ) ) ),
-			'current_page' => intval( $page ),
+			'total_pages'  => intval( ceil( $total / $per_page ) ),
+			'current_page' => $page,
 		);
 	}
 
@@ -188,27 +181,7 @@ class CSMM_Subscribers {
 		global $wpdb;
 		$table = self::get_table_name();
 
-		$subscribers = $wpdb->get_results( "SELECT id, email, ip_address, created_at FROM $table ORDER BY id DESC", ARRAY_A );
-
-		// Fallback if empty table
-		if ( empty( $subscribers ) ) {
-			$legacy = get_option( 'cmss_subscriber_list', array() );
-			if ( is_array( $legacy ) ) {
-				$subscribers = array();
-				$c = 1;
-				foreach ( $legacy as $row ) {
-					$em = is_array( $row ) ? ( isset( $row[0] ) ? $row[0] : '' ) : strval( $row );
-					if ( ! empty( $em ) ) {
-						$subscribers[] = array(
-							'id'         => $c++,
-							'email'      => $em,
-							'ip_address' => '127.0.0.1',
-							'created_at' => current_time( 'mysql' ),
-						);
-					}
-				}
-			}
-		}
+		$subscribers = $wpdb->get_results( "SELECT id, email, ip_address, created_at FROM `{$table}` ORDER BY id DESC", ARRAY_A );
 
 		$filename = 'csmm-subscribers-' . gmdate( 'Y-m-d-His' ) . '.csv';
 

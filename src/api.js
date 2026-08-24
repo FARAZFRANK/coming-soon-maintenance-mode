@@ -40,7 +40,7 @@ const buildUrl = (endpoint, params = {}) => {
 };
 
 /**
- * Robust JSON fetch wrapper that handles unexpected HTML prefixes.
+ * Robust JSON fetch wrapper.
  */
 const fetchJson = async (url, options = {}) => {
   const res = await fetch(url, {
@@ -79,10 +79,8 @@ const fetchJson = async (url, options = {}) => {
     return data;
   }
 
-  if (!res.ok) {
-    throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-  }
-  throw new Error('Server returned invalid response.');
+  const cleanSnippet = text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 150);
+  throw new Error(`Server returned (${res.status}): ${cleanSnippet || 'Empty response'}`);
 };
 
 export const api = {
