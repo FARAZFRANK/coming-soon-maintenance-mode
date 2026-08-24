@@ -10,10 +10,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 class CSMM_Integrations {
 
 	/**
-	 * Init hooks (e.g. SMTP configuration).
+	 * Init hooks (e.g. SMTP configuration, mode transition).
 	 */
 	public static function init() {
 		add_action( 'phpmailer_init', array( __CLASS__, 'setup_smtp' ) );
+		add_action( 'update_option_csmm_settings', array( __CLASS__, 'on_mode_change' ), 10, 3 );
+	}
+
+	/**
+	 * Triggered when plugin website_mode changes (e.g. from Coming Soon to Live).
+	 */
+	public static function on_mode_change( $old_value, $value, $option ) {
+		$old_mode = isset( $old_value['website_mode'] ) ? intval( $old_value['website_mode'] ) : 3;
+		$new_mode = isset( $value['website_mode'] ) ? intval( $value['website_mode'] ) : 3;
+
+		if ( 3 !== $old_mode && 3 === $new_mode ) {
+			if ( ! get_transient( 'csmm_launch_broadcast_sent' ) ) {
+				set_transient( 'csmm_launch_broadcast_sent', '1', 300 );
+				self::broadcast_site_launch_email();
+			}
+		}
 	}
 
 	/**
@@ -467,6 +483,70 @@ class CSMM_Integrations {
 		$body    = self::parse_email_placeholders( $body_template, $data );
 
 		self::send_html_mail( $subscriber_email, $subject, $body );
+	}
+
+	/**
+	 * Send site live announcement notification to a single subscriber.
+	 */
+	public static function send_launch_notification( $subscriber_email, $integrations = array() ) {
+		$subject_template = ! empty( $integrations['launch_email_subject'] )
+			? $integrations['launch_email_subject']
+			: __( 'We are officially LIVE! 🚀 Welcome to {site_name}', 'coming-soon-maintenance-mode' );
+
+		$body_template = ! empty( $integrations['launch_email_body'] )
+			? $integrations['launch_email_body']
+			: "<h2>We Are Officially Live! 🎉</h2>\n<p>Hi there,</p>\n<p>The wait is finally over! We have officially launched our brand new website, and you are the first to know.</p>\n<p>Discover our latest features, products, and exclusive offers right now.</p>\n<p style=\"text-align: center; margin: 30px 0;\"><a href=\"{site_url}\" style=\"background-color: #2563eb; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; display: inline-block;\">Start Exploring Now 🚀</a></p>\n<p>Thank you for being part of our early journey!</p>\n<p>Best regards,<br>The {site_name} Team</p>";
+
+		$data = array(
+			'subscriber_email' => $subscriber_email,
+		);
+
+		$subject = self::parse_email_placeholders( $subject_template, $data );
+		$body    = self::parse_email_placeholders( $body_template, $data );
+
+		return self::send_html_mail( $subscriber_email, $subject, $body );
+	}
+
+	/**
+	 * Broadcast site live announcement email to ALL registered subscribers.
+	 *
+	 * @return array Status and number of dispatched emails.
+	 */
+	public static function broadcast_site_launch_email() {
+		$integrations = get_option( 'csmm_integrations', array() );
+
+		if ( empty( $integrations['launch_email_enabled'] ) ) {
+			return array(
+				'success' => false,
+				'message' => __( 'Site Live Announcement Email is currently disabled in settings.', 'coming-soon-maintenance-mode' ),
+				'count'   => 0,
+			);
+		}
+
+		$emails = CSMM_Subscribers::get_all_subscriber_emails();
+		if ( empty( $emails ) ) {
+			return array(
+				'success' => true,
+				'message' => __( 'No subscribers found to notify.', 'coming-soon-maintenance-mode' ),
+				'count'   => 0,
+			);
+		}
+
+		$sent_count = 0;
+		foreach ( $emails as $email ) {
+			if ( is_email( $email ) ) {
+				$sent = self::send_launch_notification( $email, $integrations );
+				if ( $sent ) {
+					$sent_count++;
+				}
+			}
+		}
+
+		return array(
+			'success' => true,
+			'message' => sprintf( __( 'Site Live announcement successfully sent to %d subscribers!', 'coming-soon-maintenance-mode' ), $sent_count ),
+			'count'   => $sent_count,
+		);
 	}
 
 	/**

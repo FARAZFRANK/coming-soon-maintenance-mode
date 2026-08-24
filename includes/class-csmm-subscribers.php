@@ -172,6 +172,19 @@ class CSMM_Subscribers {
 	}
 
 	/**
+	 * Get all subscriber emails for broadcast announcements.
+	 *
+	 * @return array List of valid emails.
+	 */
+	public static function get_all_subscriber_emails() {
+		global $wpdb;
+		self::ensure_table_exists();
+		$table  = self::get_table_name();
+		$emails = $wpdb->get_col( "SELECT email FROM `{$table}` ORDER BY id ASC" );
+		return is_array( $emails ) ? $emails : array();
+	}
+
+	/**
 	 * Stream secure CSV export directly to browser.
 	 */
 	public static function export_csv() {

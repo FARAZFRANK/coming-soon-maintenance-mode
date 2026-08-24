@@ -260,9 +260,9 @@ export default function DocumentationTab() {
                   <li>In <strong>Templates (36)</strong> tab, pick your favorite responsive template (e.g. Modern Countdown or Video Background).</li>
                   <li>In <strong>Content, Branding & SEO</strong>, enable the Countdown timer, set your target launch date & time, and customize your logo and headlines.</li>
                   <li>In <strong>Newsletter & Integrations</strong>, enable Mailchimp, Brevo, or MailerLite and enter your API keys. Click <strong>"Test Connection"</strong> to verify authentication.</li>
-                  <li>Customize the <strong>Subscriber Welcome Email</strong> using dynamic placeholders (e.g. <code>&#123;site_name&#125;</code> and <code>&#123;launch_date&#125;</code>).</li>
-                  <li>Use the <strong>"Send Test Welcome Email"</strong> button to verify how the email looks in your inbox.</li>
-                  <li>When the countdown finishes, the plugin automatically switches the site mode to <strong>Website Live (Disabled)</strong> with zero manual intervention!</li>
+                  <li>Customize the <strong>Subscriber Welcome Email</strong> and <strong>Website Live Announcement Email</strong> using dynamic placeholders (e.g. <code>&#123;site_name&#125;</code> and <code>&#123;site_url&#125;</code>).</li>
+                  <li>Use the <strong>"Live Preview Template"</strong> and <strong>"Send Test Email"</strong> buttons to verify how your emails look across desktop and mobile inboxes.</li>
+                  <li>When the countdown finishes (or when you switch mode to Live), the plugin automatically switches to <strong>Website Live (Disabled)</strong> AND broadcasts the <strong>Site Live Announcement Email</strong> to all your subscribers!</li>
                 </Typography>
               </AccordionDetails>
             </Accordion>

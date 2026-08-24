@@ -141,6 +141,17 @@ class CSMM_REST_API {
 				'permission_callback' => array( $this, 'admin_permissions_check' ),
 			)
 		);
+
+		// Broadcast Site Launch Announcement Email
+		register_rest_route(
+			self::NAMESPACE,
+			'/integrations/broadcast-launch-email',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'broadcast_launch_email' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
 	}
 
 	/**
@@ -273,6 +284,9 @@ class CSMM_REST_API {
 				'welcome_email_enabled'  => ! empty( $integrations['welcome_email_enabled'] ),
 				'welcome_email_subject'  => isset( $integrations['welcome_email_subject'] ) ? $integrations['welcome_email_subject'] : 'Thank you for subscribing to {site_name}! 🚀',
 				'welcome_email_body'     => isset( $integrations['welcome_email_body'] ) ? $integrations['welcome_email_body'] : "<h2>Welcome to {site_name}!</h2>\n<p>Hi there,</p>\n<p>Thank you for subscribing to our newsletter! We are currently working hard behind the scenes to launch our brand new website.</p>\n<p>You'll be the very first to know when we go live on <strong>{launch_date}</strong>!</p>\n<p>Best regards,<br>The {site_name} Team</p>",
+				'launch_email_enabled'   => ! empty( $integrations['launch_email_enabled'] ),
+				'launch_email_subject'   => isset( $integrations['launch_email_subject'] ) ? $integrations['launch_email_subject'] : 'We are officially LIVE! 🚀 Welcome to {site_name}',
+				'launch_email_body'      => isset( $integrations['launch_email_body'] ) ? $integrations['launch_email_body'] : "<h2>We Are Officially Live! 🎉</h2>\n<p>Hi there,</p>\n<p>The wait is finally over! We have officially launched our brand new website, and you are the first to know.</p>\n<p>Discover our latest features, products, and exclusive offers right now.</p>\n<p style=\"text-align: center; margin: 30px 0;\"><a href=\"{site_url}\" style=\"background-color: #2563eb; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; display: inline-block;\">Start Exploring Now 🚀</a></p>\n<p>Thank you for being part of our early journey!</p>\n<p>Best regards,<br>The {site_name} Team</p>",
 				'email_header_title'     => isset( $integrations['email_header_title'] ) ? $integrations['email_header_title'] : '{site_name}',
 				'email_header_bg'        => isset( $integrations['email_header_bg'] ) ? $integrations['email_header_bg'] : '#2563eb',
 				'email_header_color'     => isset( $integrations['email_header_color'] ) ? $integrations['email_header_color'] : '#ffffff',
@@ -446,6 +460,9 @@ class CSMM_REST_API {
 				'welcome_email_enabled'  => ! empty( $int_input['welcome_email_enabled'] ),
 				'welcome_email_subject'  => isset( $int_input['welcome_email_subject'] ) ? sanitize_text_field( $int_input['welcome_email_subject'] ) : '',
 				'welcome_email_body'     => isset( $int_input['welcome_email_body'] ) ? wp_kses_post( $int_input['welcome_email_body'] ) : '',
+				'launch_email_enabled'   => ! empty( $int_input['launch_email_enabled'] ),
+				'launch_email_subject'   => isset( $int_input['launch_email_subject'] ) ? sanitize_text_field( $int_input['launch_email_subject'] ) : '',
+				'launch_email_body'      => isset( $int_input['launch_email_body'] ) ? wp_kses_post( $int_input['launch_email_body'] ) : '',
 				'email_header_title'     => isset( $int_input['email_header_title'] ) ? sanitize_text_field( $int_input['email_header_title'] ) : '',
 				'email_header_bg'        => isset( $int_input['email_header_bg'] ) ? sanitize_hex_color( $int_input['email_header_bg'] ) : '#2563eb',
 				'email_header_color'     => isset( $int_input['email_header_color'] ) ? sanitize_hex_color( $int_input['email_header_color'] ) : '#ffffff',
@@ -465,6 +482,14 @@ class CSMM_REST_API {
 				'message' => __( 'Settings updated successfully!', 'coming-soon-maintenance-mode' ),
 			)
 		);
+	}
+
+	/**
+	 * Broadcast Site Live announcement to all subscribers.
+	 */
+	public function broadcast_launch_email() {
+		$result = CSMM_Integrations::broadcast_site_launch_email();
+		return rest_ensure_response( $result );
 	}
 
 	/**

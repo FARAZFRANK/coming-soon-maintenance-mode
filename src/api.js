@@ -208,4 +208,16 @@ export const api = {
       body: JSON.stringify({ type, recipient, subject, body }),
     });
   },
+
+  async broadcastLaunchEmail() {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('integrations/broadcast-launch-email'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      body: JSON.stringify({}),
+    });
+  },
 };

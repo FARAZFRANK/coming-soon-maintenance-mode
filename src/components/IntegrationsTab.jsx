@@ -32,6 +32,7 @@ import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
 import WebhookRoundedIcon from '@mui/icons-material/WebhookRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import ForwardToInboxRoundedIcon from '@mui/icons-material/ForwardToInboxRounded';
+import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
 import ContactMailRoundedIcon from '@mui/icons-material/ContactMailRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
@@ -40,6 +41,7 @@ import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import PhoneIphoneRoundedIcon from '@mui/icons-material/PhoneIphoneRounded';
 import LaptopRoundedIcon from '@mui/icons-material/LaptopRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import CampaignRoundedIcon from '@mui/icons-material/CampaignRounded';
 import { api } from '../api';
 
 export default function IntegrationsTab({ data, onChange, onNotify }) {
@@ -70,6 +72,9 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
     welcome_email_enabled: true,
     welcome_email_subject: 'Thank you for subscribing to {site_name}! 🚀',
     welcome_email_body: "<h2>Welcome to {site_name}!</h2>\n<p>Hi there,</p>\n<p>Thank you for subscribing to our newsletter! We are currently working hard behind the scenes to launch our brand new website.</p>\n<p>You'll be the very first to know when we go live on <strong>{launch_date}</strong>!</p>\n<p>Best regards,<br>The {site_name} Team</p>",
+    launch_email_enabled: true,
+    launch_email_subject: 'We are officially LIVE! 🚀 Welcome to {site_name}',
+    launch_email_body: "<h2>We Are Officially Live! 🎉</h2>\n<p>Hi there,</p>\n<p>The wait is finally over! We have officially launched our brand new website, and you are the first to know.</p>\n<p>Discover our latest features, products, and exclusive offers right now.</p>\n<p style=\"text-align: center; margin: 30px 0;\"><a href=\"{site_url}\" style=\"background-color: #2563eb; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; display: inline-block;\">Start Exploring Now 🚀</a></p>\n<p>Thank you for being part of our early journey!</p>\n<p>Best regards,<br>The {site_name} Team</p>",
     email_header_title: '{site_name}',
     email_header_bg: '#2563eb',
     email_header_color: '#ffffff',
@@ -81,7 +86,7 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
     email_footer_color: '#64748b',
   };
 
-  const [emailSubTab, setEmailSubTab] = useState(0); // 0: Admin Alert, 1: Welcome Email, 2: Template Styling & Branding
+  const [emailSubTab, setEmailSubTab] = useState(0); // 0: Admin Alert, 1: Welcome Email, 2: Site Live Email, 3: Template Styling & Branding
 
   // Testing states
   const [testingMailchimp, setTestingMailchimp] = useState(false);
@@ -102,9 +107,13 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
   const [testEmailType, setTestEmailType] = useState('welcome');
   const [sendingTestEmail, setSendingTestEmail] = useState(false);
 
+  // Broadcast Launch Dialog State
+  const [broadcastDialogOpen, setBroadcastDialogOpen] = useState(false);
+  const [broadcasting, setBroadcasting] = useState(false);
+
   // Live Email Preview Modal State
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
-  const [previewType, setPreviewType] = useState('welcome'); // 'admin' or 'welcome'
+  const [previewType, setPreviewType] = useState('welcome'); // 'admin', 'welcome', 'launch'
   const [previewDevice, setPreviewDevice] = useState('desktop'); // 'desktop' or 'mobile'
 
   const updateIntegration = (field, val) => {
@@ -209,8 +218,16 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
     }
     setSendingTestEmail(true);
     try {
-      const subject = testEmailType === 'admin' ? integrations.admin_email_subject : integrations.welcome_email_subject;
-      const body = testEmailType === 'admin' ? integrations.admin_email_body : integrations.welcome_email_body;
+      let subject = integrations.welcome_email_subject;
+      let body = integrations.welcome_email_body;
+
+      if (testEmailType === 'admin') {
+        subject = integrations.admin_email_subject;
+        body = integrations.admin_email_body;
+      } else if (testEmailType === 'launch') {
+        subject = integrations.launch_email_subject;
+        body = integrations.launch_email_body;
+      }
 
       const res = await api.sendTestEmail(testEmailType, testEmailRecipient, subject, body);
       if (onNotify) onNotify(res.message || 'Test email dispatched successfully!', 'success');
@@ -219,6 +236,20 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
       if (onNotify) onNotify('Failed to send test email: ' + err.message, 'error');
     } finally {
       setSendingTestEmail(false);
+    }
+  };
+
+  // Broadcast Launch Announcement to All Subscribers
+  const handleBroadcastLaunchEmail = async () => {
+    setBroadcasting(true);
+    try {
+      const res = await api.broadcastLaunchEmail();
+      if (onNotify) onNotify(res.message || 'Site Live announcement broadcast complete!', res.success ? 'success' : 'error');
+      setBroadcastDialogOpen(false);
+    } catch (err) {
+      if (onNotify) onNotify('Broadcast failed: ' + err.message, 'error');
+    } finally {
+      setBroadcasting(false);
     }
   };
 
@@ -255,11 +286,21 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
     const footerBg = integrations.email_footer_bg || '#f1f5f9';
     const footerColor = integrations.email_footer_color || '#64748b';
 
-    let bodyTemplate = type === 'admin' ? integrations.admin_email_body : integrations.welcome_email_body;
+    let bodyTemplate = integrations.welcome_email_body;
+    if (type === 'admin') {
+      bodyTemplate = integrations.admin_email_body;
+    } else if (type === 'launch') {
+      bodyTemplate = integrations.launch_email_body;
+    }
+
     if (!bodyTemplate) {
-      bodyTemplate = type === 'admin'
-        ? "<h2>New Subscriber Lead!</h2>\n<p>A new visitor has subscribed to your Coming Soon newsletter:</p>\n<p><strong>Email:</strong> {subscriber_email}<br><strong>IP Address:</strong> {ip_address}<br><strong>Date:</strong> {date}</p>"
-        : "<h2>Welcome to {site_name}!</h2>\n<p>Hi there,</p>\n<p>Thank you for subscribing to our newsletter! We are currently working hard behind the scenes to launch our brand new website.</p>\n<p>You'll be the very first to know when we go live on <strong>{launch_date}</strong>!</p>\n<p>Best regards,<br>The {site_name} Team</p>";
+      if (type === 'admin') {
+        bodyTemplate = "<h2>New Subscriber Lead!</h2>\n<p>A new visitor has subscribed to your Coming Soon newsletter:</p>\n<p><strong>Email:</strong> {subscriber_email}<br><strong>IP Address:</strong> {ip_address}<br><strong>Date:</strong> {date}</p>";
+      } else if (type === 'launch') {
+        bodyTemplate = "<h2>We Are Officially Live! 🎉</h2>\n<p>Hi there,</p>\n<p>The wait is finally over! We have officially launched our brand new website, and you are the first to know.</p>\n<p>Discover our latest features, products, and exclusive offers right now.</p>\n<p style=\"text-align: center; margin: 30px 0;\"><a href=\"{site_url}\" style=\"background-color: #2563eb; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; display: inline-block;\">Start Exploring Now 🚀</a></p>\n<p>Thank you for being part of our early journey!</p>\n<p>Best regards,<br>The {site_name} Team</p>";
+      } else {
+        bodyTemplate = "<h2>Welcome to {site_name}!</h2>\n<p>Hi there,</p>\n<p>Thank you for subscribing to our newsletter! We are currently working hard behind the scenes to launch our brand new website.</p>\n<p>You'll be the very first to know when we go live on <strong>{launch_date}</strong>!</p>\n<p>Best regards,<br>The {site_name} Team</p>";
+      }
     }
 
     const replacedBody = bodyTemplate
@@ -305,6 +346,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 </div>
 </body>
 </html>`;
+  };
+
+  const getPreviewTypeForActiveTab = () => {
+    if (emailSubTab === 0) return 'admin';
+    if (emailSubTab === 2) return 'launch';
+    return 'welcome';
   };
 
   return (
@@ -652,7 +699,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
         </CardContent>
       </Card>
 
-      {/* 5. Custom SMTP Server Configuration (FIXED DOUBLE CARET) */}
+      {/* 5. Custom SMTP Server Configuration */}
       <Card sx={{ borderRadius: '10px' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
@@ -713,7 +760,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
               />
             </Grid>
             <Grid item xs={12} md={3}>
-              {/* FIXED DOUBLE CARET BY USING MUI MenuItem */}
               <TextField
                 fullWidth
                 select
@@ -785,7 +831,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                   Automated Email Templates, Branding & Live Preview
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Configure dynamic lead alerts, welcome emails, custom header/footer branding, colors, and live test previews.
+                  Configure dynamic lead alerts, welcome emails, site launch announcements, custom header/footer branding, colors, and live test previews.
                 </Typography>
               </Box>
             </Box>
@@ -795,7 +841,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
               color="primary"
               startIcon={<VisibilityRoundedIcon />}
               onClick={() => {
-                setPreviewType(emailSubTab === 0 ? 'admin' : 'welcome');
+                setPreviewType(getPreviewTypeForActiveTab());
                 setPreviewModalOpen(true);
               }}
               sx={{ borderRadius: '8px', fontWeight: 700 }}
@@ -817,6 +863,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
           >
             <Tab icon={<ForwardToInboxRoundedIcon sx={{ mr: 1 }} />} iconPosition="start" label="Admin Lead Alert" />
             <Tab icon={<EmailRoundedIcon sx={{ mr: 1 }} />} iconPosition="start" label="Subscriber Welcome Email" />
+            <Tab icon={<RocketLaunchRoundedIcon sx={{ mr: 1, color: '#2563eb' }} />} iconPosition="start" label="🚀 Site Live Announcement Email" />
             <Tab icon={<PaletteRoundedIcon sx={{ mr: 1 }} />} iconPosition="start" label="🎨 Template Header, Footer & Colors" />
           </Tabs>
 
@@ -972,8 +1019,100 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
             </Box>
           )}
 
-          {/* TAB 2: Template Header, Footer & Colors Customizer */}
+          {/* TAB 2: Site Live Announcement Email */}
           {emailSubTab === 2 && (
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Box>
+                  <Typography variant="subtitle1" fontWeight={700}>
+                    Website Live Announcement Email
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    Automatically sent to all subscribers when Coming Soon mode is disabled (or broadcast manually).
+                  </Typography>
+                </Box>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={Boolean(integrations.launch_email_enabled)}
+                      onChange={(e) => updateIntegration('launch_email_enabled', e.target.checked)}
+                      color="primary"
+                    />
+                  }
+                  label={integrations.launch_email_enabled ? 'Enabled' : 'Disabled'}
+                />
+              </Box>
+
+              <Alert severity="info" sx={{ borderRadius: '8px' }}>
+                When your website goes Live (either automatically when countdown hits zero, or when you switch Website Mode to "Disabled / Website Live"), this notification invites all your subscribers to start browsing your live site!
+              </Alert>
+
+              <Grid container spacing={2.5}>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Email Subject"
+                    value={integrations.launch_email_subject || ''}
+                    onChange={(e) => updateIntegration('launch_email_subject', e.target.value)}
+                    disabled={!integrations.launch_email_enabled}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Box sx={{ mb: 1, display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                    <Typography variant="caption" fontWeight={700} color="text.secondary">
+                      Available Dynamic Tags (Click to insert):
+                    </Typography>
+                    {placeholders.map((p) => (
+                      <Chip
+                        key={p.tag}
+                        label={p.tag}
+                        size="small"
+                        clickable
+                        onClick={() => insertPlaceholder(p.tag, 'launch_email_body')}
+                        sx={{ borderRadius: '6px', fontSize: '0.75rem', fontFamily: 'monospace' }}
+                      />
+                    ))}
+                  </Box>
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={8}
+                    label="Email HTML Body"
+                    value={integrations.launch_email_body || ''}
+                    onChange={(e) => updateIntegration('launch_email_body', e.target.value)}
+                    disabled={!integrations.launch_email_enabled}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      startIcon={<SendRoundedIcon />}
+                      onClick={() => openTestEmailModal('launch')}
+                      disabled={!integrations.launch_email_enabled}
+                      sx={{ borderRadius: '8px' }}
+                    >
+                      Send Test Launch Email
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      startIcon={<CampaignRoundedIcon />}
+                      onClick={() => setBroadcastDialogOpen(true)}
+                      disabled={!integrations.launch_email_enabled}
+                      sx={{ borderRadius: '8px', fontWeight: 700 }}
+                    >
+                      Broadcast to All Subscribers Now
+                    </Button>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          )}
+
+          {/* TAB 3: Template Header, Footer & Colors Customizer */}
+          {emailSubTab === 3 && (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
               <Alert severity="info" sx={{ borderRadius: '8px' }}>
                 Customize the colors, header branding, and footer copyright to perfectly match your website's look & feel.
@@ -1114,7 +1253,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                     color="primary"
                     startIcon={<VisibilityRoundedIcon />}
                     onClick={() => {
-                      setPreviewType('welcome');
+                      setPreviewType('launch');
                       setPreviewModalOpen(true);
                     }}
                     sx={{ borderRadius: '8px', fontWeight: 700 }}
@@ -1168,6 +1307,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
               sx={{ minHeight: 34, '& .MuiTab-root': { minHeight: 34, py: 0.5, px: 1.5, fontSize: '0.82rem', textTransform: 'none', fontWeight: 700 } }}
             >
               <Tab value="welcome" label="Welcome Email" />
+              <Tab value="launch" label="Site Live Email 🚀" />
               <Tab value="admin" label="Admin Alert" />
             </Tabs>
 
@@ -1225,7 +1365,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 
         <DialogActions sx={{ p: 2, backgroundColor: '#ffffff', borderTop: '1px solid #e2e8f0', justifyContent: 'space-between' }}>
           <Typography variant="caption" color="text.secondary">
-            Simulating live dynamic tags: {previewType === 'welcome' ? 'Subscriber Welcome Email' : 'Admin Lead Alert'}.
+            Simulating live dynamic tags for: <strong>{previewType === 'launch' ? 'Site Live Announcement' : previewType === 'welcome' ? 'Subscriber Welcome Email' : 'Admin Lead Alert'}</strong>.
           </Typography>
           <Box sx={{ display: 'flex', gap: 1.5 }}>
             <Button
@@ -1256,7 +1396,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
         PaperProps={{ sx: { borderRadius: '10px' } }}
       >
         <DialogTitle sx={{ fontWeight: 700 }}>
-          {testEmailType === 'admin' ? 'Send Test Admin Alert Email' : 'Send Test Welcome Email'}
+          {testEmailType === 'admin' ? 'Send Test Admin Alert Email' : testEmailType === 'launch' ? 'Send Test Site Live Announcement Email' : 'Send Test Welcome Email'}
         </DialogTitle>
         <DialogContent sx={{ pt: 2 }}>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -1284,6 +1424,43 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
             sx={{ borderRadius: '8px' }}
           >
             {sendingTestEmail ? 'Sending...' : 'Send Test Now'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* 9. BROADCAST LAUNCH ANNOUNCEMENT CONFIRMATION DIALOG */}
+      <Dialog
+        open={broadcastDialogOpen}
+        onClose={() => setBroadcastDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{ sx: { borderRadius: '12px' } }}
+      >
+        <DialogTitle sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <CampaignRoundedIcon sx={{ color: '#7c3aed' }} />
+          Broadcast Site Live Announcement
+        </DialogTitle>
+        <DialogContent sx={{ pt: 2 }}>
+          <Alert severity="warning" sx={{ mb: 2, borderRadius: '8px' }}>
+            This action will immediately send the "Website Live" announcement email to <strong>ALL registered subscribers</strong> in your database.
+          </Alert>
+          <Typography variant="body2" color="text.secondary">
+            Are you sure you want to broadcast this email now? Make sure your email template content and subject are saved and finalized before broadcasting.
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ p: 2.5 }}>
+          <Button onClick={() => setBroadcastDialogOpen(false)} sx={{ borderRadius: '8px' }}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleBroadcastLaunchEmail}
+            disabled={broadcasting}
+            startIcon={broadcasting ? <CircularProgress size={18} color="inherit" /> : <RocketLaunchRoundedIcon />}
+            sx={{ borderRadius: '8px', fontWeight: 700 }}
+          >
+            {broadcasting ? 'Broadcasting...' : 'Yes, Send Broadcast Now 🚀'}
           </Button>
         </DialogActions>
       </Dialog>
