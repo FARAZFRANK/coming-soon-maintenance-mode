@@ -239,7 +239,7 @@ export default function SocialMediaTab({ settings, onChange }) {
                     '&:hover': { borderColor: '#2563eb' },
                   }}
                 >
-                  <Grid container spacing={2} alignItems="center">
+                  <Grid container spacing={2} alignItems="flex-start">
                     <Grid item xs={12} md={3.5}>
                       <TextField
                         fullWidth
@@ -300,12 +300,14 @@ export default function SocialMediaTab({ settings, onChange }) {
                       />
                     </Grid>
 
-                    <Grid item xs={12} md={0.8} sx={{ textAlign: 'right' }}>
+                    <Grid item xs={12} md={0.8} sx={{ display: 'flex', justifyContent: 'flex-end', pt: { xs: 0, md: '2px' } }}>
                       <Tooltip title="Delete this channel">
                         <IconButton
                           color="error"
                           onClick={() => handleRemoveCustomChannel(channel.id)}
                           sx={{
+                            width: 36,
+                            height: 36,
                             backgroundColor: '#fee2e2',
                             '&:hover': { backgroundColor: '#fca5a5' },
                           }}
