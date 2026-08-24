@@ -86,6 +86,39 @@ class CSMM_REST_API {
 				'permission_callback' => array( $this, 'admin_permissions_check' ),
 			)
 		);
+
+		// Test Mailchimp Connection
+		register_rest_route(
+			self::NAMESPACE,
+			'/integrations/test-mailchimp',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'test_mailchimp' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
+
+		// Test Webhook Dispatch
+		register_rest_route(
+			self::NAMESPACE,
+			'/integrations/test-webhook',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'test_webhook' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
+
+		// Send Test Email
+		register_rest_route(
+			self::NAMESPACE,
+			'/integrations/send-test-email',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'send_test_email' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
 	}
 
 	/**
@@ -103,6 +136,8 @@ class CSMM_REST_API {
 		$templates    = get_option( 'csmm_templates', array() );
 		$content      = get_option( 'csmm_content', array() );
 		$social_media = get_option( 'csmm_social_media', array() );
+		$seo          = get_option( 'csmm_seo', array() );
+		$integrations = get_option( 'csmm_integrations', array() );
 
 		// Defaults
 		$website_mode = isset( $settings['website_mode'] ) ? intval( $settings['website_mode'] ) : 3;
@@ -180,6 +215,27 @@ class CSMM_REST_API {
 				'whatsapp'  => isset( $social_media['csmm_sm_whatsapp'] ) ? $social_media['csmm_sm_whatsapp'] : '',
 				'tiktok'    => isset( $social_media['csmm_sm_tiktok'] ) ? $social_media['csmm_sm_tiktok'] : '',
 				'qq'        => isset( $social_media['csmm_sm_qq'] ) ? $social_media['csmm_sm_qq'] : '',
+			),
+			'seo'                  => array(
+				'meta_title'          => isset( $seo['meta_title'] ) ? $seo['meta_title'] : '',
+				'meta_description'    => isset( $seo['meta_description'] ) ? $seo['meta_description'] : '',
+				'robots_meta'         => isset( $seo['robots_meta'] ) ? $seo['robots_meta'] : 'auto',
+				'google_analytics_id' => isset( $seo['google_analytics_id'] ) ? $seo['google_analytics_id'] : '',
+				'og_image_id'         => isset( $seo['og_image_id'] ) ? $seo['og_image_id'] : '',
+			),
+			'integrations'         => array(
+				'mailchimp_enabled'      => ! empty( $integrations['mailchimp_enabled'] ),
+				'mailchimp_api_key'      => isset( $integrations['mailchimp_api_key'] ) ? $integrations['mailchimp_api_key'] : '',
+				'mailchimp_list_id'      => isset( $integrations['mailchimp_list_id'] ) ? $integrations['mailchimp_list_id'] : '',
+				'webhook_enabled'        => ! empty( $integrations['webhook_enabled'] ),
+				'webhook_url'            => isset( $integrations['webhook_url'] ) ? $integrations['webhook_url'] : '',
+				'admin_email_enabled'    => ! empty( $integrations['admin_email_enabled'] ),
+				'admin_email_recipient'  => isset( $integrations['admin_email_recipient'] ) ? $integrations['admin_email_recipient'] : get_bloginfo( 'admin_email' ),
+				'admin_email_subject'    => isset( $integrations['admin_email_subject'] ) ? $integrations['admin_email_subject'] : 'New Subscriber Lead Captured on {site_name} 🎉',
+				'admin_email_body'       => isset( $integrations['admin_email_body'] ) ? $integrations['admin_email_body'] : "<h2>New Subscriber Lead!</h2>\n<p>A new visitor has subscribed to your Coming Soon newsletter:</p>\n<p><strong>Email:</strong> {subscriber_email}<br><strong>IP Address:</strong> {ip_address}<br><strong>Date:</strong> {date}</p>",
+				'welcome_email_enabled'  => ! empty( $integrations['welcome_email_enabled'] ),
+				'welcome_email_subject'  => isset( $integrations['welcome_email_subject'] ) ? $integrations['welcome_email_subject'] : 'Thank you for subscribing to {site_name}! 🚀',
+				'welcome_email_body'     => isset( $integrations['welcome_email_body'] ) ? $integrations['welcome_email_body'] : "<h2>Welcome to {site_name}!</h2>\n<p>Hi there,</p>\n<p>Thank you for subscribing to our newsletter! We are currently working hard behind the scenes to launch our brand new website.</p>\n<p>You'll be the very first to know when we go live on <strong>{launch_date}</strong>!</p>\n<p>Best regards,<br>The {site_name} Team</p>",
 			),
 			'preview_url'          => add_query_arg( 'csmm', 'true', home_url( '/' ) ),
 			'site_url'             => home_url(),
@@ -280,12 +336,114 @@ class CSMM_REST_API {
 			update_option( 'csmm_social_media', $social_array );
 		}
 
+		// 5. SEO Settings
+		if ( isset( $params['seo'] ) && is_array( $params['seo'] ) ) {
+			$seo_input = $params['seo'];
+			$seo_array = array(
+				'meta_title'          => isset( $seo_input['meta_title'] ) ? sanitize_text_field( $seo_input['meta_title'] ) : '',
+				'meta_description'    => isset( $seo_input['meta_description'] ) ? sanitize_textarea_field( $seo_input['meta_description'] ) : '',
+				'robots_meta'         => isset( $seo_input['robots_meta'] ) ? sanitize_text_field( $seo_input['robots_meta'] ) : 'auto',
+				'google_analytics_id' => isset( $seo_input['google_analytics_id'] ) ? sanitize_text_field( $seo_input['google_analytics_id'] ) : '',
+				'og_image_id'         => isset( $seo_input['og_image_id'] ) ? sanitize_text_field( $seo_input['og_image_id'] ) : '',
+			);
+			update_option( 'csmm_seo', $seo_array );
+		}
+
+		// 6. Newsletter Integrations & Email Notifications
+		if ( isset( $params['integrations'] ) && is_array( $params['integrations'] ) ) {
+			$int_input = $params['integrations'];
+			$int_array = array(
+				'mailchimp_enabled'      => ! empty( $int_input['mailchimp_enabled'] ),
+				'mailchimp_api_key'      => isset( $int_input['mailchimp_api_key'] ) ? sanitize_text_field( trim( $int_input['mailchimp_api_key'] ) ) : '',
+				'mailchimp_list_id'      => isset( $int_input['mailchimp_list_id'] ) ? sanitize_text_field( trim( $int_input['mailchimp_list_id'] ) ) : '',
+				'webhook_enabled'        => ! empty( $int_input['webhook_enabled'] ),
+				'webhook_url'            => isset( $int_input['webhook_url'] ) ? esc_url_raw( trim( $int_input['webhook_url'] ) ) : '',
+				'admin_email_enabled'    => ! empty( $int_input['admin_email_enabled'] ),
+				'admin_email_recipient'  => isset( $int_input['admin_email_recipient'] ) ? sanitize_email( $int_input['admin_email_recipient'] ) : get_bloginfo( 'admin_email' ),
+				'admin_email_subject'    => isset( $int_input['admin_email_subject'] ) ? sanitize_text_field( $int_input['admin_email_subject'] ) : '',
+				'admin_email_body'       => isset( $int_input['admin_email_body'] ) ? wp_kses_post( $int_input['admin_email_body'] ) : '',
+				'welcome_email_enabled'  => ! empty( $int_input['welcome_email_enabled'] ),
+				'welcome_email_subject'  => isset( $int_input['welcome_email_subject'] ) ? sanitize_text_field( $int_input['welcome_email_subject'] ) : '',
+				'welcome_email_body'     => isset( $int_input['welcome_email_body'] ) ? wp_kses_post( $int_input['welcome_email_body'] ) : '',
+			);
+			update_option( 'csmm_integrations', $int_array );
+		}
+
 		return rest_ensure_response(
 			array(
 				'success' => true,
 				'message' => __( 'Settings updated successfully!', 'coming-soon-maintenance-mode' ),
 			)
 		);
+	}
+
+	/**
+	 * Test Mailchimp API credentials.
+	 *
+	 * @param WP_REST_Request $request
+	 */
+	public function test_mailchimp( $request ) {
+		$api_key = sanitize_text_field( $request->get_param( 'api_key' ) );
+		$list_id = sanitize_text_field( $request->get_param( 'list_id' ) );
+
+		if ( empty( $api_key ) || empty( $list_id ) ) {
+			return new WP_Error( 'missing_params', __( 'Please provide both Mailchimp API Key and Audience/List ID.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+		}
+
+		$result = CSMM_Integrations::test_mailchimp( $api_key, $list_id );
+		if ( $result['success'] ) {
+			return rest_ensure_response( $result );
+		}
+		return new WP_Error( 'mailchimp_failed', $result['message'], array( 'status' => 400 ) );
+	}
+
+	/**
+	 * Test Webhook endpoint.
+	 *
+	 * @param WP_REST_Request $request
+	 */
+	public function test_webhook( $request ) {
+		$url = esc_url_raw( $request->get_param( 'url' ) );
+		if ( empty( $url ) ) {
+			return new WP_Error( 'missing_url', __( 'Please provide a valid Webhook URL.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+		}
+
+		$payload = array(
+			'event'         => 'test.webhook',
+			'email'         => 'test-subscriber@example.com',
+			'ip_address'    => '127.0.0.1',
+			'timestamp'     => current_time( 'mysql' ),
+			'site_name'     => get_bloginfo( 'name' ),
+			'site_url'      => home_url( '/' ),
+		);
+
+		$result = CSMM_Integrations::dispatch_webhook( $url, $payload );
+		if ( $result['success'] ) {
+			return rest_ensure_response( $result );
+		}
+		return new WP_Error( 'webhook_failed', $result['message'], array( 'status' => 400 ) );
+	}
+
+	/**
+	 * Send test email for admin preview.
+	 *
+	 * @param WP_REST_Request $request
+	 */
+	public function send_test_email( $request ) {
+		$type      = sanitize_text_field( $request->get_param( 'type' ) );
+		$recipient = sanitize_email( $request->get_param( 'recipient' ) );
+		$subject   = sanitize_text_field( $request->get_param( 'subject' ) );
+		$body      = wp_kses_post( $request->get_param( 'body' ) );
+
+		if ( empty( $recipient ) || ! is_email( $recipient ) ) {
+			return new WP_Error( 'invalid_recipient', __( 'Please provide a valid recipient email address.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+		}
+
+		$result = CSMM_Integrations::send_test_email( $type, $recipient, $subject, $body );
+		if ( $result['success'] ) {
+			return rest_ensure_response( $result );
+		}
+		return new WP_Error( 'send_failed', $result['message'], array( 'status' => 400 ) );
 	}
 
 	/**
@@ -330,115 +488,118 @@ class CSMM_REST_API {
 			return new WP_Error( 'invalid_email', __( 'Please provide a valid email address.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
 		}
 
-		$subscriber_id = CSMM_Subscribers::add_subscriber( $email, '', $referer );
-		if ( $subscriber_id ) {
+		$id = CSMM_Subscribers::add_subscriber( $email, '', $referer );
+		if ( $id ) {
 			return rest_ensure_response(
 				array(
 					'success' => true,
-					'message' => __( 'Thank you for subscribing! We will notify you when we launch.', 'coming-soon-maintenance-mode' ),
+					'message' => __( 'Thank you! You have been successfully subscribed.', 'coming-soon-maintenance-mode' ),
 				)
 			);
 		}
 
-		return new WP_Error( 'subscribe_error', __( 'Unable to process subscription.', 'coming-soon-maintenance-mode' ), array( 'status' => 500 ) );
+		return new WP_Error( 'subscribe_failed', __( 'You are already subscribed or could not subscribe.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
 	}
 
 	/**
-	 * Get list of 36 templates with metadata.
+	 * Get list of all available templates.
 	 */
 	public function get_templates() {
-		$image_map = array(
-			1  => '1.webp',
-			2  => '2.webp',
-			3  => '3.webp',
-			4  => '4.webp',
-			5  => '5.webp',
-			6  => '6.webp',
-			7  => '7.webp',
-			8  => '8.webp',
-			9  => '9.webp',
-			10 => '10.webp',
-			11 => '11.webp',
-			12 => '12.webp',
-			13 => '13.webp',
-			14 => '14.webp',
-			15 => '15.webp',
-			16 => '16.webp',
-			17 => '17-academy.webp',
-			18 => '18-beauty.webp',
-			19 => '19-Celebrate.webp',
-			20 => '20-construction.webp',
-			21 => '21-construction2.webp',
-			22 => '22-education.webp',
-			23 => '23-event.webp',
-			24 => '24-fashion.webp',
-			25 => '25-food.webp',
-			26 => '26-future.webp',
-			27 => '27-gaming.webp',
-			28 => '28-green.webp',
-			29 => '29-gym.webp',
-			30 => '30-health.webp',
-			31 => '31-kids.webp',
-			32 => '32-podcast.webp',
-			33 => '33-portfolio.webp',
-			34 => '34-realestate.webp',
-			35 => '35-shopping.webp',
-			36 => '36-travel.webp',
+		$templates = array();
+
+		$titles = array(
+			1 => 'Minimal Clean Countdown', 2 => 'Dark Modern Agency', 3 => 'Creative Studio Glow',
+			4 => 'Geometric Tech Blue', 5 => 'Modern Business Launch', 6 => 'Minimal White Launch',
+			7 => 'Cyber Neon Wave', 8 => 'Abstract Vibrant Gradient', 9 => 'Corporate Clean Slate',
+			10 => 'Startup Countdown Box', 11 => 'Elegant Luxury Gold', 12 => 'Modern Split Layout',
+			13 => 'Sunset Vibrant Purple', 14 => 'Deep Space Starlight', 15 => 'Aurora Borealis Glow',
+			16 => 'Animated Video Teaser', 17 => 'Academy & Courses', 18 => 'Beauty & Spa Salon',
+			19 => 'Celebration & Events', 20 => 'Construction & Architecture', 21 => 'Heavy Construction Pro',
+			22 => 'Education & University', 23 => 'Festivals & Concerts', 24 => 'Fashion & Boutique',
+			25 => 'Food & Restaurant', 26 => 'Future & AI Technology', 27 => 'Gaming & Esports',
+			28 => 'Green & Eco Energy', 29 => 'Gym & Fitness Center', 30 => 'Health & Medical Clinic',
+			31 => 'Kids & Kindergarten', 32 => 'Podcast & Audio Show', 33 => 'Creative Portfolio',
+			34 => 'Real Estate & Properties', 35 => 'Shopping & E-Commerce', 36 => 'Travel & Adventure',
 		);
 
-		$templates = array();
+		$img_names = array(
+			1 => '1.webp', 2 => '2.webp', 3 => '3.webp', 4 => '4.webp', 5 => '5.webp', 6 => '6.webp',
+			7 => '7.webp', 8 => '8.webp', 9 => '9.webp', 10 => '10.webp', 11 => '11.webp', 12 => '12.webp',
+			13 => '13.webp', 14 => '14.webp', 15 => '15.webp', 16 => '16.webp', 17 => '17-academy.webp',
+			18 => '18-beauty.webp', 19 => '19-Celebrate.webp', 20 => '20-construction.webp', 21 => '21-construction2.webp',
+			22 => '22-education.webp', 23 => '23-event.webp', 24 => '24-fashion.webp', 25 => '25-food.webp',
+			26 => '26-future.webp', 27 => '27-gaming.webp', 28 => '28-green.webp', 29 => '29-gym.webp',
+			30 => '30-health.webp', 31 => '31-kids.webp', 32 => '32-podcast.webp', 33 => '33-portfolio.webp',
+			34 => '34-realestate.webp', 35 => '35-shopping.webp', 36 => '36-travel.webp',
+		);
+
 		for ( $i = 1; $i <= 36; $i++ ) {
-			$img_file      = isset( $image_map[ $i ] ) ? $image_map[ $i ] : "$i.webp";
-			$preview_thumb = CSMM_URL . "admin/assets/img/$img_file";
+			$title    = isset( $titles[ $i ] ) ? $titles[ $i ] : "Template #{$i}";
+			$img_file = isset( $img_names[ $i ] ) ? $img_names[ $i ] : "{$i}.webp";
+			$thumb    = CSMM_URL . "admin/assets/img/{$img_file}";
 
 			$templates[] = array(
 				'id'          => $i,
-				'name'        => sprintf( __( 'Template #%02d', 'coming-soon-maintenance-mode' ), $i ),
-				'thumbnail'   => $preview_thumb,
-				'preview_url' => add_query_arg( array( 'csmm' => 'true', 'template_preview' => $i ), home_url( '/' ) ),
+				'title'       => $title,
+				'thumbnail'   => $thumb,
+				'preview_url' => add_query_arg(
+					array(
+						'csmm'             => 'true',
+						'template_preview' => $i,
+					),
+					home_url( '/' )
+				),
 			);
 		}
+
 		return rest_ensure_response( $templates );
 	}
 
 	/**
-	 * Get list of posts and pages for targeting selector.
+	 * Get posts and pages for selective targeting.
 	 */
 	public function get_target_items() {
+		$posts_data = array();
+		$pages_data = array();
+
 		$posts = get_posts(
 			array(
-				'numberposts' => 100,
-				'post_status' => 'publish',
-				'post_type'   => 'post',
-			)
-		);
-		$pages = get_pages(
-			array(
-				'number'      => 100,
-				'post_status' => 'publish',
+				'post_type'      => 'post',
+				'post_status'    => 'publish',
+				'posts_per_page' => 150,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
 			)
 		);
 
-		$post_items = array();
 		foreach ( $posts as $p ) {
-			$post_items[] = array(
+			$posts_data[] = array(
 				'id'    => $p->ID,
-				'title' => $p->post_title ? $p->post_title : '#' . $p->ID,
+				'title' => $p->post_title ? $p->post_title : "(no title #{$p->ID})",
 			);
 		}
 
-		$page_items = array();
-		foreach ( $pages as $p ) {
-			$page_items[] = array(
-				'id'    => $p->ID,
-				'title' => $p->post_title ? $p->post_title : '#' . $p->ID,
+		$pages = get_posts(
+			array(
+				'post_type'      => 'page',
+				'post_status'    => 'publish',
+				'posts_per_page' => 150,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+			)
+		);
+
+		foreach ( $pages as $pg ) {
+			$pages_data[] = array(
+				'id'    => $pg->ID,
+				'title' => $pg->post_title ? $pg->post_title : "(no title #{$pg->ID})",
 			);
 		}
 
 		return rest_ensure_response(
 			array(
-				'posts' => $post_items,
-				'pages' => $page_items,
+				'posts' => $posts_data,
+				'pages' => $pages_data,
 			)
 		);
 	}

@@ -148,4 +148,40 @@ export const api = {
       },
     });
   },
+
+  async testMailchimp(apiKey, listId) {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('integrations/test-mailchimp'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      body: JSON.stringify({ api_key: apiKey, list_id: listId }),
+    });
+  },
+
+  async testWebhook(url) {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('integrations/test-webhook'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      body: JSON.stringify({ url }),
+    });
+  },
+
+  async sendTestEmail(type, recipient, subject, body) {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('integrations/send-test-email'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      body: JSON.stringify({ type, recipient, subject, body }),
+    });
+  },
 };

@@ -390,6 +390,92 @@ export default function ContentBrandingTab({ settings, onChange }) {
         </CardContent>
       </Card>
 
+      {/* SEO & Social Metadata Suite */}
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: 2.5 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 1 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem', color: '#0f172a' }}>
+              🔍 Search Engine Optimization (SEO) & Social Sharing
+            </Typography>
+          </Box>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
+            Customize how your pre-launch or maintenance page appears on Google, Bing, Facebook, LinkedIn, and Twitter/X.
+          </Typography>
+
+          <Grid container spacing={2.5}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Custom SEO Meta Title"
+                placeholder="e.g. My Brand - Exciting New Experience Coming Soon"
+                value={(settings.seo && settings.seo.meta_title) || ''}
+                onChange={(e) =>
+                  onChange('seo', {
+                    ...(settings.seo || {}),
+                    meta_title: e.target.value,
+                  })
+                }
+                helperText="Leave empty to use main page title / site title"
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                select
+                label="Search Engine Robots Directive"
+                value={(settings.seo && settings.seo.robots_meta) || 'auto'}
+                onChange={(e) =>
+                  onChange('seo', {
+                    ...(settings.seo || {}),
+                    robots_meta: e.target.value,
+                  })
+                }
+                SelectProps={{ native: true }}
+                helperText="Smart Auto indexes Coming Soon & protects SEO during Maintenance"
+              >
+                <option value="auto">Smart Auto (Index Coming Soon / Noindex Maintenance)</option>
+                <option value="index">Always Index (index, follow)</option>
+                <option value="noindex">Never Index (noindex, nofollow)</option>
+              </TextField>
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                multiline
+                rows={3}
+                label="Custom SEO Meta Description"
+                placeholder="Brief summary of your upcoming launch for Google search snippets (150-160 characters)..."
+                value={(settings.seo && settings.seo.meta_description) || ''}
+                onChange={(e) =>
+                  onChange('seo', {
+                    ...(settings.seo || {}),
+                    meta_description: e.target.value,
+                  })
+                }
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Google Analytics / G-Tag Tracking ID"
+                placeholder="e.g. G-XXXXXXXXXX or UA-XXXXX-Y"
+                value={(settings.seo && settings.seo.google_analytics_id) || ''}
+                onChange={(e) =>
+                  onChange('seo', {
+                    ...(settings.seo || {}),
+                    google_analytics_id: e.target.value,
+                  })
+                }
+                helperText="Automatically embeds Google tag on your coming soon page"
+              />
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+
       {/* Custom CSS Editor */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: 2.5 }}>

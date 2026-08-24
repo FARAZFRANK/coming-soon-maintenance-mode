@@ -96,6 +96,9 @@ class CSMM_Subscribers {
 			update_option( 'cmss_subscriber_list', $legacy );
 		}
 
+		// Trigger Integrations Pipeline (Mailchimp, Webhooks, Welcome Email, Admin Alert)
+		CSMM_Integrations::process_new_subscriber( $email, $ip, $referer );
+
 		return $result ? $wpdb->insert_id : false;
 	}
 

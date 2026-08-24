@@ -11,6 +11,7 @@ $csmm_settings      = get_option( 'csmm_settings', array() );
 $csmm_templates     = get_option( 'csmm_templates', array() );
 $csmm_content       = get_option( 'csmm_content', array() );
 $csmm_social_media   = get_option( 'csmm_social_media', array() );
+$csmm_seo           = get_option( 'csmm_seo', array() );
 
 $csmm_website_mode   = isset( $csmm_settings['website_mode'] ) ? intval( $csmm_settings['website_mode'] ) : 3;
 $csmm_template_id    = isset( $csmm_templates['template_id'] ) ? intval( $csmm_templates['template_id'] ) : 1;
@@ -74,4 +75,17 @@ if ( ! file_exists( $template_file ) ) {
 	$template_file = CSMM_DIR . 'templates/1.php';
 }
 
+// Render template with injected SEO & Social metadata
+ob_start();
 include $template_file;
+$html = ob_get_clean();
+
+ob_start();
+CSMM_SEO::render_meta_tags( $csmm_content, $csmm_settings, $csmm_seo );
+$seo_meta = ob_get_clean();
+
+if ( preg_match( '/<head[^>]*>/i', $html ) ) {
+	$html = preg_replace( '/(<head[^>]*>)/i', '$1' . "\n" . $seo_meta, $html, 1 );
+}
+
+echo $html;

@@ -60,6 +60,8 @@ final class Coming_Soon_Maintenance_Mode_Pro {
 	private function load_dependencies() {
 		require_once CSMM_DIR . 'includes/class-csmm-activator.php';
 		require_once CSMM_DIR . 'includes/class-csmm-subscribers.php';
+		require_once CSMM_DIR . 'includes/class-csmm-integrations.php';
+		require_once CSMM_DIR . 'includes/class-csmm-seo.php';
 		require_once CSMM_DIR . 'includes/class-csmm-rest-api.php';
 		require_once CSMM_DIR . 'includes/class-csmm-frontend.php';
 		require_once CSMM_DIR . 'includes/class-csmm-admin.php';
