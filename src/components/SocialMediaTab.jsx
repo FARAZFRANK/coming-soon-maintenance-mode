@@ -176,11 +176,12 @@ export default function SocialMediaTab({ settings, onChange }) {
               p: 2,
               mb: 3,
               borderRadius: '8px !important',
-              backgroundColor: '#f8fafc',
+              backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#f8fafc'),
+              borderColor: (theme) => (theme.palette.mode === 'dark' ? '#334155' : '#cbd5e1'),
               borderStyle: 'dashed',
             }}
           >
-            <Typography variant="caption" sx={{ fontWeight: 700, color: '#475569', display: 'block', mb: 1.2 }}>
+            <Typography variant="caption" sx={{ fontWeight: 700, color: 'text.secondary', display: 'block', mb: 1.2 }}>
               ⚡ 1-Click Popular Platform Presets:
             </Typography>
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
@@ -196,8 +197,13 @@ export default function SocialMediaTab({ settings, onChange }) {
                   sx={{
                     borderRadius: '6px',
                     fontWeight: 600,
-                    backgroundColor: '#ffffff',
-                    '&:hover': { backgroundColor: '#eff6ff', borderColor: '#2563eb' },
+                    backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff'),
+                    borderColor: (theme) => (theme.palette.mode === 'dark' ? '#334155' : '#cbd5e1'),
+                    color: 'text.primary',
+                    '&:hover': {
+                      backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#334155' : '#eff6ff'),
+                      borderColor: '#2563eb',
+                    },
                   }}
                 />
               ))}
@@ -212,12 +218,13 @@ export default function SocialMediaTab({ settings, onChange }) {
                 p: 3.5,
                 textAlign: 'center',
                 borderRadius: '8px !important',
-                backgroundColor: '#f8fafc',
+                backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#f8fafc'),
+                borderColor: (theme) => (theme.palette.mode === 'dark' ? '#334155' : '#cbd5e1'),
                 borderStyle: 'dashed',
               }}
             >
               <ShareRoundedIcon sx={{ fontSize: 36, color: '#94a3b8', mb: 1 }} />
-              <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#334155' }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 600, color: 'text.primary' }}>
                 No Custom Channels Added Yet
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
@@ -233,8 +240,8 @@ export default function SocialMediaTab({ settings, onChange }) {
                   sx={{
                     p: 2,
                     borderRadius: '10px !important',
-                    borderColor: '#e2e8f0',
-                    backgroundColor: '#ffffff',
+                    borderColor: (theme) => (theme.palette.mode === 'dark' ? '#334155' : '#e2e8f0'),
+                    backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#ffffff'),
                     transition: 'border-color 0.2s',
                     '&:hover': { borderColor: '#2563eb' },
                   }}

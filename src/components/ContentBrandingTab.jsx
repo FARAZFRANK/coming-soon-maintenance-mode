@@ -396,7 +396,7 @@ export default function ContentBrandingTab({ settings, onChange }) {
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: 2.5 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 1 }}>
-            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem', color: '#0f172a' }}>
+            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem', color: 'text.primary' }}>
               🔍 Search Engine Optimization (SEO) & Social Sharing
             </Typography>
           </Box>
@@ -424,30 +424,8 @@ export default function ContentBrandingTab({ settings, onChange }) {
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
-                select
-                label="Search Engine Robots Directive"
-                value={(settings.seo && settings.seo.robots_meta) || 'auto'}
-                onChange={(e) =>
-                  onChange('seo', {
-                    ...(settings.seo || {}),
-                    robots_meta: e.target.value,
-                  })
-                }
-                helperText="Smart Auto indexes Coming Soon & protects SEO during Maintenance"
-              >
-                <MenuItem value="auto">Smart Auto (Index Coming Soon / Noindex Maintenance)</MenuItem>
-                <MenuItem value="index">Always Index (index, follow)</MenuItem>
-                <MenuItem value="noindex">Never Index (noindex, nofollow)</MenuItem>
-              </TextField>
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                multiline
-                rows={3}
                 label="Custom SEO Meta Description"
-                placeholder="Brief summary of your upcoming launch for Google search snippets (150-160 characters)..."
+                placeholder="e.g. We are building the next generation platform..."
                 value={(settings.seo && settings.seo.meta_description) || ''}
                 onChange={(e) =>
                   onChange('seo', {
@@ -455,14 +433,35 @@ export default function ContentBrandingTab({ settings, onChange }) {
                     meta_description: e.target.value,
                   })
                 }
+                helperText="Brief summary for search engine snippet"
               />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <TextField
+                select
+                fullWidth
+                label="Search Engine Robots Indexing"
+                value={(settings.seo && settings.seo.robots_meta) || 'auto'}
+                onChange={(e) =>
+                  onChange('seo', {
+                    ...(settings.seo || {}),
+                    robots_meta: e.target.value,
+                  })
+                }
+                helperText="Controls indexing in robots meta tags"
+              >
+                <MenuItem value="auto">Automatic (Index when Live, NoIndex in Maintenance/Coming Soon)</MenuItem>
+                <MenuItem value="index_follow">Always Index & Follow (index, follow)</MenuItem>
+                <MenuItem value="noindex_nofollow">Block All Search Engines (noindex, nofollow)</MenuItem>
+              </TextField>
             </Grid>
 
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
                 label="Google Analytics / G-Tag Tracking ID"
-                placeholder="e.g. G-XXXXXXXXXX or UA-XXXXX-Y"
+                placeholder="e.g. G-XXXXXXXXXX or UA-XXXXXXXX-X"
                 value={(settings.seo && settings.seo.google_analytics_id) || ''}
                 onChange={(e) =>
                   onChange('seo', {
@@ -487,7 +486,19 @@ export default function ContentBrandingTab({ settings, onChange }) {
                 Custom CSS Overrides
               </Typography>
             </Box>
-            <Chip label="custom.css" size="small" sx={{ fontFamily: 'monospace', fontWeight: 600, fontSize: '0.75rem', height: 22, borderRadius: '4px', backgroundColor: '#f1f5f9' }} />
+            <Chip
+              label="custom.css"
+              size="small"
+              sx={{
+                fontFamily: 'monospace',
+                fontWeight: 600,
+                fontSize: '0.75rem',
+                height: 22,
+                borderRadius: '4px',
+                backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#334155' : '#f1f5f9'),
+                color: (theme) => (theme.palette.mode === 'dark' ? '#f8fafc' : '#475569'),
+              }}
+            />
           </Box>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             Add custom CSS styles to fine-tune colors, fonts, or layout tweaks on your selected template.

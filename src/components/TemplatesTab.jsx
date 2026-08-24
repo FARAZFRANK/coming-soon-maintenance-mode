@@ -147,9 +147,17 @@ export default function TemplatesTab({ settings, onChange, templates }) {
                         </Button>
                         <IconButton
                           size="small"
-                          color="default"
                           onClick={() => setPreviewTemplate(tpl)}
-                          sx={{ border: '1px solid #e2e8f0', borderRadius: '6px' }}
+                          sx={{
+                            border: '1px solid',
+                            borderColor: 'divider',
+                            color: 'text.primary',
+                            borderRadius: '6px',
+                            backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#334155' : '#f8fafc'),
+                            '&:hover': {
+                              backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#475569' : '#f1f5f9'),
+                            },
+                          }}
                           title="Live Preview"
                         >
                           <VisibilityRoundedIcon fontSize="small" />
