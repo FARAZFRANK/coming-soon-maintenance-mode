@@ -12,7 +12,11 @@ import {
   Alert,
   CircularProgress,
   Badge,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
@@ -23,8 +27,11 @@ import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
 import MarkEmailReadRoundedIcon from '@mui/icons-material/MarkEmailReadRounded';
 import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRounded';
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 
 import { api } from './api';
+import { getTheme } from './theme';
 import GeneralSettingsTab from './components/GeneralSettingsTab';
 import TemplatesTab from './components/TemplatesTab';
 import ContentBrandingTab from './components/ContentBrandingTab';
@@ -77,90 +84,92 @@ class ErrorBoundary extends React.Component {
 export default function App() {
   const [tabIndex, setTabIndex] = useState(0);
   const [settings, setSettings] = useState(null);
-  const [originalSettings, setOriginalSettings] = useState(null);
   const [templates, setTemplates] = useState([]);
-  const [targetItems, setTargetItems] = useState({ posts: [], pages: [] });
+  const [targetItems, setTargetItems] = useState({ pages: [], posts: [], roles: [] });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [notification, setNotification] = useState({ open: false, message: '', severity: 'success' });
 
-  // Handle hash navigation
+  // Persistent Light / Dark Mode State
+  const [themeMode, setThemeMode] = useState(() => {
+    return localStorage.getItem('csmm_theme_mode') || 'light';
+  });
+
   useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash;
-      if (hash.includes('subscribers')) {
-        setTabIndex(5);
-      } else if (hash.includes('integrations') || hash.includes('newsletter')) {
-        setTabIndex(4);
-      } else if (hash.includes('templates')) {
-        setTabIndex(1);
-      } else if (hash.includes('content')) {
-        setTabIndex(2);
-      } else if (hash.includes('social')) {
-        setTabIndex(3);
-      } else if (hash.includes('docs')) {
-        setTabIndex(6);
+    localStorage.setItem('csmm_theme_mode', themeMode);
+    const root = document.getElementById('csmm-react-root');
+    if (root) {
+      if (themeMode === 'dark') {
+        root.classList.add('csmm-dark');
+      } else {
+        root.classList.remove('csmm-dark');
       }
-    };
+    }
+  }, [themeMode]);
 
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
+  const toggleThemeMode = () => {
+    setThemeMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
-  // Fetch initial data
+  const currentTheme = getTheme(themeMode);
+
+  // Load initial settings and templates
   useEffect(() => {
-    const loadAll = async () => {
-      setLoading(true);
+    async function loadData() {
       try {
-        const [settingsData, templatesData, targetItemsData] = await Promise.all([
+        setLoading(true);
+        const [settingsRes, templatesRes, targetRes] = await Promise.all([
           api.getSettings(),
           api.getTemplates(),
           api.getTargetItems(),
         ]);
-        setSettings(settingsData);
-        setOriginalSettings(JSON.stringify(settingsData));
-        setTemplates(templatesData || []);
-        setTargetItems(targetItemsData || { posts: [], pages: [] });
+
+        if (settingsRes.success) {
+          setSettings(settingsRes.data);
+        }
+        if (templatesRes.success) {
+          setTemplates(templatesRes.data);
+        }
+        if (targetRes.success) {
+          setTargetItems(targetRes.data);
+        }
       } catch (err) {
-        showNotification('Error loading settings: ' + err.message, 'error');
+        showNotification('Failed to load plugin data: ' + err.message, 'error');
       } finally {
         setLoading(false);
       }
-    };
-
-    loadAll();
-  }, []);
-
-  // Track unsaved changes
-  useEffect(() => {
-    if (settings && originalSettings) {
-      const isDifferent = JSON.stringify(settings) !== originalSettings;
-      setHasChanges(isDifferent);
     }
-  }, [settings, originalSettings]);
 
-  const handleFieldChange = (field, value) => {
-    setSettings((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
+    loadData();
+  }, []);
 
   const showNotification = (message, severity = 'success') => {
     setNotification({ open: true, message, severity });
   };
 
+  // Handle setting updates
+  const handleFieldChange = (key, value) => {
+    setSettings((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+    setHasChanges(true);
+  };
+
+  // Save all settings
   const handleSave = async () => {
-    setSaving(true);
     try {
+      setSaving(true);
       const res = await api.saveSettings(settings);
-      setOriginalSettings(JSON.stringify(settings));
-      setHasChanges(false);
-      showNotification(res.message || 'Settings saved successfully!', 'success');
+      if (res.success) {
+        setHasChanges(false);
+        showNotification('All settings saved successfully!', 'success');
+      } else {
+        showNotification(res.data?.message || 'Failed to save settings', 'error');
+      }
     } catch (err) {
-      showNotification('Failed to save settings: ' + err.message, 'error');
+      showNotification('Save error: ' + err.message, 'error');
     } finally {
       setSaving(false);
     }
@@ -168,57 +177,60 @@ export default function App() {
 
   if (loading) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: 'calc(100vh - 60px)',
-          backgroundColor: '#f8fafc',
-          p: 2,
-        }}
-      >
-        <Paper
-          elevation={0}
+      <ThemeProvider theme={currentTheme}>
+        <CssBaseline />
+        <Box
           sx={{
-            p: { xs: 3.5, sm: 4.5 },
-            maxWidth: 420,
-            width: '100%',
-            textAlign: 'center',
-            borderRadius: '16px !important',
-            border: '1px solid #e2e8f0',
-            backgroundColor: '#ffffff',
-            boxShadow: '0 10px 30px -5px rgba(15, 23, 42, 0.06)',
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: 'calc(100vh - 60px)',
+            backgroundColor: 'background.default',
+            p: 2,
           }}
         >
-          <Box
+          <Paper
+            elevation={0}
             sx={{
-              width: 56,
-              height: 56,
-              borderRadius: '14px',
-              background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+              p: { xs: 3.5, sm: 4.5 },
+              maxWidth: 420,
+              width: '100%',
+              textAlign: 'center',
+              borderRadius: '16px !important',
+              border: `1px solid ${currentTheme.palette.divider}`,
+              backgroundColor: 'background.paper',
+              boxShadow: themeMode === 'dark' ? '0 10px 30px rgba(0, 0, 0, 0.4)' : '0 10px 30px -5px rgba(15, 23, 42, 0.06)',
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
-              color: '#ffffff',
-              boxShadow: '0 8px 16px rgba(37, 99, 235, 0.25)',
-              mb: 2.5,
             }}
           >
-            <AccessTimeFilledRoundedIcon sx={{ fontSize: 30 }} />
-          </Box>
-          <Typography variant="h6" sx={{ fontWeight: 700, color: '#0f172a', mb: 0.5, fontSize: '1.15rem' }}>
-            Coming Soon Pro Studio
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            Loading workspace settings & templates...
-          </Typography>
-          <CircularProgress size={32} thickness={4} color="primary" />
-        </Paper>
-      </Box>
+            <Box
+              sx={{
+                width: 56,
+                height: 56,
+                borderRadius: '14px',
+                background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#ffffff',
+                boxShadow: '0 8px 16px rgba(37, 99, 235, 0.25)',
+                mb: 2.5,
+              }}
+            >
+              <AccessTimeFilledRoundedIcon sx={{ fontSize: 30 }} />
+            </Box>
+            <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1.15rem' }}>
+              Coming Soon Pro Studio
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              Loading workspace settings & templates...
+            </Typography>
+            <CircularProgress size={32} thickness={4} color="primary" />
+          </Paper>
+        </Box>
+      </ThemeProvider>
     );
   }
 
@@ -229,200 +241,234 @@ export default function App() {
   }[settings?.website_mode || 3];
 
   return (
-    <Box sx={{ pb: 6, pt: 2, backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-      <Container maxWidth="xl">
-        {/* Top Header Card */}
-        <Paper
-          elevation={0}
-          sx={{
-            p: { xs: 2, md: 2.5 },
-            mb: 2.5,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: 2,
-            borderRadius: '10px !important',
-            border: '1px solid #e2e8f0',
-            background: '#ffffff',
-          }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Box
-              sx={{
-                width: 44,
-                height: 44,
-                borderRadius: '10px',
-                background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#ffffff',
-                boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)',
-              }}
-            >
-              <AccessTimeFilledRoundedIcon sx={{ fontSize: 26 }} />
-            </Box>
-            <Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                <Typography variant="h6" sx={{ fontWeight: 800, color: '#0f172a', lineHeight: 1.2 }}>
-                  Coming Soon Maintenance Mode Pro
-                </Typography>
-                <Chip
-                  label={`v${api.getConfig().version || '3.2.0'}`}
-                  size="small"
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '0.75rem',
-                    height: 22,
-                    backgroundColor: '#f1f5f9',
-                    color: '#475569',
-                    borderRadius: '6px',
-                  }}
-                />
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 0.5 }}>
-                <Chip
-                  label={modeBadge.label}
-                  color={modeBadge.color}
-                  size="small"
-                  sx={{ fontWeight: 700, fontSize: '0.75rem', height: 22, borderRadius: '6px' }}
-                />
-                <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 500 }}>
-                  by FARAZFRANK
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-            <Button
-              variant="outlined"
-              color="inherit"
-              startIcon={<VisibilityRoundedIcon />}
-              component="a"
-              href={settings?.preview_url || '#'}
-              target="_blank"
-              sx={{ borderColor: '#cbd5e1', fontWeight: 600, borderRadius: '8px' }}
-            >
-              Live Preview
-            </Button>
-
-            <Badge color="warning" variant="dot" invisible={!hasChanges}>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={saving ? <CircularProgress size={18} color="inherit" /> : <SaveRoundedIcon />}
-                onClick={handleSave}
-                disabled={saving}
-                sx={{ px: 3, fontWeight: 700, borderRadius: '8px' }}
-              >
-                {saving ? 'Saving Changes...' : 'Save Changes'}
-              </Button>
-            </Badge>
-          </Box>
-        </Paper>
-
-        {/* Tab Navigation */}
-        <Paper
-          elevation={0}
-          sx={{
-            mb: 2.5,
-            borderRadius: '10px !important',
-            border: '1px solid #e2e8f0',
-            backgroundColor: '#ffffff',
-          }}
-        >
-          <Tabs
-            value={tabIndex}
-            onChange={(_, newTab) => setTabIndex(newTab)}
-            variant="scrollable"
-            scrollButtons="auto"
-            textColor="primary"
-            indicatorColor="primary"
-            sx={{ px: 1.5 }}
+    <ThemeProvider theme={currentTheme}>
+      <CssBaseline />
+      <Box sx={{ pb: 6, pt: 2, backgroundColor: 'background.default', minHeight: '100vh', transition: 'background-color 0.25s ease' }}>
+        <Container maxWidth="xl">
+          {/* Top Header Card */}
+          <Paper
+            elevation={0}
+            sx={{
+              p: { xs: 2, md: 2.5 },
+              mb: 2.5,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: 2,
+              borderRadius: '10px !important',
+              border: `1px solid ${currentTheme.palette.divider}`,
+              backgroundColor: 'background.paper',
+            }}
           >
-            <Tab icon={<TuneRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Website Mode & Targeting" />
-            <Tab icon={<DashboardCustomizeRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Templates (36)" />
-            <Tab icon={<PaletteRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Content, Branding & SEO" />
-            <Tab icon={<ShareRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Social Channels" />
-            <Tab icon={<MarkEmailReadRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Newsletter & Integrations" />
-            <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Subscribers Leads" />
-            <Tab icon={<MenuBookRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Documentation" />
-          </Tabs>
-        </Paper>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Box
+                sx={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: '10px',
+                  background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#ffffff',
+                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)',
+                }}
+              >
+                <AccessTimeFilledRoundedIcon sx={{ fontSize: 26 }} />
+              </Box>
+              <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1.2 }}>
+                    Coming Soon Maintenance Mode Pro
+                  </Typography>
+                  <Chip
+                    label={`v${api.getConfig().version || '3.2.0'}`}
+                    size="small"
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: '0.75rem',
+                      height: 22,
+                      backgroundColor: themeMode === 'dark' ? '#334155' : '#f1f5f9',
+                      color: themeMode === 'dark' ? '#cbd5e1' : '#475569',
+                      borderRadius: '6px',
+                    }}
+                  />
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 0.5 }}>
+                  <Chip
+                    label={modeBadge.label}
+                    color={modeBadge.color}
+                    size="small"
+                    sx={{ fontWeight: 700, fontSize: '0.75rem', height: 22, borderRadius: '6px' }}
+                  />
+                  <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500 }}>
+                    by FARAZFRANK
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
 
-        {/* Tab Content Panels */}
-        <Box sx={{ mt: 1 }}>
-          <ErrorBoundary key={tabIndex}>
-            {tabIndex === 0 && (
-              <GeneralSettingsTab
-                settings={settings}
-                onChange={handleFieldChange}
-                targetItems={targetItems}
-              />
-            )}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              {/* Theme Mode Toggle Button */}
+              <Tooltip title={themeMode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
+                <IconButton
+                  onClick={toggleThemeMode}
+                  sx={{
+                    borderRadius: '8px',
+                    border: '1px solid',
+                    borderColor: themeMode === 'dark' ? '#475569' : '#cbd5e1',
+                    backgroundColor: themeMode === 'dark' ? '#334155' : '#f8fafc',
+                    color: themeMode === 'dark' ? '#fbbf24' : '#64748b',
+                    transition: 'all 0.2s ease',
+                    '&:hover': {
+                      backgroundColor: themeMode === 'dark' ? '#475569' : '#f1f5f9',
+                      borderColor: themeMode === 'dark' ? '#64748b' : '#94a3b8',
+                      transform: 'rotate(15deg)',
+                    },
+                    p: '8px',
+                  }}
+                >
+                  {themeMode === 'dark' ? (
+                    <LightModeRoundedIcon sx={{ fontSize: 20, color: '#f59e0b' }} />
+                  ) : (
+                    <DarkModeRoundedIcon sx={{ fontSize: 20, color: '#475569' }} />
+                  )}
+                </IconButton>
+              </Tooltip>
 
-            {tabIndex === 1 && (
-              <TemplatesTab
-                settings={settings}
-                onChange={handleFieldChange}
-                templates={templates}
-                previewUrlBase={settings?.preview_url}
-              />
-            )}
+              <Button
+                variant="outlined"
+                color="inherit"
+                startIcon={<VisibilityRoundedIcon />}
+                component="a"
+                href={settings?.preview_url || '#'}
+                target="_blank"
+                sx={{
+                  borderColor: themeMode === 'dark' ? '#475569' : '#cbd5e1',
+                  fontWeight: 600,
+                  borderRadius: '8px',
+                }}
+              >
+                Live Preview
+              </Button>
 
-            {tabIndex === 2 && (
-              <ContentBrandingTab
-                settings={settings}
-                onChange={handleFieldChange}
-              />
-            )}
+              <Badge color="warning" variant="dot" invisible={!hasChanges}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={saving ? <CircularProgress size={18} color="inherit" /> : <SaveRoundedIcon />}
+                  onClick={handleSave}
+                  disabled={saving}
+                  sx={{ px: 3, fontWeight: 700, borderRadius: '8px' }}
+                >
+                  {saving ? 'Saving Changes...' : 'Save Changes'}
+                </Button>
+              </Badge>
+            </Box>
+          </Paper>
 
-            {tabIndex === 3 && (
-              <SocialMediaTab
-                settings={settings}
-                onChange={handleFieldChange}
-              />
-            )}
+          {/* Tab Navigation */}
+          <Paper
+            elevation={0}
+            sx={{
+              mb: 2.5,
+              borderRadius: '10px !important',
+              border: `1px solid ${currentTheme.palette.divider}`,
+              backgroundColor: 'background.paper',
+            }}
+          >
+            <Tabs
+              value={tabIndex}
+              onChange={(_, newTab) => setTabIndex(newTab)}
+              variant="scrollable"
+              scrollButtons="auto"
+              textColor="primary"
+              indicatorColor="primary"
+              sx={{ px: 1.5 }}
+            >
+              <Tab icon={<TuneRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Website Mode & Targeting" />
+              <Tab icon={<DashboardCustomizeRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Templates (36)" />
+              <Tab icon={<PaletteRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Content, Branding & SEO" />
+              <Tab icon={<ShareRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Social Channels" />
+              <Tab icon={<MarkEmailReadRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Newsletter & Integrations" />
+              <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Subscribers Leads" />
+              <Tab icon={<MenuBookRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Documentation" />
+            </Tabs>
+          </Paper>
 
-            {tabIndex === 4 && (
-              <IntegrationsTab
-                data={settings}
-                onChange={handleFieldChange}
-                onNotify={showNotification}
-              />
-            )}
+          {/* Tab Content Panels */}
+          <Box sx={{ mt: 1 }}>
+            <ErrorBoundary key={tabIndex}>
+              {tabIndex === 0 && (
+                <GeneralSettingsTab
+                  settings={settings}
+                  onChange={handleFieldChange}
+                  targetItems={targetItems}
+                />
+              )}
 
-            {tabIndex === 5 && (
-              <SubscribersTab
-                onNotify={showNotification}
-              />
-            )}
+              {tabIndex === 1 && (
+                <TemplatesTab
+                  settings={settings}
+                  onChange={handleFieldChange}
+                  templates={templates}
+                  previewUrlBase={settings?.preview_url}
+                />
+              )}
 
-            {tabIndex === 6 && (
-              <DocumentationTab />
-            )}
-          </ErrorBoundary>
-        </Box>
-      </Container>
+              {tabIndex === 2 && (
+                <ContentBrandingTab
+                  settings={settings}
+                  onChange={handleFieldChange}
+                />
+              )}
 
-      {/* Notification Toast */}
-      <Snackbar
-        open={notification.open}
-        autoHideDuration={4000}
-        onClose={() => setNotification((prev) => ({ ...prev, open: false }))}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert
+              {tabIndex === 3 && (
+                <SocialMediaTab
+                  settings={settings}
+                  onChange={handleFieldChange}
+                />
+              )}
+
+              {tabIndex === 4 && (
+                <IntegrationsTab
+                  data={settings}
+                  onChange={handleFieldChange}
+                  onNotify={showNotification}
+                />
+              )}
+
+              {tabIndex === 5 && (
+                <SubscribersTab
+                  onNotify={showNotification}
+                />
+              )}
+
+              {tabIndex === 6 && (
+                <DocumentationTab />
+              )}
+            </ErrorBoundary>
+          </Box>
+        </Container>
+
+        {/* Notification Toast */}
+        <Snackbar
+          open={notification.open}
+          autoHideDuration={4000}
           onClose={() => setNotification((prev) => ({ ...prev, open: false }))}
-          severity={notification.severity}
-          variant="filled"
-          sx={{ width: '100%', borderRadius: '8px', fontWeight: 600 }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         >
-          {notification.message}
-        </Alert>
-      </Snackbar>
-    </Box>
+          <Alert
+            onClose={() => setNotification((prev) => ({ ...prev, open: false }))}
+            severity={notification.severity}
+            variant="filled"
+            sx={{ width: '100%', borderRadius: '8px', fontWeight: 600 }}
+          >
+            {notification.message}
+          </Alert>
+        </Snackbar>
+      </Box>
+    </ThemeProvider>
   );
 }

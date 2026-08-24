@@ -3,6 +3,11 @@
 #csmm-react-root {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   color: #0f172a;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+#csmm-react-root.csmm-dark {
+  color: #f8fafc;
 }
 
 #csmm-react-root * {
@@ -18,6 +23,11 @@
   align-items: center !important;
   box-sizing: border-box !important;
   padding: 0 14px !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+#csmm-react-root.csmm-dark .MuiOutlinedInput-root {
+  background-color: #0f172a !important;
 }
 
 #csmm-react-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall {
@@ -56,6 +66,17 @@
   flex: 1 1 auto !important;
 }
 
+#csmm-react-root.csmm-dark input[type="text"],
+#csmm-react-root.csmm-dark input[type="email"],
+#csmm-react-root.csmm-dark input[type="url"],
+#csmm-react-root.csmm-dark input[type="password"],
+#csmm-react-root.csmm-dark input[type="search"],
+#csmm-react-root.csmm-dark input[type="date"],
+#csmm-react-root.csmm-dark input[type="time"],
+#csmm-react-root.csmm-dark input[type="number"] {
+  color: #f8fafc !important;
+}
+
 #csmm-react-root textarea {
   border: none !important;
   box-shadow: none !important;
@@ -70,15 +91,23 @@
   box-sizing: border-box !important;
 }
 
+#csmm-react-root.csmm-dark textarea {
+  color: #f8fafc !important;
+}
+
 /* Fix Adornment Icon spacing & alignment */
 #csmm-react-root .MuiInputAdornment-root {
   display: flex !important;
   align-items: center !important;
-  margin-right: 10px !important;
+  margin-right: 0 !important;
   margin-left: 0 !important;
   color: #64748b !important;
   height: auto !important;
   max-height: none !important;
+}
+
+#csmm-react-root.csmm-dark .MuiInputAdornment-root {
+  color: #94a3b8 !important;
 }
 
 #csmm-react-root .MuiInputAdornment-root svg {
@@ -96,9 +125,17 @@
   box-sizing: border-box !important;
 }
 
+#csmm-react-root.csmm-dark fieldset.MuiOutlinedInput-notchedOutline {
+  border-color: #334155 !important;
+}
+
 #csmm-react-root .Mui-focused fieldset.MuiOutlinedInput-notchedOutline {
   border-color: #2563eb !important;
   border-width: 2px !important;
+}
+
+#csmm-react-root.csmm-dark .Mui-focused fieldset.MuiOutlinedInput-notchedOutline {
+  border-color: #3b82f6 !important;
 }
 
 #csmm-react-root fieldset.MuiOutlinedInput-notchedOutline legend {
@@ -133,11 +170,19 @@
   padding: 0 !important;
 }
 
+#csmm-react-root.csmm-dark .MuiInputLabel-outlined {
+  color: #94a3b8 !important;
+}
+
 #csmm-react-root .MuiInputLabel-outlined.MuiInputLabel-shrink {
   background-color: #ffffff !important;
   padding: 0 6px !important;
   border-radius: 4px !important;
   transform: translate(14px, -7px) scale(0.75) !important;
+}
+
+#csmm-react-root.csmm-dark .MuiInputLabel-outlined.MuiInputLabel-shrink {
+  background-color: #0f172a !important;
 }
 
 #csmm-react-root .MuiInputLabel-outlined:not(.MuiInputLabel-shrink) {
@@ -146,11 +191,6 @@
 
 #csmm-react-root .MuiInputLabel-sizeSmall:not(.MuiInputLabel-shrink) {
   transform: translate(14px, 12px) scale(1) !important;
-}
-
-/* When input has startAdornment, adjust non-shrunk label position */
-#csmm-react-root .MuiInputLabel-outlined.MuiInputLabel-shrink {
-  transform: translate(14px, -7px) scale(0.75) !important;
 }
 
 /* Global 10px Border Radius on cards and papers */
