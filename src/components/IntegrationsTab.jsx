@@ -9,7 +9,6 @@ import {
   TextField,
   Button,
   Grid,
-  Alert,
   Chip,
   Divider,
   Dialog,
@@ -20,6 +19,7 @@ import {
   Tabs,
   Tab,
   Stack,
+  Alert,
 } from '@mui/material';
 import MarkEmailReadRoundedIcon from '@mui/icons-material/MarkEmailReadRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
@@ -28,7 +28,10 @@ import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
 import WebhookRoundedIcon from '@mui/icons-material/WebhookRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import ForwardToInboxRoundedIcon from '@mui/icons-material/ForwardToInboxRounded';
-import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
+import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
+import ContactMailRoundedIcon from '@mui/icons-material/ContactMailRounded';
+import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { api } from '../api';
 
 export default function IntegrationsTab({ data, onChange, onNotify }) {
@@ -36,8 +39,22 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
     mailchimp_enabled: false,
     mailchimp_api_key: '',
     mailchimp_list_id: '',
+    brevo_enabled: false,
+    brevo_api_key: '',
+    brevo_list_id: '',
+    mailerlite_enabled: false,
+    mailerlite_api_key: '',
+    mailerlite_group_id: '',
     webhook_enabled: false,
     webhook_url: '',
+    smtp_enabled: false,
+    smtp_host: '',
+    smtp_port: '587',
+    smtp_encryption: 'tls',
+    smtp_username: '',
+    smtp_password: '',
+    smtp_from_email: '',
+    smtp_from_name: '',
     admin_email_enabled: true,
     admin_email_recipient: '',
     admin_email_subject: 'New Subscriber Lead Captured on {site_name} 🎉',
@@ -48,8 +65,16 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
   };
 
   const [emailSubTab, setEmailSubTab] = useState(0); // 0: Admin Alert, 1: Welcome Email
+
+  // Testing states
   const [testingMailchimp, setTestingMailchimp] = useState(false);
   const [mailchimpResult, setMailchimpResult] = useState(null);
+
+  const [testingBrevo, setTestingBrevo] = useState(false);
+  const [brevoResult, setBrevoResult] = useState(null);
+
+  const [testingMailerLite, setTestingMailerLite] = useState(false);
+  const [mailerLiteResult, setMailerLiteResult] = useState(null);
 
   const [testingWebhook, setTestingWebhook] = useState(false);
   const [webhookResult, setWebhookResult] = useState(null);
@@ -67,6 +92,7 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
     });
   };
 
+  // Test Mailchimp
   const handleTestMailchimp = async () => {
     if (!integrations.mailchimp_api_key || !integrations.mailchimp_list_id) {
       if (onNotify) onNotify('Please enter both Mailchimp API Key and Audience/List ID', 'warning');
@@ -86,6 +112,47 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
     }
   };
 
+  // Test Brevo
+  const handleTestBrevo = async () => {
+    if (!integrations.brevo_api_key) {
+      if (onNotify) onNotify('Please enter your Brevo API Key', 'warning');
+      return;
+    }
+    setTestingBrevo(true);
+    setBrevoResult(null);
+    try {
+      const res = await api.testBrevo(integrations.brevo_api_key, integrations.brevo_list_id);
+      setBrevoResult({ success: true, message: res.message });
+      if (onNotify) onNotify(res.message, 'success');
+    } catch (err) {
+      setBrevoResult({ success: false, message: err.message });
+      if (onNotify) onNotify('Brevo test failed: ' + err.message, 'error');
+    } finally {
+      setTestingBrevo(false);
+    }
+  };
+
+  // Test MailerLite
+  const handleTestMailerLite = async () => {
+    if (!integrations.mailerlite_api_key) {
+      if (onNotify) onNotify('Please enter your MailerLite API Key', 'warning');
+      return;
+    }
+    setTestingMailerLite(true);
+    setMailerLiteResult(null);
+    try {
+      const res = await api.testMailerLite(integrations.mailerlite_api_key, integrations.mailerlite_group_id);
+      setMailerLiteResult({ success: true, message: res.message });
+      if (onNotify) onNotify(res.message, 'success');
+    } catch (err) {
+      setMailerLiteResult({ success: false, message: err.message });
+      if (onNotify) onNotify('MailerLite test failed: ' + err.message, 'error');
+    } finally {
+      setTestingMailerLite(false);
+    }
+  };
+
+  // Test Webhook
   const handleTestWebhook = async () => {
     if (!integrations.webhook_url) {
       if (onNotify) onNotify('Please enter a Webhook URL', 'warning');
@@ -105,12 +172,14 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
     }
   };
 
+  // Open Test Email Modal
   const openTestEmailModal = (type) => {
     setTestEmailType(type);
-    setTestEmailRecipient(integrations.admin_email_recipient || '');
+    setTestEmailRecipient(integrations.admin_email_recipient || integrations.smtp_from_email || '');
     setTestEmailDialogOpen(true);
   };
 
+  // Send Test Email
   const handleSendTestEmail = async () => {
     if (!testEmailRecipient) {
       if (onNotify) onNotify('Please enter recipient email', 'warning');
@@ -155,11 +224,20 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
               <MarkEmailReadRoundedIcon sx={{ color: '#2563eb', fontSize: 28 }} />
               <Box>
-                <Typography variant="h6" fontWeight={700}>
-                  Mailchimp API Integration
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                  <Typography variant="h6" fontWeight={700}>
+                    Mailchimp API v3
+                  </Typography>
+                  <Chip
+                    label="Free Tier: 500 Contacts / 1,000 Emails/Mo"
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                    sx={{ fontWeight: 700, fontSize: '0.72rem', height: 22, borderRadius: '6px' }}
+                  />
+                </Box>
                 <Typography variant="body2" color="text.secondary">
-                  Automatically sync new subscribers to your Mailchimp Audience in real-time.
+                  Automatically sync new subscribers into your Mailchimp Audience.
                 </Typography>
               </Box>
             </Box>
@@ -187,7 +265,7 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
                 value={integrations.mailchimp_api_key || ''}
                 onChange={(e) => updateIntegration('mailchimp_api_key', e.target.value)}
                 disabled={!integrations.mailchimp_enabled}
-                helperText="Find in Mailchimp Profile -> Extras -> API Keys"
+                helperText="Found in Mailchimp: Profile -> Extras -> API Keys"
               />
             </Grid>
             <Grid item xs={12} md={5}>
@@ -198,7 +276,7 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
                 value={integrations.mailchimp_list_id || ''}
                 onChange={(e) => updateIntegration('mailchimp_list_id', e.target.value)}
                 disabled={!integrations.mailchimp_enabled}
-                helperText="Find in Audience Settings -> Audience name and defaults"
+                helperText="Found in Audience Settings -> Audience name and defaults"
               />
             </Grid>
             <Grid item xs={12}>
@@ -227,16 +305,202 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
         </CardContent>
       </Card>
 
-      {/* 2. Webhook Dispatcher Card */}
+      {/* 2. Brevo (Sendinblue) Integration Card */}
+      <Card sx={{ borderRadius: '10px' }}>
+        <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <ContactMailRoundedIcon sx={{ color: '#0284c7', fontSize: 28 }} />
+              <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                  <Typography variant="h6" fontWeight={700}>
+                    Brevo (Sendinblue) API v3
+                  </Typography>
+                  <Chip
+                    label="Free Tier: 300 Emails/Day (9,000/Mo) & Unlimited Contacts"
+                    size="small"
+                    color="info"
+                    variant="outlined"
+                    sx={{ fontWeight: 700, fontSize: '0.72rem', height: 22, borderRadius: '6px' }}
+                  />
+                </Box>
+                <Typography variant="body2" color="text.secondary">
+                  Real-time subscriber capture and contact list synchronization via Brevo API v3.
+                </Typography>
+              </Box>
+            </Box>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={Boolean(integrations.brevo_enabled)}
+                  onChange={(e) => updateIntegration('brevo_enabled', e.target.checked)}
+                  color="primary"
+                />
+              }
+              label={integrations.brevo_enabled ? 'Active' : 'Disabled'}
+              sx={{ m: 0 }}
+            />
+          </Box>
+
+          <Divider sx={{ my: 2 }} />
+
+          <Grid container spacing={2.5}>
+            <Grid item xs={12} md={8}>
+              <TextField
+                fullWidth
+                label="Brevo API Key (v3)"
+                placeholder="xkeysib-..."
+                value={integrations.brevo_api_key || ''}
+                onChange={(e) => updateIntegration('brevo_api_key', e.target.value)}
+                disabled={!integrations.brevo_enabled}
+                helperText="Found in Brevo: SMTP & API -> API Keys"
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="List ID (Optional)"
+                placeholder="e.g. 2"
+                value={integrations.brevo_list_id || ''}
+                onChange={(e) => updateIntegration('brevo_list_id', e.target.value)}
+                disabled={!integrations.brevo_enabled}
+                helperText="Leave empty to add to general contacts"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                <Button
+                  variant="outlined"
+                  onClick={handleTestBrevo}
+                  disabled={!integrations.brevo_enabled || testingBrevo}
+                  startIcon={testingBrevo ? <CircularProgress size={18} /> : <CheckCircleRoundedIcon />}
+                  sx={{ borderRadius: '8px' }}
+                >
+                  {testingBrevo ? 'Testing Connection...' : 'Test Brevo Connection'}
+                </Button>
+                {brevoResult && (
+                  <Chip
+                    icon={brevoResult.success ? <CheckCircleRoundedIcon /> : <ErrorOutlineRoundedIcon />}
+                    label={brevoResult.message}
+                    color={brevoResult.success ? 'success' : 'error'}
+                    variant="outlined"
+                    sx={{ borderRadius: '8px', fontWeight: 600 }}
+                  />
+                )}
+              </Box>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+
+      {/* 3. MailerLite Integration Card */}
+      <Card sx={{ borderRadius: '10px' }}>
+        <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <MailOutlineRoundedIcon sx={{ color: '#16a34a', fontSize: 28 }} />
+              <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                  <Typography variant="h6" fontWeight={700}>
+                    MailerLite API
+                  </Typography>
+                  <Chip
+                    label="Free Tier: 1,000 Subscribers / 12,000 Emails/Mo"
+                    size="small"
+                    color="success"
+                    variant="outlined"
+                    sx={{ fontWeight: 700, fontSize: '0.72rem', height: 22, borderRadius: '6px' }}
+                  />
+                </Box>
+                <Typography variant="body2" color="text.secondary">
+                  Automatically sync coming soon subscribers into MailerLite subscriber groups.
+                </Typography>
+              </Box>
+            </Box>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={Boolean(integrations.mailerlite_enabled)}
+                  onChange={(e) => updateIntegration('mailerlite_enabled', e.target.checked)}
+                  color="success"
+                />
+              }
+              label={integrations.mailerlite_enabled ? 'Active' : 'Disabled'}
+              sx={{ m: 0 }}
+            />
+          </Box>
+
+          <Divider sx={{ my: 2 }} />
+
+          <Grid container spacing={2.5}>
+            <Grid item xs={12} md={8}>
+              <TextField
+                fullWidth
+                label="MailerLite API Token"
+                placeholder="Bearer token..."
+                value={integrations.mailerlite_api_key || ''}
+                onChange={(e) => updateIntegration('mailerlite_api_key', e.target.value)}
+                disabled={!integrations.mailerlite_enabled}
+                helperText="Found in MailerLite: Integrations -> API"
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="Group ID (Optional)"
+                placeholder="e.g. 123456789"
+                value={integrations.mailerlite_group_id || ''}
+                onChange={(e) => updateIntegration('mailerlite_group_id', e.target.value)}
+                disabled={!integrations.mailerlite_enabled}
+                helperText="Leave empty to add to all subscribers"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                <Button
+                  variant="outlined"
+                  color="success"
+                  onClick={handleTestMailerLite}
+                  disabled={!integrations.mailerlite_enabled || testingMailerLite}
+                  startIcon={testingMailerLite ? <CircularProgress size={18} /> : <CheckCircleRoundedIcon />}
+                  sx={{ borderRadius: '8px' }}
+                >
+                  {testingMailerLite ? 'Testing Connection...' : 'Test MailerLite Connection'}
+                </Button>
+                {mailerLiteResult && (
+                  <Chip
+                    icon={mailerLiteResult.success ? <CheckCircleRoundedIcon /> : <ErrorOutlineRoundedIcon />}
+                    label={mailerLiteResult.message}
+                    color={mailerLiteResult.success ? 'success' : 'error'}
+                    variant="outlined"
+                    sx={{ borderRadius: '8px', fontWeight: 600 }}
+                  />
+                )}
+              </Box>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+
+      {/* 4. Webhook Dispatcher Card */}
       <Card sx={{ borderRadius: '10px' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
               <WebhookRoundedIcon sx={{ color: '#7c3aed', fontSize: 28 }} />
               <Box>
-                <Typography variant="h6" fontWeight={700}>
-                  Zapier / Make / Webhook Dispatcher
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                  <Typography variant="h6" fontWeight={700}>
+                    Zapier / Make / Webhook Dispatcher
+                  </Typography>
+                  <Chip
+                    label="Free / Unlimited Direct Push"
+                    size="small"
+                    color="secondary"
+                    variant="outlined"
+                    sx={{ fontWeight: 700, fontSize: '0.72rem', height: 22, borderRadius: '6px' }}
+                  />
+                </Box>
                 <Typography variant="body2" color="text.secondary">
                   Trigger an automated HTTP POST webhook with subscriber data to Zapier, Make, Pabbly, or custom CRM.
                 </Typography>
@@ -296,7 +560,129 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
         </CardContent>
       </Card>
 
-      {/* 3. Email Notification Engine & Template Customizer */}
+      {/* 5. Custom SMTP Server Configuration */}
+      <Card sx={{ borderRadius: '10px' }}>
+        <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <DnsRoundedIcon sx={{ color: '#d97706', fontSize: 28 }} />
+              <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                  <Typography variant="h6" fontWeight={700}>
+                    Custom SMTP Mail Delivery
+                  </Typography>
+                  <Chip
+                    label="Free: Gmail (500/day), SendGrid (100/day) or Hosting SMTP"
+                    size="small"
+                    color="warning"
+                    variant="outlined"
+                    sx={{ fontWeight: 700, fontSize: '0.72rem', height: 22, borderRadius: '6px' }}
+                  />
+                </Box>
+                <Typography variant="body2" color="text.secondary">
+                  Route all notifications through a reliable external SMTP server (Gmail, SendGrid, Amazon SES, or cPanel).
+                </Typography>
+              </Box>
+            </Box>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={Boolean(integrations.smtp_enabled)}
+                  onChange={(e) => updateIntegration('smtp_enabled', e.target.checked)}
+                  color="warning"
+                />
+              }
+              label={integrations.smtp_enabled ? 'Active' : 'Disabled'}
+              sx={{ m: 0 }}
+            />
+          </Box>
+
+          <Divider sx={{ my: 2 }} />
+
+          <Grid container spacing={2.5}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="SMTP Host"
+                placeholder="e.g. smtp.gmail.com or smtp.sendgrid.net"
+                value={integrations.smtp_host || ''}
+                onChange={(e) => updateIntegration('smtp_host', e.target.value)}
+                disabled={!integrations.smtp_enabled}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
+                fullWidth
+                label="Port"
+                placeholder="587 / 465"
+                value={integrations.smtp_port || '587'}
+                onChange={(e) => updateIntegration('smtp_port', e.target.value)}
+                disabled={!integrations.smtp_enabled}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
+                fullWidth
+                select
+                label="Encryption"
+                value={integrations.smtp_encryption || 'tls'}
+                onChange={(e) => updateIntegration('smtp_encryption', e.target.value)}
+                disabled={!integrations.smtp_enabled}
+                SelectProps={{ native: true }}
+              >
+                <option value="tls">TLS (Port 587)</option>
+                <option value="ssl">SSL (Port 465)</option>
+                <option value="none">None (Port 25)</option>
+              </TextField>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="SMTP Username"
+                placeholder="username@gmail.com"
+                value={integrations.smtp_username || ''}
+                onChange={(e) => updateIntegration('smtp_username', e.target.value)}
+                disabled={!integrations.smtp_enabled}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                type="password"
+                label="SMTP Password / App Password"
+                placeholder="••••••••••••"
+                value={integrations.smtp_password || ''}
+                onChange={(e) => updateIntegration('smtp_password', e.target.value)}
+                disabled={!integrations.smtp_enabled}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Sender From Email"
+                placeholder="noreply@yourdomain.com"
+                value={integrations.smtp_from_email || ''}
+                onChange={(e) => updateIntegration('smtp_from_email', e.target.value)}
+                disabled={!integrations.smtp_enabled}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Sender From Name"
+                placeholder="e.g. My Awesome Brand"
+                value={integrations.smtp_from_name || ''}
+                onChange={(e) => updateIntegration('smtp_from_name', e.target.value)}
+                disabled={!integrations.smtp_enabled}
+              />
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+
+      {/* 6. Email Notification Engine & Template Customizer */}
       <Card sx={{ borderRadius: '10px' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>

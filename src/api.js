@@ -161,6 +161,30 @@ export const api = {
     });
   },
 
+  async testBrevo(apiKey, listId) {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('integrations/test-brevo'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      body: JSON.stringify({ api_key: apiKey, list_id: listId }),
+    });
+  },
+
+  async testMailerLite(apiKey, groupId) {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('integrations/test-mailerlite'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      body: JSON.stringify({ api_key: apiKey, group_id: groupId }),
+    });
+  },
+
   async testWebhook(url) {
     const { nonce } = getRestConfig();
     return fetchJson(buildUrl('integrations/test-webhook'), {

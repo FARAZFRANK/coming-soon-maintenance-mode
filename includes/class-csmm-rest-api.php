@@ -98,6 +98,28 @@ class CSMM_REST_API {
 			)
 		);
 
+		// Test Brevo Connection
+		register_rest_route(
+			self::NAMESPACE,
+			'/integrations/test-brevo',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'test_brevo' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
+
+		// Test MailerLite Connection
+		register_rest_route(
+			self::NAMESPACE,
+			'/integrations/test-mailerlite',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'test_mailerlite' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
+
 		// Test Webhook Dispatch
 		register_rest_route(
 			self::NAMESPACE,
@@ -227,8 +249,22 @@ class CSMM_REST_API {
 				'mailchimp_enabled'      => ! empty( $integrations['mailchimp_enabled'] ),
 				'mailchimp_api_key'      => isset( $integrations['mailchimp_api_key'] ) ? $integrations['mailchimp_api_key'] : '',
 				'mailchimp_list_id'      => isset( $integrations['mailchimp_list_id'] ) ? $integrations['mailchimp_list_id'] : '',
+				'brevo_enabled'          => ! empty( $integrations['brevo_enabled'] ),
+				'brevo_api_key'          => isset( $integrations['brevo_api_key'] ) ? $integrations['brevo_api_key'] : '',
+				'brevo_list_id'          => isset( $integrations['brevo_list_id'] ) ? $integrations['brevo_list_id'] : '',
+				'mailerlite_enabled'     => ! empty( $integrations['mailerlite_enabled'] ),
+				'mailerlite_api_key'     => isset( $integrations['mailerlite_api_key'] ) ? $integrations['mailerlite_api_key'] : '',
+				'mailerlite_group_id'    => isset( $integrations['mailerlite_group_id'] ) ? $integrations['mailerlite_group_id'] : '',
 				'webhook_enabled'        => ! empty( $integrations['webhook_enabled'] ),
 				'webhook_url'            => isset( $integrations['webhook_url'] ) ? $integrations['webhook_url'] : '',
+				'smtp_enabled'           => ! empty( $integrations['smtp_enabled'] ),
+				'smtp_host'              => isset( $integrations['smtp_host'] ) ? $integrations['smtp_host'] : '',
+				'smtp_port'              => isset( $integrations['smtp_port'] ) ? $integrations['smtp_port'] : '587',
+				'smtp_encryption'        => isset( $integrations['smtp_encryption'] ) ? $integrations['smtp_encryption'] : 'tls',
+				'smtp_username'          => isset( $integrations['smtp_username'] ) ? $integrations['smtp_username'] : '',
+				'smtp_password'          => isset( $integrations['smtp_password'] ) ? $integrations['smtp_password'] : '',
+				'smtp_from_email'        => isset( $integrations['smtp_from_email'] ) ? $integrations['smtp_from_email'] : get_bloginfo( 'admin_email' ),
+				'smtp_from_name'         => isset( $integrations['smtp_from_name'] ) ? $integrations['smtp_from_name'] : get_bloginfo( 'name' ),
 				'admin_email_enabled'    => ! empty( $integrations['admin_email_enabled'] ),
 				'admin_email_recipient'  => isset( $integrations['admin_email_recipient'] ) ? $integrations['admin_email_recipient'] : get_bloginfo( 'admin_email' ),
 				'admin_email_subject'    => isset( $integrations['admin_email_subject'] ) ? $integrations['admin_email_subject'] : 'New Subscriber Lead Captured on {site_name} 🎉',
@@ -356,8 +392,22 @@ class CSMM_REST_API {
 				'mailchimp_enabled'      => ! empty( $int_input['mailchimp_enabled'] ),
 				'mailchimp_api_key'      => isset( $int_input['mailchimp_api_key'] ) ? sanitize_text_field( trim( $int_input['mailchimp_api_key'] ) ) : '',
 				'mailchimp_list_id'      => isset( $int_input['mailchimp_list_id'] ) ? sanitize_text_field( trim( $int_input['mailchimp_list_id'] ) ) : '',
+				'brevo_enabled'          => ! empty( $int_input['brevo_enabled'] ),
+				'brevo_api_key'          => isset( $int_input['brevo_api_key'] ) ? sanitize_text_field( trim( $int_input['brevo_api_key'] ) ) : '',
+				'brevo_list_id'          => isset( $int_input['brevo_list_id'] ) ? sanitize_text_field( trim( $int_input['brevo_list_id'] ) ) : '',
+				'mailerlite_enabled'     => ! empty( $int_input['mailerlite_enabled'] ),
+				'mailerlite_api_key'     => isset( $int_input['mailerlite_api_key'] ) ? sanitize_text_field( trim( $int_input['mailerlite_api_key'] ) ) : '',
+				'mailerlite_group_id'    => isset( $int_input['mailerlite_group_id'] ) ? sanitize_text_field( trim( $int_input['mailerlite_group_id'] ) ) : '',
 				'webhook_enabled'        => ! empty( $int_input['webhook_enabled'] ),
 				'webhook_url'            => isset( $int_input['webhook_url'] ) ? esc_url_raw( trim( $int_input['webhook_url'] ) ) : '',
+				'smtp_enabled'           => ! empty( $int_input['smtp_enabled'] ),
+				'smtp_host'              => isset( $int_input['smtp_host'] ) ? sanitize_text_field( $int_input['smtp_host'] ) : '',
+				'smtp_port'              => isset( $int_input['smtp_port'] ) ? sanitize_text_field( $int_input['smtp_port'] ) : '587',
+				'smtp_encryption'        => isset( $int_input['smtp_encryption'] ) ? sanitize_text_field( $int_input['smtp_encryption'] ) : 'tls',
+				'smtp_username'          => isset( $int_input['smtp_username'] ) ? sanitize_text_field( $int_input['smtp_username'] ) : '',
+				'smtp_password'          => isset( $int_input['smtp_password'] ) ? $int_input['smtp_password'] : '',
+				'smtp_from_email'        => isset( $int_input['smtp_from_email'] ) ? sanitize_email( $int_input['smtp_from_email'] ) : get_bloginfo( 'admin_email' ),
+				'smtp_from_name'         => isset( $int_input['smtp_from_name'] ) ? sanitize_text_field( $int_input['smtp_from_name'] ) : get_bloginfo( 'name' ),
 				'admin_email_enabled'    => ! empty( $int_input['admin_email_enabled'] ),
 				'admin_email_recipient'  => isset( $int_input['admin_email_recipient'] ) ? sanitize_email( $int_input['admin_email_recipient'] ) : get_bloginfo( 'admin_email' ),
 				'admin_email_subject'    => isset( $int_input['admin_email_subject'] ) ? sanitize_text_field( $int_input['admin_email_subject'] ) : '',
@@ -395,6 +445,46 @@ class CSMM_REST_API {
 			return rest_ensure_response( $result );
 		}
 		return new WP_Error( 'mailchimp_failed', $result['message'], array( 'status' => 400 ) );
+	}
+
+	/**
+	 * Test Brevo API credentials.
+	 *
+	 * @param WP_REST_Request $request
+	 */
+	public function test_brevo( $request ) {
+		$api_key = sanitize_text_field( $request->get_param( 'api_key' ) );
+		$list_id = intval( $request->get_param( 'list_id' ) );
+
+		if ( empty( $api_key ) ) {
+			return new WP_Error( 'missing_api_key', __( 'Please provide Brevo API Key.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+		}
+
+		$result = CSMM_Integrations::test_brevo( $api_key, $list_id );
+		if ( $result['success'] ) {
+			return rest_ensure_response( $result );
+		}
+		return new WP_Error( 'brevo_failed', $result['message'], array( 'status' => 400 ) );
+	}
+
+	/**
+	 * Test MailerLite API credentials.
+	 *
+	 * @param WP_REST_Request $request
+	 */
+	public function test_mailerlite( $request ) {
+		$api_key  = sanitize_text_field( $request->get_param( 'api_key' ) );
+		$group_id = sanitize_text_field( $request->get_param( 'group_id' ) );
+
+		if ( empty( $api_key ) ) {
+			return new WP_Error( 'missing_api_key', __( 'Please provide MailerLite API Key.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+		}
+
+		$result = CSMM_Integrations::test_mailerlite( $api_key, $group_id );
+		if ( $result['success'] ) {
+			return rest_ensure_response( $result );
+		}
+		return new WP_Error( 'mailerlite_failed', $result['message'], array( 'status' => 400 ) );
 	}
 
 	/**

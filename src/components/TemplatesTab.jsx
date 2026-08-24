@@ -132,9 +132,6 @@ export default function TemplatesTab({ settings, onChange, templates }) {
                         <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                           {tpl.name}
                         </Typography>
-                        {isSelected && (
-                          <Chip label="Selected" size="small" color="primary" sx={{ height: 20, fontSize: '0.75rem', borderRadius: '4px' }} />
-                        )}
                       </Box>
 
                       <Box sx={{ display: 'flex', gap: 1 }}>

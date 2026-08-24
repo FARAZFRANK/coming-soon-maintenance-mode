@@ -4,9 +4,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Handles Newsletter Integrations (Mailchimp v3, Webhooks) and Email Notifications.
+ * Handles Multi-Provider Newsletter Integrations (Mailchimp, Brevo, MailerLite, Webhooks),
+ * Custom SMTP Delivery, and Automated Email Notifications.
  */
 class CSMM_Integrations {
+
+	/**
+	 * Init hooks (e.g. SMTP configuration).
+	 */
+	public static function init() {
+		add_action( 'phpmailer_init', array( __CLASS__, 'setup_smtp' ) );
+	}
+
+	/**
+	 * Configure PHPMailer to send via custom SMTP if enabled.
+	 *
+	 * @param PHPMailer\PHPMailer\PHPMailer $phpmailer
+	 */
+	public static function setup_smtp( $phpmailer ) {
+		$integrations = get_option( 'csmm_integrations', array() );
+
+		if ( ! empty( $integrations['smtp_enabled'] ) && ! empty( $integrations['smtp_host'] ) ) {
+			$phpmailer->isSMTP();
+			$phpmailer->Host       = sanitize_text_field( $integrations['smtp_host'] );
+			$phpmailer->SMTPAuth   = true;
+			$phpmailer->Port       = ! empty( $integrations['smtp_port'] ) ? intval( $integrations['smtp_port'] ) : 587;
+			$phpmailer->Username   = sanitize_text_field( $integrations['smtp_username'] );
+			$phpmailer->Password   = isset( $integrations['smtp_password'] ) ? $integrations['smtp_password'] : '';
+			$encryption            = ! empty( $integrations['smtp_encryption'] ) ? $integrations['smtp_encryption'] : 'tls';
+			$phpmailer->SMTPSecure = ( 'none' !== $encryption ) ? $encryption : '';
+
+			$from_email = ! empty( $integrations['smtp_from_email'] ) ? sanitize_email( $integrations['smtp_from_email'] ) : get_bloginfo( 'admin_email' );
+			$from_name  = ! empty( $integrations['smtp_from_name'] ) ? sanitize_text_field( $integrations['smtp_from_name'] ) : get_bloginfo( 'name' );
+
+			$phpmailer->From     = $from_email;
+			$phpmailer->FromName = $from_name;
+		}
+	}
 
 	/**
 	 * Main pipeline: Triggered when a new subscriber enters email on frontend or API.
@@ -18,12 +52,24 @@ class CSMM_Integrations {
 	public static function process_new_subscriber( $email, $ip = '', $referer = '' ) {
 		$integrations = get_option( 'csmm_integrations', array() );
 
-		// 1. Mailchimp API Sync
+		// 1. Mailchimp API v3 Sync
 		if ( ! empty( $integrations['mailchimp_enabled'] ) && ! empty( $integrations['mailchimp_api_key'] ) && ! empty( $integrations['mailchimp_list_id'] ) ) {
 			self::sync_to_mailchimp( $email, $integrations['mailchimp_api_key'], $integrations['mailchimp_list_id'] );
 		}
 
-		// 2. Custom Webhook Dispatch
+		// 2. Brevo (Sendinblue) API v3 Sync
+		if ( ! empty( $integrations['brevo_enabled'] ) && ! empty( $integrations['brevo_api_key'] ) ) {
+			$list_id = ! empty( $integrations['brevo_list_id'] ) ? intval( $integrations['brevo_list_id'] ) : 0;
+			self::sync_to_brevo( $email, $integrations['brevo_api_key'], $list_id );
+		}
+
+		// 3. MailerLite API v3 Sync
+		if ( ! empty( $integrations['mailerlite_enabled'] ) && ! empty( $integrations['mailerlite_api_key'] ) ) {
+			$group_id = ! empty( $integrations['mailerlite_group_id'] ) ? sanitize_text_field( $integrations['mailerlite_group_id'] ) : '';
+			self::sync_to_mailerlite( $email, $integrations['mailerlite_api_key'], $group_id );
+		}
+
+		// 4. Custom Webhook Dispatch
 		if ( ! empty( $integrations['webhook_enabled'] ) && ! empty( $integrations['webhook_url'] ) ) {
 			self::dispatch_webhook(
 				$integrations['webhook_url'],
@@ -39,12 +85,12 @@ class CSMM_Integrations {
 			);
 		}
 
-		// 3. Admin Notification Email
+		// 5. Admin Notification Email
 		if ( ! empty( $integrations['admin_email_enabled'] ) ) {
 			self::send_admin_notification( $email, $ip, $integrations );
 		}
 
-		// 4. Subscriber Welcome Email
+		// 6. Subscriber Welcome Email
 		if ( ! empty( $integrations['welcome_email_enabled'] ) ) {
 			self::send_welcome_email( $email, $integrations );
 		}
@@ -52,11 +98,6 @@ class CSMM_Integrations {
 
 	/**
 	 * Sync email to Mailchimp Audience via API v3.
-	 *
-	 * @param string $email
-	 * @param string $api_key
-	 * @param string $list_id
-	 * @return array
 	 */
 	public static function sync_to_mailchimp( $email, $api_key, $list_id ) {
 		$parts = explode( '-', $api_key );
@@ -89,7 +130,7 @@ class CSMM_Integrations {
 			);
 		}
 
-		$code = wp_remote_retrieve_response_code( $response );
+		$code     = wp_remote_retrieve_response_code( $response );
 		$res_body = json_decode( wp_remote_retrieve_body( $response ), true );
 
 		if ( 200 === $code || 201 === $code ) {
@@ -99,7 +140,6 @@ class CSMM_Integrations {
 			);
 		}
 
-		// Check if already subscribed (status 400 with title 'Member Exists')
 		if ( isset( $res_body['title'] ) && 'Member Exists' === $res_body['title'] ) {
 			return array(
 				'success' => true,
@@ -116,10 +156,6 @@ class CSMM_Integrations {
 
 	/**
 	 * Test Mailchimp Connection.
-	 *
-	 * @param string $api_key
-	 * @param string $list_id
-	 * @return array
 	 */
 	public static function test_mailchimp( $api_key, $list_id ) {
 		$parts = explode( '-', $api_key );
@@ -169,11 +205,196 @@ class CSMM_Integrations {
 	}
 
 	/**
+	 * Sync email to Brevo (Sendinblue) API v3.
+	 */
+	public static function sync_to_brevo( $email, $api_key, $list_id = 0 ) {
+		$url = 'https://api.brevo.com/v3/contacts';
+
+		$payload = array(
+			'email'         => $email,
+			'updateEnabled' => true,
+		);
+
+		if ( $list_id > 0 ) {
+			$payload['listIds'] = array( $list_id );
+		}
+
+		$response = wp_remote_post(
+			$url,
+			array(
+				'headers' => array(
+					'api-key'      => $api_key,
+					'Content-Type' => 'application/json',
+					'Accept'       => 'application/json',
+				),
+				'body'    => wp_json_encode( $payload ),
+				'timeout' => 15,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return array(
+				'success' => false,
+				'message' => $response->get_error_message(),
+			);
+		}
+
+		$code     = wp_remote_retrieve_response_code( $response );
+		$res_body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( 201 === $code || 204 === $code || 200 === $code ) {
+			return array(
+				'success' => true,
+				'message' => __( 'Subscribed successfully to Brevo.', 'coming-soon-maintenance-mode' ),
+			);
+		}
+
+		$msg = isset( $res_body['message'] ) ? $res_body['message'] : __( 'Brevo API Error.', 'coming-soon-maintenance-mode' );
+		return array(
+			'success' => false,
+			'message' => $msg,
+		);
+	}
+
+	/**
+	 * Test Brevo (Sendinblue) Connection.
+	 */
+	public static function test_brevo( $api_key, $list_id = 0 ) {
+		$url = 'https://api.brevo.com/v3/account';
+
+		$response = wp_remote_get(
+			$url,
+			array(
+				'headers' => array(
+					'api-key' => $api_key,
+					'Accept'  => 'application/json',
+				),
+				'timeout' => 15,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return array(
+				'success' => false,
+				'message' => $response->get_error_message(),
+			);
+		}
+
+		$code = wp_remote_retrieve_response_code( $response );
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( 200 === $code ) {
+			$email = isset( $body['email'] ) ? $body['email'] : 'Account';
+			$plan  = isset( $body['plan'][0]['type'] ) ? ucfirst( $body['plan'][0]['type'] ) : 'Free';
+			return array(
+				'success' => true,
+				'message' => sprintf( __( 'Authenticated with Brevo (%s - %s Plan)', 'coming-soon-maintenance-mode' ), $email, $plan ),
+			);
+		}
+
+		$msg = isset( $body['message'] ) ? $body['message'] : __( 'Invalid Brevo API Key.', 'coming-soon-maintenance-mode' );
+		return array(
+			'success' => false,
+			'message' => $msg,
+		);
+	}
+
+	/**
+	 * Sync email to MailerLite API v3.
+	 */
+	public static function sync_to_mailerlite( $email, $api_key, $group_id = '' ) {
+		$url = 'https://connect.mailerlite.com/api/subscribers';
+
+		$payload = array(
+			'email'  => $email,
+			'status' => 'active',
+		);
+
+		if ( ! empty( $group_id ) ) {
+			$payload['groups'] = array( $group_id );
+		}
+
+		$response = wp_remote_post(
+			$url,
+			array(
+				'headers' => array(
+					'Authorization' => 'Bearer ' . $api_key,
+					'Content-Type'  => 'application/json',
+					'Accept'        => 'application/json',
+				),
+				'body'    => wp_json_encode( $payload ),
+				'timeout' => 15,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return array(
+				'success' => false,
+				'message' => $response->get_error_message(),
+			);
+		}
+
+		$code     = wp_remote_retrieve_response_code( $response );
+		$res_body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( 200 === $code || 201 === $code ) {
+			return array(
+				'success' => true,
+				'message' => __( 'Subscribed successfully to MailerLite.', 'coming-soon-maintenance-mode' ),
+			);
+		}
+
+		$msg = isset( $res_body['message'] ) ? $res_body['message'] : __( 'MailerLite API Error.', 'coming-soon-maintenance-mode' );
+		return array(
+			'success' => false,
+			'message' => $msg,
+		);
+	}
+
+	/**
+	 * Test MailerLite Connection.
+	 */
+	public static function test_mailerlite( $api_key, $group_id = '' ) {
+		$url = 'https://connect.mailerlite.com/api/subscribers?limit=1';
+
+		$response = wp_remote_get(
+			$url,
+			array(
+				'headers' => array(
+					'Authorization' => 'Bearer ' . $api_key,
+					'Accept'        => 'application/json',
+				),
+				'timeout' => 15,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return array(
+				'success' => false,
+				'message' => $response->get_error_message(),
+			);
+		}
+
+		$code = wp_remote_retrieve_response_code( $response );
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( 200 === $code ) {
+			$total = isset( $body['total'] ) ? intval( $body['total'] ) : 0;
+			return array(
+				'success' => true,
+				'message' => sprintf( __( 'Authenticated with MailerLite (Total Subscribers: %d)', 'coming-soon-maintenance-mode' ), $total ),
+			);
+		}
+
+		$msg = isset( $body['message'] ) ? $body['message'] : __( 'Invalid MailerLite API Key.', 'coming-soon-maintenance-mode' );
+		return array(
+			'success' => false,
+			'message' => $msg,
+		);
+	}
+
+	/**
 	 * Dispatch JSON Payload to Custom Webhook.
-	 *
-	 * @param string $url
-	 * @param array $payload
-	 * @return array
 	 */
 	public static function dispatch_webhook( $url, $payload ) {
 		$response = wp_remote_post(
@@ -202,10 +423,6 @@ class CSMM_Integrations {
 
 	/**
 	 * Send notification email to admin.
-	 *
-	 * @param string $subscriber_email
-	 * @param string $ip
-	 * @param array $integrations
 	 */
 	public static function send_admin_notification( $subscriber_email, $ip = '', $integrations = array() ) {
 		$admin_email = ! empty( $integrations['admin_email_recipient'] ) ? $integrations['admin_email_recipient'] : get_bloginfo( 'admin_email' );
@@ -232,9 +449,6 @@ class CSMM_Integrations {
 
 	/**
 	 * Send welcome email to subscriber.
-	 *
-	 * @param string $subscriber_email
-	 * @param array $integrations
 	 */
 	public static function send_welcome_email( $subscriber_email, $integrations = array() ) {
 		$subject_template = ! empty( $integrations['welcome_email_subject'] )
@@ -257,12 +471,6 @@ class CSMM_Integrations {
 
 	/**
 	 * Send test email for admin preview.
-	 *
-	 * @param string $type ('admin_alert' or 'welcome')
-	 * @param string $recipient
-	 * @param string $subject
-	 * @param string $body
-	 * @return array
 	 */
 	public static function send_test_email( $type, $recipient, $subject, $body ) {
 		$recipient = sanitize_email( $recipient );
@@ -299,17 +507,13 @@ class CSMM_Integrations {
 
 	/**
 	 * Replace dynamic placeholders in email subject and HTML body.
-	 *
-	 * @param string $text
-	 * @param array $extra_data
-	 * @return string
 	 */
 	public static function parse_email_placeholders( $text, $extra_data = array() ) {
 		$site_name = get_bloginfo( 'name' );
 		$site_url  = home_url( '/' );
 
-		$content = get_option( 'csmm_content', array() );
-		$launch_date = ! empty( $content['countdown_date'] ) ? date( 'F d, Y', strtotime( $content['countdown_date'] ) ) : 'Soon';
+		$content        = get_option( 'csmm_content', array() );
+		$launch_date    = ! empty( $content['countdown_date'] ) ? date( 'F d, Y', strtotime( $content['countdown_date'] ) ) : 'Soon';
 		$countdown_time = ! empty( $content['countdown_time'] ) ? $content['countdown_time'] : '10:00';
 
 		$replacements = array(
@@ -327,16 +531,15 @@ class CSMM_Integrations {
 
 	/**
 	 * Helper to send styled HTML email via WordPress wp_mail.
-	 *
-	 * @param string $to
-	 * @param string $subject
-	 * @param string $body_html
-	 * @return bool
 	 */
 	private static function send_html_mail( $to, $subject, $body_html ) {
+		$integrations = get_option( 'csmm_integrations', array() );
+		$from_email   = ! empty( $integrations['smtp_from_email'] ) ? sanitize_email( $integrations['smtp_from_email'] ) : get_bloginfo( 'admin_email' );
+		$from_name    = ! empty( $integrations['smtp_from_name'] ) ? sanitize_text_field( $integrations['smtp_from_name'] ) : get_bloginfo( 'name' );
+
 		$headers = array(
 			'Content-Type: text/html; charset=UTF-8',
-			'From: ' . get_bloginfo( 'name' ) . ' <' . get_bloginfo( 'admin_email' ) . '>',
+			'From: ' . $from_name . ' <' . $from_email . '>',
 		);
 
 		$site_title = esc_html( get_bloginfo( 'name' ) );
