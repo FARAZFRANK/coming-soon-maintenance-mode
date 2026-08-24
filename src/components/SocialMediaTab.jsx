@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Card,
@@ -8,6 +8,13 @@ import {
   TextField,
   InputAdornment,
   Alert,
+  Button,
+  IconButton,
+  Divider,
+  Paper,
+  Chip,
+  Stack,
+  Tooltip,
 } from '@mui/material';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -18,14 +25,56 @@ import PinterestIcon from '@mui/icons-material/Pinterest';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import LinkRoundedIcon from '@mui/icons-material/LinkRounded';
+import StarsRoundedIcon from '@mui/icons-material/StarsRounded';
 
 export default function SocialMediaTab({ settings, onChange }) {
   const social = settings.social_media || {};
+  const customChannels = social.custom_channels || [];
 
-  const handleSocialChange = (key, value) => {
+  const handleStandardChange = (key, value) => {
     onChange('social_media', {
       ...social,
       [key]: value,
+    });
+  };
+
+  // Add a new custom social channel
+  const handleAddCustomChannel = (preset) => {
+    const newChannel = {
+      id: 'soc_' + Date.now(),
+      title: preset ? preset.name : 'Custom Channel',
+      icon: preset ? preset.icon : 'fa-solid fa-globe',
+      url: '',
+    };
+    onChange('social_media', {
+      ...social,
+      custom_channels: [...customChannels, newChannel],
+    });
+  };
+
+  // Update a custom channel field
+  const handleUpdateCustomChannel = (id, field, value) => {
+    const updated = customChannels.map((ch) => {
+      if (ch.id === id) {
+        return { ...ch, [field]: value };
+      }
+      return ch;
+    });
+    onChange('social_media', {
+      ...social,
+      custom_channels: updated,
+    });
+  };
+
+  // Remove a custom channel
+  const handleRemoveCustomChannel = (id) => {
+    const updated = customChannels.filter((ch) => ch.id !== id);
+    onChange('social_media', {
+      ...social,
+      custom_channels: updated,
     });
   };
 
@@ -45,20 +94,33 @@ export default function SocialMediaTab({ settings, onChange }) {
     { key: 'qq', label: 'QQ Number / Link', icon: <LanguageRoundedIcon sx={{ color: '#12b7f5' }} />, placeholder: 'Your QQ ID' },
   ];
 
+  // Quick preset chips for 1-click addition
+  const quickPresets = [
+    { name: 'Discord', icon: 'fa-brands fa-discord' },
+    { name: 'Telegram', icon: 'fa-brands fa-telegram' },
+    { name: 'GitHub', icon: 'fa-brands fa-github' },
+    { name: 'Threads', icon: 'fa-brands fa-threads' },
+    { name: 'Twitch', icon: 'fa-brands fa-twitch' },
+    { name: 'Reddit', icon: 'fa-brands fa-reddit' },
+    { name: 'Spotify', icon: 'fa-brands fa-spotify' },
+    { name: 'Medium', icon: 'fa-brands fa-medium' },
+    { name: 'Slack', icon: 'fa-brands fa-slack' },
+    { name: 'Patreon', icon: 'fa-brands fa-patreon' },
+    { name: 'Vimeo', icon: 'fa-brands fa-vimeo-v' },
+    { name: 'Website / Blog', icon: 'fa-solid fa-globe' },
+  ];
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3.5 }}>
+      {/* 1. Standard Social Platforms */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
-        <CardContent sx={{ p: 2.5 }}>
+        <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1.1rem' }}>
-            Social Media Channels
+            Standard Social Channels
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
-            Connect your audience with your active social profiles. Leave any platform URL empty to automatically hide its icon from the frontend page.
+            Connect your active social profiles. Leave any platform URL empty to automatically hide its icon from the frontend page.
           </Typography>
-
-          <Alert severity="info" sx={{ mb: 2.5, borderRadius: '8px' }}>
-            Icons will appear in the footer or social section of your chosen coming soon template.
-          </Alert>
 
           <Grid container spacing={2.5}>
             {platforms.map((p) => (
@@ -67,7 +129,7 @@ export default function SocialMediaTab({ settings, onChange }) {
                   fullWidth
                   label={p.label}
                   value={social[p.key] || ''}
-                  onChange={(e) => handleSocialChange(p.key, e.target.value)}
+                  onChange={(e) => handleStandardChange(p.key, e.target.value)}
                   placeholder={p.placeholder}
                   size="small"
                   InputProps={{
@@ -81,6 +143,167 @@ export default function SocialMediaTab({ settings, onChange }) {
               </Grid>
             ))}
           </Grid>
+        </CardContent>
+      </Card>
+
+      {/* 2. Dynamic Custom Social Channels */}
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2, mb: 2 }}>
+            <Box>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
+                🌟 Dynamic Custom Social Channels & Links
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Add any custom platform (Discord, Telegram, GitHub, Threads, Spotify, custom website, etc.) with custom icons.
+              </Typography>
+            </Box>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddRoundedIcon />}
+              onClick={() => handleAddCustomChannel(null)}
+              sx={{ borderRadius: '8px', fontWeight: 700 }}
+            >
+              Add Custom Channel
+            </Button>
+          </Box>
+
+          {/* Quick Preset Selector Chips */}
+          <Paper
+            variant="outlined"
+            sx={{
+              p: 2,
+              mb: 3,
+              borderRadius: '8px !important',
+              backgroundColor: '#f8fafc',
+              borderStyle: 'dashed',
+            }}
+          >
+            <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+              ⚡ 1-Click Quick Add Presets:
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {quickPresets.map((preset) => (
+                <Chip
+                  key={preset.name}
+                  label={preset.name}
+                  icon={<AddRoundedIcon sx={{ fontSize: 16 }} />}
+                  clickable
+                  onClick={() => handleAddCustomChannel(preset)}
+                  size="small"
+                  variant="outlined"
+                  sx={{
+                    borderRadius: '6px',
+                    fontWeight: 600,
+                    backgroundColor: '#ffffff',
+                    '&:hover': { backgroundColor: '#eff6ff', borderColor: '#2563eb' },
+                  }}
+                />
+              ))}
+            </Box>
+          </Paper>
+
+          {/* Custom Channels List */}
+          {customChannels.length === 0 ? (
+            <Alert severity="info" sx={{ borderRadius: '8px' }}>
+              No custom channels added yet. Click <strong>"Add Custom Channel"</strong> or any <strong>1-Click Quick Preset</strong> above to add Discord, Telegram, GitHub, Threads, or your custom links!
+            </Alert>
+          ) : (
+            <Stack spacing={2}>
+              {customChannels.map((channel, index) => (
+                <Paper
+                  key={channel.id || index}
+                  variant="outlined"
+                  sx={{
+                    p: 2.5,
+                    borderRadius: '10px !important',
+                    borderColor: '#e2e8f0',
+                    backgroundColor: '#ffffff',
+                    transition: 'border-color 0.2s',
+                    '&:hover': { borderColor: '#2563eb' },
+                  }}
+                >
+                  <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={12} md={3.5}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        label="Channel / Platform Name"
+                        placeholder="e.g. Discord, Telegram, GitHub"
+                        value={channel.title || ''}
+                        onChange={(e) => handleUpdateCustomChannel(channel.id, 'title', e.target.value)}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={3.5}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        label="FontAwesome Icon Class"
+                        placeholder="fa-brands fa-discord"
+                        value={channel.icon || ''}
+                        onChange={(e) => handleUpdateCustomChannel(channel.id, 'icon', e.target.value)}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Box
+                                sx={{
+                                  width: 24,
+                                  height: 24,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  color: '#2563eb',
+                                  fontSize: 14,
+                                }}
+                              >
+                                <i className={channel.icon || 'fa-solid fa-globe'} />
+                              </Box>
+                            </InputAdornment>
+                          ),
+                        }}
+                        helperText="e.g. fa-brands fa-discord, fa-brands fa-telegram"
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={4.2}>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        label="Profile / Destination URL"
+                        placeholder="https://..."
+                        value={channel.url || ''}
+                        onChange={(e) => handleUpdateCustomChannel(channel.id, 'url', e.target.value)}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <LinkRoundedIcon sx={{ color: '#64748b', fontSize: 18 }} />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={0.8} sx={{ textAlign: 'right' }}>
+                      <Tooltip title="Delete this channel">
+                        <IconButton
+                          color="error"
+                          onClick={() => handleRemoveCustomChannel(channel.id)}
+                          sx={{
+                            backgroundColor: '#fee2e2',
+                            '&:hover': { backgroundColor: '#fca5a5' },
+                          }}
+                        >
+                          <DeleteOutlineRoundedIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              ))}
+            </Stack>
+          )}
         </CardContent>
       </Card>
     </Box>

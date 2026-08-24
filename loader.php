@@ -80,6 +80,22 @@ ob_start();
 include $template_file;
 $html = ob_get_clean();
 
+// 1. Inject Custom Social Media Channels into <ul class="home-social">
+$custom_channels = isset( $csmm_social_media['custom_channels'] ) && is_array( $csmm_social_media['custom_channels'] ) ? $csmm_social_media['custom_channels'] : array();
+$custom_social_html = '';
+foreach ( $custom_channels as $ch ) {
+	if ( ! empty( $ch['url'] ) ) {
+		$icon  = ! empty( $ch['icon'] ) ? esc_attr( $ch['icon'] ) : 'fa-solid fa-globe';
+		$title = ! empty( $ch['title'] ) ? esc_attr( $ch['title'] ) : '';
+		$custom_social_html .= '<li><a href="' . esc_url( $ch['url'] ) . '" target="_blank" title="' . $title . '"><i class="' . $icon . '" aria-hidden="true"></i></a></li>' . "\n";
+	}
+}
+
+if ( ! empty( $custom_social_html ) && preg_match( '/<\/ul>(\s*<!-- end home-social -->)?/i', $html ) ) {
+	$html = preg_replace( '/(<\/ul>(\s*<!-- end home-social -->)?)/i', $custom_social_html . '$1', $html, 1 );
+}
+
+// 2. Inject SEO & Social meta tags into <head>
 ob_start();
 CSMM_SEO::render_meta_tags( $csmm_content, $csmm_settings, $csmm_seo );
 $seo_meta = ob_get_clean();

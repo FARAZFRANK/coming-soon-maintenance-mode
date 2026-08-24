@@ -237,6 +237,7 @@ class CSMM_REST_API {
 				'whatsapp'  => isset( $social_media['csmm_sm_whatsapp'] ) ? $social_media['csmm_sm_whatsapp'] : '',
 				'tiktok'    => isset( $social_media['csmm_sm_tiktok'] ) ? $social_media['csmm_sm_tiktok'] : '',
 				'qq'        => isset( $social_media['csmm_sm_qq'] ) ? $social_media['csmm_sm_qq'] : '',
+				'custom_channels' => isset( $social_media['custom_channels'] ) && is_array( $social_media['custom_channels'] ) ? $social_media['custom_channels'] : array(),
 			),
 			'seo'                  => array(
 				'meta_title'          => isset( $seo['meta_title'] ) ? $seo['meta_title'] : '',
@@ -369,6 +370,27 @@ class CSMM_REST_API {
 				'csmm_sm_tiktok'    => isset( $sm['tiktok'] ) ? esc_url_raw( $sm['tiktok'] ) : '',
 				'csmm_sm_qq'        => isset( $sm['qq'] ) ? sanitize_text_field( $sm['qq'] ) : '',
 			);
+
+			if ( isset( $sm['custom_channels'] ) && is_array( $sm['custom_channels'] ) ) {
+				$sanitized_custom = array();
+				foreach ( $sm['custom_channels'] as $ch ) {
+					if ( is_array( $ch ) ) {
+						$url = isset( $ch['url'] ) ? esc_url_raw( trim( $ch['url'] ) ) : '';
+						if ( ! empty( $url ) ) {
+							$sanitized_custom[] = array(
+								'id'    => isset( $ch['id'] ) ? sanitize_text_field( $ch['id'] ) : uniqid( 'csmm_soc_' ),
+								'title' => isset( $ch['title'] ) ? sanitize_text_field( $ch['title'] ) : '',
+								'icon'  => isset( $ch['icon'] ) ? sanitize_text_field( $ch['icon'] ) : 'fa-solid fa-globe',
+								'url'   => $url,
+							);
+						}
+					}
+				}
+				$social_array['custom_channels'] = $sanitized_custom;
+			} else {
+				$social_array['custom_channels'] = array();
+			}
+
 			update_option( 'csmm_social_media', $social_array );
 		}
 
