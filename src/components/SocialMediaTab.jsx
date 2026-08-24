@@ -184,7 +184,7 @@ export default function SocialMediaTab({ settings, onChange }) {
               ⚡ 1-Click Popular Platform Presets:
             </Typography>
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-              {PRESET_PLATFORMS.map((preset) => (
+              {quickPresets.map((preset) => (
                 <Chip
                   key={preset.name}
                   label={preset.name}
