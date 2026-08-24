@@ -30,24 +30,6 @@ class CSMM_Admin {
 			'dashicons-clock',
 			30
 		);
-
-		add_submenu_page(
-			'wpfrank-csmm',
-			__( 'Dashboard & Settings', 'coming-soon-maintenance-mode' ),
-			__( 'Dashboard', 'coming-soon-maintenance-mode' ),
-			'manage_options',
-			'wpfrank-csmm',
-			array( $this, 'render_admin_app' )
-		);
-
-		add_submenu_page(
-			'wpfrank-csmm',
-			__( 'Subscribers', 'coming-soon-maintenance-mode' ),
-			__( 'Subscribers', 'coming-soon-maintenance-mode' ),
-			'manage_options',
-			'wpfrank-csmm#/subscribers',
-			array( $this, 'render_admin_app' )
-		);
 	}
 
 	/**
