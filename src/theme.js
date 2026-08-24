@@ -118,5 +118,23 @@ export const theme = createTheme({
         },
       },
     },
+    MuiInputLabel: {
+      defaultProps: {
+        shrink: true,
+      },
+      styleOverrides: {
+        root: {
+          fontWeight: 600,
+          fontSize: '0.875rem',
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        InputLabelProps: {
+          shrink: true,
+        },
+      },
+    },
   },
 });
