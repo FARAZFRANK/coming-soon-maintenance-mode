@@ -130,17 +130,53 @@ export default function App() {
       <Box
         sx={{
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          minHeight: '60vh',
-          gap: 2,
+          minHeight: 'calc(100vh - 60px)',
+          backgroundColor: '#f8fafc',
+          p: 2,
         }}
       >
-        <CircularProgress size={44} thickness={4} color="primary" />
-        <Typography variant="body1" color="text.secondary" fontWeight={500}>
-          Loading Coming Soon Pro Studio...
-        </Typography>
+        <Paper
+          elevation={0}
+          sx={{
+            p: { xs: 3.5, sm: 4.5 },
+            maxWidth: 420,
+            width: '100%',
+            textAlign: 'center',
+            borderRadius: '16px !important',
+            border: '1px solid #e2e8f0',
+            backgroundColor: '#ffffff',
+            boxShadow: '0 10px 30px -5px rgba(15, 23, 42, 0.06)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Box
+            sx={{
+              width: 56,
+              height: 56,
+              borderRadius: '14px',
+              background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#ffffff',
+              boxShadow: '0 8px 16px rgba(37, 99, 235, 0.25)',
+              mb: 2.5,
+            }}
+          >
+            <AccessTimeFilledRoundedIcon sx={{ fontSize: 30 }} />
+          </Box>
+          <Typography variant="h6" sx={{ fontWeight: 700, color: '#0f172a', mb: 0.5, fontSize: '1.15rem' }}>
+            Coming Soon Pro Studio
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            Loading workspace settings & 36 templates...
+          </Typography>
+          <CircularProgress size={32} thickness={4} color="primary" />
+        </Paper>
       </Box>
     );
   }
