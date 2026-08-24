@@ -1,0 +1,111 @@
+=== Coming Soon Maintenance Mode Pro ===
+Contributors: farazfrank
+Tags: coming soon, maintenance mode, under construction, launch countdown, newsletter, mailchimp, brevo, mailerlite, smtp, seo
+Requires at least: 5.0
+Tested up to: 6.7
+Requires PHP: 7.2
+Stable tag: 3.2.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Create high-converting, lightning-fast Coming Soon, Under Construction, and Maintenance Mode pages with React 18 Studio, Newsletter APIs, SMTP, and SEO Suite.
+
+== Description ==
+
+**Coming Soon Maintenance Mode Pro** is an enterprise-grade, lightning-fast WordPress plugin designed to create stunning Coming Soon pages, Under Construction notices, and Maintenance Mode screens with lead capture.
+
+The admin dashboard is completely built with **React 18, Vite, Material UI (MUI v5), and WordPress REST API**, providing an ultra-smooth single-page application experience with zero legacy Bootstrap dependencies.
+
+### 🌟 Key Highlights & Features:
+
+* **3 Website Modes**:
+  * **Disabled / Website Live**: Website is accessible to all visitors.
+  * **Coming Soon Mode (HTTP 200)**: Show teaser, countdown timer, and lead capture for upcoming launches.
+  * **Maintenance Mode (HTTP 503)**: Return proper `503 Service Unavailable` with `Retry-After` headers to protect SEO ranking during site upgrades.
+* **Selective Targeting**: Apply maintenance mode site-wide or restrict it to specific Posts, Pages, Home, Frontpage, Categories, Tags, or Search.
+* **36+ Pre-built Responsive Templates**: One-click activation with interactive desktop/tablet/mobile live preview modals.
+* **Universal SEO Suite**: Auto injects Open Graph meta, Twitter Cards, Canonical links, Google Analytics tracking, and Schema.org structured data across all 36 templates.
+* **Multi-Channel Newsletter APIs**:
+  * **Mailchimp v3 API Sync** (500 Contacts / 1,000 Emails/Mo Free Tier)
+  * **Brevo (Sendinblue) API v3 Sync** (300 Emails/Day & Unlimited Contacts Free Tier)
+  * **MailerLite API Sync** (1,000 Subscribers / 12,000 Emails/Mo Free Tier)
+  * **Zapier / Make / Webhook Dispatcher** (Unlimited Direct Lead Push)
+* **Automated Email Notifications & Custom SMTP**:
+  * Admin Lead Alert Email
+  * Subscriber Welcome Email
+  * **Site Live Announcement Email**: Automatically broadcasted to all subscribers when the website goes live.
+  * Full Header, Footer, Colors, and Background Canvas branding customizer.
+  * Interactive Live Email Template Preview modal (Desktop & Smartphone viewports).
+  * Built-in PHPMailer SMTP hook for Gmail, SendGrid, Amazon SES, or hosting mailers.
+* **Dynamic Custom Social Channels**:
+  * 1-Click quick presets for Discord, Telegram, GitHub, Threads, Twitch, Spotify, Medium, Slack, Patreon, Vimeo, and custom Website links.
+  * FontAwesome icon picker with live preview.
+* **Launch Countdown Timer & Auto-Launch**:
+  * Real-time countdown timer.
+  * Automatically unlocks live website when the countdown hits zero.
+* **Secure Lead Management**:
+  * Dedicated indexed MySQL table (`wp_csmm_subscribers`).
+  * Search, pagination, deletion, and formula injection sanitized streaming CSV exports.
+* **Custom CSS Code Studio**:
+  * Formatted code editor with syntax color theme and Mac-style title bar.
+* **Comprehensive Documentation Tab**:
+  * Built-in guide with feature matrix, API free limits table, 4 step-by-step use cases, dynamic placeholders cheat sheet, and FAQ.
+
+== Installation ==
+
+1. Upload the plugin folder `coming-soon-maintenance-mode-pro` to your `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Navigate to **Coming Soon Pro** in the admin sidebar to customize your page, template, newsletter APIs, and SEO settings.
+
+== Frequently Asked Questions ==
+
+= Does Maintenance Mode hurt my Google SEO rankings? =
+No! Coming Soon Maintenance Mode Pro automatically sends a proper `HTTP 503 Service Unavailable` header along with `Retry-After: 3600`. Search engine crawlers understand the downtime is temporary and maintain your existing keyword rankings.
+
+= Can logged-in administrators browse the live website? =
+Yes! Logged-in administrators bypass the maintenance screen and can view and edit the live site normally.
+
+= How do I prevent notification emails from going to the Spam folder? =
+Go to **Newsletter & Integrations** -> **Custom SMTP Mail Delivery**, enable SMTP, and configure your Gmail, SendGrid, or hosting SMTP server.
+
+== Changelog ==
+
+= 3.2.0 = 24 August 2026
+* **React 18 Admin Dashboard**: Complete overhaul with Vite, Material UI (MUI v5), and WordPress REST API (`/wp-json/csmm/v1/`).
+* **Legacy Cleanup**: Completely removed legacy Bootstrap, jQuery UI tabs, and inline script dependencies from Admin.
+* **Universal SEO Suite**: Added Open Graph, Twitter Cards, Canonical links, Google Analytics, and Schema.org JSON-LD structured data to all 36 templates.
+* **Multi-Channel Newsletters**: Direct API sync for Mailchimp v3, Brevo (Sendinblue), MailerLite, and Custom Webhooks (Zapier/Make) with live connection testing tools.
+* **Custom SMTP Engine**: Integrated PHPMailer SMTP hook for Gmail, SendGrid, Amazon SES, and hosting mailers.
+* **Automated Email Templates & Live Preview**:
+  * Admin Lead Alert Email customizer.
+  * Subscriber Welcome Email customizer.
+  * **Site Live Announcement Email**: Automatically broadcasted to all subscribers upon site launch, with 1-click manual broadcast.
+  * Interactive Live Email Template Preview Modal with Desktop and Mobile viewports.
+  * Template Header, Footer, Canvas Colors, and Typography styling customizer.
+* **Dynamic Custom Social Channels**: Added platform creator with 12+ 1-click presets (Discord, Telegram, Threads, GitHub, Spotify, etc.) and FontAwesome icon selector.
+* **Modern Centered Floating Studio Preloader**: Redesigned PHP pre-mount and React loaders into a synchronized light glassmorphic floating card.
+* **Database & Security Layer**: Added dedicated indexed MySQL table `wp_csmm_subscribers` with utf8mb4 index protection and sanitized streaming CSV export.
+* **Custom CSS Code Studio**: Added formatted multiline CSS editor with dark slate developer theme.
+* **Comprehensive Documentation Tab**: Added complete feature matrix, API free tier limits table, real-world use cases, dynamic tags guide, and FAQ.
+
+= 3.1.0 = 28 October 2025
+* Added 20 new responsive templates (expanding collection to 36 templates).
+
+= 3.0.4 = 4 February 2025
+* Fixed favicon icon rendering bug.
+
+= 3.0.3 = 1 January 2025
+* Added 6 new pre-built templates.
+
+= 3.0.2 = 24 January 2024
+* Added translations for 15+ international languages.
+* Fixed subscriber page warning notice.
+
+= 3.0.1 = 23 May 2023
+* Fixed social media icon mobile display.
+* Improved template mobile responsiveness.
+
+= 3.0.0 = 10 January 2023
+* Introduced 3 Website Modes (Live, Coming Soon HTTP 200, Maintenance HTTP 503).
+* Initial 10 pre-built responsive templates.
+* Lead capture and subscriber management.

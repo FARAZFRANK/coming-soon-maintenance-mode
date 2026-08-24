@@ -81,14 +81,22 @@ npm run build
 ## 📋 Changelog
 
 ### = 3.2.0 = (24 August 2026)
-* Complete Admin Dashboard overhaul using **React 18, Vite, and Material UI (MUI v5)**.
-* Completely removed legacy Bootstrap and jQuery tabs from Admin.
-* Modern PHP Singleton OOP backend architecture with **WordPress REST API** (`/wp-json/csmm/v1/`).
-* Added dedicated MySQL database table (`wp_csmm_subscribers`) with automated zero-loss migration from `wp_options`.
-* Secure authenticated streaming CSV export with spreadsheet formula sanitization.
-* Search engine SEO preservation with **HTTP 503 Service Unavailable** header for Maintenance Mode.
-* Fixed template loader debug override issue.
-* Enhanced responsiveness, live modal previews, and dark/light UI tokens.
+* **React 18 Admin Dashboard**: Complete overhaul with Vite, Material UI (MUI v5), and WordPress REST API (`/wp-json/csmm/v1/`).
+* **Zero Legacy Dependencies**: Completely removed legacy Bootstrap, jQuery UI tabs, and inline script dependencies from Admin.
+* **Universal SEO Suite**: Added Open Graph, Twitter Cards, Canonical links, Google Analytics, and Schema.org JSON-LD structured data to all 36 templates.
+* **Multi-Channel Newsletters**: Direct API sync for Mailchimp v3, Brevo (Sendinblue), MailerLite, and Custom Webhooks (Zapier/Make) with live connection testing tools.
+* **Custom SMTP Engine**: Integrated PHPMailer SMTP hook for Gmail, SendGrid, Amazon SES, and hosting mailers.
+* **Automated Email Notifications & Live Preview**:
+  * Admin Lead Alert Email customizer.
+  * Subscriber Welcome Email customizer.
+  * **Site Live Announcement Email**: Automatically broadcasted to all subscribers upon site launch, with 1-click manual broadcast.
+  * Interactive Live Email Template Preview Modal with Desktop and Mobile viewports.
+  * Template Header, Footer, Canvas Colors, and Typography styling customizer.
+* **Dynamic Custom Social Channels**: Added platform creator with 12+ 1-click presets (Discord, Telegram, Threads, GitHub, Spotify, etc.) and FontAwesome icon selector.
+* **Modern Centered Floating Studio Preloader**: Synchronized light glassmorphic floating loader in PHP and React SPA mounting phases.
+* **Database & Security Layer**: Added dedicated indexed MySQL table `wp_csmm_subscribers` with utf8mb4 index protection and sanitized streaming CSV export.
+* **Custom CSS Code Studio**: Added formatted multiline CSS editor with dark slate developer theme.
+* **Comprehensive Documentation Tab**: Added complete feature matrix, API free tier limits table, real-world use cases, dynamic tags guide, and FAQ.
 
 ### = 3.1.0 = (28 Oct 2025)
 * Added 20 new responsive templates (total 36 templates).

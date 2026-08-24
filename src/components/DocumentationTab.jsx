@@ -442,11 +442,11 @@ export default function DocumentationTab() {
               <Typography variant="body2" color="text.secondary" component="ul" sx={{ pl: 2.5, m: 0, lineHeight: 1.8 }}>
                 <li><strong>Universal SEO Suite:</strong> Added Open Graph, Twitter Cards, Canonical links, Google Analytics, and Schema.org JSON-LD structured data to all 36 templates.</li>
                 <li><strong>Newsletter Integrations:</strong> Added Mailchimp v3 API sync, Brevo (Sendinblue) API v3 sync, MailerLite API sync, and Custom Webhook (Zapier/Make) dispatcher with live test connections.</li>
-                <li><strong>Customizable Email Templates:</strong> Admin Lead Notification and Subscriber Welcome Email customizer with dynamic tag placeholders and live test email sender.</li>
+                <li><strong>Automated Email Templates & Live Preview:</strong> Admin Alert, Subscriber Welcome Email, and <strong>Site Live Announcement Email</strong> with automatic launch broadcast, custom header/footer colors branding, dynamic tag placeholders, and live desktop/mobile preview modal.</li>
                 <li><strong>Custom SMTP Mailer:</strong> Integrated PHPMailer SMTP hook for reliable inbox delivery via Gmail, SendGrid, or hosting SMTP.</li>
                 <li><strong>Dynamic Custom Social Channels:</strong> Added custom platform creator with 12+ 1-click presets and FontAwesome icon selector.</li>
-                <li><strong>Modern Centered Studio Preloader:</strong> Redesigned pre-mount and React loaders to a sleek, light glassmorphic centered floating card.</li>
-                <li><strong>Clean Database Layer:</strong> Added dedicated indexed MySQL table wp_csmm_subscribers and secure streaming CSV export.</li>
+                <li><strong>Modern Centered Studio Preloader:</strong> Synchronized PHP pre-mount and React loaders into a sleek, light glassmorphic centered floating card.</li>
+                <li><strong>Database & Security Layer:</strong> Dedicated indexed MySQL table <code>wp_csmm_subscribers</code> with sanitized streaming CSV export and ErrorBoundary protection.</li>
               </Typography>
             </Box>
 
