@@ -32,7 +32,7 @@ class CSMM_Subscribers {
 		$wpdb->query(
 			"CREATE TABLE IF NOT EXISTS `{$table}` (
 				`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-				`email` VARCHAR(255) NOT NULL,
+				`email` VARCHAR(191) NOT NULL,
 				`ip_address` VARCHAR(45) NOT NULL DEFAULT '',
 				`referer` VARCHAR(255) NOT NULL DEFAULT '',
 				`created_at` DATETIME NOT NULL,
