@@ -2,32 +2,47 @@
 
 [![WordPress Plugin](https://img.shields.io/badge/WordPress-5.0+-blue.svg)](https://wordpress.org/)
 [![PHP Version](https://img.shields.io/badge/PHP-7.2+-purple.svg)](https://www.php.net/)
-[![Version](https://img.shields.io/badge/version-3.1.0-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
+[![Version](https://img.shields.io/badge/version-3.2.0-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
+[![React](https://img.shields.io/badge/React-18-61dafb.svg)](https://react.dev/)
+[![Material UI](https://img.shields.io/badge/MUI-v5-007fff.svg)](https://mui.com/)
+[![Vite](https://img.shields.io/badge/Vite-5-646cff.svg)](https://vitejs.dev/)
 [![License](https://img.shields.io/badge/license-GPL--2.0--or--later-orange.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
-**Coming Soon Maintenance Mode Pro** is a modern, responsive, and feature-rich WordPress plugin designed to help you easily set up Coming Soon pages, Under Construction notices, and Maintenance Mode screens for your website.
+**Coming Soon Maintenance Mode Pro** is an enterprise-grade, lightning-fast, and responsive WordPress plugin designed to create stunning Coming Soon pages, Under Construction notices, and Maintenance Mode screens with lead capture.
+
+The admin dashboard is completely built with **React 18, Vite, Material UI (MUI), and WordPress REST API**, providing an ultra-smooth single-page application experience with zero legacy Bootstrap dependencies.
 
 ---
 
-## 🚀 Features
+## 🚀 Tech Stack
+
+| Layer | Technology | Details |
+| :--- | :--- | :--- |
+| **Backend** | **PHP (OOP Singleton)** | Clean modular classes, WordPress REST API (`/wp-json/csmm/v1/`), async handlers |
+| **Database** | **MySQL / MariaDB Custom Table** | Dedicated `wp_csmm_subscribers` table with automated zero-loss migration from `wp_options` |
+| **Frontend (Admin)** | **React 18, Vite, Material UI (MUI v5)** | Modern SPA, tabbed configuration, real-time live iframe previews, zero Bootstrap |
+| **Build System** | **Vite** | Bundled directly to `admin/assets/dist/` |
+
+---
+
+## 🌟 Key Features
 
 - **3 Website Modes**:
-  - Disabled / Live Website
-  - Coming Soon Mode
-  - Maintenance Mode
-- **36+ Pre-built Responsive Templates**: Beautifully designed templates ready to use with one click.
-- **Custom Branding & Media**:
-  - Upload your custom logo
-  - Background image slider & background video support
-- **Countdown Timer**: Configurable launch countdown with custom date, time, and heading.
-- **Subscriber Form & Management**:
-  - Collect emails directly from your coming soon page
-  - Manage and export subscriber lists from WordPress admin
-- **Social Media Integration**: Connect Facebook, Twitter (X), Instagram, YouTube, LinkedIn, Pinterest, WhatsApp, TikTok, Behance, Dribbble, and more.
-- **Custom CSS Support**: Add your own custom styles easily from the dashboard.
-- **Multilingual & Translation Ready**: Includes translations for 15+ languages:
-  - Arabic (ar), Chinese (zh_CN), Finnish (fi), French (fr_FR), German (de_DE), Hindi (hi_IN), Hungarian (hu_HU), Italian (it_IT), Indonesian (id_ID), Japanese (ja_JP), Dutch (nl_NL), Russian (ru_RU), Spanish (es_ES), Polish (pl_PL), Portuguese (pt_PT).
-- **SEO & Performance Optimized**: Lightweight, clean code, and 100% mobile-friendly.
+  - **Disabled / Live**: Website is accessible to all visitors.
+  - **Coming Soon Mode (HTTP 200)**: Show teaser & countdown for new website projects.
+  - **Maintenance Mode (HTTP 503)**: Protect your SEO rankings with HTTP 503 headers during site redesigns and updates.
+- **Selective Targeting**: Apply maintenance mode site-wide or restrict it to specific Posts, Pages, Home, Frontpage, Categories, Tags, or Search.
+- **36+ Pre-built Responsive Templates**: One-click activation with interactive desktop/tablet/mobile live preview modals.
+- **Brand Identity & Media**:
+  - Custom logo upload with native WordPress Media Library integration.
+  - Background image slideshows and video background (Vimeo, YouTube, MP4).
+- **Launch Countdown Timer**: Customizable launch target with automatic switch to Live mode once the countdown expires.
+- **Subscribers Lead Management**:
+  - High-performance lead capture stored in custom database tables.
+  - Search, pagination, deletion, and 1-click secure authenticated CSV export stream.
+- **13+ Social Media Integrations**: Facebook, Twitter/X, Instagram, YouTube, LinkedIn, Pinterest, WhatsApp, TikTok, Behance, Dribbble, Tumblr, Snapchat, and QQ.
+- **Custom CSS Editor**: Add bespoke CSS styles on the fly.
+- **Translation & i18n Ready**: Supports 15+ international languages.
 
 ---
 
@@ -35,31 +50,48 @@
 
 ### Method 1: Upload via WordPress Dashboard
 1. Download the ZIP file of this repository or release.
-2. Go to your WordPress Admin dashboard: **Plugins** > **Add New** > **Upload Plugin**.
-3. Choose the downloaded ZIP file and click **Install Now**.
+2. Go to **Plugins** > **Add New** > **Upload Plugin**.
+3. Choose the ZIP file and click **Install Now**.
 4. Click **Activate Plugin**.
 
-### Method 2: Manual FTP Upload
+### Method 2: Manual Upload
 1. Extract the plugin folder `coming-soon-maintenance-mode-pro`.
-2. Upload the `coming-soon-maintenance-mode-pro` directory to your WordPress site's `/wp-content/plugins/` directory.
-3. Go to **Plugins** > **Installed Plugins** in your WordPress admin and click **Activate**.
+2. Upload the folder to your WordPress `/wp-content/plugins/` directory.
+3. Activate the plugin in **Plugins** > **Installed Plugins**.
 
 ---
 
-## ⚙️ Configuration & Usage
+## 🛠️ Development & Building Assets
 
-1. Navigate to **Coming Soon Maintenance Mode** in the WordPress admin menu.
-2. Select your desired **Website Mode** (Coming Soon or Maintenance Mode).
-3. Choose from the **36+ pre-built templates**.
-4. Customize your **Logo, Headline, Description, Launch Countdown, and Social Profiles**.
-5. Save changes and preview your site!
+To modify or compile the React admin application:
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Compile production bundle
+npm run build
+```
 
 ---
 
 ## 📋 Changelog
 
+### = 3.2.0 = (24 August 2026)
+* Complete Admin Dashboard overhaul using **React 18, Vite, and Material UI (MUI v5)**.
+* Completely removed legacy Bootstrap and jQuery tabs from Admin.
+* Modern PHP Singleton OOP backend architecture with **WordPress REST API** (`/wp-json/csmm/v1/`).
+* Added dedicated MySQL database table (`wp_csmm_subscribers`) with automated zero-loss migration from `wp_options`.
+* Secure authenticated streaming CSV export with spreadsheet formula sanitization.
+* Search engine SEO preservation with **HTTP 503 Service Unavailable** header for Maintenance Mode.
+* Fixed template loader debug override issue.
+* Enhanced responsiveness, live modal previews, and dark/light UI tokens.
+
 ### = 3.1.0 = (28 Oct 2025)
-* Added 20 new templates.
+* Added 20 new responsive templates (total 36 templates).
 
 ### = 3.0.4 = (4 Feb 2025)
 * Favicon icon bug fixed.
@@ -70,17 +102,6 @@
 ### = 3.0.2 = (24 Jan 2024)
 * Added translations for 15+ languages.
 * Subscriber page warning fix.
-
-### = 3.0.1 = (23 May 2023)
-* Social media icon mobile display fixed.
-* Enhanced mobile responsiveness for templates.
-* Documentation tab added.
-
-### = 3.0.0 =
-* Introduced 3 website modes.
-* 10 pre-built templates.
-* Template global settings.
-* Subscriber lead capture feature.
 
 ---
 
