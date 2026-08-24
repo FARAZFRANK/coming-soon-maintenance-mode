@@ -188,19 +188,19 @@ export default function SubscribersTab({ onNotify }) {
           {/* Table */}
           <TableContainer component={Paper} variant="outlined" sx={{ borderRadius: '8px !important' }}>
             <Table size="medium">
-              <TableHead sx={{ backgroundColor: '#f8fafc' }}>
+              <TableHead sx={{ backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#f1f5f9') }}>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 700, width: 80 }}># ID</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Email Address</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>IP Address</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Date Subscribed</TableCell>
-                  <TableCell sx={{ fontWeight: 700, width: 100, textAlign: 'center' }}>Actions</TableCell>
+                  <TableCell sx={{ fontWeight: 700, width: 80, color: 'text.primary', borderColor: 'divider' }}># ID</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: 'text.primary', borderColor: 'divider' }}>Email Address</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: 'text.primary', borderColor: 'divider' }}>IP Address</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: 'text.primary', borderColor: 'divider' }}>Date Subscribed</TableCell>
+                  <TableCell sx={{ fontWeight: 700, width: 100, textAlign: 'center', color: 'text.primary', borderColor: 'divider' }}>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {loading ? (
                   <TableRow>
-                    <TableCell colSpan={5} sx={{ textAlign: 'center', py: 6 }}>
+                    <TableCell colSpan={5} sx={{ textAlign: 'center', py: 6, borderColor: 'divider' }}>
                       <CircularProgress size={32} />
                       <Typography variant="body2" color="text.secondary" sx={{ mt: 1.5 }}>
                         Loading subscribers...
@@ -210,24 +210,24 @@ export default function SubscribersTab({ onNotify }) {
                 ) : subscribers.length > 0 ? (
                   subscribers.map((item) => (
                     <TableRow key={item.id} hover>
-                      <TableCell sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                      <TableCell sx={{ color: 'text.secondary', fontWeight: 600, borderColor: 'divider' }}>
                         #{item.id}
                       </TableCell>
-                      <TableCell>
+                      <TableCell sx={{ borderColor: 'divider' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
                           <MarkEmailReadRoundedIcon sx={{ fontSize: 18, color: '#2563eb' }} />
-                          <Typography variant="body2" sx={{ fontWeight: 600, color: '#0f172a' }}>
+                          <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary' }}>
                             {item.email}
                           </Typography>
                         </Box>
                       </TableCell>
-                      <TableCell>
+                      <TableCell sx={{ borderColor: 'divider' }}>
                         <Chip label={item.ip_address || '127.0.0.1'} size="small" variant="outlined" sx={{ fontSize: '0.75rem', borderRadius: '4px' }} />
                       </TableCell>
-                      <TableCell sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
+                      <TableCell sx={{ color: 'text.secondary', fontSize: '0.875rem', borderColor: 'divider' }}>
                         {item.created_at}
                       </TableCell>
-                      <TableCell sx={{ textAlign: 'center' }}>
+                      <TableCell sx={{ textAlign: 'center', borderColor: 'divider' }}>
                         <IconButton
                           size="small"
                           color="error"
@@ -242,9 +242,9 @@ export default function SubscribersTab({ onNotify }) {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={5} sx={{ textAlign: 'center', py: 6 }}>
-                      <PeopleAltRoundedIcon sx={{ fontSize: 40, color: '#cbd5e1', mb: 1 }} />
-                      <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#334155' }}>
+                    <TableCell colSpan={5} sx={{ textAlign: 'center', py: 6, borderColor: 'divider' }}>
+                      <PeopleAltRoundedIcon sx={{ fontSize: 40, color: '#64748b', mb: 1 }} />
+                      <Typography variant="subtitle1" sx={{ fontWeight: 600, color: 'text.primary' }}>
                         No subscribers found
                       </Typography>
                       <Typography variant="body2" color="text.secondary">

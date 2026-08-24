@@ -188,12 +188,12 @@ export default function DocumentationTab() {
 
           <TableContainer component={Paper} variant="outlined" sx={{ borderRadius: '8px' }}>
             <Table size="small">
-              <TableHead sx={{ backgroundColor: '#f8fafc' }}>
+              <TableHead sx={{ backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#f1f5f9') }}>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 700 }}>Provider</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Free Account Limit</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Required Credentials</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Key Advantage</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: 'text.primary', borderColor: 'divider' }}>Provider</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: 'text.primary', borderColor: 'divider' }}>Free Account Limit</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: 'text.primary', borderColor: 'divider' }}>Required Credentials</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: 'text.primary', borderColor: 'divider' }}>Key Advantage</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
