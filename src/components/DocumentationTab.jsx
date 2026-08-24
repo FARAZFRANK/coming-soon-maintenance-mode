@@ -55,12 +55,21 @@ export default function DocumentationTab() {
               component="a"
               href="https://wpfrank.com/"
               target="_blank"
-              endIcon={<LaunchRoundedIcon />}
+              endIcon={<LaunchRoundedIcon sx={{ color: '#ffffff !important' }} />}
               sx={{
                 borderRadius: '8px',
                 fontWeight: 700,
-                backgroundColor: '#2563eb',
-                '&:hover': { backgroundColor: '#1d4ed8' },
+                color: '#ffffff !important',
+                backgroundColor: '#2563eb !important',
+                textDecoration: 'none !important',
+                boxShadow: '0 4px 12px rgba(37, 99, 235, 0.35)',
+                '&:hover': {
+                  backgroundColor: '#1d4ed8 !important',
+                  color: '#ffffff !important',
+                },
+                '&:focus, &:active, &:visited': {
+                  color: '#ffffff !important',
+                },
               }}
             >
               Visit WPFrank.com

@@ -173,7 +173,7 @@ export default function App() {
             Coming Soon Pro Studio
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            Loading workspace settings & 36 templates...
+            Loading workspace settings & templates...
           </Typography>
           <CircularProgress size={32} thickness={4} color="primary" />
         </Paper>

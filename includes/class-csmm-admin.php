@@ -109,7 +109,7 @@ class CSMM_Admin {
 					<?php esc_html_e( 'Coming Soon Pro Studio', 'coming-soon-maintenance-mode' ); ?>
 				</h3>
 				<p style="margin: 0 0 24px 0; color: #64748b; font-size: 0.875rem;">
-					<?php esc_html_e( 'Loading workspace and templates...', 'coming-soon-maintenance-mode' ); ?>
+					<?php esc_html_e( 'Loading workspace settings & templates...', 'coming-soon-maintenance-mode' ); ?>
 				</p>
 				<div style="width: 32px; height: 32px; margin: 0 auto; border: 3px solid #e2e8f0; border-top-color: #2563eb; border-radius: 50%; animation: csmm-spin 0.8s linear infinite;"></div>
 			</div>
