@@ -15,23 +15,51 @@ const getRestConfig = () => {
   };
 };
 
+/**
+ * Robust JSON fetch wrapper that handles unexpected HTML prefixes.
+ */
+const fetchJson = async (url, options = {}) => {
+  const res = await fetch(url, options);
+  const text = await res.text();
+
+  try {
+    return JSON.parse(text);
+  } catch (err) {
+    // Try to extract JSON if server prefixed with PHP warning/notice HTML
+    const jsonStart = text.indexOf('{');
+    const jsonArrayStart = text.indexOf('[');
+    const start = jsonStart !== -1 && jsonArrayStart !== -1 ? Math.min(jsonStart, jsonArrayStart) : Math.max(jsonStart, jsonArrayStart);
+
+    if (start !== -1) {
+      try {
+        return JSON.parse(text.substring(start));
+      } catch (e) {
+        // fall through
+      }
+    }
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+    }
+    throw new Error('Server returned invalid response format.');
+  }
+};
+
 export const api = {
   getConfig: getRestConfig,
 
   async getSettings() {
     const { restUrl, nonce } = getRestConfig();
-    const res = await fetch(`${restUrl}settings`, {
+    return fetchJson(`${restUrl}settings`, {
       headers: {
         'X-WP-Nonce': nonce,
       },
     });
-    if (!res.ok) throw new Error(`Failed to load settings: ${res.statusText}`);
-    return res.json();
   },
 
   async saveSettings(settings) {
     const { restUrl, nonce } = getRestConfig();
-    const res = await fetch(`${restUrl}settings`, {
+    return fetchJson(`${restUrl}settings`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,8 +67,6 @@ export const api = {
       },
       body: JSON.stringify(settings),
     });
-    if (!res.ok) throw new Error(`Failed to save settings: ${res.statusText}`);
-    return res.json();
   },
 
   async getSubscribers(page = 1, perPage = 15, search = '') {
@@ -50,46 +76,38 @@ export const api = {
       per_page: String(perPage),
       search: search || '',
     });
-    const res = await fetch(`${restUrl}subscribers?${params.toString()}`, {
+    return fetchJson(`${restUrl}subscribers?${params.toString()}`, {
       headers: {
         'X-WP-Nonce': nonce,
       },
     });
-    if (!res.ok) throw new Error(`Failed to load subscribers: ${res.statusText}`);
-    return res.json();
   },
 
   async deleteSubscriber(id) {
     const { restUrl, nonce } = getRestConfig();
-    const res = await fetch(`${restUrl}subscribers/${id}`, {
+    return fetchJson(`${restUrl}subscribers/${id}`, {
       method: 'DELETE',
       headers: {
         'X-WP-Nonce': nonce,
       },
     });
-    if (!res.ok) throw new Error(`Failed to delete subscriber: ${res.statusText}`);
-    return res.json();
   },
 
   async getTemplates() {
     const { restUrl, nonce } = getRestConfig();
-    const res = await fetch(`${restUrl}templates`, {
+    return fetchJson(`${restUrl}templates`, {
       headers: {
         'X-WP-Nonce': nonce,
       },
     });
-    if (!res.ok) throw new Error(`Failed to load templates: ${res.statusText}`);
-    return res.json();
   },
 
   async getTargetItems() {
     const { restUrl, nonce } = getRestConfig();
-    const res = await fetch(`${restUrl}target-items`, {
+    return fetchJson(`${restUrl}target-items`, {
       headers: {
         'X-WP-Nonce': nonce,
       },
     });
-    if (!res.ok) throw new Error(`Failed to load target items: ${res.statusText}`);
-    return res.json();
   },
 };
