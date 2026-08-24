@@ -479,31 +479,76 @@ export default function ContentBrandingTab({ settings, onChange }) {
       {/* Custom CSS Editor */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: 2.5 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 1 }}>
-            <CodeRoundedIcon color="secondary" />
-            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
-              Custom CSS Overrides
-            </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+              <CodeRoundedIcon color="secondary" />
+              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
+                Custom CSS Overrides
+              </Typography>
+            </Box>
+            <Chip label="custom.css" size="small" sx={{ fontFamily: 'monospace', fontWeight: 600, fontSize: '0.75rem', height: 22, borderRadius: '4px', backgroundColor: '#f1f5f9' }} />
           </Box>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             Add custom CSS styles to fine-tune colors, fonts, or layout tweaks on your selected template.
           </Typography>
 
-          <TextField
-            fullWidth
-            multiline
-            rows={5}
-            value={settings.custom_css || ''}
-            onChange={(e) => onChange('custom_css', e.target.value)}
-            placeholder="/* Example */\n.home-content h1 { font-family: 'Poppins', sans-serif; }\nbody { background-color: #0f172a; }"
-            InputProps={{
-              sx: {
-                fontFamily: 'monospace',
-                fontSize: '0.875rem',
-                backgroundColor: '#f8fafc',
-              },
+          <Paper
+            variant="outlined"
+            sx={{
+              borderRadius: '10px !important',
+              overflow: 'hidden',
+              border: '1px solid #334155',
+              backgroundColor: '#0f172a',
             }}
-          />
+          >
+            <Box
+              sx={{
+                px: 2,
+                py: 1,
+                backgroundColor: '#1e293b',
+                borderBottom: '1px solid #334155',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+              }}
+            >
+              <Box sx={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#ef4444' }} />
+              <Box sx={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#f59e0b' }} />
+              <Box sx={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#10b981' }} />
+              <Typography variant="caption" sx={{ color: '#94a3b8', fontFamily: 'monospace', ml: 1, fontSize: '0.75rem' }}>
+                CSS Stylesheet
+              </Typography>
+            </Box>
+
+            <TextField
+              fullWidth
+              multiline
+              rows={8}
+              value={settings.custom_css || ''}
+              onChange={(e) => onChange('custom_css', e.target.value)}
+              placeholder={`/* Custom CSS Overrides */\n.home-content h1 {\n  font-family: 'Poppins', sans-serif;\n  color: #ffffff;\n}\n\nbody {\n  background-color: #0f172a;\n}`}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  p: 2,
+                  fontFamily: 'Consolas, "Fira Code", Monaco, monospace',
+                  fontSize: '0.875rem',
+                  lineHeight: 1.6,
+                  color: '#38bdf8',
+                  backgroundColor: 'transparent',
+                  '& fieldset': { border: 'none' },
+                  '&:hover fieldset': { border: 'none' },
+                  '&.Mui-focused fieldset': { border: 'none' },
+                },
+                '& .MuiInputBase-input::placeholder': {
+                  color: '#64748b',
+                  opacity: 0.85,
+                  fontFamily: 'Consolas, "Fira Code", Monaco, monospace',
+                  fontSize: '0.875rem',
+                  lineHeight: 1.6,
+                },
+              }}
+            />
+          </Paper>
         </CardContent>
       </Card>
     </Box>

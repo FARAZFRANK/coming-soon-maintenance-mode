@@ -886,29 +886,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                    <Button
-                      variant="outlined"
-                      color="success"
-                      startIcon={<SendRoundedIcon />}
-                      onClick={() => openTestEmailModal('admin')}
-                      disabled={!integrations.admin_email_enabled}
-                      sx={{ borderRadius: '8px' }}
-                    >
-                      Send Test Admin Email
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      startIcon={<VisibilityRoundedIcon />}
-                      onClick={() => {
-                        setPreviewType('admin');
-                        setPreviewModalOpen(true);
-                      }}
-                      sx={{ borderRadius: '8px' }}
-                    >
-                      Live Preview Admin Email
-                    </Button>
-                  </Box>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    startIcon={<SendRoundedIcon />}
+                    onClick={() => openTestEmailModal('admin')}
+                    disabled={!integrations.admin_email_enabled}
+                    sx={{ borderRadius: '8px' }}
+                  >
+                    Send Test Admin Email
+                  </Button>
                 </Grid>
               </Grid>
             </Box>
@@ -970,29 +957,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                    <Button
-                      variant="outlined"
-                      color="success"
-                      startIcon={<SendRoundedIcon />}
-                      onClick={() => openTestEmailModal('welcome')}
-                      disabled={!integrations.welcome_email_enabled}
-                      sx={{ borderRadius: '8px' }}
-                    >
-                      Send Test Welcome Email
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      startIcon={<VisibilityRoundedIcon />}
-                      onClick={() => {
-                        setPreviewType('welcome');
-                        setPreviewModalOpen(true);
-                      }}
-                      sx={{ borderRadius: '8px' }}
-                    >
-                      Live Preview Welcome Email
-                    </Button>
-                  </Box>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    startIcon={<SendRoundedIcon />}
+                    onClick={() => openTestEmailModal('welcome')}
+                    disabled={!integrations.welcome_email_enabled}
+                    sx={{ borderRadius: '8px' }}
+                  >
+                    Send Test Welcome Email
+                  </Button>
                 </Grid>
               </Grid>
             </Box>
