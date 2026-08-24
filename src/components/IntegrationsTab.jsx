@@ -44,6 +44,101 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import CampaignRoundedIcon from '@mui/icons-material/CampaignRounded';
 import { api } from '../api';
 
+// Modern, elegant Color Picker Field Component with Swatch & Monospace Hex input
+function ColorPickerField({ label, value, defaultValue = '#ffffff', onChange, helperText }) {
+  const hexVal = value || defaultValue;
+
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+      <Typography variant="caption" sx={{ fontWeight: 700, color: '#334155', fontSize: '0.8rem' }}>
+        {label}
+      </Typography>
+      <Paper
+        variant="outlined"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1.25,
+          p: '4px 8px',
+          borderRadius: '8px !important',
+          borderColor: '#cbd5e1',
+          backgroundColor: '#ffffff',
+          transition: 'border-color 0.2s, box-shadow 0.2s',
+          '&:hover': {
+            borderColor: '#94a3b8',
+          },
+          '&:focus-within': {
+            borderColor: '#2563eb',
+            boxShadow: '0 0 0 3px rgba(37, 99, 235, 0.12)',
+          },
+        }}
+      >
+        <Box
+          component="label"
+          sx={{
+            width: 30,
+            height: 30,
+            borderRadius: '6px',
+            backgroundColor: hexVal.startsWith('#') ? hexVal : defaultValue,
+            border: '2px solid rgba(0,0,0,0.12)',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+            cursor: 'pointer',
+            flexShrink: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+            transition: 'transform 0.15s ease',
+            '&:hover': {
+              transform: 'scale(1.08)',
+            },
+          }}
+        >
+          <input
+            type="color"
+            value={hexVal.startsWith('#') && hexVal.length === 7 ? hexVal : defaultValue}
+            onChange={(e) => onChange(e.target.value)}
+            style={{
+              position: 'absolute',
+              top: -15,
+              left: -15,
+              width: 70,
+              height: 70,
+              opacity: 0,
+              cursor: 'pointer',
+            }}
+          />
+        </Box>
+
+        <TextField
+          size="small"
+          variant="standard"
+          value={hexVal}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="#ffffff"
+          InputProps={{
+            disableUnderline: true,
+            sx: {
+              fontFamily: 'Consolas, Monaco, monospace',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              color: '#0f172a',
+              letterSpacing: '0.03em',
+            },
+          }}
+          sx={{ flex: 1 }}
+        />
+      </Paper>
+      {helperText && (
+        <Typography variant="caption" sx={{ color: '#64748b', fontSize: '0.72rem' }}>
+          {helperText}
+        </Typography>
+      )}
+    </Box>
+  );
+}
+
 export default function IntegrationsTab({ data, onChange, onNotify }) {
   const integrations = data.integrations || {
     mailchimp_enabled: false,
@@ -1137,25 +1232,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    type="color"
+                  <ColorPickerField
                     label="Header Background"
-                    value={integrations.email_header_bg || '#2563eb'}
-                    onChange={(e) => updateIntegration('email_header_bg', e.target.value)}
-                    InputLabelProps={{ shrink: true }}
+                    value={integrations.email_header_bg}
+                    defaultValue="#2563eb"
+                    onChange={(val) => updateIntegration('email_header_bg', val)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    type="color"
+                  <ColorPickerField
                     label="Header Text Color"
-                    value={integrations.email_header_color || '#ffffff'}
-                    onChange={(e) => updateIntegration('email_header_color', e.target.value)}
-                    InputLabelProps={{ shrink: true }}
+                    value={integrations.email_header_color}
+                    defaultValue="#ffffff"
+                    onChange={(val) => updateIntegration('email_header_color', val)}
                   />
                 </Grid>
 
@@ -1170,36 +1259,27 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    type="color"
+                  <ColorPickerField
                     label="Outer Background Color"
-                    value={integrations.email_bg_color || '#f8fafc'}
-                    onChange={(e) => updateIntegration('email_bg_color', e.target.value)}
-                    InputLabelProps={{ shrink: true }}
+                    value={integrations.email_bg_color}
+                    defaultValue="#f8fafc"
+                    onChange={(val) => updateIntegration('email_bg_color', val)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    type="color"
+                  <ColorPickerField
                     label="Card Background Color"
-                    value={integrations.email_card_bg || '#ffffff'}
-                    onChange={(e) => updateIntegration('email_card_bg', e.target.value)}
-                    InputLabelProps={{ shrink: true }}
+                    value={integrations.email_card_bg}
+                    defaultValue="#ffffff"
+                    onChange={(val) => updateIntegration('email_card_bg', val)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    type="color"
+                  <ColorPickerField
                     label="Main Text Color"
-                    value={integrations.email_text_color || '#1e293b'}
-                    onChange={(e) => updateIntegration('email_text_color', e.target.value)}
-                    InputLabelProps={{ shrink: true }}
+                    value={integrations.email_text_color}
+                    defaultValue="#1e293b"
+                    onChange={(val) => updateIntegration('email_text_color', val)}
                   />
                 </Grid>
 
@@ -1225,25 +1305,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    type="color"
+                  <ColorPickerField
                     label="Footer Background"
-                    value={integrations.email_footer_bg || '#f1f5f9'}
-                    onChange={(e) => updateIntegration('email_footer_bg', e.target.value)}
-                    InputLabelProps={{ shrink: true }}
+                    value={integrations.email_footer_bg}
+                    defaultValue="#f1f5f9"
+                    onChange={(val) => updateIntegration('email_footer_bg', val)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    type="color"
+                  <ColorPickerField
                     label="Footer Text Color"
-                    value={integrations.email_footer_color || '#64748b'}
-                    onChange={(e) => updateIntegration('email_footer_color', e.target.value)}
-                    InputLabelProps={{ shrink: true }}
+                    value={integrations.email_footer_color}
+                    defaultValue="#64748b"
+                    onChange={(val) => updateIntegration('email_footer_color', val)}
                   />
                 </Grid>
 
