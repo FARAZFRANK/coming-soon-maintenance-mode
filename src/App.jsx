@@ -33,6 +33,47 @@ import IntegrationsTab from './components/IntegrationsTab';
 import SubscribersTab from './components/SubscribersTab';
 import DocumentationTab from './components/DocumentationTab';
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('CSMM Studio Render Error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <Paper elevation={0} sx={{ p: 4, my: 2, borderRadius: '10px !important', border: '1px solid #fee2e2', backgroundColor: '#fff5f5' }}>
+          <Alert severity="error" sx={{ borderRadius: '8px' }}>
+            <Typography variant="subtitle1" fontWeight={700}>
+              Something went wrong in this section.
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 0.5, fontFamily: 'monospace' }}>
+              {this.state.error && this.state.error.toString()}
+            </Typography>
+          </Alert>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => this.setState({ hasError: false, error: null })}
+            sx={{ mt: 2, borderRadius: '8px' }}
+          >
+            Retry Tab
+          </Button>
+        </Paper>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function App() {
   const [tabIndex, setTabIndex] = useState(0);
   const [settings, setSettings] = useState(null);
@@ -313,54 +354,56 @@ export default function App() {
 
         {/* Tab Content Panels */}
         <Box sx={{ mt: 1 }}>
-          {tabIndex === 0 && (
-            <GeneralSettingsTab
-              settings={settings}
-              onChange={handleFieldChange}
-              targetItems={targetItems}
-            />
-          )}
+          <ErrorBoundary key={tabIndex}>
+            {tabIndex === 0 && (
+              <GeneralSettingsTab
+                settings={settings}
+                onChange={handleFieldChange}
+                targetItems={targetItems}
+              />
+            )}
 
-          {tabIndex === 1 && (
-            <TemplatesTab
-              settings={settings}
-              onChange={handleFieldChange}
-              templates={templates}
-              previewUrlBase={settings?.preview_url}
-            />
-          )}
+            {tabIndex === 1 && (
+              <TemplatesTab
+                settings={settings}
+                onChange={handleFieldChange}
+                templates={templates}
+                previewUrlBase={settings?.preview_url}
+              />
+            )}
 
-          {tabIndex === 2 && (
-            <ContentBrandingTab
-              settings={settings}
-              onChange={handleFieldChange}
-            />
-          )}
+            {tabIndex === 2 && (
+              <ContentBrandingTab
+                settings={settings}
+                onChange={handleFieldChange}
+              />
+            )}
 
-          {tabIndex === 3 && (
-            <SocialMediaTab
-              settings={settings}
-              onChange={handleFieldChange}
-            />
-          )}
+            {tabIndex === 3 && (
+              <SocialMediaTab
+                settings={settings}
+                onChange={handleFieldChange}
+              />
+            )}
 
-          {tabIndex === 4 && (
-            <IntegrationsTab
-              data={settings}
-              onChange={handleFieldChange}
-              onNotify={showNotification}
-            />
-          )}
+            {tabIndex === 4 && (
+              <IntegrationsTab
+                data={settings}
+                onChange={handleFieldChange}
+                onNotify={showNotification}
+              />
+            )}
 
-          {tabIndex === 5 && (
-            <SubscribersTab
-              onNotify={showNotification}
-            />
-          )}
+            {tabIndex === 5 && (
+              <SubscribersTab
+                onNotify={showNotification}
+              />
+            )}
 
-          {tabIndex === 6 && (
-            <DocumentationTab />
-          )}
+            {tabIndex === 6 && (
+              <DocumentationTab />
+            )}
+          </ErrorBoundary>
         </Box>
       </Container>
 
