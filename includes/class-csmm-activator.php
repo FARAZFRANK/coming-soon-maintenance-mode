@@ -34,18 +34,21 @@ class CSMM_Activator {
 		$table_name      = $wpdb->prefix . 'csmm_subscribers';
 		$charset_collate = $wpdb->get_charset_collate();
 
-		$sql = "CREATE TABLE $table_name (
-			id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-			email VARCHAR(191) NOT NULL,
-			ip_address VARCHAR(45) DEFAULT '' NOT NULL,
-			referer VARCHAR(255) DEFAULT '' NOT NULL,
-			created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-			PRIMARY KEY  (id),
-			UNIQUE KEY email (email)
-		) $charset_collate;";
+		$suppress = $wpdb->suppress_errors( true );
 
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		dbDelta( $sql );
+		$sql = "CREATE TABLE IF NOT EXISTS `{$table_name}` (
+			`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+			`email` VARCHAR(191) NOT NULL,
+			`ip_address` VARCHAR(45) NOT NULL DEFAULT '',
+			`referer` VARCHAR(255) NOT NULL DEFAULT '',
+			`created_at` DATETIME NOT NULL,
+			PRIMARY KEY (`id`),
+			UNIQUE KEY `email` (`email`)
+		) {$charset_collate};";
+
+		$wpdb->query( $sql );
+
+		$wpdb->suppress_errors( $suppress );
 	}
 
 	/**
@@ -78,20 +81,22 @@ class CSMM_Activator {
 
 			$flat_emails = array_unique( array_filter( $flat_emails ) );
 
-			foreach ( $flat_emails as $email ) {
-				// Insert IGNORE into table
-				$wpdb->query(
-					$wpdb->prepare(
-						"INSERT IGNORE INTO $table_name (email, ip_address, referer, created_at) VALUES (%s, %s, %s, %s)",
-						$email,
-						'127.0.0.1',
-						'legacy_migration',
-						current_time( 'mysql' )
-					)
-				);
+			if ( ! empty( $flat_emails ) ) {
+				$suppress = $wpdb->suppress_errors( true );
+				foreach ( $flat_emails as $email ) {
+					$wpdb->query(
+						$wpdb->prepare(
+							"INSERT IGNORE INTO `{$table_name}` (`email`, `ip_address`, `referer`, `created_at`) VALUES (%s, %s, %s, %s)",
+							$email,
+							'127.0.0.1',
+							'legacy_migration',
+							current_time( 'mysql' )
+						)
+					);
+				}
+				$wpdb->suppress_errors( $suppress );
 			}
 
-			// Keep option as backup or empty it
 			update_option( 'csmm_legacy_migrated', true );
 		}
 	}
