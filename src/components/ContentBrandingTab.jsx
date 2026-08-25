@@ -1487,59 +1487,80 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   </Typography>
                   <Box
                     sx={{
-                      p: 3,
+                      p: 4,
                       borderRadius: '8px',
-                      background: 'radial-gradient(ellipse at center, #1e293b 0%, #0f172a 100%)',
+                      background: 'linear-gradient(135deg, #0e303d 0%, #061922 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      border: '1px solid #334155',
+                      border: '1px solid #1e293b',
+                      minHeight: 130,
                     }}
                   >
                     <Box
                       sx={{
+                        position: 'relative',
+                        maxWidth: 460,
+                        width: '100%',
                         display: 'flex',
                         alignItems: 'center',
-                        maxWidth: 480,
-                        width: '100%',
-                        gap: settings.form_border_radius > 0 ? 1 : 0,
                       }}
                     >
+                      <style>{`
+                        #csmm-live-preview-input::placeholder {
+                          color: ${settings.form_input_color || '#ffffff'} !important;
+                          opacity: 0.85;
+                        }
+                      `}</style>
                       <input
+                        id="csmm-live-preview-input"
                         type="text"
                         readOnly
                         placeholder={settings.form_placeholder_text || 'Email Address'}
                         style={{
-                          flex: 1,
-                          padding: '12px 18px',
-                          backgroundColor: settings.form_input_bg || 'rgba(0, 0, 0, 0.35)',
+                          width: '100%',
+                          height: '52px',
+                          padding: '0 160px 0 20px',
+                          backgroundColor: settings.form_input_bg || '#222326',
                           color: settings.form_input_color || '#ffffff',
-                          border: '1px solid rgba(255, 255, 255, 0.15)',
-                          borderRight: settings.form_border_radius > 0 ? '1px solid rgba(255, 255, 255, 0.15)' : 'none',
-                          borderRadius: settings.form_border_radius ? `${settings.form_border_radius}px` : '0px',
+                          border: 'none',
+                          borderRadius: settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px',
                           outline: 'none',
-                          fontSize: '14px',
-                          fontFamily: 'inherit',
+                          fontSize: '15px',
+                          fontWeight: 500,
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                          boxSizing: 'border-box',
+                          boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)',
                         }}
                       />
                       <button
                         type="button"
                         style={{
-                          padding: '12px 24px',
-                          backgroundColor: settings.form_btn_bg || '#e11d48',
+                          position: 'absolute',
+                          top: 0,
+                          right: 0,
+                          height: '52px',
+                          padding: '0 26px',
+                          backgroundColor: settings.form_btn_bg || '#000000',
                           color: settings.form_btn_color || '#ffffff',
                           border: 'none',
-                          borderRadius: settings.form_border_radius ? `${settings.form_border_radius}px` : '0px',
+                          borderTopRightRadius: settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px',
+                          borderBottomRightRadius: settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px',
+                          borderTopLeftRadius: settings.form_border_radius > 0 ? `${settings.form_border_radius}px` : '0px',
+                          borderBottomLeftRadius: settings.form_border_radius > 0 ? `${settings.form_border_radius}px` : '0px',
                           fontWeight: 700,
-                          fontSize: '14px',
-                          letterSpacing: '0.05em',
+                          fontSize: '13px',
+                          letterSpacing: '0.12em',
                           textTransform: 'uppercase',
                           cursor: 'pointer',
-                          fontFamily: 'inherit',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                           whiteSpace: 'nowrap',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}
                       >
-                        {settings.form_btn_text || 'Notify Me'}
+                        {settings.form_btn_text || 'NOTIFY ME'}
                       </button>
                     </Box>
                   </Box>
