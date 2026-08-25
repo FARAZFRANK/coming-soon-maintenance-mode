@@ -69,9 +69,9 @@ export default function TemplatesTab({ settings, onChange, templates }) {
                       borderRadius: '10px !important',
                       overflow: 'hidden',
                       border: '2px solid',
-                      borderColor: isSelected ? '#2563eb' : '#e2e8f0',
+                      borderColor: isSelected ? '#2563eb' : 'divider',
                       transition: 'all 0.2s ease-in-out',
-                      backgroundColor: '#ffffff',
+                      backgroundColor: 'background.paper',
                       display: 'flex',
                       flexDirection: 'column',
                       '&:hover': {
