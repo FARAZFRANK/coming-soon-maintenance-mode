@@ -54,6 +54,17 @@ class CSMM_REST_API {
 			)
 		);
 
+		// Bulk Delete Subscribers
+		register_rest_route(
+			self::NAMESPACE,
+			'/subscribers/bulk-delete',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'bulk_delete_subscribers' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
+
 		// Public Subscribe endpoint (for frontend forms)
 		register_rest_route(
 			self::NAMESPACE,
@@ -763,6 +774,34 @@ class CSMM_REST_API {
 			return rest_ensure_response( array( 'success' => true, 'message' => __( 'Subscriber deleted.', 'coming-soon-maintenance-mode' ) ) );
 		}
 		return new WP_Error( 'delete_failed', __( 'Could not delete subscriber.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+	}
+
+	/**
+	 * Bulk delete subscribers.
+	 *
+	 * @param WP_REST_Request $request
+	 */
+	public function bulk_delete_subscribers( $request ) {
+		$params = $request->get_json_params();
+		if ( empty( $params ) ) {
+			$params = $request->get_params();
+		}
+
+		$ids = isset( $params['ids'] ) && is_array( $params['ids'] ) ? array_map( 'intval', $params['ids'] ) : array();
+
+		if ( empty( $ids ) ) {
+			return new WP_Error( 'invalid_ids', __( 'No subscriber IDs provided.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+		}
+
+		$deleted_count = CSMM_Subscribers::bulk_delete_subscribers( $ids );
+
+		return rest_ensure_response(
+			array(
+				'success' => true,
+				'count'   => $deleted_count,
+				'message' => sprintf( __( '%d subscriber(s) deleted successfully.', 'coming-soon-maintenance-mode' ), $deleted_count ),
+			)
+		);
 	}
 
 	/**

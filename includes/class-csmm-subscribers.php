@@ -119,6 +119,36 @@ class CSMM_Subscribers {
 	}
 
 	/**
+	 * Bulk delete subscribers by array of IDs.
+	 *
+	 * @param array $ids Array of subscriber IDs.
+	 * @return int Number of rows deleted.
+	 */
+	public static function bulk_delete_subscribers( $ids ) {
+		global $wpdb;
+
+		if ( empty( $ids ) || ! is_array( $ids ) ) {
+			return 0;
+		}
+
+		self::ensure_table_exists();
+
+		$table     = self::get_table_name();
+		$clean_ids = array_map( 'intval', $ids );
+		$clean_ids = array_filter( $clean_ids, function( $i ) { return $i > 0; } );
+
+		if ( empty( $clean_ids ) ) {
+			return 0;
+		}
+
+		$placeholders = implode( ',', array_fill( 0, count( $clean_ids ), '%d' ) );
+		$sql          = $wpdb->prepare( "DELETE FROM `{$table}` WHERE id IN ($placeholders)", $clean_ids );
+		$result       = $wpdb->query( $sql );
+
+		return false !== $result ? $result : 0;
+	}
+
+	/**
 	 * Get paginated list of subscribers.
 	 *
 	 * @param int $page Page number.

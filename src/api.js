@@ -131,6 +131,18 @@ export const api = {
     });
   },
 
+  async bulkDeleteSubscribers(ids) {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('subscribers/bulk-delete'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      body: JSON.stringify({ ids }),
+    });
+  },
+
   async getTemplates() {
     const { nonce } = getRestConfig();
     return fetchJson(buildUrl('templates'), {

@@ -124,9 +124,17 @@ class CSMM_Admin
 		?>
 		<div id="csmm-react-root"
 			style="margin-left: -20px; margin-right: -20px; padding: 0; min-height: 100vh; background: transparent;">
-			<div
-				style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 60px); padding: 20px;">
-				<div
+			<script>
+			(function() {
+				var mode = localStorage.getItem('csmm_theme_mode') || 'light';
+				if (mode === 'dark') {
+					document.write('<style>#csmm-preloader-bg { background-color: #0b0f19 !important; } #csmm-preloader-card { background: #1e293b !important; border-color: #334155 !important; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4) !important; } #csmm-preloader-title { color: #f8fafc !important; } #csmm-preloader-desc { color: #94a3b8 !important; } #csmm-preloader-spinner { border-color: #334155 !important; border-top-color: #3b82f6 !important; }</style>');
+				}
+			})();
+			</script>
+			<div id="csmm-preloader-bg"
+				style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 60px); padding: 20px; background-color: #ececec; transition: background-color 0.2s ease;">
+				<div id="csmm-preloader-card"
 					style="background: #ffffff; padding: 36px 44px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06); text-align: center; max-width: 420px; width: 90%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
 					<div
 						style="width: 56px; height: 56px; margin: 0 auto 20px; border-radius: 14px; background: linear-gradient(135deg, #2563eb, #1d4ed8); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);">
@@ -136,14 +144,14 @@ class CSMM_Admin
 							<polyline points="12 6 12 12 16 14"></polyline>
 						</svg>
 					</div>
-					<h3
+					<h3 id="csmm-preloader-title"
 						style="margin: 0 0 8px 0; color: #0f172a; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em;">
 						<?php esc_html_e('Coming Soon Pro Studio', 'coming-soon-maintenance-mode'); ?>
 					</h3>
-					<p style="margin: 0 0 24px 0; color: #64748b; font-size: 0.875rem;">
+					<p id="csmm-preloader-desc" style="margin: 0 0 24px 0; color: #64748b; font-size: 0.875rem;">
 						<?php esc_html_e('Loading workspace settings & templates...', 'coming-soon-maintenance-mode'); ?>
 					</p>
-					<div
+					<div id="csmm-preloader-spinner"
 						style="width: 32px; height: 32px; margin: 0 auto; border: 3px solid #e2e8f0; border-top-color: #2563eb; border-radius: 50%; animation: csmm-spin 0.8s linear infinite;">
 					</div>
 				</div>

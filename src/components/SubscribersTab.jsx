@@ -16,6 +16,7 @@ import {
   TableRow,
   Paper,
   Chip,
+  Checkbox,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -41,6 +42,9 @@ export default function SubscribersTab({ onNotify }) {
   const [loading, setLoading] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+  const [bulkDeleting, setBulkDeleting] = useState(false);
 
   const fetchSubscribers = async () => {
     setLoading(true);
@@ -56,13 +60,29 @@ export default function SubscribersTab({ onNotify }) {
   };
 
   useEffect(() => {
+    setSelectedIds([]);
     fetchSubscribers();
   }, [page, rowsPerPage]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     setPage(0);
+    setSelectedIds([]);
     fetchSubscribers();
+  };
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedIds(subscribers.map((item) => item.id));
+    } else {
+      setSelectedIds([]);
+    }
+  };
+
+  const handleToggleRow = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
   };
 
   const handleDeleteConfirm = async () => {
@@ -72,11 +92,30 @@ export default function SubscribersTab({ onNotify }) {
       await api.deleteSubscriber(deleteId);
       if (onNotify) onNotify('Subscriber deleted successfully', 'success');
       setDeleteId(null);
+      setSelectedIds((prev) => prev.filter((id) => id !== deleteId));
       fetchSubscribers();
     } catch (err) {
       if (onNotify) onNotify('Failed to delete subscriber: ' + err.message, 'error');
     } finally {
       setDeleting(false);
+    }
+  };
+
+  const handleBulkDeleteConfirm = async () => {
+    if (!selectedIds.length) return;
+    setBulkDeleting(true);
+    try {
+      const res = await api.bulkDeleteSubscribers(selectedIds);
+      if (onNotify) {
+        onNotify(res.message || `${selectedIds.length} subscriber(s) deleted successfully.`, 'success');
+      }
+      setSelectedIds([]);
+      setBulkDeleteOpen(false);
+      fetchSubscribers();
+    } catch (err) {
+      if (onNotify) onNotify('Failed to delete subscribers: ' + err.message, 'error');
+    } finally {
+      setBulkDeleting(false);
     }
   };
 
@@ -185,11 +224,63 @@ export default function SubscribersTab({ onNotify }) {
             </Box>
           </Box>
 
+          {/* Bulk Action Bar */}
+          {selectedIds.length > 0 && (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                px: 2,
+                py: 1.2,
+                mb: 2,
+                borderRadius: '8px',
+                backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'rgba(239, 68, 68, 0.15)' : '#fef2f2'),
+                border: '1px solid',
+                borderColor: (theme) => (theme.palette.mode === 'dark' ? 'rgba(239, 68, 68, 0.3)' : '#fecaca'),
+              }}
+            >
+              <Typography variant="body2" sx={{ fontWeight: 600, color: 'error.main' }}>
+                {selectedIds.length} subscriber(s) selected
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                <Button
+                  size="small"
+                  variant="text"
+                  onClick={() => setSelectedIds([])}
+                  sx={{ color: 'text.secondary', textTransform: 'none' }}
+                >
+                  Deselect All
+                </Button>
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="error"
+                  startIcon={<DeleteOutlineRoundedIcon fontSize="small" />}
+                  onClick={() => setBulkDeleteOpen(true)}
+                  sx={{ borderRadius: '6px', fontWeight: 600 }}
+                >
+                  Delete Selected ({selectedIds.length})
+                </Button>
+              </Box>
+            </Box>
+          )}
+
           {/* Table */}
           <TableContainer component={Paper} variant="outlined" sx={{ borderRadius: '8px !important' }}>
             <Table size="medium">
               <TableHead sx={{ backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#f1f5f9') }}>
                 <TableRow>
+                  <TableCell padding="checkbox" sx={{ borderColor: 'divider', width: 48, pl: 2 }}>
+                    <Checkbox
+                      color="primary"
+                      indeterminate={selectedIds.length > 0 && selectedIds.length < subscribers.length}
+                      checked={subscribers.length > 0 && selectedIds.length === subscribers.length}
+                      onChange={handleSelectAll}
+                      disabled={subscribers.length === 0 || loading}
+                      inputProps={{ 'aria-label': 'select all subscribers' }}
+                    />
+                  </TableCell>
                   <TableCell sx={{ fontWeight: 700, width: 80, color: 'text.primary', borderColor: 'divider' }}># ID</TableCell>
                   <TableCell sx={{ fontWeight: 700, color: 'text.primary', borderColor: 'divider' }}>Email Address</TableCell>
                   <TableCell sx={{ fontWeight: 700, color: 'text.primary', borderColor: 'divider' }}>IP Address</TableCell>
@@ -200,7 +291,7 @@ export default function SubscribersTab({ onNotify }) {
               <TableBody>
                 {loading ? (
                   <TableRow>
-                    <TableCell colSpan={5} sx={{ textAlign: 'center', py: 6, borderColor: 'divider' }}>
+                    <TableCell colSpan={6} sx={{ textAlign: 'center', py: 6, borderColor: 'divider' }}>
                       <CircularProgress size={32} />
                       <Typography variant="body2" color="text.secondary" sx={{ mt: 1.5 }}>
                         Loading subscribers...
@@ -208,41 +299,62 @@ export default function SubscribersTab({ onNotify }) {
                     </TableCell>
                   </TableRow>
                 ) : subscribers.length > 0 ? (
-                  subscribers.map((item) => (
-                    <TableRow key={item.id} hover>
-                      <TableCell sx={{ color: 'text.secondary', fontWeight: 600, borderColor: 'divider' }}>
-                        #{item.id}
-                      </TableCell>
-                      <TableCell sx={{ borderColor: 'divider' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                          <MarkEmailReadRoundedIcon sx={{ fontSize: 18, color: '#2563eb' }} />
-                          <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary' }}>
-                            {item.email}
-                          </Typography>
-                        </Box>
-                      </TableCell>
-                      <TableCell sx={{ borderColor: 'divider' }}>
-                        <Chip label={item.ip_address || '127.0.0.1'} size="small" variant="outlined" sx={{ fontSize: '0.75rem', borderRadius: '4px' }} />
-                      </TableCell>
-                      <TableCell sx={{ color: 'text.secondary', fontSize: '0.875rem', borderColor: 'divider' }}>
-                        {item.created_at}
-                      </TableCell>
-                      <TableCell sx={{ textAlign: 'center', borderColor: 'divider' }}>
-                        <IconButton
-                          size="small"
-                          color="error"
-                          onClick={() => setDeleteId(item.id)}
-                          title="Delete subscriber"
-                          sx={{ borderRadius: '6px' }}
-                        >
-                          <DeleteOutlineRoundedIcon fontSize="small" />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                  subscribers.map((item) => {
+                    const isSelected = selectedIds.includes(item.id);
+                    return (
+                      <TableRow
+                        key={item.id}
+                        hover
+                        selected={isSelected}
+                        sx={{
+                          cursor: 'pointer',
+                          '&.Mui-selected, &.Mui-selected:hover': {
+                            backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'rgba(37, 99, 235, 0.12)' : 'rgba(37, 99, 235, 0.06)'),
+                          },
+                        }}
+                      >
+                        <TableCell padding="checkbox" sx={{ borderColor: 'divider', pl: 2 }} onClick={(e) => e.stopPropagation()}>
+                          <Checkbox
+                            color="primary"
+                            checked={isSelected}
+                            onChange={() => handleToggleRow(item.id)}
+                            inputProps={{ 'aria-label': `select subscriber ${item.id}` }}
+                          />
+                        </TableCell>
+                        <TableCell sx={{ color: 'text.secondary', fontWeight: 600, borderColor: 'divider' }} onClick={() => handleToggleRow(item.id)}>
+                          #{item.id}
+                        </TableCell>
+                        <TableCell sx={{ borderColor: 'divider' }} onClick={() => handleToggleRow(item.id)}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                            <MarkEmailReadRoundedIcon sx={{ fontSize: 18, color: '#2563eb' }} />
+                            <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary' }}>
+                              {item.email}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell sx={{ borderColor: 'divider' }} onClick={() => handleToggleRow(item.id)}>
+                          <Chip label={item.ip_address || '127.0.0.1'} size="small" variant="outlined" sx={{ fontSize: '0.75rem', borderRadius: '4px' }} />
+                        </TableCell>
+                        <TableCell sx={{ color: 'text.secondary', fontSize: '0.875rem', borderColor: 'divider' }} onClick={() => handleToggleRow(item.id)}>
+                          {item.created_at}
+                        </TableCell>
+                        <TableCell sx={{ textAlign: 'center', borderColor: 'divider' }} onClick={(e) => e.stopPropagation()}>
+                          <IconButton
+                            size="small"
+                            color="error"
+                            onClick={() => setDeleteId(item.id)}
+                            title="Delete subscriber"
+                            sx={{ borderRadius: '6px' }}
+                          >
+                            <DeleteOutlineRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={5} sx={{ textAlign: 'center', py: 6, borderColor: 'divider' }}>
+                    <TableCell colSpan={6} sx={{ textAlign: 'center', py: 6, borderColor: 'divider' }}>
                       <PeopleAltRoundedIcon sx={{ fontSize: 40, color: '#64748b', mb: 1 }} />
                       <Typography variant="subtitle1" sx={{ fontWeight: 600, color: 'text.primary' }}>
                         No subscribers found
@@ -273,7 +385,7 @@ export default function SubscribersTab({ onNotify }) {
         </CardContent>
       </Card>
 
-      {/* Delete Confirmation Modal */}
+      {/* Single Delete Confirmation Modal */}
       <Dialog open={Boolean(deleteId)} onClose={() => setDeleteId(null)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: '10px !important' } }}>
         <DialogTitle sx={{ fontWeight: 700 }}>Confirm Deletion</DialogTitle>
         <DialogContent>
@@ -287,6 +399,24 @@ export default function SubscribersTab({ onNotify }) {
           </Button>
           <Button onClick={handleDeleteConfirm} color="error" variant="contained" disabled={deleting} sx={{ borderRadius: '6px' }}>
             {deleting ? 'Deleting...' : 'Delete Permanently'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Bulk Delete Confirmation Modal */}
+      <Dialog open={bulkDeleteOpen} onClose={() => setBulkDeleteOpen(false)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: '10px !important' } }}>
+        <DialogTitle sx={{ fontWeight: 700 }}>Delete Multiple Subscribers</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" color="text.secondary">
+            Are you sure you want to permanently delete <strong>{selectedIds.length}</strong> selected subscriber(s)? This action cannot be undone.
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ p: 2, pt: 0 }}>
+          <Button onClick={() => setBulkDeleteOpen(false)} disabled={bulkDeleting} sx={{ borderRadius: '6px' }}>
+            Cancel
+          </Button>
+          <Button onClick={handleBulkDeleteConfirm} color="error" variant="contained" disabled={bulkDeleting} sx={{ borderRadius: '6px' }}>
+            {bulkDeleting ? 'Deleting...' : `Delete (${selectedIds.length}) Subscribers`}
           </Button>
         </DialogActions>
       </Dialog>
