@@ -26,7 +26,7 @@ if ( isset( $_GET['template_preview'] ) && current_user_can( 'manage_options' ) 
 
 // Logo Setup
 $csmm_logo_type           = isset( $csmm_content['logo_type'] ) ? $csmm_content['logo_type'] : 'graphic';
-$csmm_logo_id             = isset( $csmm_content['logo'] ) ? $csmm_content['logo'] : '1';
+$csmm_logo_id             = isset( $csmm_content['logo'] ) && '' !== $csmm_content['logo'] ? $csmm_content['logo'] : '1';
 $csmm_logo_text           = isset( $csmm_content['logo_text'] ) && '' !== $csmm_content['logo_text'] ? $csmm_content['logo_text'] : ( isset( $csmm_content['title'] ) ? $csmm_content['title'] : get_bloginfo('name') );
 $csmm_logo_link           = isset( $csmm_content['logo_link'] ) ? $csmm_content['logo_link'] : '';
 $csmm_logo_height_enabled = ! empty( $csmm_content['logo_height_enabled'] );
