@@ -123,6 +123,20 @@ export default function App() {
     setThemeMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
+  // Ensure page scroll is at top on initial load, refresh, and data ready
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      window.scrollTo(0, 0);
+    }
+  }, [loading]);
+
   const currentTheme = getTheme(themeMode);
 
   // Load initial settings and templates
@@ -262,13 +276,17 @@ export default function App() {
   return (
     <ThemeProvider theme={currentTheme}>
       <CssBaseline />
-      <Box sx={{ pb: 6, pt: 1, backgroundColor: 'background.default', minHeight: '100vh', transition: 'background-color 0.25s ease' }}>
+      <Box sx={{ pb: 6, pt: { xs: 1, sm: 1.5 }, backgroundColor: 'background.default', minHeight: '100vh', transition: 'background-color 0.25s ease' }}>
         <Container maxWidth={false} sx={{ px: { xs: 1.5, sm: 2.5, md: 3.5 } }}>
-          {/* Top Header Card */}
+          {/* Top Header Card - Sticky with Managed Top Spacing */}
           <Paper
             elevation={0}
             sx={{
-              p: { xs: 2, md: 2.5 },
+              position: 'sticky',
+              top: { xs: '46px', md: '32px' },
+              zIndex: 100,
+              p: { xs: 1.75, md: 2.25 },
+              mt: { xs: 0.5, sm: 1 },
               mb: 2.5,
               display: 'flex',
               alignItems: 'center',
@@ -277,7 +295,9 @@ export default function App() {
               gap: 2,
               borderRadius: '10px !important',
               border: `1px solid ${currentTheme.palette.divider}`,
-              backgroundColor: 'background.paper',
+              backgroundColor: themeMode === 'dark' ? 'rgba(30, 41, 59, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(10px)',
+              boxShadow: themeMode === 'dark' ? '0 6px 20px rgba(0,0,0,0.35)' : '0 6px 20px rgba(0,0,0,0.06)',
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -302,7 +322,7 @@ export default function App() {
                     Coming Soon Maintenance Mode Pro
                   </Typography>
                   <Chip
-                    label={`v${api.getConfig().version || '3.2.0'}`}
+                    label={`v${api.getConfig().version || '3.2.1'}`}
                     size="small"
                     sx={{
                       fontWeight: 700,
@@ -406,12 +426,12 @@ export default function App() {
               indicatorColor="primary"
               sx={{ px: 1.5 }}
             >
-              <Tab icon={<TuneRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Website Mode & Targeting" />
+              <Tab icon={<TuneRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Website Mode" />
               <Tab icon={<DashboardCustomizeRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Templates (36)" />
               <Tab icon={<PaletteRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Content, Branding & SEO" />
-              <Tab icon={<ShareRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Social Channels" />
+              <Tab icon={<ShareRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Social Media" />
               <Tab icon={<MarkEmailReadRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Newsletter & Integrations" />
-              <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Subscribers Leads" />
+              <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Subscribers" />
               <Tab icon={<MenuBookRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Documentation" />
             </Tabs>
           </Paper>

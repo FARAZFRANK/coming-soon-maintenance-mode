@@ -224,6 +224,11 @@ class CSMM_REST_API {
 			'template_id'          => $template_id,
 			'logo'                 => $logo_id,
 			'logo_url'             => $logo_url,
+			'logo_type'            => isset( $content['logo_type'] ) ? $content['logo_type'] : 'graphic',
+			'logo_text'            => isset( $content['logo_text'] ) ? $content['logo_text'] : ( isset( $content['title'] ) ? $content['title'] : 'Testing' ),
+			'logo_link'            => isset( $content['logo_link'] ) ? $content['logo_link'] : '',
+			'logo_height_enabled'  => ! empty( $content['logo_height_enabled'] ),
+			'logo_height'          => isset( $content['logo_height'] ) ? intval( $content['logo_height'] ) : 100,
 			'title'                => isset( $content['title'] ) ? $content['title'] : 'Coming Soon',
 			'description'          => isset( $content['description'] ) ? $content['description'] : '',
 			'countdown'            => isset( $content['countdown'] ) ? strval( $content['countdown'] ) : '1',
@@ -231,9 +236,34 @@ class CSMM_REST_API {
 			'countdown_date'       => $countdown_date,
 			'countdown_time'       => isset( $content['countdown_time'] ) ? $content['countdown_time'] : '10:00',
 			'susbcriber_form'      => isset( $content['susbcriber_form'] ) ? strval( $content['susbcriber_form'] ) : '1',
+			'form_placeholder_text' => isset( $content['form_placeholder_text'] ) ? $content['form_placeholder_text'] : 'Email Address',
+			'form_btn_text'        => isset( $content['form_btn_text'] ) ? $content['form_btn_text'] : 'Notify Me',
+			'form_input_bg'        => isset( $content['form_input_bg'] ) ? $content['form_input_bg'] : 'rgba(0, 0, 0, 0.35)',
+			'form_input_color'     => isset( $content['form_input_color'] ) ? $content['form_input_color'] : '#ffffff',
+			'form_btn_bg'          => isset( $content['form_btn_bg'] ) ? $content['form_btn_bg'] : '#e11d48',
+			'form_btn_color'       => isset( $content['form_btn_color'] ) ? $content['form_btn_color'] : '#ffffff',
+			'form_border_radius'   => isset( $content['form_border_radius'] ) ? intval( $content['form_border_radius'] ) : 0,
 			'video_url'            => isset( $content['video_url'] ) ? $content['video_url'] : '',
 			'custom_css'           => isset( $content['custom_css'] ) ? $content['custom_css'] : '',
 			'slides'               => $slides_data,
+			'bg_type'              => isset( $content['bg_type'] ) ? $content['bg_type'] : 'default',
+			'bg_custom_images'     => isset( $content['bg_custom_images'] ) && is_array( $content['bg_custom_images'] ) ? $content['bg_custom_images'] : ( ! empty( $slides_data ) ? $slides_data : array() ),
+			'bg_mobile_enabled'    => ! empty( $content['bg_mobile_enabled'] ),
+			'bg_mobile_image_url'  => isset( $content['bg_mobile_image_url'] ) ? $content['bg_mobile_image_url'] : '',
+			'bg_video_source'      => isset( $content['bg_video_source'] ) ? $content['bg_video_source'] : 'youtube',
+			'bg_video_url'         => isset( $content['bg_video_url'] ) ? $content['bg_video_url'] : ( isset( $content['video_url'] ) ? $content['video_url'] : '' ),
+			'bg_video_loop'        => ! isset( $content['bg_video_loop'] ) || ! empty( $content['bg_video_loop'] ),
+			'bg_video_poster_url'  => isset( $content['bg_video_poster_url'] ) ? $content['bg_video_poster_url'] : '',
+			'bg_pattern'           => isset( $content['bg_pattern'] ) ? $content['bg_pattern'] : 'sakura',
+			'bg_solid_color'       => isset( $content['bg_solid_color'] ) ? $content['bg_solid_color'] : '#e2e8f0',
+			'bg_gradient_type'     => isset( $content['bg_gradient_type'] ) ? $content['bg_gradient_type'] : 'linear',
+			'bg_gradient_color1'   => isset( $content['bg_gradient_color1'] ) ? $content['bg_gradient_color1'] : '#1e3a8a',
+			'bg_gradient_color2'   => isset( $content['bg_gradient_color2'] ) ? $content['bg_gradient_color2'] : '#0f172a',
+			'bg_gradient_angle'    => isset( $content['bg_gradient_angle'] ) ? intval( $content['bg_gradient_angle'] ) : 135,
+			'bg_overlay_type'      => isset( $content['bg_overlay_type'] ) ? $content['bg_overlay_type'] : 'solid',
+			'bg_overlay_color'     => isset( $content['bg_overlay_color'] ) ? $content['bg_overlay_color'] : '#000000',
+			'bg_overlay_opacity'   => isset( $content['bg_overlay_opacity'] ) ? floatval( $content['bg_overlay_opacity'] ) : 0.4,
+			'bg_blur'              => isset( $content['bg_blur'] ) ? intval( $content['bg_blur'] ) : 0,
 			'social_media'         => array(
 				'facebook'  => isset( $social_media['csmm_sm_facebook'] ) ? $social_media['csmm_sm_facebook'] : '#',
 				'twitter'   => isset( $social_media['csmm_sm_twitter'] ) ? $social_media['csmm_sm_twitter'] : '#',
@@ -343,10 +373,25 @@ class CSMM_REST_API {
 			$content_array['title'] = sanitize_text_field( $params['title'] );
 		}
 		if ( isset( $params['description'] ) ) {
-			$content_array['description'] = sanitize_textarea_field( $params['description'] );
+			$content_array['description'] = wp_kses_post( $params['description'] );
 		}
 		if ( isset( $params['logo'] ) ) {
 			$content_array['logo'] = sanitize_text_field( $params['logo'] );
+		}
+		if ( isset( $params['logo_type'] ) ) {
+			$content_array['logo_type'] = sanitize_text_field( $params['logo_type'] );
+		}
+		if ( isset( $params['logo_text'] ) ) {
+			$content_array['logo_text'] = sanitize_text_field( $params['logo_text'] );
+		}
+		if ( isset( $params['logo_link'] ) ) {
+			$content_array['logo_link'] = esc_url_raw( $params['logo_link'] );
+		}
+		if ( isset( $params['logo_height_enabled'] ) ) {
+			$content_array['logo_height_enabled'] = ! empty( $params['logo_height_enabled'] );
+		}
+		if ( isset( $params['logo_height'] ) ) {
+			$content_array['logo_height'] = intval( $params['logo_height'] );
 		}
 		if ( isset( $params['countdown'] ) ) {
 			$content_array['countdown'] = sanitize_text_field( $params['countdown'] );
@@ -363,17 +408,107 @@ class CSMM_REST_API {
 		if ( isset( $params['susbcriber_form'] ) ) {
 			$content_array['susbcriber_form'] = sanitize_text_field( $params['susbcriber_form'] );
 		}
+		if ( isset( $params['form_placeholder_text'] ) ) {
+			$content_array['form_placeholder_text'] = sanitize_text_field( $params['form_placeholder_text'] );
+		}
+		if ( isset( $params['form_btn_text'] ) ) {
+			$content_array['form_btn_text'] = sanitize_text_field( $params['form_btn_text'] );
+		}
+		if ( isset( $params['form_input_bg'] ) ) {
+			$content_array['form_input_bg'] = sanitize_text_field( $params['form_input_bg'] );
+		}
+		if ( isset( $params['form_input_color'] ) ) {
+			$content_array['form_input_color'] = sanitize_text_field( $params['form_input_color'] );
+		}
+		if ( isset( $params['form_btn_bg'] ) ) {
+			$content_array['form_btn_bg'] = sanitize_text_field( $params['form_btn_bg'] );
+		}
+		if ( isset( $params['form_btn_color'] ) ) {
+			$content_array['form_btn_color'] = sanitize_text_field( $params['form_btn_color'] );
+		}
+		if ( isset( $params['form_border_radius'] ) ) {
+			$content_array['form_border_radius'] = intval( $params['form_border_radius'] );
+		}
 		if ( isset( $params['video_url'] ) ) {
 			$content_array['video_url'] = esc_url_raw( $params['video_url'] );
 		}
 		if ( isset( $params['custom_css'] ) ) {
 			$content_array['custom_css'] = wp_strip_all_tags( $params['custom_css'] );
 		}
-		if ( isset( $params['slide_ids'] ) ) {
-			$slide_ids = is_array( $params['slide_ids'] ) ? array_map( 'intval', $params['slide_ids'] ) : array();
+		if (isset($params['slide_ids'])) {
+			$slide_ids = is_array($params['slide_ids']) ? array_map('intval', $params['slide_ids']) : array();
 			$content_array['slide_ids'] = $slide_ids;
 		}
-		update_option( 'csmm_content', $content_array );
+
+		// Background Settings
+		if (isset($params['bg_type'])) {
+			$content_array['bg_type'] = sanitize_text_field($params['bg_type']);
+		}
+		if (isset($params['bg_custom_images']) && is_array($params['bg_custom_images'])) {
+			$sanitized_bg_imgs = array();
+			foreach ($params['bg_custom_images'] as $img) {
+				if (is_array($img) && !empty($img['url'])) {
+					$sanitized_bg_imgs[] = array(
+						'id'  => isset($img['id']) ? intval($img['id']) : 0,
+						'url' => esc_url_raw($img['url']),
+					);
+				}
+			}
+			$content_array['bg_custom_images'] = $sanitized_bg_imgs;
+			// Sync with slide_ids if available
+			$content_array['slide_ids'] = array_column($sanitized_bg_imgs, 'id');
+		}
+		if (isset($params['bg_mobile_enabled'])) {
+			$content_array['bg_mobile_enabled'] = !empty($params['bg_mobile_enabled']);
+		}
+		if (isset($params['bg_mobile_image_url'])) {
+			$content_array['bg_mobile_image_url'] = esc_url_raw($params['bg_mobile_image_url']);
+		}
+		if (isset($params['bg_video_source'])) {
+			$content_array['bg_video_source'] = sanitize_text_field($params['bg_video_source']);
+		}
+		if (isset($params['bg_video_url'])) {
+			$content_array['bg_video_url'] = esc_url_raw($params['bg_video_url']);
+			$content_array['video_url'] = esc_url_raw($params['bg_video_url']);
+		}
+		if (isset($params['bg_video_loop'])) {
+			$content_array['bg_video_loop'] = !empty($params['bg_video_loop']);
+		}
+		if (isset($params['bg_video_poster_url'])) {
+			$content_array['bg_video_poster_url'] = esc_url_raw($params['bg_video_poster_url']);
+		}
+		if (isset($params['bg_pattern'])) {
+			$content_array['bg_pattern'] = sanitize_text_field($params['bg_pattern']);
+		}
+		if (isset($params['bg_solid_color'])) {
+			$content_array['bg_solid_color'] = sanitize_hex_color($params['bg_solid_color']) ? sanitize_hex_color($params['bg_solid_color']) : sanitize_text_field($params['bg_solid_color']);
+		}
+		if (isset($params['bg_gradient_type'])) {
+			$content_array['bg_gradient_type'] = sanitize_text_field($params['bg_gradient_type']);
+		}
+		if (isset($params['bg_gradient_color1'])) {
+			$content_array['bg_gradient_color1'] = sanitize_text_field($params['bg_gradient_color1']);
+		}
+		if (isset($params['bg_gradient_color2'])) {
+			$content_array['bg_gradient_color2'] = sanitize_text_field($params['bg_gradient_color2']);
+		}
+		if (isset($params['bg_gradient_angle'])) {
+			$content_array['bg_gradient_angle'] = intval($params['bg_gradient_angle']);
+		}
+		if (isset($params['bg_overlay_type'])) {
+			$content_array['bg_overlay_type'] = sanitize_text_field($params['bg_overlay_type']);
+		}
+		if (isset($params['bg_overlay_color'])) {
+			$content_array['bg_overlay_color'] = sanitize_text_field($params['bg_overlay_color']);
+		}
+		if (isset($params['bg_overlay_opacity'])) {
+			$content_array['bg_overlay_opacity'] = floatval($params['bg_overlay_opacity']);
+		}
+		if (isset($params['bg_blur'])) {
+			$content_array['bg_blur'] = intval($params['bg_blur']);
+		}
+
+		update_option('csmm_content', $content_array);
 
 		// 4. Social Media
 		if ( isset( $params['social_media'] ) && is_array( $params['social_media'] ) ) {

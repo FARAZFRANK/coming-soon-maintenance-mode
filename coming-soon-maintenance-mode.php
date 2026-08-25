@@ -3,7 +3,7 @@
  * Plugin Name:       Coming Soon Maintenance Mode Pro
  * Plugin URI:        https://wpfrank.com/
  * Description:       A modern, responsive, and robust plugin to create stunning Coming Soon and Maintenance Mode landing pages with lead capture.
- * Version:           3.2.0
+ * Version:           3.2.1
  * Requires at least: 5.0
  * Requires PHP:      7.2
  * Author:            FARAZFRANK
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define Constants
-define( 'CSMM_VERSION', '3.2.0' );
+define( 'CSMM_VERSION', '3.2.1' );
 define( 'CSMM_FILE', __FILE__ );
 define( 'CSMM_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CSMM_URL', plugin_dir_url( __FILE__ ) );

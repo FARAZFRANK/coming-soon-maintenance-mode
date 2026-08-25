@@ -13,6 +13,8 @@ export default defineConfig({
     rollupOptions: {
       input: resolve(__dirname, 'src/main.jsx'),
       output: {
+        format: 'iife',
+        name: 'CsmmReactApp',
         entryFileNames: 'index.js',
         chunkFileNames: 'index-[name].js',
         assetFileNames: (assetInfo) => {

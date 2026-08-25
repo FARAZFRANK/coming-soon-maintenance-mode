@@ -2,7 +2,7 @@
 
 [![WordPress Plugin](https://img.shields.io/badge/WordPress-5.0+-blue.svg)](https://wordpress.org/)
 [![PHP Version](https://img.shields.io/badge/PHP-7.2+-purple.svg)](https://www.php.net/)
-[![Version](https://img.shields.io/badge/version-3.2.0-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
+[![Version](https://img.shields.io/badge/version-3.2.1-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
 [![React](https://img.shields.io/badge/React-18-61dafb.svg)](https://react.dev/)
 [![Material UI](https://img.shields.io/badge/MUI-v5-007fff.svg)](https://mui.com/)
 [![Vite](https://img.shields.io/badge/Vite-5-646cff.svg)](https://vitejs.dev/)
@@ -79,6 +79,14 @@ npm run build
 ---
 
 ## 📋 Changelog
+
+### = 3.2.1 = (25 August 2026)
+* **WordPress Media Library Integration**: Fixed script dependencies (`media-editor`, `media-views`) and isolated Vite output bundle with IIFE format to prevent global scope variable conflicts (`window.wp`), enabling smooth native media upload and selection modal for Brand Logo and Custom Background images.
+* **Universal Content & Branding Engine**: Added full multi-template compatibility in `loader.php` ensuring all 36 templates respect Logo (Text, Graphic with height slider and custom link, or Disabled), WYSIWYG rich HTML description and shortcodes support, custom Google Fonts, and custom CSS.
+* **Graphic Background Suite**: Added solid background colors, 2-color linear and radial gradients, 7 geometric background patterns (Dots, Hexagons, Waves, Carbon, Diagonal, Sakura, Stars), custom images, mobile background override (< 768px), and real-time backdrop blur filter.
+* **Newsletter Form & Button Customizer**: Added complete UI appearance customization for frontend lead capture forms: custom input placeholder, button label, input background color, input text/placeholder color, button background color, button text color, and border-radius slider (0px - 30px) with live real-time form preview in the dashboard.
+* **Sticky Studio Header & Spacing**: Implemented sticky top header card with responsive WordPress admin bar alignment (`top: 32px` / `top: 46px`), glassmorphic backdrop blur, and managed top spacing.
+* **UI & Theme Polish**: Refined light mode background to neutral `#ececec` palette.
 
 ### = 3.2.0 = (24 August 2026)
 * **React 18 Admin Dashboard**: Complete overhaul with Vite, Material UI (MUI v5), and WordPress REST API (`/wp-json/csmm/v1/`).

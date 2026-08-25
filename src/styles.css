@@ -17,7 +17,7 @@ body.csmm-light-page #wpcontent,
 body.csmm-light-page #wpbody,
 body.csmm-light-page #wpbody-content,
 body.csmm-light-page #wpfooter {
-  background-color: #f8fafc !important;
+  background-color: #ececec !important;
 }
 
 #csmm-react-root {
@@ -175,7 +175,7 @@ body.csmm-light-page #wpfooter {
   margin: 0 !important;
 }
 
-#csmm-react-root fieldset.MuiOutlinedInput-notchedOutline legend > span {
+#csmm-react-root fieldset.MuiOutlinedInput-notchedOutline legend>span {
   padding-left: 5px !important;
   padding-right: 5px !important;
   display: inline-block !important;

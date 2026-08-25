@@ -34,7 +34,7 @@ export const getTheme = (mode = 'light') => {
         dark: '#dc2626',
       },
       background: {
-        default: isDark ? '#0b0f19' : '#f8fafc',
+        default: isDark ? '#0b0f19' : '#ececec',
         paper: isDark ? '#1e293b' : '#ffffff',
       },
       text: {

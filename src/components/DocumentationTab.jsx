@@ -44,7 +44,7 @@ export default function DocumentationTab() {
                 <Typography variant="h5" sx={{ fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
                   Coming Soon Maintenance Mode Pro Studio
                 </Typography>
-                <Chip label="v3.2.0" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Chip label="v3.2.1" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
               </Box>
               <Typography variant="body1" sx={{ color: '#94a3b8', maxWidth: 780, lineHeight: 1.6 }}>
                 Comprehensive user guide, implementation workflows, newsletter integrations, SEO configuration, and real-world use cases.
@@ -434,7 +434,7 @@ export default function DocumentationTab() {
           <Stack spacing={2.5}>
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                <Chip label="v3.2.0" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Chip label="v3.2.1" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
                 <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                   Complete SEO Suite, Newsletter APIs, Dynamic Social Channels & Modern Centered Studio
                 </Typography>
