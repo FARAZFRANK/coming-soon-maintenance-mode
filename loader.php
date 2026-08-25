@@ -230,15 +230,138 @@ if ( 'none' !== $csmm_bg_overlay_type && $csmm_bg_overlay_opacity > 0 ) {
 	$overlay_html = '<div class="csmm-dynamic-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: ' . esc_attr( $csmm_bg_overlay_color ) . '; opacity: ' . floatval( $csmm_bg_overlay_opacity ) . '; pointer-events: none; z-index: 1;"></div>' . "\n";
 }
 
-// 5. Inject Dynamic CSS & Overlay into output HTML
+// 6. Floating Toast Notification & AJAX Subscriber Script
+$subscribe_api_url = esc_url_raw( rest_url( 'csmm/v1/subscribe' ) );
+$toast_and_ajax_html = '
+<!-- CSMM Floating Toast Notification -->
+<div id="csmm-floating-toast" style="position: fixed; bottom: 28px; right: 28px; z-index: 999999; display: flex; align-items: center; gap: 14px; background: #0f172a; color: #ffffff; padding: 14px 22px; border-radius: 12px; box-shadow: 0 12px 36px rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.15); font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 600; opacity: 0; transform: translateY(24px) scale(0.95); transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; max-width: 90vw;">
+  <div id="csmm-toast-icon" style="width: 26px; height: 26px; border-radius: 50%; background: #10b981; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0;">✓</div>
+  <div id="csmm-toast-msg" style="line-height: 1.4;">' . esc_html__( 'Thank you! You have been successfully subscribed.', 'coming-soon-maintenance-mode' ) . '</div>
+</div>
+
+<script id="csmm-ajax-subscribe-script">
+(function() {
+  function showCsmmToast(msg, isError) {
+    var toast = document.getElementById("csmm-floating-toast");
+    var toastMsg = document.getElementById("csmm-toast-msg");
+    var toastIcon = document.getElementById("csmm-toast-icon");
+    if (!toast || !toastMsg) return;
+    
+    toastMsg.textContent = msg || (isError ? "Subscription failed. Please try again." : "Thank you! You have been successfully subscribed.");
+    if (isError) {
+      toastIcon.style.background = "#ef4444";
+      toastIcon.textContent = "✕";
+    } else {
+      toastIcon.style.background = "#10b981";
+      toastIcon.textContent = "✓";
+    }
+    
+    toast.style.opacity = "1";
+    toast.style.transform = "translateY(0) scale(1)";
+    toast.style.pointerEvents = "auto";
+    
+    if (window._csmmToastTimer) clearTimeout(window._csmmToastTimer);
+    window._csmmToastTimer = setTimeout(function() {
+      toast.style.opacity = "0";
+      toast.style.transform = "translateY(24px) scale(0.95)";
+      toast.style.pointerEvents = "none";
+    }, 5000);
+  }
+
+  function initCsmmAjaxForms() {
+    var forms = document.querySelectorAll("#mc-form, form.group, .home-content__subscribe form, form.subscribe-form");
+    if (!forms.length) {
+      forms = document.querySelectorAll("form");
+    }
+
+    forms.forEach(function(form) {
+      if (form.getAttribute("data-csmm-bound")) return;
+      form.setAttribute("data-csmm-bound", "true");
+
+      var emailInput = form.querySelector("input[type=\'email\'], input#csmm-email, input[name=\'csmm-email\']");
+      if (!emailInput) return;
+
+      form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var emailVal = (emailInput.value || "").trim();
+        if (!emailVal || !emailVal.includes("@")) {
+          showCsmmToast("Please enter a valid email address.", true);
+          return false;
+        }
+
+        var submitBtn = form.querySelector("input[type=\'submit\'], button[type=\'submit\'], input[name=\'subscribe\']");
+        var origBtnText = submitBtn ? (submitBtn.value || submitBtn.textContent) : "";
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          if (submitBtn.tagName === "INPUT") submitBtn.value = "Subscribing...";
+          else submitBtn.textContent = "Subscribing...";
+        }
+
+        fetch("' . $subscribe_api_url . '", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: emailVal,
+            referer: window.location.href
+          })
+        })
+        .then(function(res) {
+          return res.json().then(function(data) {
+            return { ok: res.ok, data: data };
+          });
+        })
+        .then(function(result) {
+          if (result.ok && result.data && result.data.success) {
+            showCsmmToast(result.data.message || "Thank you! You have been successfully subscribed.", false);
+            emailInput.value = "";
+          } else {
+            var err = (result.data && result.data.message) ? result.data.message : "You are already subscribed or could not subscribe.";
+            showCsmmToast(err, true);
+          }
+        })
+        .catch(function(err) {
+          showCsmmToast("Subscription request failed. Please check your connection.", true);
+        })
+        .finally(function() {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            if (submitBtn.tagName === "INPUT") submitBtn.value = origBtnText;
+            else submitBtn.textContent = origBtnText;
+          }
+        });
+
+        return false;
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCsmmAjaxForms);
+  } else {
+    initCsmmAjaxForms();
+  }
+})();
+</script>
+';
+
+// 7. Inject Dynamic CSS, Overlay, Toast and SEO Meta into output HTML
 if ( preg_match( '/<\/head>/i', $html ) ) {
 	$html = preg_replace( '/<\/head>/i', $dynamic_css . '</head>', $html, 1 );
 }
 if ( ! empty( $overlay_html ) && preg_match( '/<body[^>]*>/i', $html ) ) {
 	$html = preg_replace( '/(<body[^>]*>)/i', '$1' . "\n" . $overlay_html, $html, 1 );
 }
+if ( preg_match( '/<\/body>/i', $html ) ) {
+	$html = preg_replace( '/<\/body>/i', $toast_and_ajax_html . '</body>', $html, 1 );
+} else {
+	$html .= $toast_and_ajax_html;
+}
 
-// 6. Inject SEO & Social meta tags into <head>
+// 8. Inject SEO & Social meta tags into <head>
 ob_start();
 CSMM_SEO::render_meta_tags( $csmm_content, $csmm_settings, $csmm_seo );
 $seo_meta = ob_get_clean();
