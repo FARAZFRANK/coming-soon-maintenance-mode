@@ -85,7 +85,10 @@ npm run build
 * **Universal Content & Branding Engine**: Added full multi-template compatibility in `loader.php` ensuring all 36 templates respect Logo (Text, Graphic with height slider and custom link, or Disabled), WYSIWYG rich HTML description and shortcodes support, custom Google Fonts, and custom CSS.
 * **Graphic Background Suite**: Added solid background colors, 2-color linear and radial gradients, 7 geometric background patterns (Dots, Hexagons, Waves, Carbon, Diagonal, Sakura, Stars), custom images, mobile background override (< 768px), and real-time backdrop blur filter.
 * **Newsletter Form & Button Customizer**: Added complete UI appearance customization for frontend lead capture forms: custom input placeholder, button label, input background color, input text/placeholder color, button background color, button text color, and border-radius slider (0px - 30px) with live real-time form preview in the dashboard.
-* **Sticky Studio Header & Spacing**: Implemented sticky top header card with responsive WordPress admin bar alignment (`top: 32px` / `top: 46px`), glassmorphic backdrop blur, and managed top spacing.
+* **AJAX Lead Capture & Floating Toast**: Added universal asynchronous zero-page-reload form submission with a sleek bottom-corner floating success/error toast notification across all templates.
+* **Subscribers Multi-Select & Bulk Delete**: Added multi-row select-all checkboxes, selected count badge toolbar, and secure bulk delete REST API endpoint.
+* **Seamless Dark Mode Preloader**: Fixed dark mode reload flash by immediately synchronizing PHP preloader styles with localStorage theme preference.
+* **Sticky Studio Header & Compact Sliders**: Implemented sticky top header card with responsive WordPress admin bar alignment (`top: 32px` / `top: 46px`), glassmorphic backdrop blur, and compact slider range controls (`maxWidth: 360px`).
 * **UI & Theme Polish**: Refined light mode background to neutral `#ececec` palette.
 
 ### = 3.2.0 = (24 August 2026)
