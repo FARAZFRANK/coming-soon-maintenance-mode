@@ -356,7 +356,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     />
 
                     {logoHeightEnabled && (
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1, maxWidth: 450 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1, maxWidth: 360 }}>
                         <Slider
                           value={logoHeight}
                           min={20}
@@ -364,6 +364,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           step={5}
                           onChange={(_, val) => onChange('logo_height', val)}
                           color="primary"
+                          size="small"
                           sx={{ flex: 1 }}
                         />
                         <TextField
@@ -1194,11 +1195,16 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   </Box>
                 )}
 
-                {/* Background Overlay Opacity Slider */}
-                <Box>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
-                    Background Overlay Opacity: {settings.bg_overlay_opacity !== undefined ? settings.bg_overlay_opacity : 0.4}
-                  </Typography>
+                {/* Background Overlay Opacity Slider - Compact */}
+                <Box sx={{ maxWidth: 360 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      Background Overlay Opacity
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
+                      {settings.bg_overlay_opacity !== undefined ? settings.bg_overlay_opacity : 0.4}
+                    </Typography>
+                  </Box>
                   <Slider
                     value={settings.bg_overlay_opacity !== undefined ? Number(settings.bg_overlay_opacity) : 0.4}
                     min={0}
@@ -1206,14 +1212,20 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     step={0.05}
                     onChange={(_, val) => onChange('bg_overlay_opacity', val)}
                     color="primary"
+                    size="small"
                   />
                 </Box>
 
-                {/* Background Blur Amount Slider */}
-                <Box>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
-                    Background Blur Amount: {settings.bg_blur || 0}px
-                  </Typography>
+                {/* Background Blur Amount Slider - Compact */}
+                <Box sx={{ maxWidth: 360 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      Background Blur Amount
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
+                      {settings.bg_blur || 0}px
+                    </Typography>
+                  </Box>
                   <Slider
                     value={settings.bg_blur ? Number(settings.bg_blur) : 0}
                     min={0}
@@ -1221,6 +1233,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     step={1}
                     onChange={(_, val) => onChange('bg_blur', val)}
                     color="primary"
+                    size="small"
                   />
                 </Box>
               </Box>
@@ -1444,23 +1457,26 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   </Box>
                 </Grid>
 
-                {/* Border Radius Slider */}
+                {/* Border Radius Slider - Compact */}
                 <Grid item xs={12}>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
-                    Form & Button Border Radius: {settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                  <Box sx={{ maxWidth: 360 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                        Form & Button Border Radius
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
+                        {settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px
+                      </Typography>
+                    </Box>
                     <Slider
                       value={settings.form_border_radius !== undefined ? Number(settings.form_border_radius) : 0}
                       onChange={(e, val) => onChange('form_border_radius', val)}
                       min={0}
                       max={30}
                       step={1}
-                      sx={{ flexGrow: 1 }}
+                      color="primary"
+                      size="small"
                     />
-                    <Typography variant="body2" sx={{ fontWeight: 700, width: 45, textAlign: 'right' }}>
-                      {settings.form_border_radius || 0}px
-                    </Typography>
                   </Box>
                 </Grid>
 
