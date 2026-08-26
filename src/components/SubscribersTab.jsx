@@ -414,9 +414,9 @@ export default function SubscribersTab({ onNotify }) {
 
       {/* Single Delete Confirmation Modal */}
       <Dialog open={Boolean(deleteId)} onClose={() => setDeleteId(null)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: '10px !important' } }}>
-        <DialogTitle sx={{ fontWeight: 700 }}>Confirm Deletion</DialogTitle>
+        <DialogTitle sx={{ fontWeight: 700, color: 'text.primary' }}>Confirm Deletion</DialogTitle>
         <DialogContent>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6 }}>
             Are you sure you want to permanently remove this subscriber email from your database? This action cannot be undone.
           </Typography>
         </DialogContent>
@@ -432,9 +432,9 @@ export default function SubscribersTab({ onNotify }) {
 
       {/* Bulk Delete Confirmation Modal */}
       <Dialog open={bulkDeleteOpen} onClose={() => setBulkDeleteOpen(false)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: '10px !important' } }}>
-        <DialogTitle sx={{ fontWeight: 700 }}>Delete Multiple Subscribers</DialogTitle>
+        <DialogTitle sx={{ fontWeight: 700, color: 'text.primary' }}>Delete Multiple Subscribers</DialogTitle>
         <DialogContent>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6 }}>
             Are you sure you want to permanently delete <strong>{selectedIds.length}</strong> selected subscriber(s)? This action cannot be undone.
           </Typography>
         </DialogContent>

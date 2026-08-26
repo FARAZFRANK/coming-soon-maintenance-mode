@@ -113,6 +113,24 @@ export const getTheme = (mode = 'light') => {
           paper: {
             borderRadius: 10,
             backgroundColor: isDark ? '#1e293b' : '#ffffff',
+            backgroundImage: 'none',
+            border: `1px solid ${isDark ? '#334155' : '#e2e8f0'}`,
+            color: isDark ? '#f8fafc' : '#0f172a',
+          },
+        },
+      },
+      MuiDialogTitle: {
+        styleOverrides: {
+          root: {
+            color: isDark ? '#f8fafc !important' : '#0f172a !important',
+            fontWeight: 700,
+          },
+        },
+      },
+      MuiDialogContent: {
+        styleOverrides: {
+          root: {
+            color: isDark ? '#94a3b8 !important' : '#475569 !important',
           },
         },
       },
