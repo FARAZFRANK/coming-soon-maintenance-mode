@@ -182,30 +182,36 @@ $dynamic_css .= ".home-content__subscribe input[type=\"submit\"], #mc-form input
 $dynamic_css .= ".home-content__subscribe label.subscribe-message, #mc-form label.subscribe-message, #mc-form label { position: absolute !important; top: 62px !important; left: 0 !important; right: 0 !important; margin-top: 0 !important; margin-bottom: 0 !important; }\n";
 
 // Graphic Background Types
+if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom' ), true ) ) {
+	$dynamic_css .= ".s-home::before, .s-home::after, .s-home--static::before, .s-home--particles::before, .s-home .overlay, .s-home .gradient-overlay, .home-overlay, .grid-overlay, .s-home .grid-overlay { display: none !important; opacity: 0 !important; background-image: none !important; background: none !important; }\n";
+}
+
 if ( 'solid' === $csmm_bg_type ) {
-	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles { background: {$csmm_bg_solid_color} !important; background-image: none !important; }\n";
+	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background: {$csmm_bg_solid_color} !important; background-image: none !important; }\n";
 } elseif ( 'gradient' === $csmm_bg_type ) {
 	if ( 'radial' === $csmm_bg_gradient_type ) {
 		$grad = "radial-gradient(circle, {$csmm_bg_gradient_color1} 0%, {$csmm_bg_gradient_color2} 100%)";
 	} else {
 		$grad = "linear-gradient({$csmm_bg_gradient_angle}deg, {$csmm_bg_gradient_color1} 0%, {$csmm_bg_gradient_color2} 100%)";
 	}
-	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles { background: {$grad} !important; background-image: {$grad} !important; }\n";
+	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background: {$grad} !important; background-image: {$grad} !important; }\n";
 } elseif ( 'pattern' === $csmm_bg_type ) {
 	$pattern_css_map = array(
-		'dots'      => "background-color: #0f172a !important; background-image: radial-gradient(rgba(255, 255, 255, 0.2) 1.5px, transparent 1.5px) !important; background-size: 24px 24px !important;",
-		'hexagons'  => "background-color: #0f172a !important; background-image: radial-gradient(circle at 100% 150%, #1e293b 24%, #0f172a 25%, #0f172a 28%, #1e293b 29%, #1e293b 36%, #0f172a 36%, #0f172a 40%, transparent 40%, transparent) !important; background-size: 30px 30px !important;",
-		'waves'     => "background: linear-gradient(135deg, #0f172a 25%, transparent 25%) -50px 0, linear-gradient(225deg, #0f172a 25%, transparent 25%) -50px 0, linear-gradient(315deg, #0f172a 25%, transparent 25%), linear-gradient(45deg, #0f172a 25%, transparent 25%) !important; background-size: 100px 100px !important; background-color: #1e293b !important;",
-		'carbon'    => "background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px, linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px, linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px, linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px, linear-gradient(90deg, #1b1b1b 10px, transparent 10px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424) !important; background-size: 20px 20px !important; background-color: #131313 !important;",
-		'diagonal'  => "background: repeating-linear-gradient(45deg, #0f172a, #0f172a 10px, #1e293b 10px, #1e293b 20px) !important;",
-		'stars'     => "background-color: #050814 !important; background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px), radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px), radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px) !important; background-size: 550px 550px, 350px 350px, 250px 250px !important;",
-		'sakura'    => "background-color: #0f172a !important; background-image: radial-gradient(ellipse at center, rgba(13,59,76,0.3) 0%, rgba(13,59,76,0.8) 100%) !important;",
+		'dots'      => "background-color: #0b1120 !important; background-image: radial-gradient(rgba(59, 130, 246, 0.5) 2px, transparent 2px) !important; background-size: 24px 24px !important;",
+		'hexagons'  => "background-color: #0b1120 !important; background-image: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 0 0, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 0 100%, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.35) 15%, transparent 16%) !important; background-size: 40px 40px !important;",
+		'waves'     => "background-color: #081226 !important; background-image: radial-gradient(ellipse at 50% 50%, rgba(14, 165, 233, 0.35) 0%, transparent 60%), repeating-radial-gradient(circle at 0 0, transparent 0, #081226 20px, transparent 21px, rgba(14, 165, 233, 0.25) 22px, transparent 23px) !important; background-size: 100% 100%, 60px 60px !important;",
+		'triangles' => "background-color: #090e1a !important; background-image: linear-gradient(30deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(150deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(30deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(150deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(60deg, rgba(30, 58, 138, 0.35) 25%, transparent 25.5%, transparent 75%, rgba(30, 58, 138, 0.35) 75%, rgba(30, 58, 138, 0.35)), linear-gradient(60deg, rgba(30, 58, 138, 0.35) 25%, transparent 25.5%, transparent 75%, rgba(30, 58, 138, 0.35) 75%, rgba(30, 58, 138, 0.35)) !important; background-size: 80px 140px !important; background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px !important;",
+		'carbon'    => "background-color: #0f1117 !important; background-image: linear-gradient(27deg, #151821 5px, transparent 5px), linear-gradient(207deg, #151821 5px, transparent 5px), linear-gradient(27deg, #1e2230 5px, transparent 5px), linear-gradient(207deg, #1e2230 5px, transparent 5px), linear-gradient(90deg, #181c27 10px, transparent 10px), linear-gradient(#1b1e2b 25%, #141722 25%, #141722 50%, transparent 50%, transparent 75%, #232838 75%, #232838) !important; background-size: 20px 20px !important;",
+		'lines'     => "background-color: #0b1120 !important; background-image: repeating-linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.2) 2px, transparent 2px, transparent 16px) !important;",
+		'diagonal'  => "background-color: #0b1120 !important; background-image: repeating-linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.2) 2px, transparent 2px, transparent 16px) !important;",
+		'stars'     => "background-color: #030712 !important; background-image: radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.9), rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, rgba(147,197,253,0.9), rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 230px 190px, #ffffff, rgba(0,0,0,0)) !important; background-size: 250px 250px !important;",
+		'sakura'    => "background-color: #1a0b18 !important; background-image: radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.4) 10%, transparent 20%), radial-gradient(circle at 20% 20%, rgba(251, 113, 133, 0.35) 15%, transparent 25%), radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.35) 15%, transparent 25%), radial-gradient(circle at 70% 30%, rgba(244, 114, 182, 0.3) 12%, transparent 24%) !important; background-size: 100px 100px !important;",
 	);
-	$pat_rule = isset( $pattern_css_map[ $csmm_bg_pattern ] ) ? $pattern_css_map[ $csmm_bg_pattern ] : $pattern_css_map['sakura'];
-	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles { {$pat_rule} }\n";
+	$pat_rule = isset( $pattern_css_map[ $csmm_bg_pattern ] ) ? $pattern_css_map[ $csmm_bg_pattern ] : $pattern_css_map['waves'];
+	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image, .bg-container { {$pat_rule} }\n";
 } elseif ( 'custom' === $csmm_bg_type && ! empty( $csmm_bg_custom_images ) && ! empty( $csmm_bg_custom_images[0]['url'] ) ) {
 	$custom_bg_url = esc_url( $csmm_bg_custom_images[0]['url'] );
-	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles { background-image: url('{$custom_bg_url}') !important; background-size: cover !important; background-position: center center !important; }\n";
+	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: cover !important; background-position: center center !important; }\n";
 }
 
 // Mobile Background Override

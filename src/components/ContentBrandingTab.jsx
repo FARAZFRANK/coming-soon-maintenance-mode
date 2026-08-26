@@ -931,49 +931,102 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
               )}
 
               {/* Option 4: Graphic Pattern */}
-              {settings.bg_type === 'pattern' && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <Box>
-                    <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
-                      Select Pattern
-                    </Typography>
-                    <Select
-                      size="small"
-                      fullWidth
-                      value={settings.bg_pattern || 'sakura'}
-                      onChange={(e) => onChange('bg_pattern', e.target.value)}
-                    >
-                      <MenuItem value="sakura">Sakura</MenuItem>
-                      <MenuItem value="hexagons">Hexagons</MenuItem>
-                      <MenuItem value="dots">Dots Pattern</MenuItem>
-                      <MenuItem value="triangles">Triangles</MenuItem>
-                      <MenuItem value="waves">Waves</MenuItem>
-                      <MenuItem value="carbon">Carbon Fiber</MenuItem>
-                      <MenuItem value="lines">Diagonal Lines</MenuItem>
-                      <MenuItem value="stars">Night Stars</MenuItem>
-                    </Select>
-                  </Box>
+              {settings.bg_type === 'pattern' && (() => {
+                const pat = settings.bg_pattern || 'waves';
+                const patternMap = {
+                  sakura: {
+                    backgroundColor: '#1a0b18',
+                    backgroundImage:
+                      'radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.4) 10%, transparent 20%), radial-gradient(circle at 20% 20%, rgba(251, 113, 133, 0.35) 15%, transparent 25%), radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.35) 15%, transparent 25%), radial-gradient(circle at 70% 30%, rgba(244, 114, 182, 0.3) 12%, transparent 24%)',
+                    backgroundSize: '100px 100px',
+                  },
+                  hexagons: {
+                    backgroundColor: '#0b1120',
+                    backgroundImage:
+                      'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 0 0, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 0 100%, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.35) 15%, transparent 16%)',
+                    backgroundSize: '40px 40px',
+                  },
+                  dots: {
+                    backgroundColor: '#0b1120',
+                    backgroundImage: 'radial-gradient(rgba(59, 130, 246, 0.5) 2px, transparent 2px)',
+                    backgroundSize: '24px 24px',
+                  },
+                  triangles: {
+                    backgroundColor: '#090e1a',
+                    backgroundImage:
+                      'linear-gradient(30deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(150deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(30deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(150deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(60deg, rgba(30, 58, 138, 0.35) 25%, transparent 25.5%, transparent 75%, rgba(30, 58, 138, 0.35) 75%, rgba(30, 58, 138, 0.35)), linear-gradient(60deg, rgba(30, 58, 138, 0.35) 25%, transparent 25.5%, transparent 75%, rgba(30, 58, 138, 0.35) 75%, rgba(30, 58, 138, 0.35))',
+                    backgroundSize: '80px 140px',
+                    backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px',
+                  },
+                  waves: {
+                    backgroundColor: '#081226',
+                    backgroundImage:
+                      'radial-gradient(ellipse at 50% 50%, rgba(14, 165, 233, 0.35) 0%, transparent 60%), repeating-radial-gradient(circle at 0 0, transparent 0, #081226 20px, transparent 21px, rgba(14, 165, 233, 0.25) 22px, transparent 23px)',
+                    backgroundSize: '100% 100%, 60px 60px',
+                  },
+                  carbon: {
+                    backgroundColor: '#0f1117',
+                    backgroundImage:
+                      'linear-gradient(27deg, #151821 5px, transparent 5px), linear-gradient(207deg, #151821 5px, transparent 5px), linear-gradient(27deg, #1e2230 5px, transparent 5px), linear-gradient(207deg, #1e2230 5px, transparent 5px), linear-gradient(90deg, #181c27 10px, transparent 10px), linear-gradient(#1b1e2b 25%, #141722 25%, #141722 50%, transparent 50%, transparent 75%, #232838 75%, #232838)',
+                    backgroundSize: '20px 20px',
+                  },
+                  lines: {
+                    backgroundColor: '#0b1120',
+                    backgroundImage:
+                      'repeating-linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.2) 2px, transparent 2px, transparent 16px)',
+                  },
+                  stars: {
+                    backgroundColor: '#030712',
+                    backgroundImage:
+                      'radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.9), rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, rgba(147,197,253,0.9), rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 230px 190px, #ffffff, rgba(0,0,0,0))',
+                    backgroundSize: '250px 250px',
+                  },
+                };
+                const activeStyle = patternMap[pat] || patternMap.waves;
 
-                  {/* Pattern Strip Preview */}
-                  <Paper
-                    variant="outlined"
-                    sx={{
-                      width: '100%',
-                      height: 160,
-                      borderRadius: '8px !important',
-                      backgroundColor: '#a39281',
-                      backgroundImage:
-                        settings.bg_pattern === 'hexagons'
-                          ? 'radial-gradient(#ffffff 15%, transparent 16%), radial-gradient(#ffffff 15%, transparent 16%)'
-                          : settings.bg_pattern === 'dots'
-                          ? 'radial-gradient(#ffffff 10%, transparent 11%)'
-                          : 'repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0px, rgba(255,255,255,0.08) 10px, transparent 10px, transparent 20px)',
-                      backgroundSize: '30px 30px',
-                      opacity: 0.9,
-                    }}
-                  />
-                </Box>
-              )}
+                return (
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Box>
+                      <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                        Select Pattern
+                      </Typography>
+                      <Select
+                        size="small"
+                        fullWidth
+                        value={pat}
+                        onChange={(e) => onChange('bg_pattern', e.target.value)}
+                      >
+                        <MenuItem value="waves">Waves</MenuItem>
+                        <MenuItem value="sakura">Sakura</MenuItem>
+                        <MenuItem value="hexagons">Hexagons</MenuItem>
+                        <MenuItem value="dots">Dots Pattern</MenuItem>
+                        <MenuItem value="triangles">Triangles</MenuItem>
+                        <MenuItem value="carbon">Carbon Fiber</MenuItem>
+                        <MenuItem value="lines">Diagonal Lines</MenuItem>
+                        <MenuItem value="stars">Night Stars</MenuItem>
+                      </Select>
+                    </Box>
+
+                    {/* Pattern Strip Preview */}
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+                      <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                        Live Pattern Preview:
+                      </Typography>
+                      <Paper
+                        variant="outlined"
+                        sx={{
+                          width: '100%',
+                          height: 140,
+                          borderRadius: '8px !important',
+                          border: '1px solid #334155',
+                          ...activeStyle,
+                          boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.4)',
+                        }}
+                      />
+                    </Box>
+                  </Box>
+                );
+              })()}
 
               {/* Option 5: Solid Color */}
               {settings.bg_type === 'solid' && (
