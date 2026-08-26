@@ -181,20 +181,22 @@ $dynamic_css .= ".home-content__subscribe input[type=\"email\"]::placeholder, #m
 $dynamic_css .= ".home-content__subscribe input[type=\"submit\"], #mc-form input[type=\"submit\"], .home-content__subscribe button, #mc-form button, input[name=\"subscribe\"] { background: {$csmm_form_btn_bg} !important; background-color: {$csmm_form_btn_bg} !important; color: {$csmm_form_btn_color} !important; border-top-right-radius: {$csmm_form_border_radius}px !important; border-bottom-right-radius: {$csmm_form_border_radius}px !important; border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important; border-color: {$csmm_form_btn_bg} !important; border: none !important; height: 54px !important; min-height: 54px !important; max-height: 54px !important; line-height: 54px !important; padding: 0 28px !important; top: 0 !important; right: 0 !important; margin: 0 !important; position: absolute !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; box-sizing: border-box !important; }\n";
 $dynamic_css .= ".home-content__subscribe label.subscribe-message, #mc-form label.subscribe-message, #mc-form label { position: absolute !important; top: 62px !important; left: 0 !important; right: 0 !important; margin-top: 0 !important; margin-bottom: 0 !important; }\n";
 
-// Graphic Background Types
-if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom' ), true ) ) {
+// Graphic Background Types - Complete replacement of template background when non-default
+if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', 'video' ), true ) ) {
 	$dynamic_css .= ".s-home::before, .s-home::after, .s-home--static::before, .s-home--particles::before, .s-home .overlay, .s-home .gradient-overlay, .home-overlay, .grid-overlay, .s-home .grid-overlay { display: none !important; opacity: 0 !important; background-image: none !important; background: none !important; }\n";
 }
 
+$video_bg_html = '';
+
 if ( 'solid' === $csmm_bg_type ) {
-	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background: {$csmm_bg_solid_color} !important; background-image: none !important; }\n";
+	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$csmm_bg_solid_color} !important; background-image: none !important; }\n";
 } elseif ( 'gradient' === $csmm_bg_type ) {
 	if ( 'radial' === $csmm_bg_gradient_type ) {
 		$grad = "radial-gradient(circle, {$csmm_bg_gradient_color1} 0%, {$csmm_bg_gradient_color2} 100%)";
 	} else {
 		$grad = "linear-gradient({$csmm_bg_gradient_angle}deg, {$csmm_bg_gradient_color1} 0%, {$csmm_bg_gradient_color2} 100%)";
 	}
-	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background: {$grad} !important; background-image: {$grad} !important; }\n";
+	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$grad} !important; background-image: {$grad} !important; }\n";
 } elseif ( 'pattern' === $csmm_bg_type ) {
 	$pattern_css_map = array(
 		'dots'      => "background-color: #0b1120 !important; background-image: radial-gradient(rgba(59, 130, 246, 0.5) 2px, transparent 2px) !important; background-size: 24px 24px !important;",
@@ -209,19 +211,52 @@ if ( 'solid' === $csmm_bg_type ) {
 	);
 	$pat_rule = isset( $pattern_css_map[ $csmm_bg_pattern ] ) ? $pattern_css_map[ $csmm_bg_pattern ] : $pattern_css_map['waves'];
 	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image, .bg-container { {$pat_rule} }\n";
-} elseif ( 'custom' === $csmm_bg_type && ! empty( $csmm_bg_custom_images ) && ! empty( $csmm_bg_custom_images[0]['url'] ) ) {
-	$custom_bg_url = esc_url( $csmm_bg_custom_images[0]['url'] );
-	$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: cover !important; background-position: center center !important; }\n";
+} elseif ( 'custom' === $csmm_bg_type ) {
+	$custom_img_url = '';
+	if ( ! empty( $csmm_bg_custom_images ) && ! empty( $csmm_bg_custom_images[0]['url'] ) ) {
+		$custom_img_url = $csmm_bg_custom_images[0]['url'];
+	} elseif ( ! empty( $csmm_content['slides'] ) && ! empty( $csmm_content['slides'][0]['url'] ) ) {
+		$custom_img_url = $csmm_content['slides'][0]['url'];
+	}
+	if ( ! empty( $custom_img_url ) ) {
+		$custom_bg_url = esc_url( $custom_img_url );
+		$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
+	}
+} elseif ( 'video' === $csmm_bg_type ) {
+	if ( ! empty( $csmm_bg_video_poster_url ) ) {
+		$poster_url = esc_url( $csmm_bg_video_poster_url );
+		$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$poster_url}') !important; background-size: cover !important; background-position: center center !important; }\n";
+	}
+	if ( ! empty( $csmm_bg_video_url ) ) {
+		$v_url = $csmm_bg_video_url;
+		if ( 'youtube' === $csmm_bg_video_source || strpos( $v_url, 'youtube.com' ) !== false || strpos( $v_url, 'youtu.be' ) !== false ) {
+			preg_match( '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $v_url, $yt_matches );
+			$yt_id = ! empty( $yt_matches[1] ) ? $yt_matches[1] : '';
+			if ( $yt_id ) {
+				$embed_src = 'https://www.youtube.com/embed/' . $yt_id . '?autoplay=1&mute=1&controls=0&loop=1&playlist=' . $yt_id . '&showinfo=0&rel=0&enablejsapi=1';
+				$video_bg_html = '<div class="csmm-video-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden;"><iframe src="' . esc_url( $embed_src ) . '" frameborder="0" allow="autoplay; encrypted-media" style="position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); pointer-events: none;"></iframe></div>';
+			}
+		} elseif ( 'vimeo' === $csmm_bg_video_source || strpos( $v_url, 'vimeo.com' ) !== false ) {
+			preg_match( '/vimeo\.com\/(?:video\/)?([0-9]+)/', $v_url, $vm_matches );
+			$vm_id = ! empty( $vm_matches[1] ) ? $vm_matches[1] : '';
+			if ( $vm_id ) {
+				$embed_src = 'https://player.vimeo.com/video/' . $vm_id . '?autoplay=1&loop=1&muted=1&background=1&autopause=0';
+				$video_bg_html = '<div class="csmm-video-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden;"><iframe src="' . esc_url( $embed_src ) . '" frameborder="0" allow="autoplay; fullscreen" style="position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); pointer-events: none;"></iframe></div>';
+			}
+		} else {
+			$video_bg_html = '<div class="csmm-video-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden;"><video src="' . esc_url( $v_url ) . '" autoplay muted loop playsinline style="position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%); object-fit: cover;"></video></div>';
+		}
+	}
 }
 
 // Mobile Background Override
 if ( $csmm_bg_mobile_enabled && ! empty( $csmm_bg_mobile_image_url ) ) {
 	$mob_url = esc_url( $csmm_bg_mobile_image_url );
-	$dynamic_css .= "@media (max-width: 768px) { body, .s-home, main.s-home, #particles-js, .home-particles { background-image: url('{$mob_url}') !important; background-size: cover !important; background-position: center center !important; } }\n";
+	$dynamic_css .= "@media (max-width: 768px) { body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$mob_url}') !important; background-size: cover !important; background-position: center center !important; } }\n";
 }
 
 // Background Blur
-if ( $csmm_bg_blur > 0 ) {
+if ( $csmm_bg_blur > 0 && 'default' !== $csmm_bg_type ) {
 	$dynamic_css .= ".home-content { backdrop-filter: blur({$csmm_bg_blur}px); -webkit-backdrop-filter: blur({$csmm_bg_blur}px); }\n";
 }
 
@@ -234,8 +269,13 @@ $dynamic_css .= "</style>\n";
 
 // Dynamic Overlay HTML if enabled
 $overlay_html = '';
-if ( 'none' !== $csmm_bg_overlay_type && $csmm_bg_overlay_opacity > 0 ) {
+if ( 'default' !== $csmm_bg_type && 'none' !== $csmm_bg_overlay_type && $csmm_bg_overlay_opacity > 0 ) {
 	$overlay_html = '<div class="csmm-dynamic-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: ' . esc_attr( $csmm_bg_overlay_color ) . '; opacity: ' . floatval( $csmm_bg_overlay_opacity ) . '; pointer-events: none; z-index: 1;"></div>' . "\n";
+}
+
+// Combine video background and overlay
+if ( ! empty( $video_bg_html ) ) {
+	$overlay_html = $video_bg_html . $overlay_html;
 }
 
 // 6. Floating Toast Notification & AJAX Subscriber Script
