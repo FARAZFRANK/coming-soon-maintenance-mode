@@ -71,17 +71,27 @@ export default function SubscribersTab({ onNotify }) {
     fetchSubscribers();
   };
 
-  const handleSelectAll = (e) => {
-    if (e.target.checked) {
-      setSelectedIds(subscribers.map((item) => item.id));
+  const allSelected =
+    subscribers.length > 0 &&
+    subscribers.every((item) => selectedIds.map(String).includes(String(item.id)));
+  const isIndeterminate = selectedIds.length > 0 && !allSelected;
+
+  const handleSelectAll = () => {
+    if (allSelected) {
+      const pageIds = new Set(subscribers.map((item) => String(item.id)));
+      setSelectedIds((prev) => prev.filter((id) => !pageIds.has(String(id))));
     } else {
-      setSelectedIds([]);
+      const pageIds = subscribers.map((item) => String(item.id));
+      setSelectedIds((prev) => Array.from(new Set([...prev.map(String), ...pageIds])));
     }
   };
 
   const handleToggleRow = (id) => {
+    const idStr = String(id);
     setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+      prev.map(String).includes(idStr)
+        ? prev.filter((i) => String(i) !== idStr)
+        : [...prev.map(String), idStr]
     );
   };
 
@@ -271,12 +281,21 @@ export default function SubscribersTab({ onNotify }) {
             <Table size="medium">
               <TableHead sx={{ backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#f1f5f9') }}>
                 <TableRow>
-                  <TableCell padding="checkbox" sx={{ borderColor: 'divider', width: 48, pl: 2 }}>
+                  <TableCell
+                    padding="checkbox"
+                    sx={{ borderColor: 'divider', width: 48, pl: 2, cursor: subscribers.length > 0 ? 'pointer' : 'default' }}
+                    onClick={() => {
+                      if (subscribers.length > 0 && !loading) {
+                        handleSelectAll();
+                      }
+                    }}
+                  >
                     <Checkbox
                       color="primary"
-                      indeterminate={selectedIds.length > 0 && selectedIds.length < subscribers.length}
-                      checked={subscribers.length > 0 && selectedIds.length === subscribers.length}
+                      indeterminate={isIndeterminate}
+                      checked={allSelected}
                       onChange={handleSelectAll}
+                      onClick={(e) => e.stopPropagation()}
                       disabled={subscribers.length === 0 || loading}
                       inputProps={{ 'aria-label': 'select all subscribers' }}
                     />
@@ -300,7 +319,7 @@ export default function SubscribersTab({ onNotify }) {
                   </TableRow>
                 ) : subscribers.length > 0 ? (
                   subscribers.map((item) => {
-                    const isSelected = selectedIds.includes(item.id);
+                    const isSelected = selectedIds.map(String).includes(String(item.id));
                     return (
                       <TableRow
                         key={item.id}
@@ -313,11 +332,19 @@ export default function SubscribersTab({ onNotify }) {
                           },
                         }}
                       >
-                        <TableCell padding="checkbox" sx={{ borderColor: 'divider', pl: 2 }} onClick={(e) => e.stopPropagation()}>
+                        <TableCell
+                          padding="checkbox"
+                          sx={{ borderColor: 'divider', pl: 2 }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggleRow(item.id);
+                          }}
+                        >
                           <Checkbox
                             color="primary"
                             checked={isSelected}
                             onChange={() => handleToggleRow(item.id)}
+                            onClick={(e) => e.stopPropagation()}
                             inputProps={{ 'aria-label': `select subscriber ${item.id}` }}
                           />
                         </TableCell>
