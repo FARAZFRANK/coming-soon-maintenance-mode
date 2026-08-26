@@ -43,6 +43,7 @@ import InsertLinkRoundedIcon from '@mui/icons-material/InsertLinkRounded';
 import HorizontalRuleRoundedIcon from '@mui/icons-material/HorizontalRuleRounded';
 import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
 import PermMediaRoundedIcon from '@mui/icons-material/PermMediaRounded';
+import WallpaperRoundedIcon from '@mui/icons-material/WallpaperRounded';
 
 export default function ContentBrandingTab({ settings = {}, onChange }) {
   const [editorMode, setEditorMode] = useState('visual'); // 'visual' | 'code'
@@ -727,33 +728,51 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
 
             {/* Right Side: Options based on selected background */}
             <Grid item xs={12} sm={8} md={9}>
-              {/* Option 1: Default Media */}
+              {/* Option 1: Default Media Info Box */}
               {(settings.bg_type === 'default' || !settings.bg_type) && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <Paper
-                    variant="outlined"
-                    sx={{
-                      width: '100%',
-                      height: 260,
-                      borderRadius: '8px !important',
-                      overflow: 'hidden',
-                      position: 'relative',
-                      background: 'linear-gradient(135deg, #0d3b4c 0%, #175d69 35%, #85b8b7 70%, #d4e7e6 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: 3,
+                    borderRadius: '10px !important',
+                    borderColor: 'divider',
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === 'dark' ? 'rgba(59, 130, 246, 0.07)' : 'rgba(37, 99, 235, 0.04)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 1.5,
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                     <Box
                       sx={{
-                        width: '100%',
-                        height: '100%',
-                        backgroundImage: 'radial-gradient(ellipse at center, rgba(13,59,76,0.3) 0%, rgba(13,59,76,0.8) 100%)',
-                        backgroundSize: 'cover',
+                        width: 42,
+                        height: 42,
+                        borderRadius: '8px',
+                        backgroundColor: 'primary.main',
+                        color: '#ffffff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
                       }}
-                    />
-                  </Paper>
-                </Box>
+                    >
+                      <WallpaperRoundedIcon fontSize="small" />
+                    </Box>
+                    <Box>
+                      <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'text.primary' }}>
+                        Template-Specific Background Active
+                      </Typography>
+                      <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500 }}>
+                        Active template utilizes its own built-in design, photography, and styling.
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7, mt: 0.5 }}>
+                    Default setting par har active template ki <strong>Template-Specific Background Settings</strong> naturally apply hongi. Agar aap apna custom background use karna chahte hain, toh left side ke options (<em>Custom Images, Video, Graphic Pattern, Solid Color, Gradient Color</em>) configure and use kar sakte hain.
+                  </Typography>
+                </Paper>
               )}
 
               {/* Option 2: Custom Images */}
@@ -1189,107 +1208,111 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                 </Box>
               )}
 
-              <Divider sx={{ my: 3 }} />
+              {/* Common Overlay & Blur Settings (Only for Custom Backgrounds) */}
+              {settings.bg_type && settings.bg_type !== 'default' && (
+                <>
+                  <Divider sx={{ my: 3 }} />
 
-              {/* Common Overlay Settings (Screenshots 1-5) */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                <Box>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
-                    Background Overlay
-                  </Typography>
-                  <Select
-                    size="small"
-                    fullWidth
-                    value={settings.bg_overlay_type || 'solid'}
-                    onChange={(e) => onChange('bg_overlay_type', e.target.value)}
-                  >
-                    <MenuItem value="solid">Solid Color</MenuItem>
-                    <MenuItem value="gradient">Gradient</MenuItem>
-                    <MenuItem value="none">None</MenuItem>
-                  </Select>
-                </Box>
-
-                {settings.bg_overlay_type !== 'none' && (
-                  <Box>
-                    <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
-                      Background Overlay Color
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, maxWidth: 280 }}>
-                      <Box
-                        component="label"
-                        sx={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: '6px',
-                          border: '1px solid #cbd5e1',
-                          backgroundColor: settings.bg_overlay_color || '#000000',
-                          cursor: 'pointer',
-                          display: 'inline-block',
-                          flexShrink: 0,
-                          overflow: 'hidden',
-                          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                        }}
-                      >
-                        <input
-                          type="color"
-                          value={settings.bg_overlay_color || '#000000'}
-                          onChange={(e) => onChange('bg_overlay_color', e.target.value)}
-                          style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
-                        />
-                      </Box>
-                      <TextField
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                    <Box>
+                      <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                        Background Overlay
+                      </Typography>
+                      <Select
                         size="small"
                         fullWidth
-                        value={settings.bg_overlay_color || '#000000'}
-                        onChange={(e) => onChange('bg_overlay_color', e.target.value)}
-                        placeholder="#000000"
+                        value={settings.bg_overlay_type || 'solid'}
+                        onChange={(e) => onChange('bg_overlay_type', e.target.value)}
+                      >
+                        <MenuItem value="solid">Solid Color</MenuItem>
+                        <MenuItem value="gradient">Gradient</MenuItem>
+                        <MenuItem value="none">None</MenuItem>
+                      </Select>
+                    </Box>
+
+                    {settings.bg_overlay_type !== 'none' && (
+                      <Box>
+                        <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                          Background Overlay Color
+                        </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, maxWidth: 280 }}>
+                          <Box
+                            component="label"
+                            sx={{
+                              width: 40,
+                              height: 40,
+                              borderRadius: '6px',
+                              border: '1px solid #cbd5e1',
+                              backgroundColor: settings.bg_overlay_color || '#000000',
+                              cursor: 'pointer',
+                              display: 'inline-block',
+                              flexShrink: 0,
+                              overflow: 'hidden',
+                              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                            }}
+                          >
+                            <input
+                              type="color"
+                              value={settings.bg_overlay_color || '#000000'}
+                              onChange={(e) => onChange('bg_overlay_color', e.target.value)}
+                              style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
+                            />
+                          </Box>
+                          <TextField
+                            size="small"
+                            fullWidth
+                            value={settings.bg_overlay_color || '#000000'}
+                            onChange={(e) => onChange('bg_overlay_color', e.target.value)}
+                            placeholder="#000000"
+                          />
+                        </Box>
+                      </Box>
+                    )}
+
+                    {/* Background Overlay Opacity Slider - Compact */}
+                    <Box sx={{ maxWidth: 360 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                          Background Overlay Opacity
+                        </Typography>
+                        <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
+                          {settings.bg_overlay_opacity !== undefined ? settings.bg_overlay_opacity : 0.4}
+                        </Typography>
+                      </Box>
+                      <Slider
+                        value={settings.bg_overlay_opacity !== undefined ? Number(settings.bg_overlay_opacity) : 0.4}
+                        min={0}
+                        max={1}
+                        step={0.05}
+                        onChange={(_, val) => onChange('bg_overlay_opacity', val)}
+                        color="primary"
+                        size="small"
+                      />
+                    </Box>
+
+                    {/* Background Blur Amount Slider - Compact */}
+                    <Box sx={{ maxWidth: 360 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                          Background Blur Amount
+                        </Typography>
+                        <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
+                          {settings.bg_blur || 0}px
+                        </Typography>
+                      </Box>
+                      <Slider
+                        value={settings.bg_blur ? Number(settings.bg_blur) : 0}
+                        min={0}
+                        max={20}
+                        step={1}
+                        onChange={(_, val) => onChange('bg_blur', val)}
+                        color="primary"
+                        size="small"
                       />
                     </Box>
                   </Box>
-                )}
-
-                {/* Background Overlay Opacity Slider - Compact */}
-                <Box sx={{ maxWidth: 360 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      Background Overlay Opacity
-                    </Typography>
-                    <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
-                      {settings.bg_overlay_opacity !== undefined ? settings.bg_overlay_opacity : 0.4}
-                    </Typography>
-                  </Box>
-                  <Slider
-                    value={settings.bg_overlay_opacity !== undefined ? Number(settings.bg_overlay_opacity) : 0.4}
-                    min={0}
-                    max={1}
-                    step={0.05}
-                    onChange={(_, val) => onChange('bg_overlay_opacity', val)}
-                    color="primary"
-                    size="small"
-                  />
-                </Box>
-
-                {/* Background Blur Amount Slider - Compact */}
-                <Box sx={{ maxWidth: 360 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      Background Blur Amount
-                    </Typography>
-                    <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
-                      {settings.bg_blur || 0}px
-                    </Typography>
-                  </Box>
-                  <Slider
-                    value={settings.bg_blur ? Number(settings.bg_blur) : 0}
-                    min={0}
-                    max={20}
-                    step={1}
-                    onChange={(_, val) => onChange('bg_blur', val)}
-                    color="primary"
-                    size="small"
-                  />
-                </Box>
-              </Box>
+                </>
+              )}
             </Grid>
           </Grid>
         </CardContent>
