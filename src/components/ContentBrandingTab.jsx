@@ -714,7 +714,13 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
             <Grid item xs={12} sm={4} md={3}>
               <RadioGroup
                 value={settings.bg_type || 'default'}
-                onChange={(e) => onChange('bg_type', e.target.value)}
+                onChange={(e) => {
+                  const newType = e.target.value;
+                  onChange('bg_type', newType);
+                  if (['custom', 'video', 'pattern'].includes(newType) && (!settings.bg_overlay_type || settings.bg_overlay_type === 'solid')) {
+                    onChange('bg_overlay_type', 'none');
+                  }
+                }}
                 sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
               >
                 <FormControlLabel value="default" control={<Radio color="primary" />} label="Default Media" />
@@ -1221,7 +1227,11 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       <Select
                         size="small"
                         fullWidth
-                        value={settings.bg_overlay_type || 'solid'}
+                        value={
+                          settings.bg_overlay_type !== undefined && settings.bg_overlay_type !== ''
+                            ? settings.bg_overlay_type
+                            : (['custom', 'video', 'pattern'].includes(settings.bg_type) ? 'none' : 'solid')
+                        }
                         onChange={(e) => onChange('bg_overlay_type', e.target.value)}
                       >
                         <MenuItem value="solid">Solid Color</MenuItem>
