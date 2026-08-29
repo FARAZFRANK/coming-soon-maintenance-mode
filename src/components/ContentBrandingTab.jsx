@@ -56,6 +56,27 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
   const logoHeightEnabled = !!settings.logo_height_enabled;
   const logoHeight = settings.logo_height || 100;
 
+  const logoEnabled = settings.logo_enabled !== undefined
+    ? String(settings.logo_enabled) === '1'
+    : (settings.logo_type !== 'disabled');
+  const titleEnabled = settings.title_enabled !== undefined
+    ? String(settings.title_enabled) === '1'
+    : true;
+  const descriptionEnabled = settings.description_enabled !== undefined
+    ? String(settings.description_enabled) === '1'
+    : true;
+
+  const handleLogoToggle = (checked) => {
+    onChange('logo_enabled', checked ? '1' : '0');
+    if (checked) {
+      if (settings.logo_type === 'disabled') {
+        onChange('logo_type', settings.logo_url ? 'graphic' : 'text');
+      }
+    } else {
+      onChange('logo_type', 'disabled');
+    }
+  };
+
   // Unified & resilient media picker helper
   const triggerMediaPicker = ({ title, buttonText, multiple = false, onSelect }) => {
     // 1. Try native WordPress media modal
@@ -243,389 +264,464 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
       {/* 1. Logo Setup Section */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: 2.5 }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, fontSize: '1.1rem' }}>
-            Logo Setup
-          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <div>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
+                Logo Setup
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Configure your brand logo or image displayed on the coming soon page.
+              </Typography>
+            </div>
 
-          <Grid container spacing={3} alignItems="flex-start">
-            {/* Left Side: Logo Type Radio Group */}
-            <Grid item xs={12} sm={4} md={3}>
-              <RadioGroup
-                value={logoType}
-                onChange={(e) => onChange('logo_type', e.target.value)}
-                sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
-              >
-                <FormControlLabel value="text" control={<Radio color="primary" />} label="Text Logo" />
-                <FormControlLabel value="graphic" control={<Radio color="primary" />} label="Graphic Logo" />
-                <FormControlLabel value="disabled" control={<Radio color="primary" />} label="Disabled" />
-              </RadioGroup>
-            </Grid>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={logoEnabled}
+                  onChange={(e) => handleLogoToggle(e.target.checked)}
+                  color="primary"
+                />
+              }
+              label={logoEnabled ? 'Enabled' : 'Disabled'}
+            />
+          </Box>
 
-            {/* Right Side: Options based on selected logo type */}
-            <Grid item xs={12} sm={8} md={9}>
-              {logoType === 'text' && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <Typography
-                    sx={{
-                      fontFamily: 'serif',
-                      fontSize: '2.5rem',
-                      fontWeight: 700,
-                      lineHeight: 1.1,
-                      color: 'text.primary',
-                      letterSpacing: '-0.02em',
-                      py: 0.5,
-                    }}
-                  >
-                    {logoText || 'Testing'}
-                  </Typography>
+          {logoEnabled ? (
+            <Grid container spacing={3} alignItems="flex-start" sx={{ mt: 0.5 }}>
+              {/* Left Side: Logo Type Radio Group */}
+              <Grid item xs={12} sm={4} md={3}>
+                <RadioGroup
+                  value={logoType === 'disabled' ? (settings.logo_url ? 'graphic' : 'text') : logoType}
+                  onChange={(e) => onChange('logo_type', e.target.value)}
+                  sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
+                >
+                  <FormControlLabel value="text" control={<Radio color="primary" />} label="Text Logo" />
+                  <FormControlLabel value="graphic" control={<Radio color="primary" />} label="Graphic Logo" />
+                </RadioGroup>
+              </Grid>
 
-                  <TextField
-                    size="small"
-                    fullWidth
-                    label="Logo Link URL"
-                    placeholder="http://localhost/testing"
-                    value={logoLink}
-                    onChange={(e) => onChange('logo_link', e.target.value)}
-                  />
-                </Box>
-              )}
-
-              {logoType === 'graphic' && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={handleLogoUpload}
-                      sx={{ borderRadius: '6px', fontWeight: 600, px: 2.5 }}
-                    >
-                      {settings.logo_url ? 'Change Logo' : 'Select Logo'}
-                    </Button>
-
-                    {settings.logo_url && (
-                      <Button
-                        size="small"
-                        color="error"
-                        variant="text"
-                        onClick={handleLogoRemove}
-                        sx={{ fontWeight: 600 }}
-                      >
-                        Remove Logo
-                      </Button>
-                    )}
-                  </Box>
-
-                  {/* Logo Preview thumbnail */}
-                  {settings.logo_url && (
-                    <Box
+              {/* Right Side: Options based on selected logo type */}
+              <Grid item xs={12} sm={8} md={9}>
+                {(logoType === 'text' || (logoType === 'disabled' && !settings.logo_url)) && (
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Typography
                       sx={{
-                        p: 1.5,
-                        borderRadius: '8px',
-                        border: '1px solid',
-                        borderColor: 'divider',
-                        backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#f8fafc'),
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        maxWidth: 320,
+                        fontFamily: 'serif',
+                        fontSize: '2.2rem',
+                        fontWeight: 700,
+                        lineHeight: 1.1,
+                        color: 'text.primary',
+                        letterSpacing: '-0.02em',
+                        py: 0.5,
                       }}
                     >
-                      <img
-                        src={settings.logo_url}
-                        alt="Selected Logo"
-                        style={{
-                          maxHeight: logoHeightEnabled ? `${logoHeight}px` : '70px',
-                          maxWidth: '100%',
-                          objectFit: 'contain',
-                        }}
-                      />
-                    </Box>
-                  )}
+                      {logoText || 'Testing'}
+                    </Typography>
 
-                  {/* Set custom logo height */}
-                  <Box sx={{ mt: 0.5 }}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={logoHeightEnabled}
-                          onChange={(e) => onChange('logo_height_enabled', e.target.checked)}
-                          color="primary"
-                        />
-                      }
-                      label="Set custom logo height"
-                      sx={{ '& .MuiTypography-root': { fontSize: '0.9rem', fontWeight: 500 } }}
+                    <TextField
+                      size="small"
+                      fullWidth
+                      label="Logo Link URL"
+                      placeholder="http://localhost/testing"
+                      value={logoLink}
+                      onChange={(e) => onChange('logo_link', e.target.value)}
                     />
+                  </Box>
+                )}
 
-                    {logoHeightEnabled && (
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1, maxWidth: 360 }}>
-                        <Slider
-                          value={logoHeight}
-                          min={20}
-                          max={300}
-                          step={5}
-                          onChange={(_, val) => onChange('logo_height', val)}
-                          color="primary"
+                {(logoType === 'graphic' || (logoType === 'disabled' && !!settings.logo_url)) && (
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={handleLogoUpload}
+                        sx={{ borderRadius: '6px', fontWeight: 600, px: 2.5 }}
+                      >
+                        {settings.logo_url ? 'Change Logo' : 'Select Logo'}
+                      </Button>
+
+                      {settings.logo_url && (
+                        <Button
                           size="small"
-                          sx={{ flex: 1 }}
+                          color="error"
+                          variant="text"
+                          onClick={handleLogoRemove}
+                          sx={{ fontWeight: 600 }}
+                        >
+                          Remove Logo
+                        </Button>
+                      )}
+                    </Box>
+
+                    {/* Logo Preview thumbnail */}
+                    {settings.logo_url && (
+                      <Box
+                        sx={{
+                          p: 1.5,
+                          borderRadius: '8px',
+                          border: '1px solid',
+                          borderColor: 'divider',
+                          backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#f8fafc'),
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          maxWidth: 320,
+                        }}
+                      >
+                        <img
+                          src={settings.logo_url}
+                          alt="Selected Logo"
+                          style={{
+                            maxHeight: logoHeightEnabled ? `${logoHeight}px` : '70px',
+                            maxWidth: '100%',
+                            objectFit: 'contain',
+                          }}
                         />
-                        <TextField
-                          size="small"
-                          type="number"
-                          value={logoHeight}
-                          onChange={(e) => onChange('logo_height', Number(e.target.value))}
-                          sx={{ width: 80 }}
-                          inputProps={{ min: 20, max: 300 }}
-                        />
-                        <Typography variant="body2" color="text.secondary">
-                          px
-                        </Typography>
                       </Box>
                     )}
+
+                    {/* Set custom logo height */}
+                    <Box sx={{ mt: 0.5 }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={logoHeightEnabled}
+                            onChange={(e) => onChange('logo_height_enabled', e.target.checked)}
+                            color="primary"
+                          />
+                        }
+                        label="Set custom logo height"
+                        sx={{ '& .MuiTypography-root': { fontSize: '0.9rem', fontWeight: 500 } }}
+                      />
+
+                      {logoHeightEnabled && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1, maxWidth: 360 }}>
+                          <Slider
+                            value={logoHeight}
+                            min={20}
+                            max={300}
+                            step={5}
+                            onChange={(_, val) => onChange('logo_height', val)}
+                            color="primary"
+                            size="small"
+                            sx={{ flex: 1 }}
+                          />
+                          <TextField
+                            size="small"
+                            type="number"
+                            value={logoHeight}
+                            onChange={(e) => onChange('logo_height', Number(e.target.value))}
+                            sx={{ width: 80 }}
+                            inputProps={{ min: 20, max: 300 }}
+                          />
+                          <Typography variant="body2" color="text.secondary">
+                            px
+                          </Typography>
+                        </Box>
+                      )}
+                    </Box>
+
+                    <TextField
+                      size="small"
+                      fullWidth
+                      label="Logo Link URL"
+                      placeholder="http://localhost/testing"
+                      value={logoLink}
+                      onChange={(e) => onChange('logo_link', e.target.value)}
+                    />
                   </Box>
-
-                  <TextField
-                    size="small"
-                    fullWidth
-                    label="Logo Link URL"
-                    placeholder="http://localhost/testing"
-                    value={logoLink}
-                    onChange={(e) => onChange('logo_link', e.target.value)}
-                  />
-                </Box>
-              )}
-
-              {logoType === 'disabled' && (
-                <Box sx={{ py: 1 }}>
-                  <Typography variant="body1" color="text.secondary">
-                    Logo is disabled
-                  </Typography>
-                </Box>
-              )}
+                )}
+              </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <Alert severity="info" variant="outlined" sx={{ borderRadius: '8px', mt: 1 }}>
+              Logo is disabled and will not be displayed on your coming soon template.
+            </Alert>
+          )}
         </CardContent>
       </Card>
 
       {/* 2. Message / Headline & Description Card */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: 2.5 }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, fontSize: '1.1rem' }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1.1rem' }}>
             Message
           </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
+            Configure the primary headline and teaser description for your coming soon page.
+          </Typography>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <TextField
-              label="Headline / Page Title"
-              fullWidth
-              variant="outlined"
-              size="small"
-              value={settings.title || ''}
-              onChange={(e) => onChange('title', e.target.value)}
-              placeholder="e.g. Something Extraordinary is in the Works"
-              helperText="Main primary heading displayed on your coming soon template."
-            />
-
-            {/* Rich Message Box with Toolbar (Screenshot 4) */}
-            <Paper
-              variant="outlined"
-              sx={{
-                borderRadius: '8px !important',
-                overflow: 'hidden',
-                borderColor: 'divider',
-                backgroundColor: 'background.paper',
-              }}
-            >
-              {/* Top Action Bar: Add Media + Visual/Code Switch */}
-              <Box
-                sx={{
-                  p: 1.2,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid',
-                  borderColor: 'divider',
-                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1e293b' : '#f8fafc'),
-                }}
-              >
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="primary"
-                  startIcon={<PermMediaRoundedIcon sx={{ fontSize: 18 }} />}
-                  onClick={handleInsertMediaToEditor}
-                  sx={{ borderRadius: '6px', fontWeight: 600, fontSize: '0.82rem' }}
-                >
-                  Add Media
-                </Button>
-
-                <ButtonGroup size="small" variant="outlined">
-                  <Button
-                    variant={editorMode === 'visual' ? 'contained' : 'outlined'}
-                    onClick={() => setEditorMode('visual')}
-                    sx={{ textTransform: 'none', fontWeight: 600, px: 2 }}
-                  >
-                    Visual
-                  </Button>
-                  <Button
-                    variant={editorMode === 'code' ? 'contained' : 'outlined'}
-                    onClick={() => setEditorMode('code')}
-                    sx={{ textTransform: 'none', fontWeight: 600, px: 2 }}
-                  >
-                    Code
-                  </Button>
-                </ButtonGroup>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            {/* Headline / Title Section */}
+            <Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
+                  Headline / Page Title
+                </Typography>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={titleEnabled}
+                      onChange={(e) => onChange('title_enabled', e.target.checked ? '1' : '0')}
+                      color="primary"
+                      size="small"
+                    />
+                  }
+                  label={titleEnabled ? 'Enabled' : 'Disabled'}
+                  sx={{ mr: 0, '& .MuiTypography-root': { fontSize: '0.85rem', fontWeight: 600 } }}
+                />
               </Box>
 
-              {/* Formatting Toolbar (Visual Mode) */}
-              {editorMode === 'visual' && (
-                <Box
-                  sx={{
-                    px: 1.2,
-                    py: 0.8,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 0.5,
-                    flexWrap: 'wrap',
-                    borderBottom: '1px solid',
-                    borderColor: 'divider',
-                    backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#ffffff'),
-                  }}
-                >
-                  <Select
-                    size="small"
-                    value={formatBlock}
-                    onChange={(e) => handleFormatBlockChange(e.target.value)}
+              {titleEnabled ? (
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  value={settings.title !== undefined ? settings.title : ''}
+                  onChange={(e) => onChange('title', e.target.value)}
+                  placeholder="Exclusive New Platform Launching Soon"
+                  helperText="Main primary heading displayed on your coming soon template."
+                />
+              ) : (
+                <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', py: 0.5 }}>
+                  Headline / Page title is disabled and will be hidden on frontend.
+                </Typography>
+              )}
+            </Box>
+
+            <Divider />
+
+            {/* Description Section */}
+            <Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
+                  Description / Message
+                </Typography>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={descriptionEnabled}
+                      onChange={(e) => onChange('description_enabled', e.target.checked ? '1' : '0')}
+                      color="primary"
+                      size="small"
+                    />
+                  }
+                  label={descriptionEnabled ? 'Enabled' : 'Disabled'}
+                  sx={{ mr: 0, '& .MuiTypography-root': { fontSize: '0.85rem', fontWeight: 600 } }}
+                />
+              </Box>
+
+              {descriptionEnabled ? (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                  {/* Rich Message Box with Toolbar */}
+                  <Paper
+                    variant="outlined"
                     sx={{
-                      height: 32,
-                      fontSize: '0.82rem',
-                      fontWeight: 600,
-                      mr: 1,
-                      minWidth: 120,
+                      borderRadius: '8px !important',
+                      overflow: 'hidden',
+                      borderColor: 'divider',
+                      backgroundColor: 'background.paper',
                     }}
                   >
-                    <MenuItem value="p">Paragraph</MenuItem>
-                    <MenuItem value="h1">Heading 1</MenuItem>
-                    <MenuItem value="h2">Heading 2</MenuItem>
-                    <MenuItem value="h3">Heading 3</MenuItem>
-                    <MenuItem value="h4">Heading 4</MenuItem>
-                  </Select>
+                    {/* Top Action Bar: Add Media + Visual/Code Switch */}
+                    <Box
+                      sx={{
+                        p: 1.2,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        borderBottom: '1px solid',
+                        borderColor: 'divider',
+                        backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1e293b' : '#f8fafc'),
+                      }}
+                    >
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        startIcon={<PermMediaRoundedIcon sx={{ fontSize: 18 }} />}
+                        onClick={handleInsertMediaToEditor}
+                        sx={{ borderRadius: '6px', fontWeight: 600, fontSize: '0.82rem' }}
+                      >
+                        Add Media
+                      </Button>
 
-                  <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
+                      <ButtonGroup size="small" variant="outlined">
+                        <Button
+                          variant={editorMode === 'visual' ? 'contained' : 'outlined'}
+                          onClick={() => setEditorMode('visual')}
+                          sx={{ textTransform: 'none', fontWeight: 600, px: 2 }}
+                        >
+                          Visual
+                        </Button>
+                        <Button
+                          variant={editorMode === 'code' ? 'contained' : 'outlined'}
+                          onClick={() => setEditorMode('code')}
+                          sx={{ textTransform: 'none', fontWeight: 600, px: 2 }}
+                        >
+                          Code
+                        </Button>
+                      </ButtonGroup>
+                    </Box>
 
-                  <Tooltip title="Bold (Ctrl+B)">
-                    <IconButton size="small" onClick={() => applyFormatting('b', '<strong>', '</strong>')}>
-                      <FormatBoldRoundedIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                    {/* Formatting Toolbar (Visual Mode) */}
+                    {editorMode === 'visual' && (
+                      <Box
+                        sx={{
+                          px: 1.2,
+                          py: 0.8,
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 0.5,
+                          flexWrap: 'wrap',
+                          borderBottom: '1px solid',
+                          borderColor: 'divider',
+                          backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#0f172a' : '#ffffff'),
+                        }}
+                      >
+                        <Select
+                          size="small"
+                          value={formatBlock}
+                          onChange={(e) => handleFormatBlockChange(e.target.value)}
+                          sx={{
+                            height: 32,
+                            fontSize: '0.82rem',
+                            fontWeight: 600,
+                            mr: 1,
+                            minWidth: 120,
+                          }}
+                        >
+                          <MenuItem value="p">Paragraph</MenuItem>
+                          <MenuItem value="h1">Heading 1</MenuItem>
+                          <MenuItem value="h2">Heading 2</MenuItem>
+                          <MenuItem value="h3">Heading 3</MenuItem>
+                          <MenuItem value="h4">Heading 4</MenuItem>
+                        </Select>
 
-                  <Tooltip title="Italic (Ctrl+I)">
-                    <IconButton size="small" onClick={() => applyFormatting('i', '<em>', '</em>')}>
-                      <FormatItalicRoundedIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                        <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
 
-                  <Tooltip title="Bulleted List">
-                    <IconButton size="small" onClick={() => applyFormatting('ul', '<ul>\n  <li>', '</li>\n</ul>')}>
-                      <FormatListBulletedRoundedIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                        <Tooltip title="Bold (Ctrl+B)">
+                          <IconButton size="small" onClick={() => applyFormatting('b', '<strong>', '</strong>')}>
+                            <FormatBoldRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
 
-                  <Tooltip title="Numbered List">
-                    <IconButton size="small" onClick={() => applyFormatting('ol', '<ol>\n  <li>', '</li>\n</ol>')}>
-                      <FormatListNumberedRoundedIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                        <Tooltip title="Italic (Ctrl+I)">
+                          <IconButton size="small" onClick={() => applyFormatting('i', '<em>', '</em>')}>
+                            <FormatItalicRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
 
-                  <Tooltip title="Blockquote">
-                    <IconButton size="small" onClick={() => applyFormatting('blockquote', '<blockquote>', '</blockquote>')}>
-                      <FormatQuoteRoundedIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                        <Tooltip title="Bulleted List">
+                          <IconButton size="small" onClick={() => applyFormatting('ul', '<ul>\n  <li>', '</li>\n</ul>')}>
+                            <FormatListBulletedRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
 
-                  <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
+                        <Tooltip title="Numbered List">
+                          <IconButton size="small" onClick={() => applyFormatting('ol', '<ol>\n  <li>', '</li>\n</ol>')}>
+                            <FormatListNumberedRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
 
-                  <Tooltip title="Align Left">
-                    <IconButton size="small" onClick={() => applyFormatting('align-left', '<p style="text-align: left;">', '</p>')}>
-                      <FormatAlignLeftRoundedIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                        <Tooltip title="Blockquote">
+                          <IconButton size="small" onClick={() => applyFormatting('blockquote', '<blockquote>', '</blockquote>')}>
+                            <FormatQuoteRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
 
-                  <Tooltip title="Align Center">
-                    <IconButton size="small" onClick={() => applyFormatting('align-center', '<p style="text-align: center;">', '</p>')}>
-                      <FormatAlignCenterRoundedIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                        <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
 
-                  <Tooltip title="Align Right">
-                    <IconButton size="small" onClick={() => applyFormatting('align-right', '<p style="text-align: right;">', '</p>')}>
-                      <FormatAlignRightRoundedIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                        <Tooltip title="Align Left">
+                          <IconButton size="small" onClick={() => applyFormatting('align-left', '<p style="text-align: left;">', '</p>')}>
+                            <FormatAlignLeftRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
 
-                  <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
+                        <Tooltip title="Align Center">
+                          <IconButton size="small" onClick={() => applyFormatting('align-center', '<p style="text-align: center;">', '</p>')}>
+                            <FormatAlignCenterRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
 
-                  <Tooltip title="Insert Link">
-                    <IconButton size="small" onClick={handleInsertLink}>
-                      <InsertLinkRoundedIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                        <Tooltip title="Align Right">
+                          <IconButton size="small" onClick={() => applyFormatting('align-right', '<p style="text-align: right;">', '</p>')}>
+                            <FormatAlignRightRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
 
-                  <Tooltip title="Horizontal Line / Divider">
-                    <IconButton size="small" onClick={() => onChange('description', (settings.description || '') + '\n<hr />\n')}>
-                      <HorizontalRuleRoundedIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                        <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
+
+                        <Tooltip title="Insert Link">
+                          <IconButton size="small" onClick={handleInsertLink}>
+                            <InsertLinkRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+
+                        <Tooltip title="Horizontal Line / Divider">
+                          <IconButton size="small" onClick={() => onChange('description', (settings.description || '') + '\n<hr />\n')}>
+                            <HorizontalRuleRoundedIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    )}
+
+                    {/* Text Area for Content Editing */}
+                    <TextField
+                      id="csmm-message-textarea"
+                      fullWidth
+                      multiline
+                      rows={8}
+                      variant="outlined"
+                      value={settings.description || ''}
+                      onChange={(e) => onChange('description', e.target.value)}
+                      placeholder="Write your coming soon teaser description, upcoming features, or launch details..."
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          p: 2,
+                          fontFamily: editorMode === 'code' ? 'Consolas, Monaco, monospace' : 'inherit',
+                          fontSize: '0.95rem',
+                          lineHeight: 1.6,
+                          '& fieldset': { border: 'none' },
+                          '&:hover fieldset': { border: 'none' },
+                          '&.Mui-focused fieldset': { border: 'none' },
+                        },
+                      }}
+                    />
+
+                    {/* Bottom Status Bar */}
+                    <Box
+                      sx={{
+                        px: 1.5,
+                        py: 0.75,
+                        borderTop: '1px solid',
+                        borderColor: 'divider',
+                        backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1e293b' : '#f8fafc'),
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <Typography variant="caption" sx={{ fontFamily: 'monospace', color: 'text.secondary', fontWeight: 600 }}>
+                        p
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {(settings.description || '').length} characters
+                      </Typography>
+                    </Box>
+                  </Paper>
+
+                  <Typography variant="caption" color="text.secondary" sx={{ fontStyle: 'italic' }}>
+                    * WordPress embeds, custom HTML and shortcodes support
+                  </Typography>
                 </Box>
+              ) : (
+                <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', py: 0.5 }}>
+                  Description is disabled and will be hidden on frontend.
+                </Typography>
               )}
-
-              {/* Text Area for Content Editing */}
-              <TextField
-                id="csmm-message-textarea"
-                fullWidth
-                multiline
-                rows={8}
-                variant="outlined"
-                value={settings.description || ''}
-                onChange={(e) => onChange('description', e.target.value)}
-                placeholder="Write your coming soon teaser description, upcoming features, or launch details..."
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    p: 2,
-                    fontFamily: editorMode === 'code' ? 'Consolas, Monaco, monospace' : 'inherit',
-                    fontSize: '0.95rem',
-                    lineHeight: 1.6,
-                    '& fieldset': { border: 'none' },
-                    '&:hover fieldset': { border: 'none' },
-                    '&.Mui-focused fieldset': { border: 'none' },
-                  },
-                }}
-              />
-
-              {/* Bottom Status Bar */}
-              <Box
-                sx={{
-                  px: 1.5,
-                  py: 0.75,
-                  borderTop: '1px solid',
-                  borderColor: 'divider',
-                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1e293b' : '#f8fafc'),
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <Typography variant="caption" sx={{ fontFamily: 'monospace', color: 'text.secondary', fontWeight: 600 }}>
-                  p
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {(settings.description || '').length} characters
-                </Typography>
-              </Box>
-            </Paper>
-
-            <Typography variant="caption" color="text.secondary" sx={{ fontStyle: 'italic' }}>
-              * WordPress embeds, custom HTML and shortcodes support
-            </Typography>
+            </Box>
           </Box>
         </CardContent>
       </Card>

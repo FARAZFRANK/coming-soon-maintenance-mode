@@ -26,7 +26,11 @@ if ( isset( $_GET['template_preview'] ) && current_user_can( 'manage_options' ) 
 
 // Logo Setup
 $csmm_logo_type           = isset( $csmm_content['logo_type'] ) ? $csmm_content['logo_type'] : 'graphic';
-$csmm_logo_id             = isset( $csmm_content['logo'] ) && '' !== $csmm_content['logo'] ? $csmm_content['logo'] : '1';
+$csmm_logo_enabled        = isset( $csmm_content['logo_enabled'] ) ? ( '1' === strval( $csmm_content['logo_enabled'] ) ) : ( 'disabled' !== $csmm_logo_type );
+if ( ! $csmm_logo_enabled ) {
+	$csmm_logo_type = 'disabled';
+}
+$csmm_logo_id             = ( ! $csmm_logo_enabled || 'disabled' === $csmm_logo_type ) ? '' : ( isset( $csmm_content['logo'] ) && '' !== $csmm_content['logo'] ? $csmm_content['logo'] : '1' );
 $csmm_logo_text           = isset( $csmm_content['logo_text'] ) && '' !== $csmm_content['logo_text'] ? $csmm_content['logo_text'] : ( isset( $csmm_content['title'] ) ? $csmm_content['title'] : get_bloginfo('name') );
 $csmm_logo_link           = isset( $csmm_content['logo_link'] ) ? $csmm_content['logo_link'] : '';
 $csmm_logo_height_enabled = ! empty( $csmm_content['logo_height_enabled'] );
@@ -42,8 +46,11 @@ if ( ! empty( $csmm_logo_id ) && is_numeric( $csmm_logo_id ) ) {
 }
 
 // Content defaults
-$csmm_title           = isset( $csmm_content['title'] ) && '' !== $csmm_content['title'] ? $csmm_content['title'] : __( 'Coming Soon', 'coming-soon-maintenance-mode' );
-$csmm_description     = isset( $csmm_content['description'] ) ? $csmm_content['description'] : __( 'Thank you for visiting our website! We are currently working on creating a new and exciting online experience for you. While we finish up the final touches, please sign up for our newsletter to receive exclusive updates and offers.', 'coming-soon-maintenance-mode' );
+$csmm_title_enabled       = isset( $csmm_content['title_enabled'] ) ? ( '1' === strval( $csmm_content['title_enabled'] ) ) : true;
+$csmm_description_enabled = isset( $csmm_content['description_enabled'] ) ? ( '1' === strval( $csmm_content['description_enabled'] ) ) : true;
+
+$csmm_title           = ( ! $csmm_title_enabled ) ? '' : ( isset( $csmm_content['title'] ) && '' !== $csmm_content['title'] ? $csmm_content['title'] : __( 'Coming Soon', 'coming-soon-maintenance-mode' ) );
+$csmm_description     = ( ! $csmm_description_enabled ) ? '' : ( isset( $csmm_content['description'] ) ? $csmm_content['description'] : __( 'Thank you for visiting our website! We are currently working on creating a new and exciting online experience for you. While we finish up the final touches, please sign up for our newsletter to receive exclusive updates and offers.', 'coming-soon-maintenance-mode' ) );
 $csmm_countdown       = isset( $csmm_content['countdown'] ) ? $csmm_content['countdown'] : '1';
 $csmm_countdown_title = isset( $csmm_content['countdown_title'] ) ? $csmm_content['countdown_title'] : __( 'Launching In...', 'coming-soon-maintenance-mode' );
 $csmm_current_date    = date( 'Y-m-d' );
@@ -130,12 +137,17 @@ if ( ! empty( $custom_social_html ) && preg_match( '/<\/ul>(\s*<!-- end home-soc
 }
 
 // 2. Process Logo across all templates (Text, Graphic with height/link, or Disabled)
-if ( 'disabled' === $csmm_logo_type ) {
+if ( ! $csmm_logo_enabled || 'disabled' === $csmm_logo_type ) {
 	$html = preg_replace( '/<div class="home-logo">.*?<\/div>/is', '', $html );
+	$html = preg_replace( '/<div class="[^"]*mb-6[^"]*">\s*<a[^>]*>\s*<img[^>]*>\s*<\/a>\s*<\/div>/is', '', $html );
 } elseif ( 'text' === $csmm_logo_type ) {
 	$logo_href = ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) );
 	$text_logo_html = '<div class="home-logo csmm-text-logo"><a href="' . $logo_href . '" style="font-family: inherit; font-size: 2.2rem; font-weight: 800; color: #ffffff; text-decoration: none; display: inline-block; letter-spacing: -0.02em;">' . esc_html( $csmm_logo_text ) . '</a></div>';
-	$html = preg_replace( '/<div class="home-logo">.*?<\/div>/is', $text_logo_html, $html, 1 );
+	if ( preg_match( '/<div class="home-logo">.*?<\/div>/is', $html ) ) {
+		$html = preg_replace( '/<div class="home-logo">.*?<\/div>/is', $text_logo_html, $html, 1 );
+	} elseif ( preg_match( '/<div class="[^"]*mb-6[^"]*">\s*<a[^>]*>\s*<img[^>]*>\s*<\/a>\s*<\/div>/is', $html ) ) {
+		$html = preg_replace( '/<div class="[^"]*mb-6[^"]*">\s*<a[^>]*>\s*<img[^>]*>\s*<\/a>\s*<\/div>/is', $text_logo_html, $html, 1 );
+	}
 } else {
 	// Graphic logo: apply custom link if set
 	if ( ! empty( $csmm_logo_link ) ) {
@@ -143,10 +155,18 @@ if ( 'disabled' === $csmm_logo_type ) {
 	}
 }
 
-// 3. Process Description for Rich HTML, Shortcodes, and WordPress Embeds
-if ( ! empty( $csmm_description ) ) {
+// 3. Process Description & Title visibility
+if ( ! $csmm_title_enabled ) {
+	$html = preg_replace( '/<h1\b[^>]*>.*?<\/h1>/is', '', $html );
+}
+
+if ( ! $csmm_description_enabled ) {
+	$html = preg_replace( '/<div class="csmm-description-content">.*?<\/div>/is', '', $html );
+	$html = preg_replace( '/<div id="postcard-message-container"[^>]*>.*?<\/div>/is', '', $html );
+	$html = preg_replace( '/(<h1>.*?<\/h1>\s*)<p\b[^>]*>.*?<\/p>/is', '$1', $html );
+} elseif ( ! empty( $csmm_description ) ) {
 	$processed_desc = do_shortcode( wpautop( stripslashes( $csmm_description ) ) );
-	// Replace the first <p>...</p> following <h1> with processed description
+	// Replace the first <p>...</p> following <h1> or in text block
 	$html = preg_replace( '/(<h1>.*?<\/h1>\s*)<p>.*?<\/p>/is', '$1<div class="csmm-description-content">' . $processed_desc . '</div>', $html, 1 );
 }
 
@@ -161,9 +181,21 @@ if ( ! empty( $csmm_form_btn_text ) ) {
 // 5. Construct Dynamic Background, Overlay & Form Styles
 $dynamic_css = "\n<style id=\"csmm-dynamic-content-styles\">\n";
 
-// Logo height constraint
-if ( 'graphic' === $csmm_logo_type && $csmm_logo_height_enabled && $csmm_logo_height > 0 ) {
+// Logo height constraint & visibility
+if ( ! $csmm_logo_enabled || 'disabled' === $csmm_logo_type ) {
+	$dynamic_css .= ".home-logo, .logo, .site-logo, .csmm-logo-wrap, .csmm-text-logo { display: none !important; }\n";
+} elseif ( 'graphic' === $csmm_logo_type && $csmm_logo_height_enabled && $csmm_logo_height > 0 ) {
 	$dynamic_css .= ".home-logo img { max-height: {$csmm_logo_height}px !important; height: auto !important; width: auto !important; }\n";
+}
+
+// Title toggle
+if ( ! $csmm_title_enabled ) {
+	$dynamic_css .= "h1, .home-content__text h1, .home-content h1, .title, .title-font, .reveal-text { display: none !important; }\n";
+}
+
+// Description toggle
+if ( ! $csmm_description_enabled ) {
+	$dynamic_css .= ".csmm-description-content, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description { display: none !important; }\n";
 }
 
 // Countdown & Subscriber Form toggles

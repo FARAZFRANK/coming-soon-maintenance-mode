@@ -235,12 +235,15 @@ class CSMM_REST_API {
 			'template_id'          => $template_id,
 			'logo'                 => $logo_id,
 			'logo_url'             => $logo_url,
+			'logo_enabled'         => isset( $content['logo_enabled'] ) ? strval( $content['logo_enabled'] ) : ( ( isset( $content['logo_type'] ) && $content['logo_type'] === 'disabled' ) ? '0' : '1' ),
 			'logo_type'            => isset( $content['logo_type'] ) ? $content['logo_type'] : 'graphic',
 			'logo_text'            => isset( $content['logo_text'] ) ? $content['logo_text'] : ( isset( $content['title'] ) ? $content['title'] : 'Testing' ),
 			'logo_link'            => isset( $content['logo_link'] ) ? $content['logo_link'] : '',
 			'logo_height_enabled'  => ! empty( $content['logo_height_enabled'] ),
 			'logo_height'          => isset( $content['logo_height'] ) ? intval( $content['logo_height'] ) : 100,
+			'title_enabled'        => isset( $content['title_enabled'] ) ? strval( $content['title_enabled'] ) : '1',
 			'title'                => isset( $content['title'] ) ? $content['title'] : 'Coming Soon',
+			'description_enabled'  => isset( $content['description_enabled'] ) ? strval( $content['description_enabled'] ) : '1',
 			'description'          => isset( $content['description'] ) ? $content['description'] : '',
 			'countdown'            => isset( $content['countdown'] ) ? strval( $content['countdown'] ) : '1',
 			'countdown_title'      => isset( $content['countdown_title'] ) ? $content['countdown_title'] : 'Launching In...',
@@ -380,11 +383,20 @@ class CSMM_REST_API {
 
 		// 3. Content
 		$content_array = get_option( 'csmm_content', array() );
+		if ( isset( $params['title_enabled'] ) ) {
+			$content_array['title_enabled'] = sanitize_text_field( $params['title_enabled'] );
+		}
 		if ( isset( $params['title'] ) ) {
 			$content_array['title'] = sanitize_text_field( $params['title'] );
 		}
+		if ( isset( $params['description_enabled'] ) ) {
+			$content_array['description_enabled'] = sanitize_text_field( $params['description_enabled'] );
+		}
 		if ( isset( $params['description'] ) ) {
 			$content_array['description'] = wp_kses_post( $params['description'] );
+		}
+		if ( isset( $params['logo_enabled'] ) ) {
+			$content_array['logo_enabled'] = sanitize_text_field( $params['logo_enabled'] );
 		}
 		if ( isset( $params['logo'] ) ) {
 			$content_array['logo'] = sanitize_text_field( $params['logo'] );

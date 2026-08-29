@@ -224,3 +224,27 @@ body.csmm-light-page #wpfooter {
 #csmm-react-root .MuiCard-root {
   border-radius: 10px !important;
 }
+
+/* WordPress Admin Link Hover Reset for MUI Buttons & Components */
+#csmm-react-root a {
+  text-decoration: none;
+}
+
+#csmm-react-root a:focus,
+#csmm-react-root a:active {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+#csmm-react-root a.MuiButton-root,
+#csmm-react-root a.MuiIconButton-root {
+  text-decoration: none !important;
+}
+
+#csmm-react-root.csmm-dark a.MuiButton-outlined {
+  color: #f1f5f9;
+}
+
+#csmm-react-root.csmm-dark a.MuiButton-outlined:hover {
+  color: #60a5fa !important;
+}

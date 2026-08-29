@@ -378,15 +378,29 @@ export default function App() {
 
               <Button
                 variant="outlined"
-                color="inherit"
-                startIcon={<VisibilityRoundedIcon />}
                 component="a"
                 href={settings?.preview_url || '#'}
                 target="_blank"
+                startIcon={<VisibilityRoundedIcon />}
                 sx={{
                   borderColor: themeMode === 'dark' ? '#475569' : '#cbd5e1',
+                  color: themeMode === 'dark' ? '#f1f5f9 !important' : '#334155 !important',
+                  backgroundColor: themeMode === 'dark' ? 'rgba(51, 65, 85, 0.4)' : '#ffffff',
                   fontWeight: 600,
                   borderRadius: '8px',
+                  textDecoration: 'none !important',
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    borderColor: themeMode === 'dark' ? '#60a5fa' : '#2563eb',
+                    backgroundColor: themeMode === 'dark' ? 'rgba(59, 130, 246, 0.15)' : 'rgba(37, 99, 235, 0.08)',
+                    color: themeMode === 'dark' ? '#60a5fa !important' : '#2563eb !important',
+                  },
+                  '&:focus, &:active, &:visited': {
+                    color: themeMode === 'dark' ? '#f1f5f9 !important' : '#334155 !important',
+                  },
+                  '&:visited:hover': {
+                    color: themeMode === 'dark' ? '#60a5fa !important' : '#2563eb !important',
+                  },
                 }}
               >
                 Live Preview
