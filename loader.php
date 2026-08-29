@@ -72,7 +72,7 @@ $csmm_bg_image_size       = isset( $csmm_content['bg_image_size'] ) ? $csmm_cont
 $csmm_bg_mobile_enabled   = ! empty( $csmm_content['bg_mobile_enabled'] );
 $csmm_bg_mobile_image_url = isset( $csmm_content['bg_mobile_image_url'] ) ? $csmm_content['bg_mobile_image_url'] : '';
 $csmm_bg_video_source     = isset( $csmm_content['bg_video_source'] ) ? $csmm_content['bg_video_source'] : 'youtube';
-$csmm_bg_video_url        = isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : $csmm_video_url;
+$csmm_bg_video_url        = ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : '' );
 $csmm_bg_video_loop       = ! isset( $csmm_content['bg_video_loop'] ) || ! empty( $csmm_content['bg_video_loop'] );
 $csmm_bg_video_poster_url = isset( $csmm_content['bg_video_poster_url'] ) ? $csmm_content['bg_video_poster_url'] : '';
 $csmm_bg_pattern          = isset( $csmm_content['bg_pattern'] ) ? $csmm_content['bg_pattern'] : 'sakura';
@@ -280,28 +280,36 @@ if ( 'solid' === $csmm_bg_type ) {
 		$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
 	}
 } elseif ( 'video' === $csmm_bg_type ) {
+	$dynamic_css .= "body, .s-home, main.s-home, .s-home--static, .s-home--particles, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: transparent !important; background-color: transparent !important; background-image: none !important; }\n";
+	$dynamic_css .= ".home-content, .s-home .row, .home-content__main { position: relative !important; z-index: 2 !important; }\n";
+	$dynamic_css .= ".csmm-video-bg { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 0 !important; pointer-events: none !important; overflow: hidden !important; background-color: #000000 !important; }\n";
+	$dynamic_css .= ".csmm-video-bg iframe, .csmm-video-bg video { position: absolute !important; top: 50% !important; left: 50% !important; width: 100vw !important; height: 56.25vw !important; min-height: 100vh !important; min-width: 177.77vh !important; transform: translate(-50%, -50%) !important; pointer-events: none !important; border: 0 !important; }\n";
+
 	if ( ! empty( $csmm_bg_video_poster_url ) ) {
 		$poster_url = esc_url( $csmm_bg_video_poster_url );
-		$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$poster_url}') !important; background-size: cover !important; background-position: center center !important; }\n";
+		$dynamic_css .= ".csmm-video-bg { background-image: url('{$poster_url}') !important; background-size: cover !important; background-position: center center !important; }\n";
 	}
 	if ( ! empty( $csmm_bg_video_url ) ) {
 		$v_url = $csmm_bg_video_url;
 		if ( 'youtube' === $csmm_bg_video_source || strpos( $v_url, 'youtube.com' ) !== false || strpos( $v_url, 'youtu.be' ) !== false ) {
-			preg_match( '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $v_url, $yt_matches );
+			preg_match( '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $v_url, $yt_matches );
 			$yt_id = ! empty( $yt_matches[1] ) ? $yt_matches[1] : '';
 			if ( $yt_id ) {
-				$embed_src = 'https://www.youtube.com/embed/' . $yt_id . '?autoplay=1&mute=1&controls=0&loop=1&playlist=' . $yt_id . '&showinfo=0&rel=0&enablejsapi=1';
-				$video_bg_html = '<div class="csmm-video-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden;"><iframe src="' . esc_url( $embed_src ) . '" frameborder="0" allow="autoplay; encrypted-media" style="position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); pointer-events: none;"></iframe></div>';
+				$loop_param = $csmm_bg_video_loop ? '&loop=1&playlist=' . $yt_id : '&loop=0';
+				$embed_src = 'https://www.youtube.com/embed/' . $yt_id . '?autoplay=1&mute=1&controls=0&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&modestbranding=1&enablejsapi=1' . $loop_param;
+				$video_bg_html = '<div class="csmm-video-bg"><iframe src="' . esc_url( $embed_src ) . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
 			}
 		} elseif ( 'vimeo' === $csmm_bg_video_source || strpos( $v_url, 'vimeo.com' ) !== false ) {
-			preg_match( '/vimeo\.com\/(?:video\/)?([0-9]+)/', $v_url, $vm_matches );
+			preg_match( '/(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)([0-9]+)/i', $v_url, $vm_matches );
 			$vm_id = ! empty( $vm_matches[1] ) ? $vm_matches[1] : '';
 			if ( $vm_id ) {
-				$embed_src = 'https://player.vimeo.com/video/' . $vm_id . '?autoplay=1&loop=1&muted=1&background=1&autopause=0';
-				$video_bg_html = '<div class="csmm-video-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden;"><iframe src="' . esc_url( $embed_src ) . '" frameborder="0" allow="autoplay; fullscreen" style="position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); pointer-events: none;"></iframe></div>';
+				$loop_param = $csmm_bg_video_loop ? '1' : '0';
+				$embed_src = 'https://player.vimeo.com/video/' . $vm_id . '?autoplay=1&loop=' . $loop_param . '&muted=1&background=1&autopause=0';
+				$video_bg_html = '<div class="csmm-video-bg"><iframe src="' . esc_url( $embed_src ) . '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>';
 			}
 		} else {
-			$video_bg_html = '<div class="csmm-video-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden;"><video src="' . esc_url( $v_url ) . '" autoplay muted loop playsinline style="position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%); object-fit: cover;"></video></div>';
+			$loop_attr = $csmm_bg_video_loop ? 'loop' : '';
+			$video_bg_html = '<div class="csmm-video-bg"><video src="' . esc_url( $v_url ) . '" autoplay muted ' . $loop_attr . ' playsinline style="width: 100%; height: 100%; object-fit: cover;"></video></div>';
 		}
 	}
 }
