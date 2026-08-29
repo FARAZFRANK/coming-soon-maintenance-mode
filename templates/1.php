@@ -31,13 +31,15 @@
     <!-- home
     ================================================== -->
     <main class="s-home s-home--particles template-one">
+        <?php if ( 'default' === $csmm_bg_type ) { ?>
         <div id="particles-js" class="home-particles"></div>
+        <?php } ?>
         <div class="home-content">
             <div class="row home-content__main text-center">
                 
                 <?php if($csmm_logo_id) { ?>
                 <div class="home-logo">
-                    <a href="<?php echo get_site_url(); ?>">
+                    <a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
                         <img src="<?php echo esc_url( $csmm_logo_url[0] ); ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); ?>">
                     </a>
                 </div>
@@ -197,9 +199,11 @@
     }
     ?>
     <script src="<?php echo esc_url($csmm_include_url); ?>js/jquery/jquery.js"></script>
+    <?php if ( 'default' === $csmm_bg_type ) { ?>
     <script src="<?php echo esc_js(CSMM_URL.'templates/js/particles.min.js'); ?>"></script>
     <script src="<?php echo esc_js(CSMM_URL.'templates/js/plugins.js'); ?>"></script>
     <script src="<?php echo esc_js(CSMM_URL.'templates/js/polygons.js'); ?>"></script>
+    <?php } ?>
     <script>
     jQuery( document ).ready(function() {
         // Add the User Agent to the <html>

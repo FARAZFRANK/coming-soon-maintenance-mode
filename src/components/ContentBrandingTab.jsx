@@ -50,9 +50,12 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
   const [formatBlock, setFormatBlock] = useState('p');
   const visualEditorRef = useRef(null);
 
+  const defaultSiteUrl = api.getConfig().siteUrl || (typeof window !== 'undefined' ? window.location.origin : '');
+  const defaultSiteTitle = api.getConfig().siteTitle || 'Coming Soon';
+
   const logoType = settings.logo_type || (settings.logo_url ? 'graphic' : 'text');
-  const logoText = settings.logo_text !== undefined ? settings.logo_text : (settings.title || 'Testing');
-  const logoLink = settings.logo_link || '';
+  const logoText = settings.logo_text !== undefined && settings.logo_text !== '' ? settings.logo_text : (settings.title || defaultSiteTitle);
+  const logoLink = settings.logo_link !== undefined && settings.logo_link !== '' ? settings.logo_link : defaultSiteUrl;
   const logoHeightEnabled = !!settings.logo_height_enabled;
   const logoHeight = settings.logo_height || 100;
 
@@ -315,14 +318,14 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         py: 0.5,
                       }}
                     >
-                      {logoText || 'Testing'}
+                      {logoText || defaultSiteTitle}
                     </Typography>
 
                     <TextField
                       size="small"
                       fullWidth
                       label="Logo Link URL"
-                      placeholder="http://localhost/testing"
+                      placeholder={defaultSiteUrl || 'https://yoursite.com'}
                       value={logoLink}
                       onChange={(e) => onChange('logo_link', e.target.value)}
                     />
@@ -426,7 +429,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       size="small"
                       fullWidth
                       label="Logo Link URL"
-                      placeholder="http://localhost/testing"
+                      placeholder={defaultSiteUrl || 'https://yoursite.com'}
                       value={logoLink}
                       onChange={(e) => onChange('logo_link', e.target.value)}
                     />

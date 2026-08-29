@@ -31,8 +31,8 @@ if ( ! $csmm_logo_enabled ) {
 	$csmm_logo_type = 'disabled';
 }
 $csmm_logo_id             = ( ! $csmm_logo_enabled || 'disabled' === $csmm_logo_type ) ? '' : ( isset( $csmm_content['logo'] ) && '' !== $csmm_content['logo'] ? $csmm_content['logo'] : '1' );
-$csmm_logo_text           = isset( $csmm_content['logo_text'] ) && '' !== $csmm_content['logo_text'] ? $csmm_content['logo_text'] : ( isset( $csmm_content['title'] ) ? $csmm_content['title'] : get_bloginfo('name') );
-$csmm_logo_link           = isset( $csmm_content['logo_link'] ) ? $csmm_content['logo_link'] : '';
+$csmm_logo_text           = ( isset( $csmm_content['logo_text'] ) && '' !== $csmm_content['logo_text'] ) ? $csmm_content['logo_text'] : ( ( isset( $csmm_content['title'] ) && '' !== $csmm_content['title'] ) ? $csmm_content['title'] : get_bloginfo( 'name' ) );
+$csmm_logo_link           = ( isset( $csmm_content['logo_link'] ) && '' !== $csmm_content['logo_link'] ) ? $csmm_content['logo_link'] : home_url( '/' );
 $csmm_logo_height_enabled = ! empty( $csmm_content['logo_height_enabled'] );
 $csmm_logo_height         = isset( $csmm_content['logo_height'] ) ? intval( $csmm_content['logo_height'] ) : 100;
 $csmm_logo_alt            = 'coming-soon-logo';
@@ -122,6 +122,12 @@ ob_start();
 include $template_file;
 $html = ob_get_clean();
 
+// Remove particle mesh DOM element and scripts if non-default background is active
+if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', 'video' ), true ) ) {
+	$html = preg_replace( '/<div[^>]*id=["\']particles-js["\'][^>]*>\s*<\/div>/is', '', $html );
+	$html = preg_replace( '/<script[^>]*src=["\'][^"\']*(?:particles|polygons)[^"\']*["\'][^>]*><\/script>\s*/is', '', $html );
+}
+
 // 1. Inject Custom Social Media Channels into <ul class="home-social">
 $custom_channels = isset( $csmm_social_media['custom_channels'] ) && is_array( $csmm_social_media['custom_channels'] ) ? $csmm_social_media['custom_channels'] : array();
 $custom_social_html = '';
@@ -150,9 +156,10 @@ if ( ! $csmm_logo_enabled || 'disabled' === $csmm_logo_type ) {
 		$html = preg_replace( '/<div class="[^"]*mb-6[^"]*">\s*<a[^>]*>\s*<img[^>]*>\s*<\/a>\s*<\/div>/is', $text_logo_html, $html, 1 );
 	}
 } else {
-	// Graphic logo: apply custom link if set
-	if ( ! empty( $csmm_logo_link ) ) {
-		$html = preg_replace( '/<div class="home-logo">\s*<a href="[^"]*">/i', '<div class="home-logo"><a href="' . esc_url( $csmm_logo_link ) . '">', $html, 1 );
+	// Graphic logo: apply custom link or default to home_url('/')
+	$logo_href = ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) );
+	if ( preg_match( '/<div class="home-logo">\s*<a href="[^"]*">/i', $html ) ) {
+		$html = preg_replace( '/<div class="home-logo">\s*<a href="[^"]*">/i', '<div class="home-logo"><a href="' . $logo_href . '">', $html, 1 );
 	}
 }
 
@@ -217,6 +224,7 @@ $dynamic_css .= ".home-content__subscribe label.subscribe-message, #mc-form labe
 // Graphic Background Types - Complete replacement of template background when non-default
 if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', 'video' ), true ) ) {
 	$dynamic_css .= ".s-home::before, .s-home::after, .s-home--static::before, .s-home--particles::before, .s-home .overlay, .s-home .gradient-overlay, .home-overlay, .grid-overlay, .s-home .grid-overlay { display: none !important; opacity: 0 !important; background-image: none !important; background: none !important; }\n";
+	$dynamic_css .= "#particles-js, .home-particles, .particles-js-canvas-el, #particles-js canvas { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }\n";
 }
 
 $video_bg_html = '';
