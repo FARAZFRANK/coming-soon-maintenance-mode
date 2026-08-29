@@ -404,7 +404,11 @@ class CSMM_REST_API {
 			$content_array['description_enabled'] = sanitize_text_field( $params['description_enabled'] );
 		}
 		if ( isset( $params['description'] ) ) {
-			$content_array['description'] = wp_kses_post( $params['description'] );
+			if ( current_user_can( 'unfiltered_html' ) ) {
+				$content_array['description'] = $params['description'];
+			} else {
+				$content_array['description'] = wp_kses_post( $params['description'] );
+			}
 		}
 		if ( isset( $params['description_font_size_enabled'] ) ) {
 			$content_array['description_font_size_enabled'] = ! empty( $params['description_font_size_enabled'] );

@@ -54,7 +54,9 @@ $csmm_description_font_size_enabled = ! empty( $csmm_content['description_font_s
 $csmm_description_font_size         = isset( $csmm_content['description_font_size'] ) ? intval( $csmm_content['description_font_size'] ) : 0;
 
 $csmm_title           = ( ! $csmm_title_enabled ) ? '' : ( isset( $csmm_content['title'] ) && '' !== $csmm_content['title'] ? $csmm_content['title'] : __( 'Coming Soon', 'coming-soon-maintenance-mode' ) );
-$csmm_description     = ( ! $csmm_description_enabled ) ? '' : ( isset( $csmm_content['description'] ) ? $csmm_content['description'] : __( 'Thank you for visiting our website! We are currently working on creating a new and exciting online experience for you. While we finish up the final touches, please sign up for our newsletter to receive exclusive updates and offers.', 'coming-soon-maintenance-mode' ) );
+$csmm_description_raw = ( ! $csmm_description_enabled ) ? '' : ( isset( $csmm_content['description'] ) ? $csmm_content['description'] : __( 'Thank you for visiting our website! We are currently working on creating a new and exciting online experience for you. While we finish up the final touches, please sign up for our newsletter to receive exclusive updates and offers.', 'coming-soon-maintenance-mode' ) );
+$csmm_desc_placeholder = '%%CSMM_DESC_TOKEN_' . md5( __FILE__ ) . '%%';
+$csmm_description     = $csmm_desc_placeholder;
 $csmm_countdown       = isset( $csmm_content['countdown'] ) ? $csmm_content['countdown'] : '1';
 $csmm_countdown_title = isset( $csmm_content['countdown_title'] ) ? $csmm_content['countdown_title'] : __( 'Launching In...', 'coming-soon-maintenance-mode' );
 $csmm_current_date    = date( 'Y-m-d' );
@@ -167,19 +169,38 @@ if ( ! $csmm_logo_enabled || 'disabled' === $csmm_logo_type ) {
 	}
 }
 
-// 3. Process Description & Title visibility
+// 3. Process Description & Title visibility and full rich content / shortcode / embed rendering
 if ( ! $csmm_title_enabled ) {
 	$html = preg_replace( '/<h1\b[^>]*>.*?<\/h1>/is', '', $html );
 }
 
-if ( ! $csmm_description_enabled ) {
+// Replace <meta name="description" content="..."> with clean stripped plain text
+$csmm_meta_desc_text = wp_strip_all_tags( stripslashes( $csmm_description_raw ) );
+$html = str_replace( '<meta name="description" content="' . $csmm_desc_placeholder . '">', '<meta name="description" content="' . esc_attr( $csmm_meta_desc_text ) . '">', $html );
+$html = preg_replace( '/<meta name="description" content="[^"]*%%CSMM_DESC_TOKEN_[^"]*">/i', '<meta name="description" content="' . esc_attr( $csmm_meta_desc_text ) . '">', $html );
+
+if ( ! $csmm_description_enabled || empty( $csmm_description_raw ) ) {
 	$html = preg_replace( '/<div class="csmm-description-content">.*?<\/div>/is', '', $html );
 	$html = preg_replace( '/<div id="postcard-message-container"[^>]*>.*?<\/div>/is', '', $html );
+	$html = preg_replace( '/<p[^>]*>\s*' . preg_quote( $csmm_desc_placeholder, '/' ) . '\s*<\/p>/is', '', $html );
+	$html = str_replace( $csmm_desc_placeholder, '', $html );
 	$html = preg_replace( '/(<h1>.*?<\/h1>\s*)<p\b[^>]*>.*?<\/p>/is', '$1', $html );
-} elseif ( ! empty( $csmm_description ) ) {
-	$processed_desc = do_shortcode( wpautop( stripslashes( $csmm_description ) ) );
-	// Replace the first <p>...</p> following <h1> or in text block
-	$html = preg_replace( '/(<h1>.*?<\/h1>\s*)<p>.*?<\/p>/is', '$1<div class="csmm-description-content">' . $processed_desc . '</div>', $html, 1 );
+} else {
+	// Full support for Shortcodes, WordPress Auto-Embeds, Custom HTML, and wpautop
+	$processed_desc = stripslashes( $csmm_description_raw );
+	global $wp_embed;
+	if ( is_object( $wp_embed ) ) {
+		$processed_desc = $wp_embed->autoembed( $processed_desc );
+		$processed_desc = $wp_embed->run_shortcode( $processed_desc );
+	}
+	$processed_desc = do_shortcode( $processed_desc );
+	$processed_desc = wpautop( $processed_desc );
+
+	$desc_html = '<div class="csmm-description-content">' . $processed_desc . '</div>';
+
+	// Replace template <p>...</p> placeholder or plain token with the rich description div
+	$html = preg_replace( '/<p[^>]*>\s*' . preg_quote( $csmm_desc_placeholder, '/' ) . '\s*<\/p>/is', $desc_html, $html );
+	$html = str_replace( $csmm_desc_placeholder, $desc_html, $html );
 }
 
 // 4. Process Form Custom Placeholder & Button Text
