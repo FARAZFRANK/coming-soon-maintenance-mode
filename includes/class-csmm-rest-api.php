@@ -267,6 +267,10 @@ class CSMM_REST_API {
 			'bg_type'              => isset( $content['bg_type'] ) ? $content['bg_type'] : 'default',
 			'bg_custom_images'     => isset( $content['bg_custom_images'] ) && is_array( $content['bg_custom_images'] ) ? $content['bg_custom_images'] : ( ! empty( $slides_data ) ? $slides_data : array() ),
 			'bg_image_size'        => isset( $content['bg_image_size'] ) ? $content['bg_image_size'] : 'cover',
+			'bg_slideshow_images'  => isset( $content['bg_slideshow_images'] ) && is_array( $content['bg_slideshow_images'] ) ? $content['bg_slideshow_images'] : ( ! empty( $slides_data ) ? $slides_data : array() ),
+			'bg_slideshow_speed'   => isset( $content['bg_slideshow_speed'] ) ? intval( $content['bg_slideshow_speed'] ) : 5,
+			'bg_slideshow_animation' => isset( $content['bg_slideshow_animation'] ) ? $content['bg_slideshow_animation'] : 'fade',
+			'bg_slideshow_scale'   => isset( $content['bg_slideshow_scale'] ) ? $content['bg_slideshow_scale'] : 'cover',
 			'bg_mobile_enabled'    => ! empty( $content['bg_mobile_enabled'] ),
 			'bg_mobile_image_url'  => isset( $content['bg_mobile_image_url'] ) ? $content['bg_mobile_image_url'] : '',
 			'bg_video_source'      => isset( $content['bg_video_source'] ) ? $content['bg_video_source'] : 'youtube',
@@ -504,6 +508,27 @@ class CSMM_REST_API {
 		}
 		if (isset($params['bg_image_size'])) {
 			$content_array['bg_image_size'] = sanitize_text_field($params['bg_image_size']);
+		}
+		if ( isset( $params['bg_slideshow_images'] ) && is_array( $params['bg_slideshow_images'] ) ) {
+			$sanitized_slideshow = array();
+			foreach ( $params['bg_slideshow_images'] as $img ) {
+				if ( isset( $img['url'] ) ) {
+					$sanitized_slideshow[] = array(
+						'id'  => isset( $img['id'] ) ? intval( $img['id'] ) : 0,
+						'url' => esc_url_raw( $img['url'] ),
+					);
+				}
+			}
+			$content_array['bg_slideshow_images'] = $sanitized_slideshow;
+		}
+		if ( isset( $params['bg_slideshow_speed'] ) ) {
+			$content_array['bg_slideshow_speed'] = max( 2, intval( $params['bg_slideshow_speed'] ) );
+		}
+		if ( isset( $params['bg_slideshow_animation'] ) ) {
+			$content_array['bg_slideshow_animation'] = sanitize_text_field( $params['bg_slideshow_animation'] );
+		}
+		if ( isset( $params['bg_slideshow_scale'] ) ) {
+			$content_array['bg_slideshow_scale'] = sanitize_text_field( $params['bg_slideshow_scale'] );
 		}
 		if (isset($params['bg_mobile_enabled'])) {
 			$content_array['bg_mobile_enabled'] = !empty($params['bg_mobile_enabled']);

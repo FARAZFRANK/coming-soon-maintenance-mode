@@ -68,21 +68,25 @@ $csmm_custom_css      = isset( $csmm_content['custom_css'] ) ? $csmm_content['cu
 $csmm_slide_ids       = isset( $csmm_content['slide_ids'] ) && is_array( $csmm_content['slide_ids'] ) ? $csmm_content['slide_ids'] : array();
 
 // Graphic Background Settings
-$csmm_bg_type             = isset( $csmm_content['bg_type'] ) ? $csmm_content['bg_type'] : 'default';
-$csmm_bg_custom_images    = isset( $csmm_content['bg_custom_images'] ) && is_array( $csmm_content['bg_custom_images'] ) ? $csmm_content['bg_custom_images'] : array();
-$csmm_bg_image_size       = isset( $csmm_content['bg_image_size'] ) ? $csmm_content['bg_image_size'] : 'cover';
-$csmm_bg_mobile_enabled   = ! empty( $csmm_content['bg_mobile_enabled'] );
-$csmm_bg_mobile_image_url = isset( $csmm_content['bg_mobile_image_url'] ) ? $csmm_content['bg_mobile_image_url'] : '';
-$csmm_bg_video_source     = isset( $csmm_content['bg_video_source'] ) ? $csmm_content['bg_video_source'] : 'youtube';
-$csmm_bg_video_url        = ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : '' );
-$csmm_bg_video_loop       = ! isset( $csmm_content['bg_video_loop'] ) || ! empty( $csmm_content['bg_video_loop'] );
-$csmm_bg_video_poster_url = isset( $csmm_content['bg_video_poster_url'] ) ? $csmm_content['bg_video_poster_url'] : '';
-$csmm_bg_pattern          = isset( $csmm_content['bg_pattern'] ) ? $csmm_content['bg_pattern'] : 'sakura';
-$csmm_bg_solid_color      = isset( $csmm_content['bg_solid_color'] ) ? $csmm_content['bg_solid_color'] : '#e2e8f0';
-$csmm_bg_gradient_type    = isset( $csmm_content['bg_gradient_type'] ) ? $csmm_content['bg_gradient_type'] : 'linear';
-$csmm_bg_gradient_color1  = isset( $csmm_content['bg_gradient_color1'] ) ? $csmm_content['bg_gradient_color1'] : '#1e3a8a';
-$csmm_bg_gradient_color2  = isset( $csmm_content['bg_gradient_color2'] ) ? $csmm_content['bg_gradient_color2'] : '#0f172a';
-$default_overlay          = in_array( $csmm_bg_type, array( 'custom', 'video', 'pattern' ), true ) ? 'none' : 'solid';
+$csmm_bg_type                = isset( $csmm_content['bg_type'] ) ? $csmm_content['bg_type'] : 'default';
+$csmm_bg_custom_images       = isset( $csmm_content['bg_custom_images'] ) && is_array( $csmm_content['bg_custom_images'] ) ? $csmm_content['bg_custom_images'] : array();
+$csmm_bg_image_size          = isset( $csmm_content['bg_image_size'] ) ? $csmm_content['bg_image_size'] : 'cover';
+$csmm_bg_slideshow_images    = isset( $csmm_content['bg_slideshow_images'] ) && is_array( $csmm_content['bg_slideshow_images'] ) ? $csmm_content['bg_slideshow_images'] : ( ! empty( $slides_data ) ? $slides_data : array() );
+$csmm_bg_slideshow_speed     = isset( $csmm_content['bg_slideshow_speed'] ) ? max( 2, intval( $csmm_content['bg_slideshow_speed'] ) ) : 5;
+$csmm_bg_slideshow_animation = isset( $csmm_content['bg_slideshow_animation'] ) ? $csmm_content['bg_slideshow_animation'] : 'fade';
+$csmm_bg_slideshow_scale     = isset( $csmm_content['bg_slideshow_scale'] ) ? $csmm_content['bg_slideshow_scale'] : 'cover';
+$csmm_bg_mobile_enabled      = ! empty( $csmm_content['bg_mobile_enabled'] );
+$csmm_bg_mobile_image_url    = isset( $csmm_content['bg_mobile_image_url'] ) ? $csmm_content['bg_mobile_image_url'] : '';
+$csmm_bg_video_source        = isset( $csmm_content['bg_video_source'] ) ? $csmm_content['bg_video_source'] : 'youtube';
+$csmm_bg_video_url           = ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : '' );
+$csmm_bg_video_loop          = ! isset( $csmm_content['bg_video_loop'] ) || ! empty( $csmm_content['bg_video_loop'] );
+$csmm_bg_video_poster_url    = isset( $csmm_content['bg_video_poster_url'] ) ? $csmm_content['bg_video_poster_url'] : '';
+$csmm_bg_pattern             = isset( $csmm_content['bg_pattern'] ) ? $csmm_content['bg_pattern'] : 'sakura';
+$csmm_bg_solid_color         = isset( $csmm_content['bg_solid_color'] ) ? $csmm_content['bg_solid_color'] : '#e2e8f0';
+$csmm_bg_gradient_type       = isset( $csmm_content['bg_gradient_type'] ) ? $csmm_content['bg_gradient_type'] : 'linear';
+$csmm_bg_gradient_color1     = isset( $csmm_content['bg_gradient_color1'] ) ? $csmm_content['bg_gradient_color1'] : '#1e3a8a';
+$csmm_bg_gradient_color2     = isset( $csmm_content['bg_gradient_color2'] ) ? $csmm_content['bg_gradient_color2'] : '#0f172a';
+$default_overlay             = in_array( $csmm_bg_type, array( 'custom', 'slideshow', 'video', 'pattern' ), true ) ? 'none' : 'solid';
 $csmm_bg_overlay_type     = ( isset( $csmm_content['bg_overlay_type'] ) && '' !== $csmm_content['bg_overlay_type'] ) ? $csmm_content['bg_overlay_type'] : $default_overlay;
 $csmm_bg_overlay_color    = isset( $csmm_content['bg_overlay_color'] ) ? $csmm_content['bg_overlay_color'] : '#000000';
 $csmm_bg_overlay_opacity  = isset( $csmm_content['bg_overlay_opacity'] ) ? floatval( $csmm_content['bg_overlay_opacity'] ) : 0.4;
@@ -251,7 +255,7 @@ $dynamic_css .= ".home-content__subscribe input[type=\"submit\"], #mc-form input
 $dynamic_css .= ".home-content__subscribe label.subscribe-message, #mc-form label.subscribe-message, #mc-form label { position: absolute !important; top: 62px !important; left: 0 !important; right: 0 !important; margin-top: 0 !important; margin-bottom: 0 !important; }\n";
 
 // Graphic Background Types - Complete replacement of template background when non-default
-if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', 'video' ), true ) ) {
+if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', 'slideshow', 'video' ), true ) ) {
 	$dynamic_css .= ".s-home::before, .s-home::after, .s-home--static::before, .s-home--particles::before, .s-home .overlay, .s-home .gradient-overlay, .home-overlay, .grid-overlay, .s-home .grid-overlay { display: none !important; opacity: 0 !important; background-image: none !important; background: none !important; }\n";
 	$dynamic_css .= "#particles-js, .home-particles, .particles-js-canvas-el, #particles-js canvas { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }\n";
 }
@@ -299,6 +303,81 @@ if ( 'solid' === $csmm_bg_type ) {
 			$bg_size_val = '100% 100%';
 		}
 		$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
+	}
+} elseif ( 'slideshow' === $csmm_bg_type ) {
+	$dynamic_css .= "body, .s-home, main.s-home, .s-home--static, .s-home--particles, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: transparent !important; background-color: transparent !important; background-image: none !important; }\n";
+	$dynamic_css .= ".home-content, .s-home .row, .home-content__main { position: relative !important; z-index: 2 !important; }\n";
+	$dynamic_css .= ".csmm-slideshow-bg { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 0 !important; pointer-events: none !important; overflow: hidden !important; background-color: #000000 !important; }\n";
+	$dynamic_css .= ".csmm-slideshow-slide { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; background-position: center center !important; background-repeat: no-repeat !important; opacity: 0; transition: opacity 1.2s ease-in-out, transform 6s ease-out; transform: scale(1); }\n";
+	$dynamic_css .= ".csmm-slideshow-slide.active { opacity: 1 !important; }\n";
+	$dynamic_css .= ".csmm-slideshow-bg.anim-zoom .csmm-slideshow-slide.active { transform: scale(1.08) !important; }\n";
+	$dynamic_css .= ".csmm-slideshow-bg.anim-slide .csmm-slideshow-slide { transform: translateX(100%); transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s ease-in-out; }\n";
+	$dynamic_css .= ".csmm-slideshow-bg.anim-slide .csmm-slideshow-slide.active { transform: translateX(0) !important; opacity: 1 !important; }\n";
+	$dynamic_css .= ".csmm-slideshow-bg.anim-slide .csmm-slideshow-slide.prev { transform: translateX(-100%) !important; opacity: 0 !important; }\n";
+
+	$slideshow_imgs = array();
+	if ( ! empty( $csmm_bg_slideshow_images ) && is_array( $csmm_bg_slideshow_images ) ) {
+		foreach ( $csmm_bg_slideshow_images as $s ) {
+			if ( is_array( $s ) && ! empty( $s['url'] ) ) {
+				$slideshow_imgs[] = esc_url( $s['url'] );
+			} elseif ( is_string( $s ) && ! empty( $s ) ) {
+				$slideshow_imgs[] = esc_url( $s );
+			}
+		}
+	}
+	if ( empty( $slideshow_imgs ) && ! empty( $slides_data ) ) {
+		foreach ( $slides_data as $s ) {
+			if ( ! empty( $s['url'] ) ) {
+				$slideshow_imgs[] = esc_url( $s['url'] );
+			}
+		}
+	}
+
+	if ( ! empty( $slideshow_imgs ) ) {
+		$scale_val = 'cover';
+		if ( 'contain' === $csmm_bg_slideshow_scale ) {
+			$scale_val = 'contain';
+		} elseif ( 'auto' === $csmm_bg_slideshow_scale ) {
+			$scale_val = 'auto';
+		} elseif ( 'fill' === $csmm_bg_slideshow_scale || 'stretch' === $csmm_bg_slideshow_scale ) {
+			$scale_val = '100% 100%';
+		}
+
+		$anim_class = 'anim-' . ( ! empty( $csmm_bg_slideshow_animation ) ? esc_attr( $csmm_bg_slideshow_animation ) : 'fade' );
+		$slideshow_html = '<div class="csmm-slideshow-bg ' . $anim_class . '">';
+		foreach ( $slideshow_imgs as $idx => $s_url ) {
+			$active_cls = 0 === $idx ? ' active' : '';
+			$slideshow_html .= '<div class="csmm-slideshow-slide' . $active_cls . '" style="background-image: url(\'' . $s_url . '\'); background-size: ' . $scale_val . ';" data-slide-index="' . $idx . '"></div>';
+		}
+		$slideshow_html .= '</div>';
+		$interval_ms = max( 2, intval( $csmm_bg_slideshow_speed ) ) * 1000;
+		$slideshow_html .= '
+<script id="csmm-slideshow-script">
+(function() {
+  function initCsmmSlideshow() {
+    var slides = document.querySelectorAll(".csmm-slideshow-slide");
+    if (slides.length <= 1) return;
+    var current = 0;
+    var intervalMs = ' . $interval_ms . ';
+    setInterval(function() {
+      var prev = current;
+      current = (current + 1) % slides.length;
+      slides.forEach(function(s, i) {
+        s.classList.remove("prev");
+        if (i === prev) s.classList.add("prev");
+        if (i === current) s.classList.add("active");
+        else s.classList.remove("active");
+      });
+    }, intervalMs);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCsmmSlideshow);
+  } else {
+    initCsmmSlideshow();
+  }
+})();
+</script>';
+		$video_bg_html = $slideshow_html;
 	}
 } elseif ( 'video' === $csmm_bg_type ) {
 	$dynamic_css .= "body, .s-home, main.s-home, .s-home--static, .s-home--particles, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: transparent !important; background-color: transparent !important; background-image: none !important; }\n";

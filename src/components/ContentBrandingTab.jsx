@@ -263,6 +263,33 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
     );
   };
 
+  const handleAddSlideshowImages = () => {
+    triggerMediaPicker({
+      title: 'Select Slideshow Images',
+      buttonText: 'Add to Slideshow',
+      multiple: true,
+      onSelect: (selection) => {
+        const newItems = (Array.isArray(selection) ? selection : [selection]).map((item) => ({
+          id: item.id,
+          url: item.url,
+        }));
+        const current = (settings.bg_slideshow_images && Array.isArray(settings.bg_slideshow_images)) ? settings.bg_slideshow_images : [];
+        const updated = [...current, ...newItems];
+        onChange('bg_slideshow_images', updated);
+        onChange('slides', updated);
+        onChange('slide_ids', updated.map((s) => s.id).filter(Boolean));
+      },
+    });
+  };
+
+  const handleRemoveSlideshowImage = (slideIdOrUrl) => {
+    const current = (settings.bg_slideshow_images && Array.isArray(settings.bg_slideshow_images)) ? settings.bg_slideshow_images : [];
+    const updated = current.filter((s) => (s.id ? s.id !== slideIdOrUrl : s.url !== slideIdOrUrl));
+    onChange('bg_slideshow_images', updated);
+    onChange('slides', updated);
+    onChange('slide_ids', updated.map((s) => s.id).filter(Boolean));
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
       {/* 1. Logo Setup Section */}
@@ -950,7 +977,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                 onChange={(e) => {
                   const newType = e.target.value;
                   onChange('bg_type', newType);
-                  if (['custom', 'video', 'pattern'].includes(newType) && (!settings.bg_overlay_type || settings.bg_overlay_type === 'solid')) {
+                  if (['custom', 'slideshow', 'video', 'pattern'].includes(newType) && (!settings.bg_overlay_type || settings.bg_overlay_type === 'solid')) {
                     onChange('bg_overlay_type', 'none');
                   }
                 }}
@@ -958,6 +985,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
               >
                 <FormControlLabel value="default" control={<Radio color="primary" />} label="Default Media" />
                 <FormControlLabel value="custom" control={<Radio color="primary" />} label="Custom Images" />
+                <FormControlLabel value="slideshow" control={<Radio color="primary" />} label="Background Slideshow" />
                 <FormControlLabel value="video" control={<Radio color="primary" />} label="Video" />
                 <FormControlLabel value="pattern" control={<Radio color="primary" />} label="Graphic Pattern" />
                 <FormControlLabel value="solid" control={<Radio color="primary" />} label="Solid Color" />
@@ -1159,6 +1187,191 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       </Box>
                     )}
                   </Box>
+                </Box>
+              )}
+
+              {/* Option: Background Slideshow */}
+              {settings.bg_type === 'slideshow' && (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                  {(() => {
+                    const slideshowImages = (settings.bg_slideshow_images && settings.bg_slideshow_images.length > 0)
+                      ? settings.bg_slideshow_images
+                      : (settings.slides && settings.slides.length > 0)
+                      ? settings.slides
+                      : [];
+                    const hasSlides = slideshowImages.length > 0;
+
+                    return (
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={handleAddSlideshowImages}
+                            sx={{ borderRadius: '6px', fontWeight: 600, px: 2.5 }}
+                          >
+                            {hasSlides ? 'Add More Slides' : 'Select Slides'}
+                          </Button>
+                          {hasSlides && (
+                            <Button
+                              size="small"
+                              color="error"
+                              variant="text"
+                              onClick={() => {
+                                onChange('bg_slideshow_images', []);
+                                onChange('slides', []);
+                                onChange('slide_ids', []);
+                              }}
+                              sx={{ fontWeight: 600 }}
+                            >
+                              Clear All Slides
+                            </Button>
+                          )}
+                          {hasSlides && (
+                            <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
+                              {slideshowImages.length} {slideshowImages.length === 1 ? 'slide' : 'slides'} in playlist
+                            </Typography>
+                          )}
+                        </Box>
+
+                        {/* Thumbnail gallery */}
+                        {hasSlides ? (
+                          <Grid container spacing={1.5} sx={{ mt: 0.5 }}>
+                            {slideshowImages.map((slide, idx) => (
+                              <Grid item xs={12} sm={6} md={4} key={slide.id || slide.url || idx}>
+                                <Paper
+                                  variant="outlined"
+                                  sx={{
+                                    position: 'relative',
+                                    height: 110,
+                                    borderRadius: '8px !important',
+                                    overflow: 'hidden',
+                                    backgroundColor: '#1e293b',
+                                  }}
+                                >
+                                  <img
+                                    src={slide.url}
+                                    alt={`Slide ${idx + 1}`}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                  />
+                                  <Box
+                                    sx={{
+                                      position: 'absolute',
+                                      bottom: 4,
+                                      left: 6,
+                                      backgroundColor: 'rgba(0,0,0,0.65)',
+                                      color: '#ffffff',
+                                      px: 1,
+                                      py: 0.2,
+                                      borderRadius: '4px',
+                                      fontSize: '0.72rem',
+                                      fontWeight: 700,
+                                    }}
+                                  >
+                                    Slide {idx + 1}
+                                  </Box>
+                                  <IconButton
+                                    size="small"
+                                    color="error"
+                                    onClick={() => handleRemoveSlideshowImage(slide.id || slide.url)}
+                                    sx={{
+                                      position: 'absolute',
+                                      top: 4,
+                                      right: 4,
+                                      backgroundColor: 'rgba(255,255,255,0.9)',
+                                      '&:hover': { backgroundColor: '#ffffff' },
+                                    }}
+                                  >
+                                    <DeleteOutlineRoundedIcon fontSize="small" />
+                                  </IconButton>
+                                </Paper>
+                              </Grid>
+                            ))}
+                          </Grid>
+                        ) : (
+                          <Alert severity="info" sx={{ borderRadius: '8px' }}>
+                            Upload multiple images to create an interactive background slideshow.
+                          </Alert>
+                        )}
+                      </Box>
+                    );
+                  })()}
+
+                  <Divider />
+
+                  {/* Transition Animation & Scale */}
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                        Transition Effect
+                      </Typography>
+                      <Select
+                        size="small"
+                        fullWidth
+                        value={settings.bg_slideshow_animation || 'fade'}
+                        onChange={(e) => onChange('bg_slideshow_animation', e.target.value)}
+                        sx={{ borderRadius: '8px' }}
+                      >
+                        <MenuItem value="fade">Smooth Crossfade (Default)</MenuItem>
+                        <MenuItem value="slide">Slide Horizontal</MenuItem>
+                        <MenuItem value="zoom">Ken Burns / Zoom Effect</MenuItem>
+                      </Select>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                        Background Scale Mode
+                      </Typography>
+                      <Select
+                        size="small"
+                        fullWidth
+                        value={settings.bg_slideshow_scale || 'cover'}
+                        onChange={(e) => onChange('bg_slideshow_scale', e.target.value)}
+                        sx={{ borderRadius: '8px' }}
+                      >
+                        <MenuItem value="cover">Cover (Fill screen, maintain aspect ratio - Default)</MenuItem>
+                        <MenuItem value="contain">Contain (Fit entirely inside screen)</MenuItem>
+                        <MenuItem value="auto">Auto (Original image size)</MenuItem>
+                        <MenuItem value="fill">Stretch / Fill (100% width & 100% height)</MenuItem>
+                      </Select>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Box sx={{ maxWidth: 420 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                            Slide Display Duration
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
+                            {settings.bg_slideshow_speed || 5} seconds
+                          </Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                          <Slider
+                            value={Number(settings.bg_slideshow_speed) || 5}
+                            min={2}
+                            max={20}
+                            step={1}
+                            onChange={(_, val) => onChange('bg_slideshow_speed', val)}
+                            color="primary"
+                            size="small"
+                            sx={{ flex: 1 }}
+                          />
+                          <TextField
+                            size="small"
+                            type="number"
+                            value={settings.bg_slideshow_speed !== undefined ? settings.bg_slideshow_speed : 5}
+                            onChange={(e) => onChange('bg_slideshow_speed', Math.max(2, Number(e.target.value)))}
+                            sx={{ width: 80 }}
+                            inputProps={{ min: 2, max: 20 }}
+                          />
+                          <Typography variant="body2" color="text.secondary">
+                            sec
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </Box>
               )}
 
