@@ -226,36 +226,36 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
     }
   };
 
-  // Background Slider Uploader
+  // Background Custom Image Uploader
   const handleAddSlide = (e) => {
     if (e && e.preventDefault) e.preventDefault();
     triggerMediaPicker({
-      title: 'Select Background Slide Images',
-      buttonText: 'Add to Background',
-      multiple: true,
+      title: 'Select Background Image',
+      buttonText: 'Use this Image',
+      multiple: false,
       onSelect: (selection) => {
-        const currentSlides = settings.slides || [];
         const newSlides = (Array.isArray(selection) ? selection : [selection]).map((item) => ({
           id: item.id,
           url: item.url,
         }));
-        const combined = [...currentSlides, ...newSlides];
-        onChange('slides', combined);
-        onChange('bg_custom_images', combined);
+        onChange('slides', newSlides);
+        onChange('bg_custom_images', newSlides);
         onChange(
           'slide_ids',
-          combined.map((s) => s.id)
+          newSlides.map((s) => s.id)
         );
       },
     });
   };
 
-  const handleRemoveSlide = (slideId) => {
-    const updated = (settings.slides || []).filter((s) => s.id !== slideId);
+  const handleRemoveSlide = (slideIdOrUrl) => {
+    const currentList = (settings.slides && settings.slides.length > 0) ? settings.slides : (settings.bg_custom_images || []);
+    const updated = currentList.filter((s) => (s.id ? s.id !== slideIdOrUrl : s.url !== slideIdOrUrl));
     onChange('slides', updated);
+    onChange('bg_custom_images', updated);
     onChange(
       'slide_ids',
-      updated.map((s) => s.id)
+      updated.map((s) => s.id).filter(Boolean)
     );
   };
 
@@ -880,54 +880,84 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
               {/* Option 2: Custom Images */}
               {settings.bg_type === 'custom' && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <Box>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={handleAddSlide}
-                      sx={{ borderRadius: '6px', fontWeight: 600, px: 2.5 }}
-                    >
-                      Add Images
-                    </Button>
-                  </Box>
+                  {(() => {
+                    const customImages = (settings.slides && settings.slides.length > 0)
+                      ? settings.slides
+                      : (settings.bg_custom_images && settings.bg_custom_images.length > 0)
+                      ? settings.bg_custom_images
+                      : [];
+                    const hasImages = customImages.length > 0;
 
-                  {/* Thumbnail gallery */}
-                  <Grid container spacing={1.5} sx={{ mt: 0.5 }}>
-                    {(settings.slides || []).map((slide) => (
-                      <Grid item xs={6} sm={4} md={3} key={slide.id}>
-                        <Paper
-                          variant="outlined"
-                          sx={{
-                            position: 'relative',
-                            height: 90,
-                            borderRadius: '8px !important',
-                            overflow: 'hidden',
-                            backgroundColor: '#1e293b',
-                          }}
-                        >
-                          <img
-                            src={slide.url}
-                            alt="Slide"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                          />
-                          <IconButton
-                            size="small"
-                            color="error"
-                            onClick={() => handleRemoveSlide(slide.id)}
-                            sx={{
-                              position: 'absolute',
-                              top: 4,
-                              right: 4,
-                              backgroundColor: 'rgba(255,255,255,0.9)',
-                              '&:hover': { backgroundColor: '#ffffff' },
-                            }}
+                    return (
+                      <>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={handleAddSlide}
+                            sx={{ borderRadius: '6px', fontWeight: 600, px: 2.5 }}
                           >
-                            <DeleteOutlineRoundedIcon fontSize="small" />
-                          </IconButton>
-                        </Paper>
-                      </Grid>
-                    ))}
-                  </Grid>
+                            {hasImages ? 'Change Image' : 'Select Image'}
+                          </Button>
+                          {hasImages && (
+                            <Button
+                              size="small"
+                              color="error"
+                              variant="text"
+                              onClick={() => {
+                                onChange('slides', []);
+                                onChange('bg_custom_images', []);
+                                onChange('slide_ids', []);
+                              }}
+                              sx={{ fontWeight: 600 }}
+                            >
+                              Remove Image
+                            </Button>
+                          )}
+                        </Box>
+
+                        {/* Thumbnail gallery */}
+                        {hasImages && (
+                          <Grid container spacing={1.5} sx={{ mt: 0.5 }}>
+                            {customImages.map((slide, idx) => (
+                              <Grid item xs={12} sm={6} md={4} key={slide.id || slide.url || idx}>
+                                <Paper
+                                  variant="outlined"
+                                  sx={{
+                                    position: 'relative',
+                                    height: 100,
+                                    borderRadius: '8px !important',
+                                    overflow: 'hidden',
+                                    backgroundColor: '#1e293b',
+                                  }}
+                                >
+                                  <img
+                                    src={slide.url}
+                                    alt="Custom Background"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                  />
+                                  <IconButton
+                                    size="small"
+                                    color="error"
+                                    onClick={() => handleRemoveSlide(slide.id || slide.url)}
+                                    sx={{
+                                      position: 'absolute',
+                                      top: 4,
+                                      right: 4,
+                                      backgroundColor: 'rgba(255,255,255,0.9)',
+                                      '&:hover': { backgroundColor: '#ffffff' },
+                                    }}
+                                  >
+                                    <DeleteOutlineRoundedIcon fontSize="small" />
+                                  </IconButton>
+                                </Paper>
+                              </Grid>
+                            ))}
+                          </Grid>
+                        )}
+                      </>
+                    );
+                  })()}
 
                   {/* Mobile Device Override */}
                   <Box sx={{ mt: 1 }}>
