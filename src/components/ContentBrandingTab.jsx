@@ -959,6 +959,28 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     );
                   })()}
 
+                  {/* Background Scale Mode */}
+                  <Box sx={{ mt: 0.5 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75, color: 'text.primary' }}>
+                      Background Scale Mode
+                    </Typography>
+                    <Select
+                      size="small"
+                      fullWidth
+                      value={settings.bg_image_size || 'cover'}
+                      onChange={(e) => onChange('bg_image_size', e.target.value)}
+                      sx={{ borderRadius: '8px' }}
+                    >
+                      <MenuItem value="cover">Cover (Fill screen, maintain aspect ratio - Default)</MenuItem>
+                      <MenuItem value="contain">Contain (Fit entirely inside screen without cropping)</MenuItem>
+                      <MenuItem value="auto">Auto (Original natural image size)</MenuItem>
+                      <MenuItem value="fill">Stretch / Fill (100% width & 100% height)</MenuItem>
+                    </Select>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', mt: 0.5, display: 'block' }}>
+                      Manage how the custom background image is sized and fitted across desktop and mobile screens.
+                    </Typography>
+                  </Box>
+
                   {/* Mobile Device Override */}
                   <Box sx={{ mt: 1 }}>
                     <FormControlLabel

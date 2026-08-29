@@ -64,6 +64,7 @@ $csmm_slide_ids       = isset( $csmm_content['slide_ids'] ) && is_array( $csmm_c
 // Graphic Background Settings
 $csmm_bg_type             = isset( $csmm_content['bg_type'] ) ? $csmm_content['bg_type'] : 'default';
 $csmm_bg_custom_images    = isset( $csmm_content['bg_custom_images'] ) && is_array( $csmm_content['bg_custom_images'] ) ? $csmm_content['bg_custom_images'] : array();
+$csmm_bg_image_size       = isset( $csmm_content['bg_image_size'] ) ? $csmm_content['bg_image_size'] : 'cover';
 $csmm_bg_mobile_enabled   = ! empty( $csmm_content['bg_mobile_enabled'] );
 $csmm_bg_mobile_image_url = isset( $csmm_content['bg_mobile_image_url'] ) ? $csmm_content['bg_mobile_image_url'] : '';
 $csmm_bg_video_source     = isset( $csmm_content['bg_video_source'] ) ? $csmm_content['bg_video_source'] : 'youtube';
@@ -252,7 +253,15 @@ if ( 'solid' === $csmm_bg_type ) {
 	}
 	if ( ! empty( $custom_img_url ) ) {
 		$custom_bg_url = esc_url( $custom_img_url );
-		$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
+		$bg_size_val = 'cover';
+		if ( 'contain' === $csmm_bg_image_size ) {
+			$bg_size_val = 'contain';
+		} elseif ( 'auto' === $csmm_bg_image_size ) {
+			$bg_size_val = 'auto';
+		} elseif ( 'fill' === $csmm_bg_image_size || 'stretch' === $csmm_bg_image_size ) {
+			$bg_size_val = '100% 100%';
+		}
+		$dynamic_css .= "body, .s-home, main.s-home, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
 	}
 } elseif ( 'video' === $csmm_bg_type ) {
 	if ( ! empty( $csmm_bg_video_poster_url ) ) {

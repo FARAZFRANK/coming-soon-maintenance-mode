@@ -262,6 +262,7 @@ class CSMM_REST_API {
 			'slides'               => $slides_data,
 			'bg_type'              => isset( $content['bg_type'] ) ? $content['bg_type'] : 'default',
 			'bg_custom_images'     => isset( $content['bg_custom_images'] ) && is_array( $content['bg_custom_images'] ) ? $content['bg_custom_images'] : ( ! empty( $slides_data ) ? $slides_data : array() ),
+			'bg_image_size'        => isset( $content['bg_image_size'] ) ? $content['bg_image_size'] : 'cover',
 			'bg_mobile_enabled'    => ! empty( $content['bg_mobile_enabled'] ),
 			'bg_mobile_image_url'  => isset( $content['bg_mobile_image_url'] ) ? $content['bg_mobile_image_url'] : '',
 			'bg_video_source'      => isset( $content['bg_video_source'] ) ? $content['bg_video_source'] : 'youtube',
@@ -480,6 +481,9 @@ class CSMM_REST_API {
 			$content_array['bg_custom_images'] = $sanitized_bg_imgs;
 			// Sync with slide_ids if available
 			$content_array['slide_ids'] = array_column($sanitized_bg_imgs, 'id');
+		}
+		if (isset($params['bg_image_size'])) {
+			$content_array['bg_image_size'] = sanitize_text_field($params['bg_image_size']);
 		}
 		if (isset($params['bg_mobile_enabled'])) {
 			$content_array['bg_mobile_enabled'] = !empty($params['bg_mobile_enabled']);
