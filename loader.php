@@ -47,7 +47,11 @@ if ( ! empty( $csmm_logo_id ) && is_numeric( $csmm_logo_id ) ) {
 
 // Content defaults
 $csmm_title_enabled       = isset( $csmm_content['title_enabled'] ) ? ( '1' === strval( $csmm_content['title_enabled'] ) ) : true;
+$csmm_title_font_size_enabled = ! empty( $csmm_content['title_font_size_enabled'] );
+$csmm_title_font_size         = isset( $csmm_content['title_font_size'] ) ? intval( $csmm_content['title_font_size'] ) : 0;
 $csmm_description_enabled = isset( $csmm_content['description_enabled'] ) ? ( '1' === strval( $csmm_content['description_enabled'] ) ) : true;
+$csmm_description_font_size_enabled = ! empty( $csmm_content['description_font_size_enabled'] );
+$csmm_description_font_size         = isset( $csmm_content['description_font_size'] ) ? intval( $csmm_content['description_font_size'] ) : 0;
 
 $csmm_title           = ( ! $csmm_title_enabled ) ? '' : ( isset( $csmm_content['title'] ) && '' !== $csmm_content['title'] ? $csmm_content['title'] : __( 'Coming Soon', 'coming-soon-maintenance-mode' ) );
 $csmm_description     = ( ! $csmm_description_enabled ) ? '' : ( isset( $csmm_content['description'] ) ? $csmm_content['description'] : __( 'Thank you for visiting our website! We are currently working on creating a new and exciting online experience for you. While we finish up the final touches, please sign up for our newsletter to receive exclusive updates and offers.', 'coming-soon-maintenance-mode' ) );
@@ -196,14 +200,18 @@ if ( ! $csmm_logo_enabled || 'disabled' === $csmm_logo_type ) {
 	$dynamic_css .= ".home-logo img { max-height: {$csmm_logo_height}px !important; height: auto !important; width: auto !important; }\n";
 }
 
-// Title toggle
+// Title toggle & font size override
 if ( ! $csmm_title_enabled ) {
-	$dynamic_css .= "h1, .home-content__text h1, .home-content h1, .title, .title-font, .reveal-text { display: none !important; }\n";
+	$dynamic_css .= "h1, .home-content__text h1, .home-content h1, .title, .title-font, .reveal-text, .hero-title, .section-title, .main-title { display: none !important; }\n";
+} elseif ( $csmm_title_font_size_enabled && $csmm_title_font_size > 0 ) {
+	$dynamic_css .= "h1, .home-content__text h1, .home-content h1, .title, .title-font, .reveal-text, .hero-title, .section-title, .main-title { font-size: {$csmm_title_font_size}px !important; line-height: 1.2 !important; }\n";
 }
 
-// Description toggle
+// Description toggle & font size override
 if ( ! $csmm_description_enabled ) {
-	$dynamic_css .= ".csmm-description-content, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description { display: none !important; }\n";
+	$dynamic_css .= ".csmm-description-content, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description, .hero-desc, .section-desc { display: none !important; }\n";
+} elseif ( $csmm_description_font_size_enabled && $csmm_description_font_size > 0 ) {
+	$dynamic_css .= ".csmm-description-content, .csmm-description-content *, .csmm-description-content p, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description, .hero-desc, .section-desc { font-size: {$csmm_description_font_size}px !important; line-height: 1.6 !important; }\n";
 }
 
 // Countdown & Subscriber Form toggles

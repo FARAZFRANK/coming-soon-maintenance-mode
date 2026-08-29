@@ -478,15 +478,82 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
               </Box>
 
               {titleEnabled ? (
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  value={settings.title !== undefined ? settings.title : ''}
-                  onChange={(e) => onChange('title', e.target.value)}
-                  placeholder="Exclusive New Platform Launching Soon"
-                  helperText="Main primary heading displayed on your coming soon template."
-                />
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    value={settings.title !== undefined ? settings.title : ''}
+                    onChange={(e) => onChange('title', e.target.value)}
+                    placeholder="Exclusive New Platform Launching Soon"
+                    helperText="Main primary heading displayed on your coming soon template."
+                  />
+
+                  {/* Title Font Size Override */}
+                  <Box
+                    sx={{
+                      p: 1.5,
+                      borderRadius: '8px',
+                      backgroundColor: (theme) =>
+                        theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+                      border: '1px solid',
+                      borderColor: 'divider',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 1,
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={!!settings.title_font_size_enabled}
+                            onChange={(e) => onChange('title_font_size_enabled', e.target.checked)}
+                            size="small"
+                            color="primary"
+                          />
+                        }
+                        label={
+                          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                            Override Title Font Size
+                          </Typography>
+                        }
+                        sx={{ mr: 0 }}
+                      />
+                      {settings.title_font_size_enabled && (
+                        <Typography variant="caption" color="text.secondary">
+                          Custom size applied over template default
+                        </Typography>
+                      )}
+                    </Box>
+
+                    {settings.title_font_size_enabled && (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pt: 0.5, maxWidth: 400 }}>
+                        <Slider
+                          value={Number(settings.title_font_size) || 48}
+                          min={16}
+                          max={120}
+                          step={1}
+                          onChange={(_, val) => onChange('title_font_size', val)}
+                          color="primary"
+                          size="small"
+                          sx={{ flex: 1 }}
+                        />
+                        <TextField
+                          size="small"
+                          type="number"
+                          value={settings.title_font_size !== undefined ? settings.title_font_size : 48}
+                          onChange={(e) => onChange('title_font_size', Number(e.target.value))}
+                          sx={{ width: 85 }}
+                          inputProps={{ min: 16, max: 120 }}
+                        />
+                        <Typography variant="body2" color="text.secondary">
+                          px
+                        </Typography>
+                      </Box>
+                    )}
+                  </Box>
+                </Box>
               ) : (
                 <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', py: 0.5 }}>
                   Headline / Page title is disabled and will be hidden on frontend.
@@ -719,6 +786,72 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   <Typography variant="caption" color="text.secondary" sx={{ fontStyle: 'italic' }}>
                     * WordPress embeds, custom HTML and shortcodes support
                   </Typography>
+
+                  {/* Description Font Size Override */}
+                  <Box
+                    sx={{
+                      p: 1.5,
+                      borderRadius: '8px',
+                      backgroundColor: (theme) =>
+                        theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+                      border: '1px solid',
+                      borderColor: 'divider',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 1,
+                      mt: 0.5,
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={!!settings.description_font_size_enabled}
+                            onChange={(e) => onChange('description_font_size_enabled', e.target.checked)}
+                            size="small"
+                            color="primary"
+                          />
+                        }
+                        label={
+                          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                            Override Description Font Size
+                          </Typography>
+                        }
+                        sx={{ mr: 0 }}
+                      />
+                      {settings.description_font_size_enabled && (
+                        <Typography variant="caption" color="text.secondary">
+                          Custom size applied over template default
+                        </Typography>
+                      )}
+                    </Box>
+
+                    {settings.description_font_size_enabled && (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pt: 0.5, maxWidth: 400 }}>
+                        <Slider
+                          value={Number(settings.description_font_size) || 18}
+                          min={12}
+                          max={60}
+                          step={1}
+                          onChange={(_, val) => onChange('description_font_size', val)}
+                          color="primary"
+                          size="small"
+                          sx={{ flex: 1 }}
+                        />
+                        <TextField
+                          size="small"
+                          type="number"
+                          value={settings.description_font_size !== undefined ? settings.description_font_size : 18}
+                          onChange={(e) => onChange('description_font_size', Number(e.target.value))}
+                          sx={{ width: 85 }}
+                          inputProps={{ min: 12, max: 60 }}
+                        />
+                        <Typography variant="body2" color="text.secondary">
+                          px
+                        </Typography>
+                      </Box>
+                    )}
+                  </Box>
                 </Box>
               ) : (
                 <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', py: 0.5 }}>

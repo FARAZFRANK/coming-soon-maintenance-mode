@@ -241,10 +241,14 @@ class CSMM_REST_API {
 			'logo_link'            => ( isset( $content['logo_link'] ) && '' !== $content['logo_link'] ) ? $content['logo_link'] : home_url( '/' ),
 			'logo_height_enabled'  => ! empty( $content['logo_height_enabled'] ),
 			'logo_height'          => isset( $content['logo_height'] ) ? intval( $content['logo_height'] ) : 100,
-			'title_enabled'        => isset( $content['title_enabled'] ) ? strval( $content['title_enabled'] ) : '1',
-			'title'                => isset( $content['title'] ) ? $content['title'] : 'Coming Soon',
-			'description_enabled'  => isset( $content['description_enabled'] ) ? strval( $content['description_enabled'] ) : '1',
-			'description'          => isset( $content['description'] ) ? $content['description'] : '',
+			'title_enabled'                => isset( $content['title_enabled'] ) ? strval( $content['title_enabled'] ) : '1',
+			'title'                        => isset( $content['title'] ) ? $content['title'] : 'Coming Soon',
+			'title_font_size_enabled'      => ! empty( $content['title_font_size_enabled'] ),
+			'title_font_size'              => isset( $content['title_font_size'] ) ? intval( $content['title_font_size'] ) : 48,
+			'description_enabled'          => isset( $content['description_enabled'] ) ? strval( $content['description_enabled'] ) : '1',
+			'description'                  => isset( $content['description'] ) ? $content['description'] : '',
+			'description_font_size_enabled'=> ! empty( $content['description_font_size_enabled'] ),
+			'description_font_size'        => isset( $content['description_font_size'] ) ? intval( $content['description_font_size'] ) : 18,
 			'countdown'            => isset( $content['countdown'] ) ? strval( $content['countdown'] ) : '1',
 			'countdown_title'      => isset( $content['countdown_title'] ) ? $content['countdown_title'] : 'Launching In...',
 			'countdown_date'       => $countdown_date,
@@ -390,11 +394,23 @@ class CSMM_REST_API {
 		if ( isset( $params['title'] ) ) {
 			$content_array['title'] = sanitize_text_field( $params['title'] );
 		}
+		if ( isset( $params['title_font_size_enabled'] ) ) {
+			$content_array['title_font_size_enabled'] = ! empty( $params['title_font_size_enabled'] );
+		}
+		if ( isset( $params['title_font_size'] ) ) {
+			$content_array['title_font_size'] = intval( $params['title_font_size'] );
+		}
 		if ( isset( $params['description_enabled'] ) ) {
 			$content_array['description_enabled'] = sanitize_text_field( $params['description_enabled'] );
 		}
 		if ( isset( $params['description'] ) ) {
 			$content_array['description'] = wp_kses_post( $params['description'] );
+		}
+		if ( isset( $params['description_font_size_enabled'] ) ) {
+			$content_array['description_font_size_enabled'] = ! empty( $params['description_font_size_enabled'] );
+		}
+		if ( isset( $params['description_font_size'] ) ) {
+			$content_array['description_font_size'] = intval( $params['description_font_size'] );
 		}
 		if ( isset( $params['logo_enabled'] ) ) {
 			$content_array['logo_enabled'] = sanitize_text_field( $params['logo_enabled'] );
