@@ -44,6 +44,7 @@ import HorizontalRuleRoundedIcon from '@mui/icons-material/HorizontalRuleRounded
 import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
 import PermMediaRoundedIcon from '@mui/icons-material/PermMediaRounded';
 import WallpaperRoundedIcon from '@mui/icons-material/WallpaperRounded';
+import { api } from '../api';
 
 export default function ContentBrandingTab({ settings = {}, onChange }) {
   const [editorMode, setEditorMode] = useState('visual'); // 'visual' | 'code'
