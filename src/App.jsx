@@ -103,10 +103,10 @@ export default function App() {
     }
     return 0;
   });
-  const [settings, setSettings] = useState(null);
-  const [templates, setTemplates] = useState([]);
-  const [targetItems, setTargetItems] = useState({ pages: [], posts: [], roles: [] });
-  const [loading, setLoading] = useState(true);
+  const [settings, setSettings] = useState(() => window.csmmData?.initialSettings || null);
+  const [templates, setTemplates] = useState(() => window.csmmData?.templates || []);
+  const [targetItems, setTargetItems] = useState(() => window.csmmData?.targetItems || { pages: [], posts: [], roles: [] });
+  const [loading, setLoading] = useState(() => !window.csmmData?.initialSettings);
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [notification, setNotification] = useState({ open: false, message: '', severity: 'success' });
@@ -150,9 +150,13 @@ export default function App() {
 
   const currentTheme = getTheme(themeMode);
 
-  // Load initial settings and templates
+  // Load initial settings and templates if not already provided synchronously
   useEffect(() => {
     async function loadData() {
+      if (window.csmmData?.initialSettings) {
+        setLoading(false);
+        return;
+      }
       try {
         setLoading(true);
         const [settingsRes, templatesRes, targetRes] = await Promise.all([
