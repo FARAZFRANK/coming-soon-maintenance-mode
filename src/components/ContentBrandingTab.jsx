@@ -1395,9 +1395,34 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
       {/* 3. Graphic Background Section */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: 2.5 }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, fontSize: '1.1rem' }}>
-            Graphic Background
-          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 1 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
+              Graphic Background
+            </Typography>
+            <Tooltip title="Reset all background settings to template defaults">
+              <Button
+                size="small"
+                variant="outlined"
+                startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                onClick={() => {
+                  onChange('bg_type', 'default');
+                  onChange('bg_solid_color', '#1d1b1b');
+                  onChange('bg_gradient_type', 'linear');
+                  onChange('bg_gradient_color1', '#1e3a8a');
+                  onChange('bg_gradient_color2', '#0f172a');
+                  onChange('bg_gradient_angle', 135);
+                  onChange('bg_pattern', 'sakura');
+                  onChange('bg_overlay_type', 'none');
+                  onChange('bg_overlay_color', '#000000');
+                  onChange('bg_overlay_opacity', 0.4);
+                  onChange('bg_blur', 0);
+                }}
+                sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+              >
+                Reset Background
+              </Button>
+            </Tooltip>
+          </Box>
 
           <Grid container spacing={3} alignItems="flex-start">
             {/* Left Side: Background Type Radio Selection */}
@@ -2108,7 +2133,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
                       Select Color
                     </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, maxWidth: 280 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
                       <Box
                         component="label"
                         sx={{
@@ -2133,11 +2158,22 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       </Box>
                       <TextField
                         size="small"
-                        fullWidth
+                        sx={{ width: 140 }}
                         value={settings.bg_solid_color || '#1d1b1b'}
                         onChange={(e) => onChange('bg_solid_color', e.target.value)}
                         placeholder="#1d1b1b"
                       />
+                      <Tooltip title="Reset solid color to default (#1d1b1b)">
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                          onClick={() => onChange('bg_solid_color', '#1d1b1b')}
+                          sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                        >
+                          Reset (#1d1b1b)
+                        </Button>
+                      </Tooltip>
                     </Box>
                   </Box>
 
@@ -2245,6 +2281,25 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       </Box>
                     </Grid>
                   </Grid>
+
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+                    <Tooltip title="Reset gradient settings to default">
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                        onClick={() => {
+                          onChange('bg_gradient_type', 'linear');
+                          onChange('bg_gradient_color1', '#1e3a8a');
+                          onChange('bg_gradient_color2', '#0f172a');
+                          onChange('bg_gradient_angle', 135);
+                        }}
+                        sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                      >
+                        Reset Gradient
+                      </Button>
+                    </Tooltip>
+                  </Box>
 
                   {/* Gradient Preview */}
                   <Paper
@@ -2367,6 +2422,25 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         color="primary"
                         size="small"
                       />
+                    </Box>
+
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-start', pt: 0.5 }}>
+                      <Tooltip title="Reset overlay and blur settings to default">
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                          onClick={() => {
+                            onChange('bg_overlay_type', 'none');
+                            onChange('bg_overlay_color', '#000000');
+                            onChange('bg_overlay_opacity', 0.4);
+                            onChange('bg_blur', 0);
+                          }}
+                          sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                        >
+                          Reset Overlay & Blur
+                        </Button>
+                      </Tooltip>
                     </Box>
                   </Box>
                 </>
