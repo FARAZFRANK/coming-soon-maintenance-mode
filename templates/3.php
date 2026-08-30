@@ -38,7 +38,16 @@
         <div class="home-content">
 
             <div class="row home-content__main">
+				<?php if($csmm_logo_id) { ?>
+                <div class="home-logo">
+                    <a class="logo-dark" href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
+                        <img src="<?php echo esc_url( $csmm_logo_url[0] ); ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); ?>">
+                    </a>
+                </div>
+                <?php } ?>
+
                 <h1><?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?></h1>
+                <p><?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?></p>
          
                 <div class="home-content__video">
                     <a class="video-link" href="<?php if($csmm_video_url != "") { echo esc_url( $csmm_video_url ); } ?>" data-lity>
