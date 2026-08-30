@@ -84,11 +84,11 @@ $csmm_bg_video_mp4_url       = isset( $csmm_content['bg_video_mp4_url'] ) ? $csm
 
 $csmm_bg_video_url = '';
 if ( 'vimeo' === $csmm_bg_video_source ) {
-	$csmm_bg_video_url = ! empty( $csmm_bg_video_vimeo_url ) ? $csmm_bg_video_vimeo_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : 'https://player.vimeo.com/video/427528336' );
+	$csmm_bg_video_url = ! empty( $csmm_bg_video_vimeo_url ) ? $csmm_bg_video_vimeo_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : 'https://vimeo.com/1178283333' );
 } elseif ( 'file' === $csmm_bg_video_source || 'mp4' === $csmm_bg_video_source ) {
 	$csmm_bg_video_url = ! empty( $csmm_bg_video_mp4_url ) ? $csmm_bg_video_mp4_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : '' );
 } else {
-	$csmm_bg_video_url = ! empty( $csmm_bg_video_youtube_url ) ? $csmm_bg_video_youtube_url : ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' ) );
+	$csmm_bg_video_url = ! empty( $csmm_bg_video_youtube_url ) ? $csmm_bg_video_youtube_url : ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : 'https://www.youtube.com/watch?v=91AcVUR0O8I' ) );
 }
 $csmm_bg_video_loop          = ! isset( $csmm_content['bg_video_loop'] ) || ! empty( $csmm_content['bg_video_loop'] );
 $csmm_bg_video_poster_url    = isset( $csmm_content['bg_video_poster_url'] ) ? $csmm_content['bg_video_poster_url'] : '';

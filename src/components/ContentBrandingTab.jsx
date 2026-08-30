@@ -1430,7 +1430,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         const newSource = e.target.value;
                         onChange('bg_video_source', newSource);
                         if (newSource === 'vimeo') {
-                          const vVal = settings.bg_video_vimeo_url || 'https://player.vimeo.com/video/427528336';
+                          const vVal = settings.bg_video_vimeo_url || 'https://vimeo.com/1178283333';
                           onChange('bg_video_url', vVal);
                           onChange('video_url', vVal);
                         } else if (newSource === 'file') {
@@ -1438,7 +1438,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           onChange('bg_video_url', mp4Val);
                           onChange('video_url', mp4Val);
                         } else {
-                          const ytVal = settings.bg_video_youtube_url || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+                          const ytVal = settings.bg_video_youtube_url || 'https://www.youtube.com/watch?v=91AcVUR0O8I';
                           onChange('bg_video_url', ytVal);
                           onChange('video_url', ytVal);
                         }
@@ -1452,36 +1452,72 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
 
                   {/* YouTube Option */}
                   {(settings.bg_video_source === 'youtube' || !settings.bg_video_source) && (
-                    <TextField
-                      size="small"
-                      fullWidth
-                      label="Enter YouTube URL"
-                      value={settings.bg_video_youtube_url !== undefined ? settings.bg_video_youtube_url : (settings.bg_video_url || settings.video_url || '')}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        onChange('bg_video_youtube_url', val);
-                        onChange('bg_video_url', val);
-                        onChange('video_url', val);
-                      }}
-                      placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                    />
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                      <TextField
+                        size="small"
+                        fullWidth
+                        label="Enter YouTube URL"
+                        value={settings.bg_video_youtube_url !== undefined ? settings.bg_video_youtube_url : (settings.bg_video_url || settings.video_url || 'https://www.youtube.com/watch?v=91AcVUR0O8I')}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          onChange('bg_video_youtube_url', val);
+                          onChange('bg_video_url', val);
+                          onChange('video_url', val);
+                        }}
+                        placeholder="https://www.youtube.com/watch?v=91AcVUR0O8I"
+                      />
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                          onClick={() => {
+                            const defaultYt = 'https://www.youtube.com/watch?v=91AcVUR0O8I';
+                            onChange('bg_video_youtube_url', defaultYt);
+                            onChange('bg_video_url', defaultYt);
+                            onChange('video_url', defaultYt);
+                          }}
+                          sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.3 }}
+                        >
+                          Reset Default YouTube Video
+                        </Button>
+                      </Box>
+                    </Box>
                   )}
 
                   {/* Vimeo Option */}
                   {settings.bg_video_source === 'vimeo' && (
-                    <TextField
-                      size="small"
-                      fullWidth
-                      label="Enter Vimeo URL"
-                      value={settings.bg_video_vimeo_url !== undefined ? settings.bg_video_vimeo_url : (settings.bg_video_url || '')}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        onChange('bg_video_vimeo_url', val);
-                        onChange('bg_video_url', val);
-                        onChange('video_url', val);
-                      }}
-                      placeholder="https://player.vimeo.com/video/427528336"
-                    />
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                      <TextField
+                        size="small"
+                        fullWidth
+                        label="Enter Vimeo URL"
+                        value={settings.bg_video_vimeo_url !== undefined ? settings.bg_video_vimeo_url : (settings.bg_video_url || 'https://vimeo.com/1178283333')}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          onChange('bg_video_vimeo_url', val);
+                          onChange('bg_video_url', val);
+                          onChange('video_url', val);
+                        }}
+                        placeholder="https://vimeo.com/1178283333"
+                      />
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                          onClick={() => {
+                            const defaultVimeo = 'https://vimeo.com/1178283333';
+                            onChange('bg_video_vimeo_url', defaultVimeo);
+                            onChange('bg_video_url', defaultVimeo);
+                            onChange('video_url', defaultVimeo);
+                          }}
+                          sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.3 }}
+                        >
+                          Reset Default Vimeo Video
+                        </Button>
+                      </Box>
+                    </Box>
                   )}
 
                   {/* Direct Video File (MP4) Option */}
