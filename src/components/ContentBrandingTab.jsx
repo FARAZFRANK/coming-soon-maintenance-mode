@@ -83,16 +83,21 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
   };
 
   // Unified & resilient media picker helper
-  const triggerMediaPicker = ({ title, buttonText, multiple = false, onSelect }) => {
+  const triggerMediaPicker = ({ title, buttonText, type = 'image', multiple = false, onSelect }) => {
     // 1. Try native WordPress media modal
     if (window.wp && typeof window.wp.media === 'function') {
       try {
-        const frame = window.wp.media({
+        const mediaOptions = {
           title: title || 'Select Media',
           button: { text: buttonText || 'Select' },
           multiple: multiple,
-          library: { type: 'image' },
-        });
+        };
+
+        if (type && type !== 'all') {
+          mediaOptions.library = { type: type };
+        }
+
+        const frame = window.wp.media(mediaOptions);
 
         frame.on('select', () => {
           const selection = frame.state().get('selection');
@@ -133,7 +138,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
     // 3. Graceful client fallback: Direct file picker
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = 'image/*';
+    input.accept = type === 'video' ? 'video/*' : 'image/*';
     input.multiple = multiple;
     input.onchange = (e) => {
       const files = Array.from(e.target.files || []);
