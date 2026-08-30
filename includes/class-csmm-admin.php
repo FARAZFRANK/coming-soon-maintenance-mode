@@ -131,8 +131,30 @@ class CSMM_Admin
 	public function render_admin_app()
 	{
 		?>
+		<style>
+		/* Ensure no unwanted page scrollbars during loading */
+		.toplevel_page_wpfrank-csmm html,
+		.toplevel_page_wpfrank-csmm body {
+			overflow-x: hidden !important;
+		}
+		.toplevel_page_wpfrank-csmm #wpcontent {
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+		}
+		.toplevel_page_wpfrank-csmm #wpbody-content {
+			padding-bottom: 0 !important;
+		}
+		.toplevel_page_wpfrank-csmm #wpfooter {
+			display: none !important;
+		}
+		@keyframes csmm-spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+		</style>
 		<div id="csmm-react-root"
-			style="margin-left: -20px; margin-right: -20px; padding: 0; min-height: 100vh; background: transparent;">
+			style="margin: 0; padding: 0; width: 100%; box-sizing: border-box; overflow-x: hidden; background: transparent;">
 			<script>
 			(function() {
 				var mode = localStorage.getItem('csmm_theme_mode') || 'light';
@@ -142,7 +164,7 @@ class CSMM_Admin
 			})();
 			</script>
 			<div id="csmm-preloader-bg"
-				style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 60px); padding: 20px; background-color: #ececec; transition: background-color 0.2s ease;">
+				style="display: flex; align-items: center; justify-content: center; height: calc(100vh - 32px); min-height: 480px; width: 100%; padding: 20px; box-sizing: border-box; overflow: hidden; background-color: #ececec; transition: background-color 0.2s ease;">
 				<div id="csmm-preloader-card"
 					style="background: #ffffff; padding: 36px 44px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06); text-align: center; max-width: 420px; width: 90%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
 					<div
@@ -166,13 +188,6 @@ class CSMM_Admin
 				</div>
 			</div>
 		</div>
-		<style>
-			@keyframes csmm-spin {
-				to {
-					transform: rotate(360deg);
-				}
-			}
-		</style>
 		<?php
 	}
 }
