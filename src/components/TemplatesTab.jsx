@@ -131,8 +131,8 @@ export default function TemplatesTab({ settings, onChange, onActivate, templates
                           backdropFilter: 'blur(6px)',
                           color: '#ffffff',
                           borderRadius: '6px',
-                          px: 1,
-                          py: 0.3,
+                          px: 1.1,
+                          py: 0.25,
                           fontSize: '0.75rem',
                           fontWeight: 800,
                           letterSpacing: '0.5px',
@@ -141,7 +141,7 @@ export default function TemplatesTab({ settings, onChange, onActivate, templates
                           zIndex: 2,
                         }}
                       >
-                        Template {templateNumberStr}
+                        {String(tpl.id).padStart(2, '0')}
                       </Box>
 
                       {isSelected && (
@@ -167,10 +167,7 @@ export default function TemplatesTab({ settings, onChange, onActivate, templates
                     {/* Card Footer Actions */}
                     <Box sx={{ p: 1.8, display: 'flex', flexDirection: 'column', gap: 1.2 }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, fontSize: '0.88rem' }}>
-                          Template {templateNumberStr}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, fontSize: '0.76rem' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                           {tpl.name}
                         </Typography>
                       </Box>
