@@ -1407,8 +1407,11 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                 onChange={(e) => {
                   const newType = e.target.value;
                   onChange('bg_type', newType);
-                  if (['custom', 'slideshow', 'video', 'pattern'].includes(newType) && (!settings.bg_overlay_type || settings.bg_overlay_type === 'solid')) {
+                  if (['custom', 'slideshow', 'video', 'pattern', 'solid'].includes(newType) && (!settings.bg_overlay_type || settings.bg_overlay_type === 'solid')) {
                     onChange('bg_overlay_type', 'none');
+                  }
+                  if (newType === 'solid' && !settings.bg_solid_color) {
+                    onChange('bg_solid_color', '#1d1b1b');
                   }
                 }}
                 sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
@@ -2113,7 +2116,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           height: 40,
                           borderRadius: '6px',
                           border: '1px solid #cbd5e1',
-                          backgroundColor: settings.bg_solid_color || '#e2e8f0',
+                          backgroundColor: settings.bg_solid_color || '#1d1b1b',
                           cursor: 'pointer',
                           display: 'inline-block',
                           flexShrink: 0,
@@ -2123,7 +2126,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       >
                         <input
                           type="color"
-                          value={settings.bg_solid_color || '#e2e8f0'}
+                          value={settings.bg_solid_color || '#1d1b1b'}
                           onChange={(e) => onChange('bg_solid_color', e.target.value)}
                           style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
                         />
@@ -2131,9 +2134,9 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       <TextField
                         size="small"
                         fullWidth
-                        value={settings.bg_solid_color || '#e2e8f0'}
+                        value={settings.bg_solid_color || '#1d1b1b'}
                         onChange={(e) => onChange('bg_solid_color', e.target.value)}
-                        placeholder="#e2e8f0"
+                        placeholder="#1d1b1b"
                       />
                     </Box>
                   </Box>
@@ -2145,7 +2148,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       width: '100%',
                       height: 180,
                       borderRadius: '8px !important',
-                      backgroundColor: settings.bg_solid_color || '#e2e8f0',
+                      backgroundColor: settings.bg_solid_color || '#1d1b1b',
                     }}
                   />
                 </Box>
@@ -2275,7 +2278,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         value={
                           settings.bg_overlay_type !== undefined && settings.bg_overlay_type !== ''
                             ? settings.bg_overlay_type
-                            : (['custom', 'video', 'pattern'].includes(settings.bg_type) ? 'none' : 'solid')
+                            : (['custom', 'video', 'pattern', 'solid'].includes(settings.bg_type) ? 'none' : 'solid')
                         }
                         onChange={(e) => onChange('bg_overlay_type', e.target.value)}
                       >

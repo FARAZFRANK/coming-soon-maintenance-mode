@@ -101,12 +101,12 @@ if ( 'vimeo' === $csmm_bg_video_source ) {
 $csmm_bg_video_loop          = ! isset( $csmm_content['bg_video_loop'] ) || ! empty( $csmm_content['bg_video_loop'] );
 $csmm_bg_video_poster_url    = isset( $csmm_content['bg_video_poster_url'] ) ? $csmm_content['bg_video_poster_url'] : '';
 $csmm_bg_pattern             = isset( $csmm_content['bg_pattern'] ) ? $csmm_content['bg_pattern'] : 'sakura';
-$csmm_bg_solid_color         = isset( $csmm_content['bg_solid_color'] ) ? $csmm_content['bg_solid_color'] : '#e2e8f0';
+$csmm_bg_solid_color         = isset( $csmm_content['bg_solid_color'] ) ? $csmm_content['bg_solid_color'] : '#1d1b1b';
 $csmm_bg_gradient_type       = isset( $csmm_content['bg_gradient_type'] ) ? $csmm_content['bg_gradient_type'] : 'linear';
 $csmm_bg_gradient_color1     = isset( $csmm_content['bg_gradient_color1'] ) ? $csmm_content['bg_gradient_color1'] : '#1e3a8a';
 $csmm_bg_gradient_color2     = isset( $csmm_content['bg_gradient_color2'] ) ? $csmm_content['bg_gradient_color2'] : '#0f172a';
 $csmm_bg_gradient_angle      = isset( $csmm_content['bg_gradient_angle'] ) ? intval( $csmm_content['bg_gradient_angle'] ) : 135;
-$default_overlay             = in_array( $csmm_bg_type, array( 'custom', 'slideshow', 'video', 'pattern' ), true ) ? 'none' : 'solid';
+$default_overlay             = in_array( $csmm_bg_type, array( 'custom', 'slideshow', 'video', 'pattern', 'solid' ), true ) ? 'none' : 'solid';
 $csmm_bg_overlay_type     = ( isset( $csmm_content['bg_overlay_type'] ) && '' !== $csmm_content['bg_overlay_type'] ) ? $csmm_content['bg_overlay_type'] : $default_overlay;
 $csmm_bg_overlay_color    = isset( $csmm_content['bg_overlay_color'] ) ? $csmm_content['bg_overlay_color'] : '#000000';
 $csmm_bg_overlay_opacity  = isset( $csmm_content['bg_overlay_opacity'] ) ? floatval( $csmm_content['bg_overlay_opacity'] ) : 0.4;

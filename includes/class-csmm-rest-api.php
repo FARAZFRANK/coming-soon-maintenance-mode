@@ -311,7 +311,7 @@ class CSMM_REST_API {
 			'bg_video_loop'        => ! isset( $content['bg_video_loop'] ) || ! empty( $content['bg_video_loop'] ),
 			'bg_video_poster_url'  => isset( $content['bg_video_poster_url'] ) ? $content['bg_video_poster_url'] : '',
 			'bg_pattern'           => isset( $content['bg_pattern'] ) ? $content['bg_pattern'] : 'sakura',
-			'bg_solid_color'       => isset( $content['bg_solid_color'] ) ? $content['bg_solid_color'] : '#e2e8f0',
+			'bg_solid_color'       => isset( $content['bg_solid_color'] ) ? $content['bg_solid_color'] : '#1d1b1b',
 			'bg_gradient_type'     => isset( $content['bg_gradient_type'] ) ? $content['bg_gradient_type'] : 'linear',
 			'bg_gradient_color1'   => isset( $content['bg_gradient_color1'] ) ? $content['bg_gradient_color1'] : '#1e3a8a',
 			'bg_gradient_color2'   => isset( $content['bg_gradient_color2'] ) ? $content['bg_gradient_color2'] : '#0f172a',
