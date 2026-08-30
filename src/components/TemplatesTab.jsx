@@ -13,6 +13,7 @@ import {
   IconButton,
   ButtonGroup,
   Paper,
+  CircularProgress,
 } from '@mui/material';
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
@@ -22,13 +23,21 @@ import TabletMacRoundedIcon from '@mui/icons-material/TabletMacRounded';
 import PhoneIphoneRoundedIcon from '@mui/icons-material/PhoneIphoneRounded';
 import LaunchRoundedIcon from '@mui/icons-material/LaunchRounded';
 
-export default function TemplatesTab({ settings, onChange, templates }) {
+export default function TemplatesTab({ settings, onChange, onActivate, templates }) {
   const selectedTemplateId = Number(settings.template_id) || 1;
   const [previewTemplate, setPreviewTemplate] = useState(null);
   const [deviceMode, setDeviceMode] = useState('desktop'); // desktop | tablet | mobile
+  const [activatingId, setActivatingId] = useState(null);
 
-  const handleSelect = (id) => {
-    onChange('template_id', id);
+  const handleSelect = async (id) => {
+    if (selectedTemplateId === id) return;
+    setActivatingId(id);
+    if (onActivate) {
+      await onActivate(id);
+    } else if (onChange) {
+      onChange('template_id', id);
+    }
+    setActivatingId(null);
   };
 
   const getDeviceWidth = () => {
@@ -47,7 +56,7 @@ export default function TemplatesTab({ settings, onChange, templates }) {
                 Choose Pre-Built Template
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Select from 36 modern, mobile-ready Coming Soon and Maintenance Mode layouts.
+                Select from 36 modern, mobile-ready Coming Soon and Maintenance Mode layouts. Click Activate to apply instantly.
               </Typography>
             </div>
             <Chip
@@ -61,6 +70,9 @@ export default function TemplatesTab({ settings, onChange, templates }) {
           <Grid container spacing={2.5}>
             {templates.map((tpl) => {
               const isSelected = selectedTemplateId === tpl.id;
+              const isActivating = activatingId === tpl.id;
+              const templateNumberStr = `#${String(tpl.id).padStart(2, '0')}`;
+
               return (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={tpl.id}>
                   <Paper
@@ -74,6 +86,7 @@ export default function TemplatesTab({ settings, onChange, templates }) {
                       backgroundColor: 'background.paper',
                       display: 'flex',
                       flexDirection: 'column',
+                      position: 'relative',
                       '&:hover': {
                         transform: 'translateY(-3px)',
                         boxShadow: '0 8px 20px rgba(0,0,0,0.06)',
@@ -107,6 +120,30 @@ export default function TemplatesTab({ settings, onChange, templates }) {
                           e.target.style.opacity = '0.4';
                         }}
                       />
+
+                      {/* Numbering Badge on Top Left */}
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 8,
+                          left: 8,
+                          backgroundColor: isSelected ? '#2563eb' : 'rgba(15, 23, 42, 0.82)',
+                          backdropFilter: 'blur(6px)',
+                          color: '#ffffff',
+                          borderRadius: '6px',
+                          px: 1,
+                          py: 0.3,
+                          fontSize: '0.75rem',
+                          fontWeight: 800,
+                          letterSpacing: '0.5px',
+                          boxShadow: '0 2px 6px rgba(0,0,0,0.35)',
+                          border: isSelected ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0.18)',
+                          zIndex: 2,
+                        }}
+                      >
+                        Template {templateNumberStr}
+                      </Box>
+
                       {isSelected && (
                         <Box
                           sx={{
@@ -119,6 +156,7 @@ export default function TemplatesTab({ settings, onChange, templates }) {
                             display: 'flex',
                             p: 0.4,
                             boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+                            zIndex: 2,
                           }}
                         >
                           <CheckCircleRoundedIcon sx={{ fontSize: 18 }} />
@@ -129,7 +167,10 @@ export default function TemplatesTab({ settings, onChange, templates }) {
                     {/* Card Footer Actions */}
                     <Box sx={{ p: 1.8, display: 'flex', flexDirection: 'column', gap: 1.2 }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, fontSize: '0.88rem' }}>
+                          Template {templateNumberStr}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, fontSize: '0.76rem' }}>
                           {tpl.name}
                         </Typography>
                       </Box>
@@ -140,10 +181,12 @@ export default function TemplatesTab({ settings, onChange, templates }) {
                           size="small"
                           variant={isSelected ? 'contained' : 'outlined'}
                           color="primary"
+                          disabled={isActivating}
                           onClick={() => handleSelect(tpl.id)}
+                          startIcon={isActivating ? <CircularProgress size={14} color="inherit" /> : (isSelected ? <CheckCircleRoundedIcon sx={{ fontSize: 16 }} /> : null)}
                           sx={{ fontWeight: 600, borderRadius: '6px' }}
                         >
-                          {isSelected ? 'Activated' : 'Activate'}
+                          {isActivating ? 'Activating...' : (isSelected ? 'Activated' : 'Activate')}
                         </Button>
                         <IconButton
                           size="small"

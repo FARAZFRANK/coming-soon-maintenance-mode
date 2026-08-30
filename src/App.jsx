@@ -190,6 +190,26 @@ export default function App() {
     setHasChanges(true);
   };
 
+  // Instant Template Activation (Auto-Save)
+  const handleActivateTemplate = async (templateId) => {
+    try {
+      setSaving(true);
+      const updated = { ...settings, template_id: templateId };
+      setSettings(updated);
+      const res = await api.saveSettings(updated);
+      if (res.success) {
+        setHasChanges(false);
+        showNotification(`Template #${String(templateId).padStart(2, '0')} activated & saved successfully!`, 'success');
+      } else {
+        showNotification(res.data?.message || 'Failed to activate template', 'error');
+      }
+    } catch (err) {
+      showNotification('Activation error: ' + err.message, 'error');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   // Save all settings
   const handleSave = async () => {
     try {
@@ -465,6 +485,7 @@ export default function App() {
                 <TemplatesTab
                   settings={settings}
                   onChange={handleFieldChange}
+                  onActivate={handleActivateTemplate}
                   templates={templates}
                   previewUrlBase={settings?.preview_url}
                 />
