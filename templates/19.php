@@ -33,7 +33,7 @@
 		<!--  Logo -->
 		<?php if($csmm_logo_id) { ?>
 		<div class="home-logo mb-6">
-			<a href="<?php echo get_site_url(); ?>">
+			<a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
 				<img class="mx-auto h-10 w-auto" src="<?php echo esc_url( $csmm_logo_url[0] ); ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); ?>">
 			</a>
 		</div>

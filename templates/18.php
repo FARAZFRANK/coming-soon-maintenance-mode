@@ -34,7 +34,7 @@
             <!-- Logo -->
 			<div class="mb-3 flex items-center justify-center gap-3">
 				<?php if($csmm_logo_id) { ?>
-				<a href="<?php echo get_site_url(); ?>">
+				<a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
 					<img class="h-8 mb-4" src="<?php echo esc_url( $csmm_logo_url[0] ); ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); ?>">
 				</a>
 				<?php } else { ?>

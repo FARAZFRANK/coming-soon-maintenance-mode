@@ -278,7 +278,7 @@ $dynamic_css .= ".home-content__subscribe label.subscribe-message, #mc-form labe
 
 // Graphic Background Types - Complete replacement of template background when non-default
 if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', 'slideshow', 'video' ), true ) ) {
-	$dynamic_css .= ".s-home::before, .s-home::after, .s-home--static::before, .s-home--particles::before, .s-home .overlay, .s-home .gradient-overlay, .home-overlay, .grid-overlay, .s-home .grid-overlay, .home-slider, .home-slider-img, .home-slider-img::before, .parallax-mirror, .parallax-slider, .frame-ipad::before, .PhotoZoom_iframe__LeuQM, .PhotoZoom_image__iR_Ia, video.PhotoZoom_iframe__LeuQM, #vjs_video_3_html5_api, .video-background, #main-video { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; background-image: none !important; background: none !important; }\n";
+	$dynamic_css .= ".s-home::before, .s-home::after, .s-home--static::before, .s-home--particles::before, .s-home .overlay, .s-home .gradient-overlay, .home-overlay, .grid-overlay, .s-home .grid-overlay, .home-slider, .home-slider-img, .home-slider-img::before, .parallax-mirror, .parallax-slider, .frame-ipad::before, .PhotoZoom_iframe__LeuQM, .PhotoZoom_image__iR_Ia, video.PhotoZoom_iframe__LeuQM, #vjs_video_3_html5_api, .video-background, #main-video, #gameCanvas, #gameOver, .background-image { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; background-image: none !important; background: none !important; }\n";
 	$dynamic_css .= "#particles-js, .home-particles, .particles-js-canvas-el, #particles-js canvas { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }\n";
 	$dynamic_css .= ".frame-ipad { background-image: none !important; background-color: rgba(255, 255, 255, 0.05) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; }\n";
 }
@@ -286,14 +286,14 @@ if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', '
 $video_bg_html = '';
 
 if ( 'solid' === $csmm_bg_type ) {
-	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, .template-two, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$csmm_bg_solid_color} !important; background-color: {$csmm_bg_solid_color} !important; background-image: none !important; }\n";
+	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, .template-two, .prospectus-card, .main-card, .split-layout, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$csmm_bg_solid_color} !important; background-color: {$csmm_bg_solid_color} !important; background-image: none !important; }\n";
 } elseif ( 'gradient' === $csmm_bg_type ) {
 	if ( 'radial' === $csmm_bg_gradient_type ) {
 		$grad = "radial-gradient(circle, {$csmm_bg_gradient_color1} 0%, {$csmm_bg_gradient_color2} 100%)";
 	} else {
 		$grad = "linear-gradient({$csmm_bg_gradient_angle}deg, {$csmm_bg_gradient_color1} 0%, {$csmm_bg_gradient_color2} 100%)";
 	}
-	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, .template-two, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$grad} !important; background-image: {$grad} !important; }\n";
+	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, .template-two, .prospectus-card, .main-card, .split-layout, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$grad} !important; background-image: {$grad} !important; }\n";
 } elseif ( 'pattern' === $csmm_bg_type ) {
 	$pattern_css_map = array(
 		'dots'      => "background-color: #0b1120 !important; background-image: radial-gradient(rgba(59, 130, 246, 0.5) 2px, transparent 2px) !important; background-size: 24px 24px !important;",
@@ -307,7 +307,7 @@ if ( 'solid' === $csmm_bg_type ) {
 		'sakura'    => "background-color: #1a0b18 !important; background-image: radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.4) 10%, transparent 20%), radial-gradient(circle at 20% 20%, rgba(251, 113, 133, 0.35) 15%, transparent 25%), radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.35) 15%, transparent 25%), radial-gradient(circle at 70% 30%, rgba(244, 114, 182, 0.3) 12%, transparent 24%) !important; background-size: 100px 100px !important;",
 	);
 	$pat_rule = isset( $pattern_css_map[ $csmm_bg_pattern ] ) ? $pattern_css_map[ $csmm_bg_pattern ] : $pattern_css_map['waves'];
-	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, .template-two, #particles-js, .home-particles, #bg, .bg-image, .bg-container { {$pat_rule} }\n";
+	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, .template-two, .prospectus-card, .main-card, .split-layout, #particles-js, .home-particles, #bg, .bg-image, .bg-container { {$pat_rule} }\n";
 } elseif ( 'custom' === $csmm_bg_type ) {
 	$custom_img_url = '';
 	if ( ! empty( $csmm_bg_custom_images ) && ! empty( $csmm_bg_custom_images[0]['url'] ) ) {
@@ -325,10 +325,10 @@ if ( 'solid' === $csmm_bg_type ) {
 		} elseif ( 'fill' === $csmm_bg_image_size || 'stretch' === $csmm_bg_image_size ) {
 			$bg_size_val = '100% 100%';
 		}
-		$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, .template-two, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
+		$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, .template-two, .prospectus-card, .main-card, .split-layout, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
 	}
 } elseif ( 'slideshow' === $csmm_bg_type ) {
-	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .s-home--static, .s-home--particles, .template-one, .template-two, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: transparent !important; background-color: transparent !important; background-image: none !important; }\n";
+	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .s-home--static, .s-home--particles, .template-one, .template-two, .prospectus-card, .main-card, .split-layout, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: transparent !important; background-color: transparent !important; background-image: none !important; }\n";
 	$dynamic_css .= ".home-content, .s-home .row, .home-content__main { position: relative !important; z-index: 2 !important; }\n";
 	$dynamic_css .= ".csmm-slideshow-bg { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 0 !important; pointer-events: none !important; overflow: hidden !important; background-color: #000000 !important; }\n";
 	$dynamic_css .= ".csmm-slideshow-slide { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; background-position: center center !important; background-repeat: no-repeat !important; opacity: 0; transition: opacity 1.2s ease-in-out, transform 6s ease-out; transform: scale(1); }\n";
