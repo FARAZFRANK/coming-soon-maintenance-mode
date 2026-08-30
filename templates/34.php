@@ -35,9 +35,8 @@
         <!-- Right Side: Content -->
         <div class="content-side lg:order-1">
             <div class="w-full max-w-md mx-auto">
-                <!-- Logo -->
                 <?php if($csmm_logo_id) { ?>
-                <a href="<?php echo get_site_url(); ?>" class="">
+                <a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>" class="">
 					<img class="h-8 mb-5" src="<?php echo esc_url( $csmm_logo_url[0] ); ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); ?>">
 				</a>
 				<?php } ?>

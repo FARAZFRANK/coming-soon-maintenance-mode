@@ -30,17 +30,29 @@
     <main class="main-content container mx-auto text-center">
 		<?php
 		// Admin Name fetch
-        function get_admin_name() {
-			// Get all users with the 'administrator' role
-			$admins = get_users( array( 'role' => 'administrator' ) );
-			
-			// If there’s at least one admin, return the display name
-			if ( ! empty( $admins ) ) {
-				return $admins[0]->display_name;
+		if ( ! function_exists( 'get_admin_name' ) ) {
+			function get_admin_name() {
+				// Get all users with the 'administrator' role
+				$admins = get_users( array( 'role' => 'administrator' ) );
+				
+				// If there’s at least one admin, return the display name
+				if ( ! empty( $admins ) ) {
+					return $admins[0]->display_name;
+				}
+				
+				return 'Admin not found';
 			}
-			
-			return 'Admin not found';
-		} ?>
+		}
+		?>
+
+		<!-- Logo -->
+		<?php if($csmm_logo_id) { ?>
+		<div class="mb-6 flex justify-center">
+		  <a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
+			<img class="h-10 w-auto" src="<?php echo esc_url($csmm_logo_url[0]); ?>" alt="<?php echo esc_attr($csmm_logo_alt); ?>">
+		  </a>
+		</div>
+		<?php } ?>
 
         <!-- Header -->
         <header class="mb-10">
