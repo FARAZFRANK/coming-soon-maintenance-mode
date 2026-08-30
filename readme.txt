@@ -4,7 +4,7 @@ Tags: coming soon, maintenance mode, under construction, launch countdown, newsl
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 3.2.1
+Stable tag: 3.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,16 @@ Yes! Logged-in administrators bypass the maintenance screen and can view and edi
 Go to **Newsletter & Integrations** -> **Custom SMTP Mail Delivery**, enable SMTP, and configure your Gmail, SendGrid, or hosting SMTP server.
 
 == Changelog ==
+
+= 3.2.2 = 30 August 2026
+* **Plugin Settings Backup, Export & JSON Import**: Added complete JSON configuration file download and restore upload support with schema verification, enabling seamless migration across staging and production sites.
+* **Factory Reset System**: Added complete plugin factory reset option in Documentation Tab with high-visibility warning alert modal and backup recommendation.
+* **Title & Description Override Suite (All 36 Templates)**: Renamed controls to `Override Title` and `Override Description`, adding custom Font Size sliders and Text Color swatches + hex inputs with reset buttons across all template layouts.
+* **Launch Countdown Timer Override**: Added `Override Countdown` setting with dedicated Digits & Labels font size sliders and color pickers mapped to all countdown variations.
+* **Sticky Dashboard Header**: Implemented sticky first card with responsive WordPress admin bar alignment (`top: 32px` / `top: 46px`), enhanced elevation shadow, and backdrop blur.
+* **Graphic Background & Solid Color Enhancements**: Updated Solid Color default to `#1d1b1b` with overlay `none`, and added dedicated Reset buttons for Solid Color, Gradient, Pattern, and Overlay settings.
+* **Synchronized Subscriber Form Live Preview**: Aligned dashboard Live Form Preview with the exact frontend search/subscribe bar appearance, fixing real-time input background color rendering overrides.
+* **Preloader & Performance Optimization**: Eliminated duplicate loaders and white screen flash by pre-hydrating workspace state in `wp_localize_script`; resolved horizontal scrollbars via `overflow-x: clip`.
 
 = 3.2.1 = 25 August 2026
 * **WordPress Media Library Integration**: Fixed script dependencies (`media-editor`, `media-views`) and isolated Vite output bundle with IIFE format to prevent global scope variable conflicts (`window.wp`), enabling smooth native media upload and selection modal for Brand Logo and Custom Background images.
