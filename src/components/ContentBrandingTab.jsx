@@ -2690,19 +2690,41 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
 
                 {/* Live Form UI Preview */}
                 <Grid item xs={12}>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-                    Live Form Preview
-                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      Live Form Preview
+                    </Typography>
+                    <Tooltip title="Reset subscription form styling to defaults">
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                        onClick={() => {
+                          onChange('form_placeholder_text', 'Email Address');
+                          onChange('form_btn_text', 'Notify Me');
+                          onChange('form_input_bg', 'rgba(0, 0, 0, 0.35)');
+                          onChange('form_input_color', '#ffffff');
+                          onChange('form_btn_bg', '#e11d48');
+                          onChange('form_btn_color', '#ffffff');
+                          onChange('form_border_radius', 0);
+                        }}
+                        sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.3 }}
+                      >
+                        Reset Form Styling
+                      </Button>
+                    </Tooltip>
+                  </Box>
                   <Box
                     sx={{
-                      p: 4,
+                      p: { xs: 2.5, sm: 3.5 },
                       borderRadius: '8px',
-                      background: 'linear-gradient(135deg, #0e303d 0%, #061922 100%)',
+                      backgroundColor: '#1d1b1b',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      border: '1px solid #1e293b',
-                      minHeight: 130,
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      minHeight: 110,
+                      boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.5)',
                     }}
                   >
                     <Box
@@ -2710,6 +2732,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         position: 'relative',
                         maxWidth: 540,
                         width: '100%',
+                        height: 54,
                         display: 'flex',
                         alignItems: 'center',
                       }}
@@ -2724,12 +2747,13 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         id="csmm-live-preview-input"
                         type="text"
                         readOnly
+                        value=""
                         placeholder={settings.form_placeholder_text || 'Email Address'}
                         style={{
                           width: '100%',
-                          height: '52px',
-                          padding: '0 190px 0 20px',
-                          backgroundColor: settings.form_input_bg || '#222326',
+                          height: '54px',
+                          padding: '0 160px 0 20px',
+                          backgroundColor: settings.form_input_bg || 'rgba(0, 0, 0, 0.35)',
                           color: settings.form_input_color || '#ffffff',
                           border: 'none',
                           borderTopLeftRadius: settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px',
@@ -2741,7 +2765,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           fontWeight: 500,
                           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                           boxSizing: 'border-box',
-                          boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)',
+                          boxShadow: 'none',
                         }}
                       />
                       <button
@@ -2750,9 +2774,9 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           position: 'absolute',
                           top: 0,
                           right: 0,
-                          height: '52px',
-                          padding: '0 26px',
-                          backgroundColor: settings.form_btn_bg || '#000000',
+                          height: '54px',
+                          padding: '0 28px',
+                          backgroundColor: settings.form_btn_bg || '#e11d48',
                           color: settings.form_btn_color || '#ffffff',
                           border: 'none',
                           borderTopRightRadius: settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px',
@@ -2766,9 +2790,10 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           cursor: 'pointer',
                           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                           whiteSpace: 'nowrap',
-                          display: 'flex',
+                          display: 'inline-flex',
                           alignItems: 'center',
                           justifyContent: 'center',
+                          boxSizing: 'border-box',
                         }}
                       >
                         {settings.form_btn_text || 'NOTIFY ME'}
