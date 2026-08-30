@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Box,
   Card,
@@ -19,6 +19,12 @@ import {
   TableHead,
   TableRow,
   Stack,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded';
@@ -30,10 +36,132 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
 import SecurityRoundedIcon from '@mui/icons-material/SecurityRounded';
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
+import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
+import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
+import BackupRoundedIcon from '@mui/icons-material/BackupRounded';
+import { api } from '../api';
 
-export default function DocumentationTab() {
+export default function DocumentationTab({ settings, onSettingsUpdate, onNotify }) {
+  const [resetDialogOpen, setResetDialogOpen] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+  const [isImporting, setIsImporting] = useState(false);
+  const fileInputRef = useRef(null);
+
+  // 1. Export Settings to JSON file
+  const handleExportSettings = () => {
+    try {
+      const exportData = {
+        plugin: 'Coming Soon Maintenance Mode Pro',
+        version: api.getConfig().version || '3.2.1',
+        site_url: api.getConfig().siteUrl || '',
+        exported_at: new Date().toISOString(),
+        settings: settings || {},
+      };
+
+      const jsonStr = JSON.stringify(exportData, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const dateStr = new Date().toISOString().split('T')[0];
+      link.href = url;
+      link.download = `csmm-settings-backup-${dateStr}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      if (onNotify) {
+        onNotify('Settings backup exported successfully!', 'success');
+      }
+    } catch (err) {
+      if (onNotify) {
+        onNotify('Export failed: ' + err.message, 'error');
+      }
+    }
+  };
+
+  // 2. Trigger File Picker for Import
+  const handleImportClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+      fileInputRef.current.click();
+    }
+  };
+
+  // 3. Process Imported JSON File
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      try {
+        setIsImporting(true);
+        const parsed = JSON.parse(event.target.result);
+        if (!parsed || typeof parsed !== 'object') {
+          throw new Error('Invalid JSON file structure');
+        }
+
+        const res = await api.importSettings(parsed);
+        if (res.success) {
+          if (onSettingsUpdate && res.data) {
+            onSettingsUpdate(res.data);
+          }
+          if (onNotify) {
+            onNotify('Settings imported and applied successfully!', 'success');
+          }
+        } else {
+          throw new Error(res.message || 'Failed to import settings');
+        }
+      } catch (err) {
+        if (onNotify) {
+          onNotify('Import failed: ' + err.message, 'error');
+        }
+      } finally {
+        setIsImporting(false);
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  // 4. Factory Reset All Settings
+  const handleConfirmReset = async () => {
+    try {
+      setIsResetting(true);
+      const res = await api.resetSettings();
+      if (res.success) {
+        if (onSettingsUpdate && res.data) {
+          onSettingsUpdate(res.data);
+        }
+        setResetDialogOpen(false);
+        if (onNotify) {
+          onNotify('All settings have been successfully reset to factory defaults!', 'success');
+        }
+      } else {
+        throw new Error(res.message || 'Failed to reset settings');
+      }
+    } catch (err) {
+      if (onNotify) {
+        onNotify('Reset error: ' + err.message, 'error');
+      }
+    } finally {
+      setIsResetting(false);
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3.5 }}>
+      {/* Hidden input for Import JSON */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        accept=".json,application/json"
+        style={{ display: 'none' }}
+      />
+
       {/* 1. Header Hero Card */}
       <Card elevation={0} sx={{ borderRadius: '12px !important', background: 'linear-gradient(135deg, #1e293b, #0f172a)', color: '#ffffff' }}>
         <CardContent sx={{ p: { xs: 3, md: 4 } }}>
@@ -77,6 +205,176 @@ export default function DocumentationTab() {
           </Box>
         </CardContent>
       </Card>
+
+      {/* 1.1 Settings Backup, Migration & Factory Reset Card */}
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 0.5 }}>
+            <BackupRoundedIcon sx={{ color: 'primary.main', fontSize: 24 }} />
+            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.15rem' }}>
+              Settings Backup, Import & Factory Reset
+            </Typography>
+          </Box>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            Export all current configurations to a JSON backup file, restore settings to any WordPress site, or reset the plugin back to initial factory defaults.
+          </Typography>
+
+          <Grid container spacing={3}>
+            {/* Left: Export & Import */}
+            <Grid item xs={12} md={7}>
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 3,
+                  height: '100%',
+                  borderRadius: '10px !important',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  gap: 2.5,
+                }}
+              >
+                <Box>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 0.5 }}>
+                    📦 Export & Import Settings
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    Save a full snapshot of your website mode, active template, content, logo, timer dates, form designs, custom CSS, SEO, and social links.
+                  </Typography>
+                </Box>
+
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<FileDownloadRoundedIcon />}
+                    onClick={handleExportSettings}
+                    sx={{ fontWeight: 700, borderRadius: '8px', px: 2.5, py: 1 }}
+                  >
+                    Export Settings (JSON)
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    startIcon={isImporting ? <CircularProgress size={16} /> : <FileUploadRoundedIcon />}
+                    onClick={handleImportClick}
+                    disabled={isImporting}
+                    sx={{ fontWeight: 700, borderRadius: '8px', px: 2.5, py: 1 }}
+                  >
+                    {isImporting ? 'Importing...' : 'Import Settings (JSON)'}
+                  </Button>
+                </Stack>
+              </Paper>
+            </Grid>
+
+            {/* Right: Factory Reset (Danger Zone) */}
+            <Grid item xs={12} md={5}>
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 3,
+                  height: '100%',
+                  borderRadius: '10px !important',
+                  borderColor: (theme) => (theme.palette.mode === 'dark' ? 'rgba(239, 68, 68, 0.3)' : '#fee2e2'),
+                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'rgba(239, 68, 68, 0.05)' : '#fef2f2'),
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  gap: 2.5,
+                }}
+              >
+                <Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                    <WarningAmberRoundedIcon sx={{ color: 'error.main', fontSize: 20 }} />
+                    <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'error.main' }}>
+                      Factory Reset Plugin
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" color="text.secondary">
+                    Restore all Coming Soon, content branding, styling, and integration settings back to original factory defaults.
+                  </Typography>
+                </Box>
+
+                <Box>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    startIcon={<RestartAltRoundedIcon />}
+                    onClick={() => setResetDialogOpen(true)}
+                    sx={{
+                      fontWeight: 700,
+                      borderRadius: '8px',
+                      px: 2.5,
+                      py: 1,
+                      borderColor: 'error.main',
+                      '&:hover': {
+                        backgroundColor: 'error.main',
+                        color: '#ffffff',
+                      },
+                    }}
+                  >
+                    Reset to Default Settings
+                  </Button>
+                </Box>
+              </Paper>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+
+      {/* Factory Reset Confirmation Dialog */}
+      <Dialog
+        open={resetDialogOpen}
+        onClose={() => !isResetting && setResetDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: '12px !important',
+            p: 1,
+          },
+        }}
+      >
+        <DialogTitle sx={{ fontWeight: 800, fontSize: '1.2rem', pb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <WarningAmberRoundedIcon sx={{ color: 'error.main', fontSize: 26 }} />
+          Confirm Factory Reset
+        </DialogTitle>
+
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: '10px !important' }}>
+          <Alert severity="error" sx={{ borderRadius: '8px', fontWeight: 500 }}>
+            <strong>Warning:</strong> This action will permanently erase all your custom headlines, backgrounds, logo configurations, custom CSS styles, subscriber form designs, and third-party integrations. All settings will be restored to fresh installation defaults.
+          </Alert>
+
+          <Alert severity="info" sx={{ borderRadius: '8px', fontWeight: 500 }}>
+            <strong>💡 Recommended Backup:</strong> We strongly advise using the <strong>Export Settings</strong> button to download a backup file of your current configuration before resetting.
+          </Alert>
+
+          <Typography variant="body2" color="text.secondary">
+            Are you sure you want to proceed with resetting all settings to factory defaults?
+          </Typography>
+        </DialogContent>
+
+        <DialogActions sx={{ px: 3, pb: 2.5, gap: 1 }}>
+          <Button
+            variant="outlined"
+            onClick={() => setResetDialogOpen(false)}
+            disabled={isResetting}
+            sx={{ borderRadius: '8px', fontWeight: 600 }}
+          >
+            Cancel & Keep Settings
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleConfirmReset}
+            disabled={isResetting}
+            startIcon={isResetting ? <CircularProgress size={16} color="inherit" /> : <RestartAltRoundedIcon />}
+            sx={{ borderRadius: '8px', fontWeight: 700 }}
+          >
+            {isResetting ? 'Resetting...' : 'Yes, Reset All Settings'}
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/* 2. Feature Highlights & Architecture */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>

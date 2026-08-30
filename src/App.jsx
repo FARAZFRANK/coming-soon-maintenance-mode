@@ -554,7 +554,14 @@ export default function App() {
               )}
 
               {tabIndex === 6 && (
-                <DocumentationTab />
+                <DocumentationTab
+                  settings={settings}
+                  onSettingsUpdate={(newSettings) => {
+                    setSettings(newSettings);
+                    setHasChanges(false);
+                  }}
+                  onNotify={showNotification}
+                />
               )}
             </ErrorBoundary>
           </Box>

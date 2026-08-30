@@ -232,4 +232,28 @@ export const api = {
       body: JSON.stringify({}),
     });
   },
+
+  async importSettings(settingsData) {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('import-settings'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      body: JSON.stringify(settingsData),
+    });
+  },
+
+  async resetSettings() {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('reset-settings'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      body: JSON.stringify({}),
+    });
+  },
 };

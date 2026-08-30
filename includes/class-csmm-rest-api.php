@@ -163,6 +163,28 @@ class CSMM_REST_API {
 				'permission_callback' => array( $this, 'admin_permissions_check' ),
 			)
 		);
+
+		// Import Plugin Settings
+		register_rest_route(
+			self::NAMESPACE,
+			'/import-settings',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'import_settings' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
+
+		// Factory Reset Settings
+		register_rest_route(
+			self::NAMESPACE,
+			'/reset-settings',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'reset_settings' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
 	}
 
 	/**
@@ -1011,6 +1033,63 @@ class CSMM_REST_API {
 			array(
 				'posts' => $posts_data,
 				'pages' => $pages_data,
+			)
+		);
+	}
+
+	/**
+	 * Import plugin settings from JSON payload.
+	 */
+	public function import_settings( $request ) {
+		$params = $request->get_json_params();
+		if ( empty( $params ) || ! is_array( $params ) ) {
+			return new WP_Error( 'invalid_data', __( 'Invalid or empty settings data provided for import.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+		}
+
+		// Handle payload if wrapped inside "settings" key from export file
+		$import_data = isset( $params['settings'] ) && is_array( $params['settings'] ) ? $params['settings'] : $params;
+
+		// Save imported settings through save_settings logic
+		$save_req = new WP_REST_Request( 'POST', '/' . self::NAMESPACE . '/settings' );
+		$save_req->set_body_params( $import_data );
+		$save_res = $this->save_settings( $save_req );
+
+		if ( is_wp_error( $save_res ) ) {
+			return $save_res;
+		}
+
+		$updated = $this->get_settings();
+		$updated_data = is_a( $updated, 'WP_REST_Response' ) ? $updated->get_data() : $updated;
+
+		return rest_ensure_response(
+			array(
+				'success' => true,
+				'message' => __( 'Plugin settings imported successfully!', 'coming-soon-maintenance-mode' ),
+				'data'    => $updated_data,
+			)
+		);
+	}
+
+	/**
+	 * Factory reset all plugin settings to default installation values.
+	 */
+	public function reset_settings( $request ) {
+		delete_option( 'csmm_settings' );
+		delete_option( 'csmm_templates' );
+		delete_option( 'csmm_content' );
+		delete_option( 'csmm_social_media' );
+		delete_option( 'csmm_advanced' );
+
+		CSMM_Activator::set_default_options();
+
+		$fresh = $this->get_settings();
+		$fresh_data = is_a( $fresh, 'WP_REST_Response' ) ? $fresh->get_data() : $fresh;
+
+		return rest_ensure_response(
+			array(
+				'success' => true,
+				'message' => __( 'All plugin settings have been reset to factory defaults.', 'coming-soon-maintenance-mode' ),
+				'data'    => $fresh_data,
 			)
 		);
 	}
