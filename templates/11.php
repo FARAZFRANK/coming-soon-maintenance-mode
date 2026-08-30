@@ -48,12 +48,8 @@
 
                 <?php if ($csmm_logo_id) { ?>
                     <div class="home-logo">
-                        <a href="<?php echo get_site_url(); ?>">
-                             <img src="<?php echo esc_url( $csmm_logo_url[0] ); 
-                                            ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); 
-                                                                                                ?>"> 
-                           
-
+                        <a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
+                            <img src="<?php echo esc_url( $csmm_logo_url[0] ); ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); ?>">
                         </a>
                     </div>
                 <?php } ?>
@@ -84,6 +80,9 @@
                 <h1><?php if ($csmm_title != "") {
                         echo esc_html($csmm_title);
                     } ?></h1>
+                <p><?php if ($csmm_description != "") {
+                        echo esc_textarea(stripslashes($csmm_description));
+                    } ?></p>
   <?php if ($csmm_susbcriber_form == 1) { ?>
                     <div class="home-content__subscribe">
                         <form id="mc-form" method="post" class="group">
