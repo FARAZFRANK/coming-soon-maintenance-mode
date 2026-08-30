@@ -86,6 +86,7 @@ $csmm_bg_solid_color         = isset( $csmm_content['bg_solid_color'] ) ? $csmm_
 $csmm_bg_gradient_type       = isset( $csmm_content['bg_gradient_type'] ) ? $csmm_content['bg_gradient_type'] : 'linear';
 $csmm_bg_gradient_color1     = isset( $csmm_content['bg_gradient_color1'] ) ? $csmm_content['bg_gradient_color1'] : '#1e3a8a';
 $csmm_bg_gradient_color2     = isset( $csmm_content['bg_gradient_color2'] ) ? $csmm_content['bg_gradient_color2'] : '#0f172a';
+$csmm_bg_gradient_angle      = isset( $csmm_content['bg_gradient_angle'] ) ? intval( $csmm_content['bg_gradient_angle'] ) : 135;
 $default_overlay             = in_array( $csmm_bg_type, array( 'custom', 'slideshow', 'video', 'pattern' ), true ) ? 'none' : 'solid';
 $csmm_bg_overlay_type     = ( isset( $csmm_content['bg_overlay_type'] ) && '' !== $csmm_content['bg_overlay_type'] ) ? $csmm_content['bg_overlay_type'] : $default_overlay;
 $csmm_bg_overlay_color    = isset( $csmm_content['bg_overlay_color'] ) ? $csmm_content['bg_overlay_color'] : '#000000';
