@@ -15,6 +15,9 @@ import {
   Chip,
   Stack,
   Tooltip,
+  FormControlLabel,
+  Checkbox,
+  Slider,
 } from '@mui/material';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -29,6 +32,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import LinkRoundedIcon from '@mui/icons-material/LinkRounded';
 import StarsRoundedIcon from '@mui/icons-material/StarsRounded';
+import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
 
 export default function SocialMediaTab({ settings, onChange }) {
   const social = settings.social_media || {};
@@ -146,7 +150,110 @@ export default function SocialMediaTab({ settings, onChange }) {
         </CardContent>
       </Card>
 
-      {/* 2. Dynamic Custom Social Channels */}
+      {/* 2. Social Icon Appearance & Size Override */}
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
+            <Box>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
+                Social Icon Size Override
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Customize and override the size of all social media icons across frontend templates.
+              </Typography>
+            </Box>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={!!social.social_icon_size_enabled}
+                  onChange={(e) => {
+                    const checked = e.target.checked;
+                    handleStandardChange('social_icon_size_enabled', checked);
+                    if (checked && (!social.social_icon_size || Number(social.social_icon_size) <= 0)) {
+                      handleStandardChange('social_icon_size', 24);
+                    }
+                  }}
+                  size="small"
+                  color="primary"
+                />
+              }
+              label={
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                  Override Icon Size
+                </Typography>
+              }
+              sx={{ mr: 0 }}
+            />
+          </Box>
+
+          {social.social_icon_size_enabled && (
+            <Box
+              sx={{
+                p: 2,
+                borderRadius: '8px',
+                backgroundColor: (theme) =>
+                  theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+                border: '1px solid',
+                borderColor: 'divider',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+                mt: 1.5,
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, maxWidth: 520, flexWrap: 'wrap' }}>
+                <Slider
+                  value={Number(social.social_icon_size) || 24}
+                  min={12}
+                  max={64}
+                  step={1}
+                  onChange={(_, val) => handleStandardChange('social_icon_size', val)}
+                  color="primary"
+                  size="small"
+                  sx={{ flex: 1, minWidth: 140 }}
+                />
+                <TextField
+                  size="small"
+                  type="number"
+                  value={social.social_icon_size !== undefined && social.social_icon_size !== '' ? social.social_icon_size : 24}
+                  onChange={(e) => handleStandardChange('social_icon_size', Number(e.target.value))}
+                  sx={{ width: 80 }}
+                  inputProps={{ min: 12, max: 64 }}
+                />
+                <Typography variant="body2" color="text.secondary">
+                  px
+                </Typography>
+                <Tooltip title="Reset to default icon size (24px)">
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                    onClick={() => handleStandardChange('social_icon_size', 24)}
+                    sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                  >
+                    Reset (24px)
+                  </Button>
+                </Tooltip>
+              </Box>
+
+              {/* Real-time Visual Preview */}
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pt: 1, borderTop: '1px dashed', borderColor: 'divider', flexWrap: 'wrap' }}>
+                <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
+                  Live Icon Size Preview ({social.social_icon_size || 24}px):
+                </Typography>
+                <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2, color: 'primary.main' }}>
+                  <FacebookRoundedIcon sx={{ fontSize: `${social.social_icon_size || 24}px` }} />
+                  <TwitterIcon sx={{ fontSize: `${social.social_icon_size || 24}px` }} />
+                  <InstagramIcon sx={{ fontSize: `${social.social_icon_size || 24}px` }} />
+                  <YouTubeIcon sx={{ fontSize: `${social.social_icon_size || 24}px` }} />
+                </Box>
+              </Box>
+            </Box>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* 3. Dynamic Custom Social Channels */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2, mb: 2 }}>

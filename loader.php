@@ -123,6 +123,8 @@ $csmm_sm_dribbble  = isset( $csmm_social_media['csmm_sm_dribbble'] ) ? $csmm_soc
 $csmm_sm_whatsapp  = isset( $csmm_social_media['csmm_sm_whatsapp'] ) ? $csmm_social_media['csmm_sm_whatsapp'] : '';
 $csmm_sm_tiktok    = isset( $csmm_social_media['csmm_sm_tiktok'] ) ? $csmm_social_media['csmm_sm_tiktok'] : '';
 $csmm_sm_qq        = isset( $csmm_social_media['csmm_sm_qq'] ) ? $csmm_social_media['csmm_sm_qq'] : '';
+$csmm_social_icon_size_enabled = ! empty( $csmm_social_media['social_icon_size_enabled'] );
+$csmm_social_icon_size         = isset( $csmm_social_media['social_icon_size'] ) ? intval( $csmm_social_media['social_icon_size'] ) : 24;
 
 // Subscriber Form UI Settings
 $csmm_form_placeholder   = isset( $csmm_content['form_placeholder_text'] ) && '' !== $csmm_content['form_placeholder_text'] ? $csmm_content['form_placeholder_text'] : __( 'Email Address', 'coming-soon-maintenance-mode' );
@@ -249,6 +251,13 @@ if ( ! $csmm_description_enabled ) {
 	$dynamic_css .= ".csmm-description-content, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description, .hero-desc, .section-desc { display: none !important; }\n";
 } elseif ( $csmm_description_font_size_enabled && $csmm_description_font_size > 0 ) {
 	$dynamic_css .= ".csmm-description-content, .csmm-description-content *, .csmm-description-content p, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description, .hero-desc, .section-desc { font-size: {$csmm_description_font_size}px !important; line-height: 1.6 !important; }\n";
+}
+
+// Social Icon Size Override
+if ( $csmm_social_icon_size_enabled && $csmm_social_icon_size > 0 ) {
+	$dynamic_css .= ".home-social, .social-links, .social-icons, .social-media, .social, .s-footer .social-list { gap: 16px !important; }\n";
+	$dynamic_css .= ".home-social i, .home-social a i, .home-social li a i, .home-social svg, .social-links i, .social-links a i, .social-icons i, .social-icons a i, .social i, .social a i, .s-footer .social-list i, .s-footer .social-list a i { font-size: {$csmm_social_icon_size}px !important; width: auto !important; height: auto !important; line-height: 1 !important; }\n";
+	$dynamic_css .= ".home-social a, .home-social li a, .social-links a, .social-icons a, .social a { font-size: {$csmm_social_icon_size}px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; }\n";
 }
 
 // Countdown & Subscriber Form toggles

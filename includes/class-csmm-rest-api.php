@@ -304,6 +304,8 @@ class CSMM_REST_API {
 				'whatsapp'  => isset( $social_media['csmm_sm_whatsapp'] ) ? $social_media['csmm_sm_whatsapp'] : '',
 				'tiktok'    => isset( $social_media['csmm_sm_tiktok'] ) ? $social_media['csmm_sm_tiktok'] : '',
 				'qq'        => isset( $social_media['csmm_sm_qq'] ) ? $social_media['csmm_sm_qq'] : '',
+				'social_icon_size_enabled' => ! empty( $social_media['social_icon_size_enabled'] ),
+				'social_icon_size'         => isset( $social_media['social_icon_size'] ) ? intval( $social_media['social_icon_size'] ) : 24,
 				'custom_channels' => isset( $social_media['custom_channels'] ) && is_array( $social_media['custom_channels'] ) ? $social_media['custom_channels'] : array(),
 			),
 			'seo'                  => array(
@@ -631,6 +633,13 @@ class CSMM_REST_API {
 				$social_array['custom_channels'] = $sanitized_custom;
 			} else {
 				$social_array['custom_channels'] = array();
+			}
+
+			if ( isset( $sm['social_icon_size_enabled'] ) ) {
+				$social_array['social_icon_size_enabled'] = ! empty( $sm['social_icon_size_enabled'] );
+			}
+			if ( isset( $sm['social_icon_size'] ) ) {
+				$social_array['social_icon_size'] = max( 12, min( 64, intval( $sm['social_icon_size'] ) ) );
 			}
 
 			update_option( 'csmm_social_media', $social_array );
