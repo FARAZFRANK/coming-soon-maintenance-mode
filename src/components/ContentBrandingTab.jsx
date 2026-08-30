@@ -1386,7 +1386,23 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       size="small"
                       fullWidth
                       value={settings.bg_video_source || 'youtube'}
-                      onChange={(e) => onChange('bg_video_source', e.target.value)}
+                      onChange={(e) => {
+                        const newSource = e.target.value;
+                        onChange('bg_video_source', newSource);
+                        if (newSource === 'vimeo') {
+                          const vVal = settings.bg_video_vimeo_url || 'https://player.vimeo.com/video/427528336';
+                          onChange('bg_video_url', vVal);
+                          onChange('video_url', vVal);
+                        } else if (newSource === 'file') {
+                          const mp4Val = settings.bg_video_mp4_url || '';
+                          onChange('bg_video_url', mp4Val);
+                          onChange('video_url', mp4Val);
+                        } else {
+                          const ytVal = settings.bg_video_youtube_url || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+                          onChange('bg_video_url', ytVal);
+                          onChange('video_url', ytVal);
+                        }
+                      }}
                     >
                       <MenuItem value="youtube">YouTube</MenuItem>
                       <MenuItem value="vimeo">Vimeo</MenuItem>
@@ -1394,21 +1410,86 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     </Select>
                   </Box>
 
-                  <TextField
-                    size="small"
-                    fullWidth
-                    label={settings.bg_video_source === 'youtube' ? 'Enter Youtube URL' : 'Enter Video URL'}
-                    value={settings.video_url || settings.bg_video_url || ''}
-                    onChange={(e) => {
-                      onChange('video_url', e.target.value);
-                      onChange('bg_video_url', e.target.value);
-                    }}
-                    placeholder={
-                      settings.bg_video_source === 'youtube'
-                        ? 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-                        : 'https://player.vimeo.com/video/427528336'
-                    }
-                  />
+                  {/* YouTube Option */}
+                  {(settings.bg_video_source === 'youtube' || !settings.bg_video_source) && (
+                    <TextField
+                      size="small"
+                      fullWidth
+                      label="Enter YouTube URL"
+                      value={settings.bg_video_youtube_url !== undefined ? settings.bg_video_youtube_url : (settings.bg_video_url || settings.video_url || '')}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        onChange('bg_video_youtube_url', val);
+                        onChange('bg_video_url', val);
+                        onChange('video_url', val);
+                      }}
+                      placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                    />
+                  )}
+
+                  {/* Vimeo Option */}
+                  {settings.bg_video_source === 'vimeo' && (
+                    <TextField
+                      size="small"
+                      fullWidth
+                      label="Enter Vimeo URL"
+                      value={settings.bg_video_vimeo_url !== undefined ? settings.bg_video_vimeo_url : (settings.bg_video_url || '')}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        onChange('bg_video_vimeo_url', val);
+                        onChange('bg_video_url', val);
+                        onChange('video_url', val);
+                      }}
+                      placeholder="https://player.vimeo.com/video/427528336"
+                    />
+                  )}
+
+                  {/* Direct Video File (MP4) Option */}
+                  {settings.bg_video_source === 'file' && (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                      <TextField
+                        size="small"
+                        fullWidth
+                        label="Direct MP4 Video URL"
+                        value={settings.bg_video_mp4_url !== undefined ? settings.bg_video_mp4_url : (settings.bg_video_url || '')}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          onChange('bg_video_mp4_url', val);
+                          onChange('bg_video_url', val);
+                          onChange('video_url', val);
+                        }}
+                        placeholder="https://example.com/wp-content/uploads/video.mp4"
+                      />
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <Button
+                          variant="outlined"
+                          size="small"
+                          color="primary"
+                          onClick={() => {
+                            triggerMediaPicker({
+                              title: 'Select MP4 Video File',
+                              buttonText: 'Use this Video',
+                              type: 'video',
+                              multiple: false,
+                              onSelect: (att) => {
+                                onChange('bg_video_mp4_url', att.url);
+                                onChange('bg_video_url', att.url);
+                                onChange('video_url', att.url);
+                              },
+                            });
+                          }}
+                          sx={{ borderRadius: '6px', fontWeight: 600 }}
+                        >
+                          Upload / Select MP4 Video
+                        </Button>
+                        {settings.bg_video_mp4_url && (
+                          <Typography variant="caption" color="text.secondary" sx={{ wordBreak: 'break-all' }}>
+                            {settings.bg_video_mp4_url.split('/').pop()}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+                  )}
 
                   <FormControlLabel
                     control={

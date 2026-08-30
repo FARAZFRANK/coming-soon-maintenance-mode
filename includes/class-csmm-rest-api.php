@@ -275,6 +275,9 @@ class CSMM_REST_API {
 			'bg_mobile_image_url'  => isset( $content['bg_mobile_image_url'] ) ? $content['bg_mobile_image_url'] : '',
 			'bg_video_source'      => isset( $content['bg_video_source'] ) ? $content['bg_video_source'] : 'youtube',
 			'bg_video_url'         => isset( $content['bg_video_url'] ) ? $content['bg_video_url'] : ( isset( $content['video_url'] ) ? $content['video_url'] : '' ),
+			'bg_video_youtube_url' => isset( $content['bg_video_youtube_url'] ) ? $content['bg_video_youtube_url'] : ( ( ! isset( $content['bg_video_source'] ) || 'youtube' === $content['bg_video_source'] ) && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : ( isset( $content['video_url'] ) ? $content['video_url'] : 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' ) ),
+			'bg_video_vimeo_url'   => isset( $content['bg_video_vimeo_url'] ) ? $content['bg_video_vimeo_url'] : ( isset( $content['bg_video_source'] ) && 'vimeo' === $content['bg_video_source'] && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : 'https://player.vimeo.com/video/427528336' ),
+			'bg_video_mp4_url'     => isset( $content['bg_video_mp4_url'] ) ? $content['bg_video_mp4_url'] : ( isset( $content['bg_video_source'] ) && in_array( $content['bg_video_source'], array( 'file', 'mp4' ), true ) && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : '' ),
 			'bg_video_loop'        => ! isset( $content['bg_video_loop'] ) || ! empty( $content['bg_video_loop'] ),
 			'bg_video_poster_url'  => isset( $content['bg_video_poster_url'] ) ? $content['bg_video_poster_url'] : '',
 			'bg_pattern'           => isset( $content['bg_pattern'] ) ? $content['bg_pattern'] : 'sakura',
@@ -538,6 +541,15 @@ class CSMM_REST_API {
 		}
 		if (isset($params['bg_video_source'])) {
 			$content_array['bg_video_source'] = sanitize_text_field($params['bg_video_source']);
+		}
+		if (isset($params['bg_video_youtube_url'])) {
+			$content_array['bg_video_youtube_url'] = esc_url_raw($params['bg_video_youtube_url']);
+		}
+		if (isset($params['bg_video_vimeo_url'])) {
+			$content_array['bg_video_vimeo_url'] = esc_url_raw($params['bg_video_vimeo_url']);
+		}
+		if (isset($params['bg_video_mp4_url'])) {
+			$content_array['bg_video_mp4_url'] = esc_url_raw($params['bg_video_mp4_url']);
 		}
 		if (isset($params['bg_video_url'])) {
 			$content_array['bg_video_url'] = esc_url_raw($params['bg_video_url']);

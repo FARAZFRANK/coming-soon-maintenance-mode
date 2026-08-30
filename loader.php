@@ -78,7 +78,18 @@ $csmm_bg_slideshow_scale     = isset( $csmm_content['bg_slideshow_scale'] ) ? $c
 $csmm_bg_mobile_enabled      = ! empty( $csmm_content['bg_mobile_enabled'] );
 $csmm_bg_mobile_image_url    = isset( $csmm_content['bg_mobile_image_url'] ) ? $csmm_content['bg_mobile_image_url'] : '';
 $csmm_bg_video_source        = isset( $csmm_content['bg_video_source'] ) ? $csmm_content['bg_video_source'] : 'youtube';
-$csmm_bg_video_url           = ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : '' );
+$csmm_bg_video_youtube_url   = isset( $csmm_content['bg_video_youtube_url'] ) ? $csmm_content['bg_video_youtube_url'] : '';
+$csmm_bg_video_vimeo_url     = isset( $csmm_content['bg_video_vimeo_url'] ) ? $csmm_content['bg_video_vimeo_url'] : '';
+$csmm_bg_video_mp4_url       = isset( $csmm_content['bg_video_mp4_url'] ) ? $csmm_content['bg_video_mp4_url'] : '';
+
+$csmm_bg_video_url = '';
+if ( 'vimeo' === $csmm_bg_video_source ) {
+	$csmm_bg_video_url = ! empty( $csmm_bg_video_vimeo_url ) ? $csmm_bg_video_vimeo_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : 'https://player.vimeo.com/video/427528336' );
+} elseif ( 'file' === $csmm_bg_video_source || 'mp4' === $csmm_bg_video_source ) {
+	$csmm_bg_video_url = ! empty( $csmm_bg_video_mp4_url ) ? $csmm_bg_video_mp4_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : '' );
+} else {
+	$csmm_bg_video_url = ! empty( $csmm_bg_video_youtube_url ) ? $csmm_bg_video_youtube_url : ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' ) );
+}
 $csmm_bg_video_loop          = ! isset( $csmm_content['bg_video_loop'] ) || ! empty( $csmm_content['bg_video_loop'] );
 $csmm_bg_video_poster_url    = isset( $csmm_content['bg_video_poster_url'] ) ? $csmm_content['bg_video_poster_url'] : '';
 $csmm_bg_pattern             = isset( $csmm_content['bg_pattern'] ) ? $csmm_content['bg_pattern'] : 'sakura';
