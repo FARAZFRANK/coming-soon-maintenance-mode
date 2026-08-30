@@ -2738,9 +2738,53 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       }}
                     >
                       <style>{`
+                        #csmm-live-preview-input {
+                          background: ${settings.form_input_bg || 'rgba(0, 0, 0, 0.35)'} !important;
+                          background-color: ${settings.form_input_bg || 'rgba(0, 0, 0, 0.35)'} !important;
+                          color: ${settings.form_input_color || '#ffffff'} !important;
+                          border: none !important;
+                          border-top-left-radius: ${settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px'} !important;
+                          border-bottom-left-radius: ${settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px'} !important;
+                          border-top-right-radius: 0px !important;
+                          border-bottom-right-radius: 0px !important;
+                          box-shadow: none !important;
+                          width: 100% !important;
+                          height: 54px !important;
+                          padding: 0 160px 0 20px !important;
+                          outline: none !important;
+                          font-size: 15px !important;
+                          font-weight: 500 !important;
+                          display: block !important;
+                          box-sizing: border-box !important;
+                        }
                         #csmm-live-preview-input::placeholder {
                           color: ${settings.form_input_color || '#ffffff'} !important;
-                          opacity: 0.85;
+                          opacity: 0.85 !important;
+                        }
+                        #csmm-live-preview-btn {
+                          background: ${settings.form_btn_bg || '#e11d48'} !important;
+                          background-color: ${settings.form_btn_bg || '#e11d48'} !important;
+                          color: ${settings.form_btn_color || '#ffffff'} !important;
+                          border: none !important;
+                          border-top-right-radius: ${settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px'} !important;
+                          border-bottom-right-radius: ${settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px'} !important;
+                          border-top-left-radius: 0px !important;
+                          border-bottom-left-radius: 0px !important;
+                          height: 54px !important;
+                          padding: 0 28px !important;
+                          font-weight: 700 !important;
+                          font-size: 13px !important;
+                          letter-spacing: 0.12em !important;
+                          text-transform: uppercase !important;
+                          cursor: pointer !important;
+                          display: inline-flex !important;
+                          align-items: center !important;
+                          justify-content: center !important;
+                          position: absolute !important;
+                          top: 0 !important;
+                          right: 0 !important;
+                          margin: 0 !important;
+                          box-sizing: border-box !important;
                         }
                       `}</style>
                       <input
@@ -2749,52 +2793,10 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         readOnly
                         value=""
                         placeholder={settings.form_placeholder_text || 'Email Address'}
-                        style={{
-                          width: '100%',
-                          height: '54px',
-                          padding: '0 160px 0 20px',
-                          backgroundColor: settings.form_input_bg || 'rgba(0, 0, 0, 0.35)',
-                          color: settings.form_input_color || '#ffffff',
-                          border: 'none',
-                          borderTopLeftRadius: settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px',
-                          borderBottomLeftRadius: settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px',
-                          borderTopRightRadius: '0px',
-                          borderBottomRightRadius: '0px',
-                          outline: 'none',
-                          fontSize: '15px',
-                          fontWeight: 500,
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                          boxSizing: 'border-box',
-                          boxShadow: 'none',
-                        }}
                       />
                       <button
+                        id="csmm-live-preview-btn"
                         type="button"
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          right: 0,
-                          height: '54px',
-                          padding: '0 28px',
-                          backgroundColor: settings.form_btn_bg || '#e11d48',
-                          color: settings.form_btn_color || '#ffffff',
-                          border: 'none',
-                          borderTopRightRadius: settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px',
-                          borderBottomRightRadius: settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px',
-                          borderTopLeftRadius: '0px',
-                          borderBottomLeftRadius: '0px',
-                          fontWeight: 700,
-                          fontSize: '13px',
-                          letterSpacing: '0.12em',
-                          textTransform: 'uppercase',
-                          cursor: 'pointer',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                          whiteSpace: 'nowrap',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxSizing: 'border-box',
-                        }}
                       >
                         {settings.form_btn_text || 'NOTIFY ME'}
                       </button>
