@@ -492,10 +492,25 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             {/* Headline / Title Section */}
             <Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
-                  Headline / Page Title
-                </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
+                    Headline / Page Title
+                  </Typography>
+                  {titleEnabled && (
+                    <Tooltip title="Reset to default title ('Coming Soon')">
+                      <Button
+                        size="small"
+                        variant="text"
+                        startIcon={<RestartAltRoundedIcon sx={{ fontSize: 16 }} />}
+                        onClick={() => onChange('title', 'Coming Soon')}
+                        sx={{ fontSize: '0.76rem', textTransform: 'none', py: 0.2, px: 0.8, minWidth: 'auto', color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
+                      >
+                        Reset Default
+                      </Button>
+                    </Tooltip>
+                  )}
+                </Box>
                 <FormControlLabel
                   control={
                     <Switch
@@ -615,10 +630,25 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
 
             {/* Description Section */}
             <Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
-                  Description / Message
-                </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
+                    Description / Message
+                  </Typography>
+                  {descriptionEnabled && (
+                    <Tooltip title="Reset to default description text">
+                      <Button
+                        size="small"
+                        variant="text"
+                        startIcon={<RestartAltRoundedIcon sx={{ fontSize: 16 }} />}
+                        onClick={() => onChange('description', 'Thank you for visiting our website! We are currently working on creating a new and exciting online experience for you. While we finish up the final touches, please sign up for our newsletter to receive exclusive updates and offers.')}
+                        sx={{ fontSize: '0.76rem', textTransform: 'none', py: 0.2, px: 0.8, minWidth: 'auto', color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
+                      >
+                        Reset Default
+                      </Button>
+                    </Tooltip>
+                  )}
+                </Box>
                 <FormControlLabel
                   control={
                     <Switch
@@ -645,7 +675,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       backgroundColor: 'background.paper',
                     }}
                   >
-                    {/* Top Action Bar: Add Media + Visual/Code Switch */}
+                    {/* Top Action Bar: Add Media + Reset + Visual/Code Switch */}
                     <Box
                       sx={{
                         p: 1.2,
@@ -657,16 +687,30 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1e293b' : '#f8fafc'),
                       }}
                     >
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        color="primary"
-                        startIcon={<PermMediaRoundedIcon sx={{ fontSize: 18 }} />}
-                        onClick={handleInsertMediaToEditor}
-                        sx={{ borderRadius: '6px', fontWeight: 600, fontSize: '0.82rem' }}
-                      >
-                        Add Media
-                      </Button>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          color="primary"
+                          startIcon={<PermMediaRoundedIcon sx={{ fontSize: 18 }} />}
+                          onClick={handleInsertMediaToEditor}
+                          sx={{ borderRadius: '6px', fontWeight: 600, fontSize: '0.82rem' }}
+                        >
+                          Add Media
+                        </Button>
+                        <Tooltip title="Reset description to default text">
+                          <Button
+                            size="small"
+                            variant="outlined"
+                            color="inherit"
+                            startIcon={<RestartAltRoundedIcon sx={{ fontSize: 16 }} />}
+                            onClick={() => onChange('description', 'Thank you for visiting our website! We are currently working on creating a new and exciting online experience for you. While we finish up the final touches, please sign up for our newsletter to receive exclusive updates and offers.')}
+                            sx={{ borderRadius: '6px', fontWeight: 600, fontSize: '0.8rem', borderColor: 'divider', textTransform: 'none' }}
+                          >
+                            Reset Default
+                          </Button>
+                        </Tooltip>
+                      </Box>
 
                       <ButtonGroup size="small" variant="outlined">
                         <Button
