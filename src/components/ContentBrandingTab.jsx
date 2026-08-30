@@ -44,6 +44,7 @@ import HorizontalRuleRoundedIcon from '@mui/icons-material/HorizontalRuleRounded
 import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
 import PermMediaRoundedIcon from '@mui/icons-material/PermMediaRounded';
 import WallpaperRoundedIcon from '@mui/icons-material/WallpaperRounded';
+import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
 import { api } from '../api';
 
 export default function ContentBrandingTab({ settings = {}, onChange }) {
@@ -535,7 +536,13 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         control={
                           <Checkbox
                             checked={!!settings.title_font_size_enabled}
-                            onChange={(e) => onChange('title_font_size_enabled', e.target.checked)}
+                            onChange={(e) => {
+                              const checked = e.target.checked;
+                              onChange('title_font_size_enabled', checked);
+                              if (checked && (!settings.title_font_size || Number(settings.title_font_size) <= 0)) {
+                                onChange('title_font_size', 48);
+                              }
+                            }}
                             size="small"
                             color="primary"
                           />
@@ -549,13 +556,13 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       />
                       {settings.title_font_size_enabled && (
                         <Typography variant="caption" color="text.secondary">
-                          Custom size applied over template default
+                          Custom size applied over template default (Default: 48px)
                         </Typography>
                       )}
                     </Box>
 
                     {settings.title_font_size_enabled && (
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pt: 0.5, maxWidth: 400 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pt: 0.5, maxWidth: 520, flexWrap: 'wrap' }}>
                         <Slider
                           value={Number(settings.title_font_size) || 48}
                           min={16}
@@ -564,19 +571,30 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           onChange={(_, val) => onChange('title_font_size', val)}
                           color="primary"
                           size="small"
-                          sx={{ flex: 1 }}
+                          sx={{ flex: 1, minWidth: 140 }}
                         />
                         <TextField
                           size="small"
                           type="number"
-                          value={settings.title_font_size !== undefined ? settings.title_font_size : 48}
+                          value={settings.title_font_size !== undefined && settings.title_font_size !== '' ? settings.title_font_size : 48}
                           onChange={(e) => onChange('title_font_size', Number(e.target.value))}
-                          sx={{ width: 85 }}
+                          sx={{ width: 80 }}
                           inputProps={{ min: 16, max: 120 }}
                         />
                         <Typography variant="body2" color="text.secondary">
                           px
                         </Typography>
+                        <Tooltip title="Reset to default title size (48px)">
+                          <Button
+                            size="small"
+                            variant="outlined"
+                            startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                            onClick={() => onChange('title_font_size', 48)}
+                            sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                          >
+                            Reset (48px)
+                          </Button>
+                        </Tooltip>
                       </Box>
                     )}
                   </Box>
@@ -834,7 +852,13 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         control={
                           <Checkbox
                             checked={!!settings.description_font_size_enabled}
-                            onChange={(e) => onChange('description_font_size_enabled', e.target.checked)}
+                            onChange={(e) => {
+                              const checked = e.target.checked;
+                              onChange('description_font_size_enabled', checked);
+                              if (checked && (!settings.description_font_size || Number(settings.description_font_size) <= 0)) {
+                                onChange('description_font_size', 18);
+                              }
+                            }}
                             size="small"
                             color="primary"
                           />
@@ -848,13 +872,13 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       />
                       {settings.description_font_size_enabled && (
                         <Typography variant="caption" color="text.secondary">
-                          Custom size applied over template default
+                          Custom size applied over template default (Default: 18px)
                         </Typography>
                       )}
                     </Box>
 
                     {settings.description_font_size_enabled && (
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pt: 0.5, maxWidth: 400 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pt: 0.5, maxWidth: 520, flexWrap: 'wrap' }}>
                         <Slider
                           value={Number(settings.description_font_size) || 18}
                           min={12}
@@ -863,19 +887,30 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           onChange={(_, val) => onChange('description_font_size', val)}
                           color="primary"
                           size="small"
-                          sx={{ flex: 1 }}
+                          sx={{ flex: 1, minWidth: 140 }}
                         />
                         <TextField
                           size="small"
                           type="number"
-                          value={settings.description_font_size !== undefined ? settings.description_font_size : 18}
+                          value={settings.description_font_size !== undefined && settings.description_font_size !== '' ? settings.description_font_size : 18}
                           onChange={(e) => onChange('description_font_size', Number(e.target.value))}
-                          sx={{ width: 85 }}
+                          sx={{ width: 80 }}
                           inputProps={{ min: 12, max: 60 }}
                         />
                         <Typography variant="body2" color="text.secondary">
                           px
                         </Typography>
+                        <Tooltip title="Reset to default description size (18px)">
+                          <Button
+                            size="small"
+                            variant="outlined"
+                            startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                            onClick={() => onChange('description_font_size', 18)}
+                            sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                          >
+                            Reset (18px)
+                          </Button>
+                        </Tooltip>
                       </Box>
                     )}
                   </Box>
