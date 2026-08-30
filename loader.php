@@ -64,6 +64,12 @@ $csmm_countdown_title = isset( $csmm_content['countdown_title'] ) ? $csmm_conten
 $csmm_current_date    = date( 'Y-m-d' );
 $csmm_countdown_date  = isset( $csmm_content['countdown_date'] ) ? $csmm_content['countdown_date'] : date( 'Y-m-d', strtotime( $csmm_current_date . ' +30 days' ) );
 $csmm_countdown_time  = isset( $csmm_content['countdown_time'] ) ? $csmm_content['countdown_time'] : '10:00';
+$csmm_countdown_override_enabled = ! empty( $csmm_content['countdown_override_enabled'] );
+$csmm_countdown_digit_font_size  = isset( $csmm_content['countdown_digit_font_size'] ) ? intval( $csmm_content['countdown_digit_font_size'] ) : 0;
+$csmm_countdown_digit_color      = isset( $csmm_content['countdown_digit_color'] ) ? sanitize_text_field( $csmm_content['countdown_digit_color'] ) : '';
+$csmm_countdown_label_font_size  = isset( $csmm_content['countdown_label_font_size'] ) ? intval( $csmm_content['countdown_label_font_size'] ) : 0;
+$csmm_countdown_label_color      = isset( $csmm_content['countdown_label_color'] ) ? sanitize_text_field( $csmm_content['countdown_label_color'] ) : '';
+$csmm_countdown_box_bg           = isset( $csmm_content['countdown_box_bg'] ) ? sanitize_text_field( $csmm_content['countdown_box_bg'] ) : '';
 $csmm_susbcriber_form = isset( $csmm_content['susbcriber_form'] ) ? $csmm_content['susbcriber_form'] : '1';
 $csmm_video_url       = isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : 'https://player.vimeo.com/video/427528336?title=0&portrait=0&byline=0&autoplay=1&loop=1&muted=true';
 $csmm_custom_css      = isset( $csmm_content['custom_css'] ) ? $csmm_content['custom_css'] : '';
@@ -287,9 +293,44 @@ if ( $csmm_social_icon_size_enabled && $csmm_social_icon_size > 0 ) {
 	$dynamic_css .= ".home-social a, .home-social li a, .social-links a, .social-icons a, .social a { font-size: {$csmm_social_icon_size}px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; }\n";
 }
 
-// Countdown & Subscriber Form toggles
+// Countdown & Subscriber Form toggles & styling
 if ( '0' === strval( $csmm_countdown ) ) {
-	$dynamic_css .= ".home-content__counter, .home-content__clock { display: none !important; }\n";
+	$dynamic_css .= ".home-content__counter, .home-content__clock, #countdown, .countdown, .countdown-container, .countdown-box, .counter-box { display: none !important; }\n";
+} elseif ( $csmm_countdown_override_enabled ) {
+	// Digits / Numbers
+	$digit_rules = array();
+	if ( $csmm_countdown_digit_font_size > 0 ) {
+		$digit_rules[] = "font-size: {$csmm_countdown_digit_font_size}px !important";
+		$digit_rules[] = "line-height: 1.1 !important";
+	}
+	if ( ! empty( $csmm_countdown_digit_color ) ) {
+		$digit_rules[] = "color: {$csmm_countdown_digit_color} !important";
+		$digit_rules[] = "-webkit-text-fill-color: {$csmm_countdown_digit_color} !important";
+		$digit_rules[] = "background-image: none !important";
+		$digit_rules[] = "background: none !important";
+	}
+	if ( ! empty( $digit_rules ) ) {
+		$digit_rule_str = implode( '; ', $digit_rules );
+		$dynamic_css .= ".home-content__clock .time, .home-content__clock, .countdown-number, .countdown-amount, .counter-number, .countdown-box .text-3xl, .countdown-box .text-4xl, .countdown-box .text-5xl, .countdown-box .font-bold, #days, #hours, #minutes, #seconds, .time.days, .time.hours, .time.minutes, .time.seconds { {$digit_rule_str}; }\n";
+	}
+
+	// Labels (Days, Hours, Mins, Secs)
+	$label_rules = array();
+	if ( $csmm_countdown_label_font_size > 0 ) {
+		$label_rules[] = "font-size: {$csmm_countdown_label_font_size}px !important";
+	}
+	if ( ! empty( $csmm_countdown_label_color ) ) {
+		$label_rules[] = "color: {$csmm_countdown_label_color} !important";
+	}
+	if ( ! empty( $label_rules ) ) {
+		$label_rule_str = implode( '; ', $label_rules );
+		$dynamic_css .= ".home-content__clock .time span, .countdown-label, .counter-label, .time-text, .subtext, .countdown-text, .timer-label, .countdown-period { {$label_rule_str}; }\n";
+	}
+
+	// Box backgrounds
+	if ( ! empty( $csmm_countdown_box_bg ) ) {
+		$dynamic_css .= ".countdown-box, .counter-box, .time-box, .timer-box, .count-box, .counter-item, #countdown > div { background: {$csmm_countdown_box_bg} !important; background-color: {$csmm_countdown_box_bg} !important; }\n";
+	}
 }
 if ( '0' === strval( $csmm_susbcriber_form ) ) {
 	$dynamic_css .= ".home-content__subscribe, #mc-form { display: none !important; }\n";

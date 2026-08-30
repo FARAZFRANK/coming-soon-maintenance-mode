@@ -273,16 +273,22 @@ class CSMM_REST_API {
 			'description_font_size_enabled'=> ! empty( $content['description_font_size_enabled'] ),
 			'description_font_size'        => isset( $content['description_font_size'] ) ? intval( $content['description_font_size'] ) : 18,
 			'description_color'            => isset( $content['description_color'] ) ? $content['description_color'] : '',
-			'countdown'            => isset( $content['countdown'] ) ? strval( $content['countdown'] ) : '1',
-			'countdown_title'      => isset( $content['countdown_title'] ) ? $content['countdown_title'] : 'Launching In...',
-			'countdown_date'       => $countdown_date,
-			'countdown_time'       => isset( $content['countdown_time'] ) ? $content['countdown_time'] : '10:00',
-			'susbcriber_form'      => isset( $content['susbcriber_form'] ) ? strval( $content['susbcriber_form'] ) : '1',
-			'form_placeholder_text' => isset( $content['form_placeholder_text'] ) ? $content['form_placeholder_text'] : 'Email Address',
-			'form_btn_text'        => isset( $content['form_btn_text'] ) ? $content['form_btn_text'] : 'Notify Me',
-			'form_input_bg'        => isset( $content['form_input_bg'] ) ? $content['form_input_bg'] : 'rgba(0, 0, 0, 0.35)',
-			'form_input_color'     => isset( $content['form_input_color'] ) ? $content['form_input_color'] : '#ffffff',
-			'form_btn_bg'          => isset( $content['form_btn_bg'] ) ? $content['form_btn_bg'] : '#e11d48',
+			'countdown'                    => isset( $content['countdown'] ) ? strval( $content['countdown'] ) : '1',
+			'countdown_title'              => isset( $content['countdown_title'] ) ? $content['countdown_title'] : 'Launching In...',
+			'countdown_date'               => $countdown_date,
+			'countdown_time'               => isset( $content['countdown_time'] ) ? $content['countdown_time'] : '10:00',
+			'countdown_override_enabled'   => ! empty( $content['countdown_override_enabled'] ),
+			'countdown_digit_font_size'    => isset( $content['countdown_digit_font_size'] ) ? intval( $content['countdown_digit_font_size'] ) : 48,
+			'countdown_digit_color'        => isset( $content['countdown_digit_color'] ) ? $content['countdown_digit_color'] : '',
+			'countdown_label_font_size'    => isset( $content['countdown_label_font_size'] ) ? intval( $content['countdown_label_font_size'] ) : 14,
+			'countdown_label_color'        => isset( $content['countdown_label_color'] ) ? $content['countdown_label_color'] : '',
+			'countdown_box_bg'             => isset( $content['countdown_box_bg'] ) ? $content['countdown_box_bg'] : '',
+			'susbcriber_form'              => isset( $content['susbcriber_form'] ) ? strval( $content['susbcriber_form'] ) : '1',
+			'form_placeholder_text'        => isset( $content['form_placeholder_text'] ) ? $content['form_placeholder_text'] : 'Email Address',
+			'form_btn_text'                => isset( $content['form_btn_text'] ) ? $content['form_btn_text'] : 'Notify Me',
+			'form_input_bg'                => isset( $content['form_input_bg'] ) ? $content['form_input_bg'] : 'rgba(0, 0, 0, 0.35)',
+			'form_input_color'             => isset( $content['form_input_color'] ) ? $content['form_input_color'] : '#ffffff',
+			'form_btn_bg'                  => isset( $content['form_btn_bg'] ) ? $content['form_btn_bg'] : '#e11d48',
 			'form_btn_color'       => isset( $content['form_btn_color'] ) ? $content['form_btn_color'] : '#ffffff',
 			'form_border_radius'   => isset( $content['form_border_radius'] ) ? intval( $content['form_border_radius'] ) : 0,
 			'video_url'            => isset( $content['video_url'] ) ? $content['video_url'] : '',
@@ -482,11 +488,26 @@ class CSMM_REST_API {
 		if ( isset( $params['countdown_title'] ) ) {
 			$content_array['countdown_title'] = sanitize_text_field( $params['countdown_title'] );
 		}
-		if ( isset( $params['countdown_date'] ) ) {
-			$content_array['countdown_date'] = sanitize_text_field( $params['countdown_date'] );
-		}
 		if ( isset( $params['countdown_time'] ) ) {
 			$content_array['countdown_time'] = sanitize_text_field( $params['countdown_time'] );
+		}
+		if ( isset( $params['countdown_override_enabled'] ) ) {
+			$content_array['countdown_override_enabled'] = ! empty( $params['countdown_override_enabled'] );
+		}
+		if ( isset( $params['countdown_digit_font_size'] ) ) {
+			$content_array['countdown_digit_font_size'] = intval( $params['countdown_digit_font_size'] );
+		}
+		if ( isset( $params['countdown_digit_color'] ) ) {
+			$content_array['countdown_digit_color'] = sanitize_text_field( $params['countdown_digit_color'] );
+		}
+		if ( isset( $params['countdown_label_font_size'] ) ) {
+			$content_array['countdown_label_font_size'] = intval( $params['countdown_label_font_size'] );
+		}
+		if ( isset( $params['countdown_label_color'] ) ) {
+			$content_array['countdown_label_color'] = sanitize_text_field( $params['countdown_label_color'] );
+		}
+		if ( isset( $params['countdown_box_bg'] ) ) {
+			$content_array['countdown_box_bg'] = sanitize_text_field( $params['countdown_box_bg'] );
 		}
 		if ( isset( $params['susbcriber_form'] ) ) {
 			$content_array['susbcriber_form'] = sanitize_text_field( $params['susbcriber_form'] );

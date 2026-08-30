@@ -1148,6 +1148,240 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                 />
               </Grid>
 
+              {/* Override Countdown Settings */}
+              <Grid item xs={12}>
+                <Box
+                  sx={{
+                    p: 1.5,
+                    borderRadius: '8px',
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 1.5,
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={!!settings.countdown_override_enabled}
+                          onChange={(e) => {
+                            const checked = e.target.checked;
+                            onChange('countdown_override_enabled', checked);
+                            if (checked && (!settings.countdown_digit_font_size || Number(settings.countdown_digit_font_size) <= 0)) {
+                              onChange('countdown_digit_font_size', 48);
+                            }
+                            if (checked && (!settings.countdown_label_font_size || Number(settings.countdown_label_font_size) <= 0)) {
+                              onChange('countdown_label_font_size', 14);
+                            }
+                          }}
+                          size="small"
+                          color="primary"
+                        />
+                      }
+                      label={
+                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                          Override Countdown
+                        </Typography>
+                      }
+                      sx={{ mr: 0 }}
+                    />
+                    {settings.countdown_override_enabled && (
+                      <Typography variant="caption" color="text.secondary">
+                        Custom digit/label font sizes & text colors applied over template default
+                      </Typography>
+                    )}
+                  </Box>
+
+                  {settings.countdown_override_enabled && (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 0.5 }}>
+                      {/* Digits Styling */}
+                      <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={12} md={7}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                            <Typography variant="caption" sx={{ fontWeight: 600, minWidth: 105, color: 'text.secondary' }}>
+                              Digits Font Size:
+                            </Typography>
+                            <Slider
+                              value={Number(settings.countdown_digit_font_size) || 48}
+                              min={16}
+                              max={100}
+                              step={1}
+                              onChange={(_, val) => onChange('countdown_digit_font_size', val)}
+                              color="primary"
+                              size="small"
+                              sx={{ flex: 1, minWidth: 120 }}
+                            />
+                            <TextField
+                              size="small"
+                              type="number"
+                              value={settings.countdown_digit_font_size !== undefined && settings.countdown_digit_font_size !== '' ? settings.countdown_digit_font_size : 48}
+                              onChange={(e) => onChange('countdown_digit_font_size', Number(e.target.value))}
+                              sx={{ width: 75 }}
+                              inputProps={{ min: 16, max: 100 }}
+                            />
+                            <Typography variant="body2" color="text.secondary">px</Typography>
+                            <Tooltip title="Reset to default digit size (48px)">
+                              <Button
+                                size="small"
+                                variant="outlined"
+                                startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                                onClick={() => onChange('countdown_digit_font_size', 48)}
+                                sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                              >
+                                Reset (48px)
+                              </Button>
+                            </Tooltip>
+                          </Box>
+                        </Grid>
+
+                        <Grid item xs={12} md={5}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                            <Typography variant="caption" sx={{ fontWeight: 600, minWidth: 80, color: 'text.secondary' }}>
+                              Digits Color:
+                            </Typography>
+                            <Box
+                              component="label"
+                              sx={{
+                                width: 34,
+                                height: 34,
+                                borderRadius: '6px',
+                                border: '1px solid #cbd5e1',
+                                backgroundColor: settings.countdown_digit_color || '#ffffff',
+                                cursor: 'pointer',
+                                display: 'inline-block',
+                                flexShrink: 0,
+                                overflow: 'hidden',
+                                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                              }}
+                            >
+                              <input
+                                type="color"
+                                value={settings.countdown_digit_color && settings.countdown_digit_color.startsWith('#') ? settings.countdown_digit_color : '#ffffff'}
+                                onChange={(e) => onChange('countdown_digit_color', e.target.value)}
+                                style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
+                              />
+                            </Box>
+                            <TextField
+                              size="small"
+                              value={settings.countdown_digit_color || ''}
+                              onChange={(e) => onChange('countdown_digit_color', e.target.value)}
+                              placeholder="e.g. #ffffff"
+                              sx={{ flex: 1 }}
+                            />
+                            {settings.countdown_digit_color && (
+                              <Tooltip title="Reset digit color to template default">
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  onClick={() => onChange('countdown_digit_color', '')}
+                                  sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                                >
+                                  Clear
+                                </Button>
+                              </Tooltip>
+                            )}
+                          </Box>
+                        </Grid>
+                      </Grid>
+
+                      {/* Labels Styling */}
+                      <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={12} md={7}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                            <Typography variant="caption" sx={{ fontWeight: 600, minWidth: 105, color: 'text.secondary' }}>
+                              Labels Font Size:
+                            </Typography>
+                            <Slider
+                              value={Number(settings.countdown_label_font_size) || 14}
+                              min={10}
+                              max={32}
+                              step={1}
+                              onChange={(_, val) => onChange('countdown_label_font_size', val)}
+                              color="primary"
+                              size="small"
+                              sx={{ flex: 1, minWidth: 120 }}
+                            />
+                            <TextField
+                              size="small"
+                              type="number"
+                              value={settings.countdown_label_font_size !== undefined && settings.countdown_label_font_size !== '' ? settings.countdown_label_font_size : 14}
+                              onChange={(e) => onChange('countdown_label_font_size', Number(e.target.value))}
+                              sx={{ width: 75 }}
+                              inputProps={{ min: 10, max: 32 }}
+                            />
+                            <Typography variant="body2" color="text.secondary">px</Typography>
+                            <Tooltip title="Reset to default label size (14px)">
+                              <Button
+                                size="small"
+                                variant="outlined"
+                                startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                                onClick={() => onChange('countdown_label_font_size', 14)}
+                                sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                              >
+                                Reset (14px)
+                              </Button>
+                            </Tooltip>
+                          </Box>
+                        </Grid>
+
+                        <Grid item xs={12} md={5}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                            <Typography variant="caption" sx={{ fontWeight: 600, minWidth: 80, color: 'text.secondary' }}>
+                              Labels Color:
+                            </Typography>
+                            <Box
+                              component="label"
+                              sx={{
+                                width: 34,
+                                height: 34,
+                                borderRadius: '6px',
+                                border: '1px solid #cbd5e1',
+                                backgroundColor: settings.countdown_label_color || '#94a3b8',
+                                cursor: 'pointer',
+                                display: 'inline-block',
+                                flexShrink: 0,
+                                overflow: 'hidden',
+                                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                              }}
+                            >
+                              <input
+                                type="color"
+                                value={settings.countdown_label_color && settings.countdown_label_color.startsWith('#') ? settings.countdown_label_color : '#94a3b8'}
+                                onChange={(e) => onChange('countdown_label_color', e.target.value)}
+                                style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
+                              />
+                            </Box>
+                            <TextField
+                              size="small"
+                              value={settings.countdown_label_color || ''}
+                              onChange={(e) => onChange('countdown_label_color', e.target.value)}
+                              placeholder="e.g. #94a3b8"
+                              sx={{ flex: 1 }}
+                            />
+                            {settings.countdown_label_color && (
+                              <Tooltip title="Reset label color to template default">
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  onClick={() => onChange('countdown_label_color', '')}
+                                  sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                                >
+                                  Clear
+                                </Button>
+                              </Tooltip>
+                            )}
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  )}
+                </Box>
+              </Grid>
+
               <Grid item xs={12}>
                 <Alert severity="success" sx={{ borderRadius: '8px' }}>
                   <strong>Auto-Launch Feature:</strong> When the countdown clock reaches zero, the website mode will automatically switch to <strong>Live / Disabled</strong> so your visitors can access your live website immediately!
