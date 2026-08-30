@@ -537,7 +537,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     helperText="Main primary heading displayed on your coming soon template."
                   />
 
-                  {/* Title Font Size Override */}
+                  {/* Title Override (Font Size & Color) */}
                   <Box
                     sx={{
                       p: 1.5,
@@ -548,7 +548,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       borderColor: 'divider',
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: 1,
+                      gap: 1.5,
                     }}
                   >
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
@@ -569,52 +569,108 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         }
                         label={
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                            Override Title Font Size
+                            Override Title
                           </Typography>
                         }
                         sx={{ mr: 0 }}
                       />
                       {settings.title_font_size_enabled && (
                         <Typography variant="caption" color="text.secondary">
-                          Custom size applied over template default (Default: 48px)
+                          Custom font size & text color applied over template default
                         </Typography>
                       )}
                     </Box>
 
                     {settings.title_font_size_enabled && (
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pt: 0.5, maxWidth: 520, flexWrap: 'wrap' }}>
-                        <Slider
-                          value={Number(settings.title_font_size) || 48}
-                          min={16}
-                          max={120}
-                          step={1}
-                          onChange={(_, val) => onChange('title_font_size', val)}
-                          color="primary"
-                          size="small"
-                          sx={{ flex: 1, minWidth: 140 }}
-                        />
-                        <TextField
-                          size="small"
-                          type="number"
-                          value={settings.title_font_size !== undefined && settings.title_font_size !== '' ? settings.title_font_size : 48}
-                          onChange={(e) => onChange('title_font_size', Number(e.target.value))}
-                          sx={{ width: 80 }}
-                          inputProps={{ min: 16, max: 120 }}
-                        />
-                        <Typography variant="body2" color="text.secondary">
-                          px
-                        </Typography>
-                        <Tooltip title="Reset to default title size (48px)">
-                          <Button
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, pt: 0.5 }}>
+                        {/* Font Size Row */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, maxWidth: 540, flexWrap: 'wrap' }}>
+                          <Typography variant="caption" sx={{ fontWeight: 600, minWidth: 65, color: 'text.secondary' }}>
+                            Font Size:
+                          </Typography>
+                          <Slider
+                            value={Number(settings.title_font_size) || 48}
+                            min={16}
+                            max={120}
+                            step={1}
+                            onChange={(_, val) => onChange('title_font_size', val)}
+                            color="primary"
                             size="small"
-                            variant="outlined"
-                            startIcon={<RestartAltRoundedIcon fontSize="small" />}
-                            onClick={() => onChange('title_font_size', 48)}
-                            sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
-                          >
-                            Reset (48px)
-                          </Button>
-                        </Tooltip>
+                            sx={{ flex: 1, minWidth: 140 }}
+                          />
+                          <TextField
+                            size="small"
+                            type="number"
+                            value={settings.title_font_size !== undefined && settings.title_font_size !== '' ? settings.title_font_size : 48}
+                            onChange={(e) => onChange('title_font_size', Number(e.target.value))}
+                            sx={{ width: 75 }}
+                            inputProps={{ min: 16, max: 120 }}
+                          />
+                          <Typography variant="body2" color="text.secondary">
+                            px
+                          </Typography>
+                          <Tooltip title="Reset to default title size (48px)">
+                            <Button
+                              size="small"
+                              variant="outlined"
+                              startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                              onClick={() => onChange('title_font_size', 48)}
+                              sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                            >
+                              Reset (48px)
+                            </Button>
+                          </Tooltip>
+                        </Box>
+
+                        {/* Title Color Row */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, maxWidth: 540, flexWrap: 'wrap' }}>
+                          <Typography variant="caption" sx={{ fontWeight: 600, minWidth: 65, color: 'text.secondary' }}>
+                            Text Color:
+                          </Typography>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, flex: 1, minWidth: 200 }}>
+                            <Box
+                              component="label"
+                              sx={{
+                                width: 34,
+                                height: 34,
+                                borderRadius: '6px',
+                                border: '1px solid #cbd5e1',
+                                backgroundColor: settings.title_color || '#ffffff',
+                                cursor: 'pointer',
+                                display: 'inline-block',
+                                flexShrink: 0,
+                                overflow: 'hidden',
+                                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                              }}
+                            >
+                              <input
+                                type="color"
+                                value={settings.title_color && settings.title_color.startsWith('#') ? settings.title_color : '#ffffff'}
+                                onChange={(e) => onChange('title_color', e.target.value)}
+                                style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
+                              />
+                            </Box>
+                            <TextField
+                              size="small"
+                              value={settings.title_color || ''}
+                              onChange={(e) => onChange('title_color', e.target.value)}
+                              placeholder="e.g. #ffffff or #2563eb"
+                              sx={{ flex: 1 }}
+                            />
+                            {settings.title_color && (
+                              <Tooltip title="Reset title color to template default">
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  onClick={() => onChange('title_color', '')}
+                                  sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                                >
+                                  Clear Color
+                                </Button>
+                              </Tooltip>
+                            )}
+                          </Box>
+                        </Box>
                       </Box>
                     )}
                   </Box>
@@ -881,7 +937,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     * WordPress embeds, custom HTML and shortcodes support
                   </Typography>
 
-                  {/* Description Font Size Override */}
+                  {/* Description Override (Font Size & Color) */}
                   <Box
                     sx={{
                       p: 1.5,
@@ -892,7 +948,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       borderColor: 'divider',
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: 1,
+                      gap: 1.5,
                       mt: 0.5,
                     }}
                   >
@@ -914,52 +970,108 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         }
                         label={
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                            Override Description Font Size
+                            Override Description
                           </Typography>
                         }
                         sx={{ mr: 0 }}
                       />
                       {settings.description_font_size_enabled && (
                         <Typography variant="caption" color="text.secondary">
-                          Custom size applied over template default (Default: 18px)
+                          Custom font size & text color applied over template default
                         </Typography>
                       )}
                     </Box>
 
                     {settings.description_font_size_enabled && (
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pt: 0.5, maxWidth: 520, flexWrap: 'wrap' }}>
-                        <Slider
-                          value={Number(settings.description_font_size) || 18}
-                          min={12}
-                          max={60}
-                          step={1}
-                          onChange={(_, val) => onChange('description_font_size', val)}
-                          color="primary"
-                          size="small"
-                          sx={{ flex: 1, minWidth: 140 }}
-                        />
-                        <TextField
-                          size="small"
-                          type="number"
-                          value={settings.description_font_size !== undefined && settings.description_font_size !== '' ? settings.description_font_size : 18}
-                          onChange={(e) => onChange('description_font_size', Number(e.target.value))}
-                          sx={{ width: 80 }}
-                          inputProps={{ min: 12, max: 60 }}
-                        />
-                        <Typography variant="body2" color="text.secondary">
-                          px
-                        </Typography>
-                        <Tooltip title="Reset to default description size (18px)">
-                          <Button
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, pt: 0.5 }}>
+                        {/* Font Size Row */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, maxWidth: 540, flexWrap: 'wrap' }}>
+                          <Typography variant="caption" sx={{ fontWeight: 600, minWidth: 65, color: 'text.secondary' }}>
+                            Font Size:
+                          </Typography>
+                          <Slider
+                            value={Number(settings.description_font_size) || 18}
+                            min={12}
+                            max={60}
+                            step={1}
+                            onChange={(_, val) => onChange('description_font_size', val)}
+                            color="primary"
                             size="small"
-                            variant="outlined"
-                            startIcon={<RestartAltRoundedIcon fontSize="small" />}
-                            onClick={() => onChange('description_font_size', 18)}
-                            sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
-                          >
-                            Reset (18px)
-                          </Button>
-                        </Tooltip>
+                            sx={{ flex: 1, minWidth: 140 }}
+                          />
+                          <TextField
+                            size="small"
+                            type="number"
+                            value={settings.description_font_size !== undefined && settings.description_font_size !== '' ? settings.description_font_size : 18}
+                            onChange={(e) => onChange('description_font_size', Number(e.target.value))}
+                            sx={{ width: 75 }}
+                            inputProps={{ min: 12, max: 60 }}
+                          />
+                          <Typography variant="body2" color="text.secondary">
+                            px
+                          </Typography>
+                          <Tooltip title="Reset to default description size (18px)">
+                            <Button
+                              size="small"
+                              variant="outlined"
+                              startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                              onClick={() => onChange('description_font_size', 18)}
+                              sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                            >
+                              Reset (18px)
+                            </Button>
+                          </Tooltip>
+                        </Box>
+
+                        {/* Description Color Row */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, maxWidth: 540, flexWrap: 'wrap' }}>
+                          <Typography variant="caption" sx={{ fontWeight: 600, minWidth: 65, color: 'text.secondary' }}>
+                            Text Color:
+                          </Typography>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, flex: 1, minWidth: 200 }}>
+                            <Box
+                              component="label"
+                              sx={{
+                                width: 34,
+                                height: 34,
+                                borderRadius: '6px',
+                                border: '1px solid #cbd5e1',
+                                backgroundColor: settings.description_color || '#ffffff',
+                                cursor: 'pointer',
+                                display: 'inline-block',
+                                flexShrink: 0,
+                                overflow: 'hidden',
+                                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                              }}
+                            >
+                              <input
+                                type="color"
+                                value={settings.description_color && settings.description_color.startsWith('#') ? settings.description_color : '#ffffff'}
+                                onChange={(e) => onChange('description_color', e.target.value)}
+                                style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
+                              />
+                            </Box>
+                            <TextField
+                              size="small"
+                              value={settings.description_color || ''}
+                              onChange={(e) => onChange('description_color', e.target.value)}
+                              placeholder="e.g. #ffffff or #94a3b8"
+                              sx={{ flex: 1 }}
+                            />
+                            {settings.description_color && (
+                              <Tooltip title="Reset description color to template default">
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  onClick={() => onChange('description_color', '')}
+                                  sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                                >
+                                  Clear Color
+                                </Button>
+                              </Tooltip>
+                            )}
+                          </Box>
+                        </Box>
                       </Box>
                     )}
                   </Box>

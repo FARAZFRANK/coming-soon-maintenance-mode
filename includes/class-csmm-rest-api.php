@@ -267,10 +267,12 @@ class CSMM_REST_API {
 			'title'                        => isset( $content['title'] ) ? $content['title'] : 'Coming Soon',
 			'title_font_size_enabled'      => ! empty( $content['title_font_size_enabled'] ),
 			'title_font_size'              => isset( $content['title_font_size'] ) ? intval( $content['title_font_size'] ) : 48,
+			'title_color'                  => isset( $content['title_color'] ) ? $content['title_color'] : '',
 			'description_enabled'          => isset( $content['description_enabled'] ) ? strval( $content['description_enabled'] ) : '1',
 			'description'                  => isset( $content['description'] ) ? $content['description'] : '',
 			'description_font_size_enabled'=> ! empty( $content['description_font_size_enabled'] ),
 			'description_font_size'        => isset( $content['description_font_size'] ) ? intval( $content['description_font_size'] ) : 18,
+			'description_color'            => isset( $content['description_color'] ) ? $content['description_color'] : '',
 			'countdown'            => isset( $content['countdown'] ) ? strval( $content['countdown'] ) : '1',
 			'countdown_title'      => isset( $content['countdown_title'] ) ? $content['countdown_title'] : 'Launching In...',
 			'countdown_date'       => $countdown_date,
@@ -431,6 +433,9 @@ class CSMM_REST_API {
 		if ( isset( $params['title_font_size'] ) ) {
 			$content_array['title_font_size'] = intval( $params['title_font_size'] );
 		}
+		if ( isset( $params['title_color'] ) ) {
+			$content_array['title_color'] = sanitize_text_field( $params['title_color'] );
+		}
 		if ( isset( $params['description_enabled'] ) ) {
 			$content_array['description_enabled'] = sanitize_text_field( $params['description_enabled'] );
 		}
@@ -446,6 +451,9 @@ class CSMM_REST_API {
 		}
 		if ( isset( $params['description_font_size'] ) ) {
 			$content_array['description_font_size'] = intval( $params['description_font_size'] );
+		}
+		if ( isset( $params['description_color'] ) ) {
+			$content_array['description_color'] = sanitize_text_field( $params['description_color'] );
 		}
 		if ( isset( $params['logo_enabled'] ) ) {
 			$content_array['logo_enabled'] = sanitize_text_field( $params['logo_enabled'] );

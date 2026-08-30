@@ -49,9 +49,11 @@ if ( ! empty( $csmm_logo_id ) && is_numeric( $csmm_logo_id ) ) {
 $csmm_title_enabled       = isset( $csmm_content['title_enabled'] ) ? ( '1' === strval( $csmm_content['title_enabled'] ) ) : true;
 $csmm_title_font_size_enabled = ! empty( $csmm_content['title_font_size_enabled'] );
 $csmm_title_font_size         = isset( $csmm_content['title_font_size'] ) ? intval( $csmm_content['title_font_size'] ) : 0;
+$csmm_title_color             = isset( $csmm_content['title_color'] ) ? sanitize_text_field( $csmm_content['title_color'] ) : '';
 $csmm_description_enabled = isset( $csmm_content['description_enabled'] ) ? ( '1' === strval( $csmm_content['description_enabled'] ) ) : true;
 $csmm_description_font_size_enabled = ! empty( $csmm_content['description_font_size_enabled'] );
 $csmm_description_font_size         = isset( $csmm_content['description_font_size'] ) ? intval( $csmm_content['description_font_size'] ) : 0;
+$csmm_description_color             = isset( $csmm_content['description_color'] ) ? sanitize_text_field( $csmm_content['description_color'] ) : '';
 
 $csmm_title           = ( ! $csmm_title_enabled ) ? '' : ( isset( $csmm_content['title'] ) && '' !== $csmm_content['title'] ? $csmm_content['title'] : __( 'Coming Soon', 'coming-soon-maintenance-mode' ) );
 $csmm_description_raw = ( ! $csmm_description_enabled ) ? '' : ( isset( $csmm_content['description'] ) ? $csmm_content['description'] : __( 'Thank you for visiting our website! We are currently working on creating a new and exciting online experience for you. While we finish up the final touches, please sign up for our newsletter to receive exclusive updates and offers.', 'coming-soon-maintenance-mode' ) );
@@ -239,18 +241,43 @@ if ( ! $csmm_logo_enabled || 'disabled' === $csmm_logo_type ) {
 	$dynamic_css .= ".home-logo img { max-height: {$csmm_logo_height}px !important; height: auto !important; width: auto !important; }\n";
 }
 
-// Title toggle & font size override
+// Title toggle & font size / color override (Supported across all 36 templates)
 if ( ! $csmm_title_enabled ) {
-	$dynamic_css .= "h1, .home-content__text h1, .home-content h1, .title, .title-font, .reveal-text, .hero-title, .section-title, .main-title { display: none !important; }\n";
-} elseif ( $csmm_title_font_size_enabled && $csmm_title_font_size > 0 ) {
-	$dynamic_css .= "h1, .home-content__text h1, .home-content h1, .title, .title-font, .reveal-text, .hero-title, .section-title, .main-title { font-size: {$csmm_title_font_size}px !important; line-height: 1.2 !important; }\n";
+	$dynamic_css .= "h1, .home-content__text h1, .home-content h1, .title, .title-font, .reveal-text, .hero-title, .section-title, .main-title, .highlight, h1 span.highlight, h1.title-font, .banner-text h1, .display-1, .display-2 { display: none !important; }\n";
+} elseif ( $csmm_title_font_size_enabled ) {
+	$title_rules = array();
+	if ( $csmm_title_font_size > 0 ) {
+		$title_rules[] = "font-size: {$csmm_title_font_size}px !important";
+		$title_rules[] = "line-height: 1.2 !important";
+	}
+	if ( ! empty( $csmm_title_color ) ) {
+		$title_rules[] = "color: {$csmm_title_color} !important";
+		$title_rules[] = "-webkit-text-fill-color: {$csmm_title_color} !important";
+		$title_rules[] = "background-image: none !important";
+		$title_rules[] = "background: none !important";
+	}
+	if ( ! empty( $title_rules ) ) {
+		$title_rule_str = implode( '; ', $title_rules );
+		$dynamic_css .= "h1, .home-content__text h1, .home-content h1, .title, .title-font, .reveal-text, .hero-title, .section-title, .main-title, .highlight, h1 span.highlight, h1.title-font, .banner-text h1, .display-1, .display-2 { {$title_rule_str}; }\n";
+	}
 }
 
-// Description toggle & font size override
+// Description toggle & font size / color override (Supported across all 36 templates)
 if ( ! $csmm_description_enabled ) {
-	$dynamic_css .= ".csmm-description-content, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description, .hero-desc, .section-desc { display: none !important; }\n";
-} elseif ( $csmm_description_font_size_enabled && $csmm_description_font_size > 0 ) {
-	$dynamic_css .= ".csmm-description-content, .csmm-description-content *, .csmm-description-content p, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description, .hero-desc, .section-desc { font-size: {$csmm_description_font_size}px !important; line-height: 1.6 !important; }\n";
+	$dynamic_css .= ".csmm-description-content, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description, .hero-desc, .section-desc, .sub-title, .content p, .lead { display: none !important; }\n";
+} elseif ( $csmm_description_font_size_enabled ) {
+	$desc_rules = array();
+	if ( $csmm_description_font_size > 0 ) {
+		$desc_rules[] = "font-size: {$csmm_description_font_size}px !important";
+		$desc_rules[] = "line-height: 1.6 !important";
+	}
+	if ( ! empty( $csmm_description_color ) ) {
+		$desc_rules[] = "color: {$csmm_description_color} !important";
+	}
+	if ( ! empty( $desc_rules ) ) {
+		$desc_rule_str = implode( '; ', $desc_rules );
+		$dynamic_css .= ".csmm-description-content, .csmm-description-content *, .csmm-description-content p, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description, .hero-desc, .section-desc, .sub-title, .content p, .lead { {$desc_rule_str}; }\n";
+	}
 }
 
 // Social Icon Size Override
