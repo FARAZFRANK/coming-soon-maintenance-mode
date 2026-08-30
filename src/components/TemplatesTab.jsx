@@ -23,11 +23,13 @@ import TabletMacRoundedIcon from '@mui/icons-material/TabletMacRounded';
 import PhoneIphoneRoundedIcon from '@mui/icons-material/PhoneIphoneRounded';
 import LaunchRoundedIcon from '@mui/icons-material/LaunchRounded';
 
-export default function TemplatesTab({ settings, onChange, onActivate, templates }) {
+export default function TemplatesTab({ settings = {}, onChange, onActivate, templates = [] }) {
   const selectedTemplateId = Number(settings.template_id) || 1;
   const [previewTemplate, setPreviewTemplate] = useState(null);
   const [deviceMode, setDeviceMode] = useState('desktop'); // desktop | tablet | mobile
   const [activatingId, setActivatingId] = useState(null);
+
+  const templateList = Array.isArray(templates) ? templates : (Array.isArray(templates?.data) ? templates.data : []);
 
   const handleSelect = async (id) => {
     if (selectedTemplateId === id) return;
@@ -68,7 +70,7 @@ export default function TemplatesTab({ settings, onChange, onActivate, templates
           </Box>
 
           <Grid container spacing={2.5}>
-            {templates.map((tpl) => {
+            {templateList.map((tpl) => {
               const isSelected = selectedTemplateId === tpl.id;
               const isActivating = activatingId === tpl.id;
               const templateNumberStr = `#${String(tpl.id).padStart(2, '0')}`;
@@ -168,7 +170,7 @@ export default function TemplatesTab({ settings, onChange, onActivate, templates
                     <Box sx={{ p: 1.8, display: 'flex', flexDirection: 'column', gap: 1.2 }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                          {tpl.name}
+                          {tpl.name || tpl.title}
                         </Typography>
                       </Box>
 
@@ -239,7 +241,7 @@ export default function TemplatesTab({ settings, onChange, onActivate, templates
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
-              {previewTemplate ? previewTemplate.name : 'Template Preview'}
+              {previewTemplate ? (previewTemplate.name || previewTemplate.title) : 'Template Preview'}
             </Typography>
             <ButtonGroup size="small" variant="outlined" sx={{ ml: 1 }}>
               <Button

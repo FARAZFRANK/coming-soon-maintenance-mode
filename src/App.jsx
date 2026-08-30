@@ -103,10 +103,22 @@ export default function App() {
     }
     return 0;
   });
-  const [settings, setSettings] = useState(() => window.csmmData?.initialSettings || null);
-  const [templates, setTemplates] = useState(() => window.csmmData?.templates || []);
-  const [targetItems, setTargetItems] = useState(() => window.csmmData?.targetItems || { pages: [], posts: [], roles: [] });
-  const [loading, setLoading] = useState(() => !window.csmmData?.initialSettings);
+  const [settings, setSettings] = useState(() => {
+    const d = window.csmmData?.initialSettings;
+    return d?.data ? d.data : (d || null);
+  });
+  const [templates, setTemplates] = useState(() => {
+    const t = window.csmmData?.templates;
+    return Array.isArray(t) ? t : (Array.isArray(t?.data) ? t.data : []);
+  });
+  const [targetItems, setTargetItems] = useState(() => {
+    const ti = window.csmmData?.targetItems;
+    return ti?.data ? ti.data : (ti || { pages: [], posts: [], roles: [] });
+  });
+  const [loading, setLoading] = useState(() => {
+    const d = window.csmmData?.initialSettings;
+    return !d;
+  });
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [notification, setNotification] = useState({ open: false, message: '', severity: 'success' });

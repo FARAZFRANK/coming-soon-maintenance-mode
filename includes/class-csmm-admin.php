@@ -96,9 +96,14 @@ class CSMM_Admin
 			);
 
 			$rest_api = new CSMM_REST_API();
-			$initial_settings = $rest_api->get_settings();
-			$templates = $rest_api->get_templates();
-			$target_items = $rest_api->get_target_items();
+			$settings_res = $rest_api->get_settings();
+			$initial_settings = is_a( $settings_res, 'WP_REST_Response' ) ? $settings_res->get_data() : $settings_res;
+
+			$templates_res = $rest_api->get_templates();
+			$templates = is_a( $templates_res, 'WP_REST_Response' ) ? $templates_res->get_data() : $templates_res;
+
+			$target_res = $rest_api->get_target_items();
+			$target_items = is_a( $target_res, 'WP_REST_Response' ) ? $target_res->get_data() : $target_res;
 
 			// Pass context & REST configuration to React
 			wp_localize_script(
