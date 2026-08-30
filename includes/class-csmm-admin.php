@@ -137,10 +137,15 @@ class CSMM_Admin
 	{
 		?>
 		<style>
-		/* Ensure no unwanted page scrollbars during loading */
+		/* Ensure no unwanted page horizontal scrollbars while preserving sticky headers */
 		.toplevel_page_wpfrank-csmm html,
 		.toplevel_page_wpfrank-csmm body {
-			overflow-x: hidden !important;
+			overflow-x: clip !important;
+		}
+		.toplevel_page_wpfrank-csmm #wpcontent,
+		.toplevel_page_wpfrank-csmm #wpbody,
+		.toplevel_page_wpfrank-csmm #wpbody-content {
+			overflow: visible !important;
 		}
 		.toplevel_page_wpfrank-csmm #wpcontent {
 			padding-left: 0 !important;
@@ -159,7 +164,7 @@ class CSMM_Admin
 		}
 		</style>
 		<div id="csmm-react-root"
-			style="margin: 0; padding: 0; width: 100%; box-sizing: border-box; overflow-x: hidden; background: transparent;">
+			style="margin: 0; padding: 0; width: 100%; box-sizing: border-box; overflow-x: clip; background: transparent;">
 			<script>
 			(function() {
 				var mode = localStorage.getItem('csmm_theme_mode') || 'light';

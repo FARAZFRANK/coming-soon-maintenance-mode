@@ -325,13 +325,13 @@ export default function App() {
       <CssBaseline />
       <Box sx={{ pb: 6, pt: { xs: 1, sm: 1.5 }, backgroundColor: 'background.default', minHeight: '100vh', transition: 'background-color 0.25s ease' }}>
         <Container maxWidth={false} sx={{ px: { xs: 1.5, sm: 2.5, md: 3.5 } }}>
-          {/* Top Header Card - Sticky with Managed Top Spacing */}
+          {/* Top Header Card - Sticky Header */}
           <Paper
             elevation={0}
             sx={{
               position: 'sticky',
               top: { xs: '46px', md: '32px' },
-              zIndex: 100,
+              zIndex: 1100,
               p: { xs: 1.75, md: 2.25 },
               mt: { xs: 0.5, sm: 1 },
               mb: 2.5,
@@ -342,9 +342,9 @@ export default function App() {
               gap: 2,
               borderRadius: '10px !important',
               border: `1px solid ${currentTheme.palette.divider}`,
-              backgroundColor: themeMode === 'dark' ? 'rgba(30, 41, 59, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(10px)',
-              boxShadow: themeMode === 'dark' ? '0 6px 20px rgba(0,0,0,0.35)' : '0 6px 20px rgba(0,0,0,0.06)',
+              backgroundColor: themeMode === 'dark' ? 'rgba(30, 41, 59, 0.98)' : 'rgba(255, 255, 255, 0.98)',
+              backdropFilter: 'blur(12px)',
+              boxShadow: themeMode === 'dark' ? '0 10px 30px rgba(0,0,0,0.5)' : '0 10px 30px rgba(0,0,0,0.08)',
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>

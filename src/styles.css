@@ -22,18 +22,21 @@ body.csmm-light-page #wpfooter {
 
 body.csmm-dark-page,
 body.csmm-light-page {
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
 }
 
 body.csmm-dark-page #wpcontent,
 body.csmm-light-page #wpcontent {
   padding-left: 0 !important;
   padding-right: 0 !important;
+  overflow: visible !important;
 }
 
+body.csmm-dark-page #wpbody,
+body.csmm-light-page #wpbody,
 body.csmm-dark-page #wpbody-content,
 body.csmm-light-page #wpbody-content {
-  padding-bottom: 0 !important;
+  overflow: visible !important;
 }
 
 body.csmm-dark-page #wpfooter,
@@ -46,7 +49,8 @@ body.csmm-light-page #wpfooter {
   color: #0f172a;
   width: 100% !important;
   max-width: 100% !important;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
