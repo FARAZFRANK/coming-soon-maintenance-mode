@@ -2716,90 +2716,87 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   </Box>
                   <Box
                     sx={{
-                      p: { xs: 2.5, sm: 3.5 },
+                      p: { xs: 3, md: 4 },
                       borderRadius: '8px',
-                      backgroundColor: '#1d1b1b',
+                      backgroundColor: '#161616',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      minHeight: 110,
-                      boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.5)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      minHeight: 120,
                     }}
                   >
                     <Box
                       sx={{
-                        position: 'relative',
                         maxWidth: 540,
                         width: '100%',
                         height: 54,
                         display: 'flex',
-                        alignItems: 'center',
+                        alignItems: 'stretch',
+                        borderRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
+                        overflow: 'hidden',
+                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)',
                       }}
                     >
-                      <style>{`
-                        #csmm-live-preview-input {
-                          background: ${settings.form_input_bg || 'rgba(0, 0, 0, 0.35)'} !important;
-                          background-color: ${settings.form_input_bg || 'rgba(0, 0, 0, 0.35)'} !important;
-                          color: ${settings.form_input_color || '#ffffff'} !important;
-                          border: none !important;
-                          border-top-left-radius: ${settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px'} !important;
-                          border-bottom-left-radius: ${settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px'} !important;
-                          border-top-right-radius: 0px !important;
-                          border-bottom-right-radius: 0px !important;
-                          box-shadow: none !important;
-                          width: 100% !important;
-                          height: 54px !important;
-                          padding: 0 160px 0 20px !important;
-                          outline: none !important;
-                          font-size: 15px !important;
-                          font-weight: 500 !important;
-                          display: block !important;
-                          box-sizing: border-box !important;
-                        }
-                        #csmm-live-preview-input::placeholder {
-                          color: ${settings.form_input_color || '#ffffff'} !important;
-                          opacity: 0.85 !important;
-                        }
-                        #csmm-live-preview-btn {
-                          background: ${settings.form_btn_bg || '#e11d48'} !important;
-                          background-color: ${settings.form_btn_bg || '#e11d48'} !important;
-                          color: ${settings.form_btn_color || '#ffffff'} !important;
-                          border: none !important;
-                          border-top-right-radius: ${settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px'} !important;
-                          border-bottom-right-radius: ${settings.form_border_radius !== undefined ? `${settings.form_border_radius}px` : '0px'} !important;
-                          border-top-left-radius: 0px !important;
-                          border-bottom-left-radius: 0px !important;
-                          height: 54px !important;
-                          padding: 0 28px !important;
-                          font-weight: 700 !important;
-                          font-size: 13px !important;
-                          letter-spacing: 0.12em !important;
-                          text-transform: uppercase !important;
-                          cursor: pointer !important;
-                          display: inline-flex !important;
-                          align-items: center !important;
-                          justify-content: center !important;
-                          position: absolute !important;
-                          top: 0 !important;
-                          right: 0 !important;
-                          margin: 0 !important;
-                          box-sizing: border-box !important;
-                        }
-                      `}</style>
-                      <input
-                        id="csmm-live-preview-input"
-                        type="text"
-                        readOnly
-                        value=""
-                        placeholder={settings.form_placeholder_text || 'Email Address'}
-                      />
-                      <button
-                        id="csmm-live-preview-btn"
-                        type="button"
+                      {/* Left Input Field Box */}
+                      <Box
+                        sx={{
+                          flex: 1,
+                          height: '100%',
+                          backgroundColor: settings.form_input_bg || 'rgba(0, 0, 0, 0.35)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          px: 2.5,
+                          fontSize: '15px',
+                          fontWeight: 500,
+                          userSelect: 'none',
+                          borderTopLeftRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
+                          borderBottomLeftRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
+                          transition: 'background-color 0.2s ease',
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: settings.form_input_color || '#ffffff',
+                            opacity: 0.9,
+                            fontSize: '15px',
+                            fontWeight: 500,
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                          }}
+                        >
+                          {settings.form_placeholder_text || 'Email Address'}
+                        </Typography>
+                      </Box>
+
+                      {/* Right Submit Button Box */}
+                      <Box
+                        sx={{
+                          height: '100%',
+                          backgroundColor: settings.form_btn_bg || '#e11d48',
+                          color: settings.form_btn_color || '#ffffff',
+                          px: 3.5,
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontWeight: 700,
+                          fontSize: '13px',
+                          letterSpacing: '0.12em',
+                          textTransform: 'uppercase',
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap',
+                          userSelect: 'none',
+                          flexShrink: 0,
+                          borderTopRightRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
+                          borderBottomRightRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                          transition: 'background-color 0.2s ease, opacity 0.2s ease',
+                          '&:hover': {
+                            opacity: 0.9,
+                          },
+                        }}
                       >
                         {settings.form_btn_text || 'NOTIFY ME'}
-                      </button>
+                      </Box>
                     </Box>
                   </Box>
                 </Grid>
