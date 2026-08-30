@@ -91,7 +91,18 @@ class ErrorBoundary extends React.Component {
 }
 
 export default function App() {
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(() => {
+    try {
+      const savedTab = localStorage.getItem('csmm_active_tab');
+      if (savedTab !== null && !isNaN(Number(savedTab))) {
+        const val = Number(savedTab);
+        if (val >= 0 && val <= 6) return val;
+      }
+    } catch (e) {
+      console.warn('Could not read saved tab', e);
+    }
+    return 0;
+  });
   const [settings, setSettings] = useState(null);
   const [templates, setTemplates] = useState([]);
   const [targetItems, setTargetItems] = useState({ pages: [], posts: [], roles: [] });
@@ -453,7 +464,14 @@ export default function App() {
           >
             <Tabs
               value={tabIndex}
-              onChange={(_, newTab) => setTabIndex(newTab)}
+              onChange={(_, newTab) => {
+                setTabIndex(newTab);
+                try {
+                  localStorage.setItem('csmm_active_tab', String(newTab));
+                } catch (e) {
+                  console.warn('Could not save tab', e);
+                }
+              }}
               variant="scrollable"
               scrollButtons="auto"
               textColor="primary"
