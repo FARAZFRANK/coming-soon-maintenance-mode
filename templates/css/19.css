@@ -124,7 +124,9 @@ body {
 	color: #4A148C !important;
 	border: none !important;
 	height: 48px !important;
-	line-height: 48px !important;
+	min-height: 48px !important;
+	max-height: 48px !important;
+	line-height: 1 !important;
 	padding: 0 28px !important;
 	border-radius: 9999px !important;
 	white-space: nowrap !important;
@@ -136,6 +138,7 @@ body {
 	align-items: center !important;
 	justify-content: center !important;
 	box-sizing: border-box !important;
+	margin: 0 !important;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
 	transition: all 0.3s ease;
 }
