@@ -348,7 +348,9 @@ $dynamic_css .= ".home-content__subscribe label.subscribe-message, #mc-form labe
 // Template Spacing & Centering Fixes (Subscriber form gap, social icons, and middle card alignment)
 $dynamic_css .= ".home-social, ul.home-social, .social-links, .social-icons { margin-top: 28px !important; position: relative !important; }\n";
 $dynamic_css .= ".home-content__main .home-social, .home-content__text .home-social, .cs-text-wrapper .home-social { margin-top: 28px !important; }\n";
+$dynamic_css .= ".home-content__main .home-social { left: 0 !important; right: 0 !important; margin-left: auto !important; margin-right: auto !important; padding: 0 !important; display: flex !important; justify-content: center !important; align-items: center !important; width: 100% !important; }\n";
 $dynamic_css .= ".s-home .home-content__subscribe, .s-home #mc-form, .home-content__main .home-content__subscribe, .home-content__text .home-content__subscribe { margin-left: auto !important; margin-right: auto !important; float: none !important; display: block !important; }\n";
+$dynamic_css .= ".template-12 .home-content__subscribe, .template-12 #mc-form, .template-12 .home-content__main .home-content__subscribe { margin-left: 0 !important; margin-right: auto !important; }\n";
 $dynamic_css .= ".template-two, main.template-two, .s-home--static.template-two { display: flex !important; align-items: center !important; justify-content: center !important; min-height: 100vh !important; height: auto !important; padding: 40px 20px !important; box-sizing: border-box !important; }\n";
 $dynamic_css .= ".template-two .home-content { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; height: auto !important; padding: 0 !important; margin: auto !important; }\n";
 $dynamic_css .= ".template-two .home-content__main { width: 100% !important; max-width: 980px !important; margin: 0 auto !important; padding: 0 !important; }\n";

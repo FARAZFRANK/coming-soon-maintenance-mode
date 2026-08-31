@@ -223,6 +223,14 @@
    bottom: 0;
  }
 
+ .home-content__subscribe {
+   max-width: 540px;
+   margin: 24px 0 28px 0 !important;
+   padding: 0;
+   position: relative;
+   width: 100%;
+ }
+
  /* ------------------------------------------------------------------- 
  * ## home video link
  * ------------------------------------------------------------------- */
