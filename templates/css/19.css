@@ -31,6 +31,7 @@ body {
 	animation: popIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
 	transform: scale(0.8);
 	opacity: 0;
+	padding: 2.75rem 2.5rem !important;
 }
 
 @keyframes popIn {
@@ -40,16 +41,8 @@ body {
 	}
 }
 
-/* Custom font for titles */
-.title-font {
-	font-family: 'Anton', sans-serif;
-	letter-spacing: 0.05em;
-	text-transform: uppercase;
-	text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.highlight {
-	color: #FFD600; /* Bright Yellow */
+.home-logo {
+	margin-bottom: 1.25rem !important;
 }
 
 .subtitle {
@@ -58,9 +51,33 @@ body {
 	text-transform: uppercase;
 	letter-spacing: 0.2em;
 	color: #F06292; /* Bright Pink */
+	margin-bottom: 0.5rem !important;
+}
+
+/* Custom font for titles */
+.title-font {
+	font-family: 'Anton', sans-serif;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+	margin-top: 0.5rem !important;
+	margin-bottom: 1.25rem !important;
+}
+
+.highlight {
+	color: #FFD600; /* Bright Yellow */
+}
+
+.main-card p.text-gray-200 {
+	margin-bottom: 1.5rem !important;
+	line-height: 1.6;
 }
 
 /* Countdown timer styling */
+.main-card #countdown {
+	margin-bottom: 1.75rem !important;
+}
+
 .countdown-box {
 	background: rgba(0,0,0,0.2);
 	border-radius: 0.5rem;

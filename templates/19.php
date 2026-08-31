@@ -28,28 +28,28 @@
 <body>
     <canvas id="confetti-canvas"></canvas>
 
-    <main class="main-card w-full max-w-2xl text-center rounded-2xl p-8 m-4">
+    <main class="main-card w-full max-w-2xl text-center rounded-2xl p-8 sm:p-12 m-4">
         
 		<!--  Logo -->
 		<?php if($csmm_logo_id) { ?>
-		<div class="home-logo mb-6">
+		<div class="home-logo mb-4">
 			<a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
 				<img class="mx-auto h-10 w-auto" src="<?php echo esc_url( $csmm_logo_url[0] ); ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); ?>">
 			</a>
 		</div>
 		<?php } ?>
 		
-        <p class="subtitle text-sm mb-3"><?php esc_html_e( 'Get Ready To', 'coming-soon-maintenance-mode' ); ?></p>
-        <h1 class="title-font text-6xl md:text-7xl text-white mt-6 mb-6">
+        <p class="subtitle text-sm mb-2"><?php esc_html_e( 'Get Ready To', 'coming-soon-maintenance-mode' ); ?></p>
+        <h1 class="title-font text-5xl md:text-7xl text-white my-4">
             <?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?>
         </h1>
-        <p class="text-gray-200 mb-8 max-w-md mx-auto">
+        <p class="text-gray-200 mb-6 max-w-md mx-auto leading-relaxed">
             <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
         </p>
 
         <!-- Countdown Timer -->
 		<?php if($csmm_countdown == 1) { ?>
-        <div id="countdown" class="grid grid-cols-4 gap-4 mb-10 w-full max-w-md mx-auto">
+        <div id="countdown" class="grid grid-cols-4 gap-4 mb-6 w-full max-w-md mx-auto">
             <div class="countdown-box">
                 <div id="days" class="countdown-number text-4xl md:text-5xl">00</div>
                 <div class="countdown-label"><?php esc_html_e( "Days", 'coming-soon-maintenance-mode' ); ?></div>
@@ -71,13 +71,13 @@
 		
         <!-- Subscription Form -->
         <div class="w-full max-w-md mx-auto text-center mb-6">
-            <p class="mb-4 font-bold text-lg"><?php esc_html_e( "Don't miss the party!", 'coming-soon-maintenance-mode' ); ?></p>
+            <p class="mb-3 font-bold text-lg"><?php esc_html_e( "Don't miss the party!", 'coming-soon-maintenance-mode' ); ?></p>
             <form id="subscribe-form" method="post" class="flex flex-row items-center justify-center gap-3 w-full">
                 <input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Enter your email', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow px-5 rounded-full focus:outline-none text-left h-[48px]" required>
                 <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">
 				<button type="submit" class="subscribe-btn px-8 rounded-full whitespace-nowrap uppercase tracking-wider font-bold text-xs md:text-sm h-[48px] inline-flex items-center justify-center"><?php esc_html_e( 'Get on the list', 'coming-soon-maintenance-mode' ); ?></button>
             </form>
-            <p id="success-message" class="mt-4 text-sm text-green-300 hidden"><?php esc_html_e( "Awesome! Your invite is confirmed.", 'coming-soon-maintenance-mode' ); ?></p>
+            <p id="success-message" class="mt-3 text-sm text-green-300 hidden"><?php esc_html_e( "Awesome! Your invite is confirmed.", 'coming-soon-maintenance-mode' ); ?></p>
         </div>
 		<?php
 			$csmm_flag = 0;
@@ -117,7 +117,7 @@
 			?>
 		</div>
 		
-		<div class="flex justify-center space-x-4">
+		<div class="flex justify-center space-x-4 mt-6">
 			<ul class="home-social">
 				<?php if(empty($csmm_sm_facebook) == false) { ?>
 				<li><a href="<?php echo esc_url($csmm_sm_facebook); ?>" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
