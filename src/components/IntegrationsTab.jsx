@@ -1532,6 +1532,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
             placeholder="your-email@example.com"
             value={testEmailRecipient}
             onChange={(e) => setTestEmailRecipient(e.target.value)}
+            sx={{ mt: 1.5 }}
           />
         </DialogContent>
         <DialogActions sx={{ p: 2.5 }}>
