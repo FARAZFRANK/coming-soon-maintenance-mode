@@ -43,13 +43,13 @@
         <h1 class="title-font text-5xl md:text-7xl text-white my-4">
             <?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?>
         </h1>
-        <p class="text-gray-200 mb-6 max-w-md mx-auto leading-relaxed">
+        <p class="party-desc text-gray-200 mb-8 max-w-md mx-auto leading-relaxed">
             <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
         </p>
 
         <!-- Countdown Timer -->
 		<?php if($csmm_countdown == 1) { ?>
-        <div id="countdown" class="grid grid-cols-4 gap-4 mb-6 w-full max-w-md mx-auto">
+        <div id="countdown" class="grid grid-cols-4 gap-4 mb-8 w-full max-w-md mx-auto">
             <div class="countdown-box">
                 <div id="days" class="countdown-number text-4xl md:text-5xl">00</div>
                 <div class="countdown-label"><?php esc_html_e( "Days", 'coming-soon-maintenance-mode' ); ?></div>

@@ -68,14 +68,17 @@ body {
 	color: #FFD600; /* Bright Yellow */
 }
 
-.main-card p.text-gray-200 {
-	margin-bottom: 1.5rem !important;
-	line-height: 1.6;
+.main-card .party-desc,
+.main-card p.party-desc {
+	margin-top: 1rem !important;
+	margin-bottom: 2.25rem !important;
+	line-height: 1.7 !important;
 }
 
 /* Countdown timer styling */
 .main-card #countdown {
-	margin-bottom: 1.75rem !important;
+	margin-top: 0 !important;
+	margin-bottom: 2rem !important;
 }
 
 .countdown-box {
