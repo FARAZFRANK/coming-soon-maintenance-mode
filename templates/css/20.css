@@ -89,30 +89,66 @@ body {
 }
 
 /* Subscription form styling */
-.subscribe-input {
-	background: rgba(255, 255, 255, 0.05);
-	border: 1px solid #374151;
-	color: #ffffff;
+.content-side #subscribe-form {
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: center !important;
+	gap: 12px !important;
+	max-width: 520px !important;
+	width: 100% !important;
+	margin: 0 !important;
+}
+
+.content-side .subscribe-input {
+	background: rgba(255, 255, 255, 0.05) !important;
+	border: 1px solid #374151 !important;
+	color: #ffffff !important;
+	height: 48px !important;
+	line-height: 48px !important;
+	padding: 0 16px !important;
+	border-radius: 8px !important;
+	flex: 1 1 auto !important;
+	width: auto !important;
+	font-family: 'Roboto Condensed', sans-serif !important;
+	font-size: 15px !important;
+	box-sizing: border-box !important;
+	text-align: left !important;
 	transition: all 0.3s ease;
 }
-.subscribe-input::placeholder {
-	color: #6B7280;
+
+.content-side .subscribe-input::placeholder {
+	color: #6B7280 !important;
+	opacity: 1 !important;
 }
-.subscribe-input:focus {
-	outline: none;
-	border-color: #FBBF24;
-	background: rgba(255, 255, 255, 0.1);
+
+.content-side .subscribe-input:focus {
+	outline: none !important;
+	border-color: #FBBF24 !important;
+	background: rgba(255, 255, 255, 0.1) !important;
 }
-.subscribe-btn {
-	background-color: #FBBF24;
-	color: #111827;
-	border: none;
+
+.content-side .subscribe-btn {
+	background-color: #FBBF24 !important;
+	color: #111827 !important;
+	border: none !important;
+	height: 48px !important;
+	line-height: 48px !important;
+	padding: 0 24px !important;
+	border-radius: 8px !important;
+	white-space: nowrap !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.05em !important;
+	text-transform: uppercase !important;
+	position: static !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	box-sizing: border-box !important;
 	transition: all 0.3s ease;
-	font-weight: 700;
-	text-transform: uppercase;
 }
-.subscribe-btn:hover {
-	background-color: #F59E0B; /* Darker amber */
+
+.content-side .subscribe-btn:hover {
+	background-color: #F59E0B !important;
 }
 
 /* Social media icons styling */
