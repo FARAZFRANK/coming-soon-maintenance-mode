@@ -541,7 +541,172 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
         </CardContent>
       </Card>
 
-      {/* 4. Real-World Use Cases & Step-by-Step Workflows */}
+      {/* 4. Step-by-Step API Key Retrieval Guide */}
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1.15rem' }}>
+            🔑 Step-by-Step Guide: How to Get Your Newsletter API Keys & Audience IDs
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
+            Follow these simple step-by-step instructions to obtain API credentials from your preferred email marketing service and connect them to Coming Soon Pro.
+          </Typography>
+
+          <Stack spacing={2}>
+            {/* 1. Mailchimp Guide */}
+            <Accordion defaultExpanded elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#2563eb' }}>
+                    1. Mailchimp — Getting API Key & Audience / List ID
+                  </Typography>
+                  <Chip label="v3 API" size="small" color="primary" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 700 }} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
+                  <Box sx={{ mb: 1.5, p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(37, 99, 235, 0.08)' : '#eff6ff', borderRadius: '8px', border: '1px solid rgba(37, 99, 235, 0.2)' }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#1d4ed8', mb: 0.5 }}>
+                      How to generate your Mailchimp API Key:
+                    </Typography>
+                    <ol style={{ margin: 0, paddingLeft: '20px' }}>
+                      <li>Log in to your <strong><a href="https://admin.mailchimp.com/" target="_blank" rel="noreferrer" style={{ color: '#2563eb', fontWeight: 600 }}>Mailchimp Dashboard</a></strong>.</li>
+                      <li>Click on your <strong>Profile Avatar / Account Icon</strong> in the bottom-left corner and select <strong>Profile</strong>.</li>
+                      <li>Click on the <strong>Extras</strong> dropdown menu at the top and select <strong>API keys</strong>.</li>
+                      <li>Under the <em>"Your API Keys"</em> section, click the <strong>"Create A Key"</strong> button.</li>
+                      <li>Give the key a descriptive name (e.g. <code>Coming Soon WordPress</code>) and click <strong>Generate Key</strong>.</li>
+                      <li>Copy the generated API Key (format: <code>xxxxxxxxxxxxxxxxxxxx-us21</code>) and paste it into the plugin's <strong>Mailchimp API Key</strong> field.</li>
+                    </ol>
+                  </Box>
+
+                  <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                      How to find your Audience / List ID:
+                    </Typography>
+                    <ol style={{ margin: 0, paddingLeft: '20px' }}>
+                      <li>In the Mailchimp left sidebar menu, click <strong>Audience</strong> -&gt; <strong>All Contacts</strong>.</li>
+                      <li>If you have multiple audiences, select the one you want to sync subscribers to.</li>
+                      <li>Click the <strong>Settings</strong> dropdown button and choose <strong>Audience name and defaults</strong>.</li>
+                      <li>Find the <strong>Audience ID</strong> (a string of random numbers/letters like <code>a1b2c3d4e5</code>) and copy it.</li>
+                      <li>Paste this into the plugin's <strong>Audience / List ID</strong> field, then click <strong>"Test Mailchimp Connection"</strong>.</li>
+                    </ol>
+                  </Box>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+
+            {/* 2. Brevo Guide */}
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0284c7' }}>
+                    2. Brevo (Sendinblue) — Getting API Key (v3) & List ID
+                  </Typography>
+                  <Chip label="v3 API" size="small" color="info" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 700 }} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
+                  <Box sx={{ mb: 1.5, p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(2, 132, 199, 0.08)' : '#f0f9ff', borderRadius: '8px', border: '1px solid rgba(2, 132, 199, 0.2)' }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0369a1', mb: 0.5 }}>
+                      How to generate your Brevo API Key:
+                    </Typography>
+                    <ol style={{ margin: 0, paddingLeft: '20px' }}>
+                      <li>Log in to your <strong><a href="https://app.brevo.com/" target="_blank" rel="noreferrer" style={{ color: '#0284c7', fontWeight: 600 }}>Brevo Account</a></strong>.</li>
+                      <li>Click on your <strong>Account / Company Name</strong> in the top-right corner.</li>
+                      <li>Select <strong>SMTP &amp; API</strong> from the dropdown menu.</li>
+                      <li>Click on the <strong>API Keys</strong> tab, then click the <strong>"Generate a new API key"</strong> button.</li>
+                      <li>Name your API Key (e.g. <code>Coming Soon Plugin</code>) and click <strong>Generate</strong>.</li>
+                      <li>Copy the full key (starts with <code>xkeysib-...</code>) and paste it into the <strong>Brevo API Key (v3)</strong> field.</li>
+                    </ol>
+                  </Box>
+
+                  <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                      How to find your List ID (Optional):
+                    </Typography>
+                    <ol style={{ margin: 0, paddingLeft: '20px' }}>
+                      <li>In Brevo, go to <strong>Contacts</strong> -&gt; <strong>Lists</strong> in the left navigation.</li>
+                      <li>Look at the list you want to save leads into. The numeric List ID is displayed directly on the list row (e.g. <code>#2</code>, <code>#5</code>).</li>
+                      <li>Enter just the number (e.g. <code>2</code>) into the <strong>List ID</strong> field in Coming Soon Pro. (If left blank, leads go to your general contact list).</li>
+                      <li>Click <strong>"Test Brevo Connection"</strong> to verify.</li>
+                    </ol>
+                  </Box>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+
+            {/* 3. MailerLite Guide */}
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#16a34a' }}>
+                    3. MailerLite — Getting API Token & Group ID
+                  </Typography>
+                  <Chip label="Bearer Token" size="small" color="success" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 700 }} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
+                  <Box sx={{ mb: 1.5, p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(22, 163, 74, 0.08)' : '#f0fdf4', borderRadius: '8px', border: '1px solid rgba(22, 163, 74, 0.2)' }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#15803d', mb: 0.5 }}>
+                      How to generate your MailerLite API Token:
+                    </Typography>
+                    <ol style={{ margin: 0, paddingLeft: '20px' }}>
+                      <li>Log in to your <strong><a href="https://dashboard.mailerlite.com/" target="_blank" rel="noreferrer" style={{ color: '#16a34a', fontWeight: 600 }}>MailerLite Dashboard</a></strong>.</li>
+                      <li>Click <strong>Integrations</strong> in the left sidebar menu.</li>
+                      <li>Find <strong>MailerLite API</strong> and click the <strong>Use</strong> button.</li>
+                      <li>Click <strong>"Generate new token"</strong>. Give it a name (e.g. <code>Coming Soon WP Site</code>).</li>
+                      <li>Copy the generated API Token string (save it somewhere safe as MailerLite only shows it once!).</li>
+                      <li>Paste the token into the plugin's <strong>MailerLite API Token</strong> field.</li>
+                    </ol>
+                  </Box>
+
+                  <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                      How to find your Group ID (Optional):
+                    </Typography>
+                    <ol style={{ margin: 0, paddingLeft: '20px' }}>
+                      <li>Go to <strong>Subscribers</strong> -&gt; <strong>Groups</strong> in MailerLite.</li>
+                      <li>Click on the specific group name you want leads to be organized under.</li>
+                      <li>Check your browser's URL address bar. The numeric ID at the end of the URL (e.g. <code>groups/123456789</code>) is your Group ID.</li>
+                      <li>Paste this numeric Group ID into the plugin and click <strong>"Test MailerLite Connection"</strong>.</li>
+                    </ol>
+                  </Box>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+
+            {/* 4. Zapier & Make Webhooks */}
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#7c3aed' }}>
+                    4. Webhooks — Connecting to Zapier, Make (Integromat), or Google Sheets
+                  </Typography>
+                  <Chip label="Webhook URL" size="small" color="secondary" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 700 }} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
+                  <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(124, 58, 237, 0.08)' : '#faf5ff', borderRadius: '8px', border: '1px solid rgba(124, 58, 237, 0.2)' }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#6d28d9', mb: 0.5 }}>
+                      How to set up a real-time Webhook:
+                    </Typography>
+                    <ol style={{ margin: 0, paddingLeft: '20px' }}>
+                      <li><strong>In Zapier:</strong> Create a Zap -&gt; Choose <strong>Webhooks by Zapier</strong> -&gt; Event: <strong>Catch Hook</strong> -&gt; Copy the <strong>Custom Webhook URL</strong>.</li>
+                      <li><strong>In Make (Integromat):</strong> Create a Scenario -&gt; Add <strong>Custom Webhook</strong> module -&gt; Copy the webhook link.</li>
+                      <li>Paste the URL into the <strong>Webhook Endpoint URL</strong> field in Coming Soon Pro.</li>
+                      <li>Click <strong>"Send Test Webhook"</strong> to fire a sample JSON payload (contains email, timestamp, IP, user-agent, and source page) into your automation.</li>
+                    </ol>
+                  </Box>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </Stack>
+        </CardContent>
+      </Card>
+
+      {/* 5. Real-World Use Cases & Step-by-Step Workflows */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1.15rem' }}>
