@@ -570,7 +570,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                     </Typography>
                     <ol style={{ margin: 0, paddingLeft: '20px' }}>
                       <li>Log in to your <strong><a href="https://admin.mailchimp.com/" target="_blank" rel="noreferrer" style={{ color: '#2563eb', fontWeight: 600 }}>Mailchimp Dashboard</a></strong>.</li>
-                      <li>Click on your <strong>Profile Avatar / Account Icon</strong> in the bottom-left corner and select <strong>Profile</strong>.</li>
+                      <li>Click on your <strong>Profile Avatar / Account Icon</strong> in the top-right corner and select <strong>Profile</strong>.</li>
                       <li>Click on the <strong>Extras</strong> dropdown menu at the top and select <strong>API keys</strong>.</li>
                       <li>Under the <em>"Your API Keys"</em> section, click the <strong>"Create A Key"</strong> button.</li>
                       <li>Give the key a descriptive name (e.g. <code>Coming Soon WordPress</code>) and click <strong>Generate Key</strong>.</li>
