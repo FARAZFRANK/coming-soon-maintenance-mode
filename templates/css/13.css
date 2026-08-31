@@ -377,19 +377,20 @@ text-align: center;
  /* ------------------------------------------------------------------- 
  * ## home social
  * ------------------------------------------------------------------- */
- .home-social {
-   list-style: none;
-   font-family: "Nunito Sans", sans-serif;
-   margin: 0;
-   /* position: absolute; */
-   /* bottom: 3.6rem; */
-   left: 8rem;
-   z-index: 5;
-   display: flex;
-   justify-content: flex-start;
-   align-content: center;
-   gap: 15px;
- }
+  .home-social {
+    list-style: none;
+    font-family: "Nunito Sans", sans-serif;
+    margin: 20px auto 0 auto !important;
+    padding: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 5;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 15px;
+    width: 100% !important;
+  }
 
  .home-social a {
    color: #FFFFFF;
