@@ -66,6 +66,20 @@ body {
 	color: #ccc;
 }
 
+.ticket-desc,
+.ticket p.ticket-desc {
+	margin-top: 1rem !important;
+	margin-bottom: 2.75rem !important;
+	line-height: 1.7 !important;
+	display: block !important;
+}
+
+#countdown,
+.ticket #countdown {
+	margin-top: 1.5rem !important;
+	margin-bottom: 2.5rem !important;
+}
+
 /* Perforated line effect */
 .perforated-line {
 	height: 1px;

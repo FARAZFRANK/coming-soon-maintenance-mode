@@ -42,13 +42,13 @@
             <h1 class="title-font text-5xl md:text-6xl text-white mb-4">
                 <?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?>
             </h1>
-            <p class="text-gray-400 text-sm mb-6">
+            <p class="ticket-desc text-gray-400 text-sm leading-relaxed" style="margin-top: 1rem !important; margin-bottom: 2.75rem !important; line-height: 1.7 !important;">
                 <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
             </p>
 
             <!-- Countdown Timer -->
 		<?php if($csmm_countdown == 1) { ?>
-        <div id="countdown" class="grid grid-cols-4 gap-4 mb-8 w-full">
+        <div id="countdown" class="grid grid-cols-4 gap-4 w-full" style="margin-top: 1.5rem !important; margin-bottom: 2.5rem !important;">
                 <div class="text-center">
                     <div id="days" class="countdown-number text-3xl md:text-4xl">00</div>
                     <div class="countdown-label"><?php esc_html_e( "Days", 'coming-soon-maintenance-mode' ); ?></div>
