@@ -2,7 +2,7 @@
 
 [![WordPress Plugin](https://img.shields.io/badge/WordPress-5.0+-blue.svg)](https://wordpress.org/)
 [![PHP Version](https://img.shields.io/badge/PHP-7.2+-purple.svg)](https://www.php.net/)
-[![Version](https://img.shields.io/badge/version-3.2.2-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
+[![Version](https://img.shields.io/badge/version-3.2.3-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
 [![React](https://img.shields.io/badge/React-18-61dafb.svg)](https://react.dev/)
 [![Material UI](https://img.shields.io/badge/MUI-v5-007fff.svg)](https://mui.com/)
 [![Vite](https://img.shields.io/badge/Vite-5-646cff.svg)](https://vitejs.dev/)
@@ -79,6 +79,13 @@ npm run build
 ---
 
 ## 📋 Changelog
+
+### = 3.2.3 = (31 August 2026)
+* **Custom SMTP Direct Test Mailer**: Added instant Send Test Mail functionality and connection diagnostics in the Custom SMTP Mail Delivery card to verify server credentials on the fly.
+* **Form Headline Text Setting**: Added customizable `Form Headline Text` under Email Lead Capture settings with dynamic support across templates 17–36.
+* **Newsletter API Setup Guide & 2026 Plan Limits**: Added comprehensive step-by-step API key retrieval tutorials and verified official free tier limits in Documentation and Integrations tabs.
+* **Subscribers Multi-Select & Bulk Deletion Fix**: Resolved event double-firing issue on table rows and header checkbox for smooth bulk subscriber selection and deletion.
+* **Modal Dialog Input & Placeholder Alignment**: Fixed WordPress core admin CSS bleed into MUI Dialog portals, ensuring pixel-perfect input placeholder, label, and fieldset rendering in both Dark and Light modes.
 
 ### = 3.2.2 = (30 August 2026)
 * **Plugin Settings Backup, Export & JSON Import**: Added complete JSON configuration file download and restore upload support with schema verification, enabling seamless migration across staging and production sites.

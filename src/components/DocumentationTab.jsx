@@ -54,7 +54,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
     try {
       const exportData = {
         plugin: 'Coming Soon Maintenance Mode Pro',
-        version: api.getConfig().version || '3.2.1',
+        version: api.getConfig().version || '3.2.3',
         site_url: api.getConfig().siteUrl || '',
         exported_at: new Date().toISOString(),
         settings: settings || {},
@@ -172,7 +172,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <Typography variant="h5" sx={{ fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
                   Coming Soon Maintenance Mode Pro Studio
                 </Typography>
-                <Chip label="v3.2.1" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Chip label="v3.2.3" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
               </Box>
               <Typography variant="body1" sx={{ color: '#94a3b8', maxWidth: 780, lineHeight: 1.6 }}>
                 Comprehensive user guide, implementation workflows, newsletter integrations, SEO configuration, and real-world use cases.
@@ -897,7 +897,42 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
           <Stack spacing={2.5}>
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                <Chip label="v3.2.1" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Chip label="v3.2.3" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                  Custom SMTP Test Mailer, Dynamic Form Headlines, API Guides & UI Polish
+                </Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary" component="ul" sx={{ pl: 2.5, m: 0, lineHeight: 1.8 }}>
+                <li><strong>Custom SMTP Direct Test Mailer:</strong> Added instant Send Test Mail functionality and connection diagnostics in the Custom SMTP Mail Delivery card to verify server credentials on the fly.</li>
+                <li><strong>Form Headline Text Setting:</strong> Added customizable Form Headline Text under Email Lead Capture settings with dynamic support across templates 17–36.</li>
+                <li><strong>Newsletter API Setup Guide & 2026 Plan Limits:</strong> Added comprehensive step-by-step API key retrieval tutorials and verified official free tier limits in Documentation and Integrations tabs.</li>
+                <li><strong>Subscribers Multi-Select & Bulk Deletion Fix:</strong> Resolved event double-firing issue on table rows and header checkbox for smooth bulk subscriber selection and deletion.</li>
+                <li><strong>Modal Dialog Input & Placeholder Alignment:</strong> Fixed WordPress core admin CSS bleed into MUI Dialog portals, ensuring pixel-perfect input placeholder, label, and fieldset rendering in both Dark and Light modes.</li>
+              </Typography>
+            </Box>
+
+            <Divider />
+
+            <Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                <Chip label="v3.2.2" color="primary" variant="outlined" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                  Settings Backup/Export/Import, Factory Reset, Override Suite & Sticky Header
+                </Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary" component="ul" sx={{ pl: 2.5, m: 0, lineHeight: 1.8 }}>
+                <li><strong>Settings Backup, Export & JSON Import:</strong> Full JSON configuration download and upload restore system with schema validation.</li>
+                <li><strong>Factory Reset System:</strong> Complete plugin reset with high-visibility alert dialog.</li>
+                <li><strong>Title, Description & Countdown Override:</strong> Enhanced typography sliders and color swatches across all 36 templates.</li>
+                <li><strong>Sticky Header & Solid Background:</strong> Sticky first card with responsive WordPress admin bar alignment and `#1d1b1b` solid background default.</li>
+              </Typography>
+            </Box>
+
+            <Divider />
+
+            <Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                <Chip label="v3.2.1" size="small" sx={{ fontWeight: 700, borderRadius: '6px' }} />
                 <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                   Complete SEO Suite, Newsletter APIs, Dynamic Social Channels & Modern Centered Studio
                 </Typography>

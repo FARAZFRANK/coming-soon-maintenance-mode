@@ -1,5 +1,22 @@
 Coming Soon Maintenance Mode Pro
 
+= 3.2.3 = 31 August 2026
+* Custom SMTP Direct Test Mailer: Added instant Send Test Mail functionality and connection diagnostics in the Custom SMTP Mail Delivery card to verify server credentials on the fly.
+* Form Headline Text Setting: Added customizable Form Headline Text under Email Lead Capture settings with dynamic support across templates 17–36.
+* Newsletter API Setup Guide & 2026 Plan Limits: Added comprehensive step-by-step API key retrieval tutorials and verified official free tier limits in Documentation and Integrations tabs.
+* Subscribers Multi-Select & Bulk Deletion Fix: Resolved event double-firing issue on table rows and header checkbox for smooth bulk subscriber selection and deletion.
+* Modal Dialog Input & Placeholder Alignment: Fixed WordPress core admin CSS bleed into MUI Dialog portals, ensuring pixel-perfect input placeholder, label, and fieldset rendering in both Dark and Light modes.
+
+= 3.2.2 = 30 August 2026
+* Plugin Settings Backup, Export & JSON Import: Added complete JSON configuration file download and restore upload support with schema verification, enabling seamless migration across staging and production sites.
+* Factory Reset System: Added complete plugin factory reset option in Documentation Tab with high-visibility warning alert modal and backup recommendation.
+* Title & Description Override Suite (All 36 Templates): Renamed controls to Override Title and Override Description, adding custom Font Size sliders and Text Color swatches + hex inputs with reset buttons across all template layouts.
+* Launch Countdown Timer Override: Added Override Countdown setting with dedicated Digits & Labels font size sliders and color pickers mapped to all countdown variations.
+* Sticky Dashboard Header: Implemented sticky first card with responsive WordPress admin bar alignment (top: 32px / top: 46px), enhanced elevation shadow, and backdrop blur.
+* Graphic Background & Solid Color Enhancements: Updated Solid Color default to #1d1b1b with overlay none, and added dedicated Reset buttons for Solid Color, Gradient, Pattern, and Overlay settings.
+* Synchronized Subscriber Form Live Preview: Aligned dashboard Live Form Preview with the exact frontend search/subscribe bar appearance, fixing real-time input background color rendering overrides.
+* Preloader & Performance Optimization: Eliminated duplicate loaders and white screen flash by pre-hydrating workspace state in wp_localize_script; resolved horizontal scrollbars via overflow-x: clip.
+
 = 3.2.1 = 25 August 2026
 * WordPress Media Library Integration: Fixed script dependencies (media-editor, media-views) and isolated Vite output bundle with IIFE format to prevent global scope variable conflicts (window.wp), enabling smooth native media upload and selection modal for Brand Logo and Custom Background images.
 * Universal Content & Branding Engine: Added full multi-template compatibility in loader.php ensuring all 36 templates respect Logo (Text, Graphic with height slider and custom link, or Disabled), WYSIWYG rich HTML description and shortcodes support, custom Google Fonts, and custom CSS.

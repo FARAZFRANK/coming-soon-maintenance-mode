@@ -4,7 +4,7 @@ Tags: coming soon, maintenance mode, under construction, launch countdown, newsl
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 3.2.2
+Stable tag: 3.2.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,13 @@ Yes! Logged-in administrators bypass the maintenance screen and can view and edi
 Go to **Newsletter & Integrations** -> **Custom SMTP Mail Delivery**, enable SMTP, and configure your Gmail, SendGrid, or hosting SMTP server.
 
 == Changelog ==
+
+= 3.2.3 = 31 August 2026
+* **Custom SMTP Direct Test Mailer**: Added instant Send Test Mail functionality and connection diagnostics in the Custom SMTP Mail Delivery card to verify server credentials on the fly.
+* **Form Headline Text Setting**: Added customizable `Form Headline Text` under Email Lead Capture settings with dynamic support across templates 17–36.
+* **Newsletter API Setup Guide & 2026 Plan Limits**: Added comprehensive step-by-step API key retrieval tutorials and verified official free tier limits in Documentation and Integrations tabs.
+* **Subscribers Multi-Select & Bulk Deletion Fix**: Resolved event double-firing issue on table rows and header checkbox for smooth bulk subscriber selection and deletion.
+* **Modal Dialog Input & Placeholder Alignment**: Fixed WordPress core admin CSS bleed into MUI Dialog portals, ensuring pixel-perfect input placeholder, label, and fieldset rendering in both Dark and Light modes.
 
 = 3.2.2 = 30 August 2026
 * **Plugin Settings Backup, Export & JSON Import**: Added complete JSON configuration file download and restore upload support with schema verification, enabling seamless migration across staging and production sites.

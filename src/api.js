@@ -10,7 +10,7 @@ const getRestConfig = () => {
     previewUrl: data.previewUrl || '',
     siteUrl: data.siteUrl || '',
     pluginUrl: data.pluginUrl || '',
-    version: data.version || '3.2.1',
+    version: data.version || '3.2.3',
     user: data.user || { name: 'Admin', can_manage: true },
   };
 };
