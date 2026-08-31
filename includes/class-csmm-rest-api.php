@@ -286,7 +286,7 @@ class CSMM_REST_API {
 			'susbcriber_form'              => isset( $content['susbcriber_form'] ) ? strval( $content['susbcriber_form'] ) : '1',
 			'form_placeholder_text'        => isset( $content['form_placeholder_text'] ) ? $content['form_placeholder_text'] : 'Email Address',
 			'form_btn_text'                => isset( $content['form_btn_text'] ) ? $content['form_btn_text'] : 'Notify Me',
-			'form_input_bg'                => isset( $content['form_input_bg'] ) ? $content['form_input_bg'] : 'rgba(0, 0, 0, 0.35)',
+			'form_input_bg'                => isset( $content['form_input_bg'] ) ? $content['form_input_bg'] : 'rgba(0, 0, 0, 0.7)',
 			'form_input_color'             => isset( $content['form_input_color'] ) ? $content['form_input_color'] : '#ffffff',
 			'form_btn_bg'                  => isset( $content['form_btn_bg'] ) ? $content['form_btn_bg'] : '#e11d48',
 			'form_btn_color'       => isset( $content['form_btn_color'] ) ? $content['form_btn_color'] : '#ffffff',

@@ -2738,9 +2738,9 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     <TextField
                       size="small"
                       fullWidth
-                      value={settings.form_input_bg !== undefined ? settings.form_input_bg : 'rgba(0, 0, 0, 0.35)'}
+                      value={settings.form_input_bg !== undefined ? settings.form_input_bg : 'rgba(0, 0, 0, 0.7)'}
                       onChange={(e) => onChange('form_input_bg', e.target.value)}
-                      placeholder="rgba(0, 0, 0, 0.35)"
+                      placeholder="rgba(0, 0, 0, 0.7)"
                     />
                   </Box>
                 </Grid>
@@ -2896,7 +2896,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         onClick={() => {
                           onChange('form_placeholder_text', 'Email Address');
                           onChange('form_btn_text', 'Notify Me');
-                          onChange('form_input_bg', 'rgba(0, 0, 0, 0.35)');
+                          onChange('form_input_bg', 'rgba(0, 0, 0, 0.7)');
                           onChange('form_input_color', '#ffffff');
                           onChange('form_btn_bg', '#e11d48');
                           onChange('form_btn_color', '#ffffff');
@@ -2937,7 +2937,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         sx={{
                           flex: 1,
                           height: '100%',
-                          backgroundColor: settings.form_input_bg || 'rgba(0, 0, 0, 0.35)',
+                          backgroundColor: settings.form_input_bg || 'rgba(0, 0, 0, 0.7)',
                           display: 'flex',
                           alignItems: 'center',
                           px: 2.5,

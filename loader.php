@@ -139,7 +139,7 @@ $csmm_social_icon_size         = isset( $csmm_social_media['social_icon_size'] )
 // Subscriber Form UI Settings
 $csmm_form_placeholder   = isset( $csmm_content['form_placeholder_text'] ) && '' !== $csmm_content['form_placeholder_text'] ? $csmm_content['form_placeholder_text'] : __( 'Email Address', 'coming-soon-maintenance-mode' );
 $csmm_form_btn_text      = isset( $csmm_content['form_btn_text'] ) && '' !== $csmm_content['form_btn_text'] ? $csmm_content['form_btn_text'] : __( 'Notify Me', 'coming-soon-maintenance-mode' );
-$csmm_form_input_bg      = isset( $csmm_content['form_input_bg'] ) && '' !== $csmm_content['form_input_bg'] ? $csmm_content['form_input_bg'] : 'rgba(0, 0, 0, 0.35)';
+$csmm_form_input_bg      = isset( $csmm_content['form_input_bg'] ) && '' !== $csmm_content['form_input_bg'] ? $csmm_content['form_input_bg'] : 'rgba(0, 0, 0, 0.7)';
 $csmm_form_input_color   = isset( $csmm_content['form_input_color'] ) && '' !== $csmm_content['form_input_color'] ? $csmm_content['form_input_color'] : '#ffffff';
 $csmm_form_btn_bg        = isset( $csmm_content['form_btn_bg'] ) && '' !== $csmm_content['form_btn_bg'] ? $csmm_content['form_btn_bg'] : '#e11d48';
 $csmm_form_btn_color     = isset( $csmm_content['form_btn_color'] ) && '' !== $csmm_content['form_btn_color'] ? $csmm_content['form_btn_color'] : '#ffffff';
