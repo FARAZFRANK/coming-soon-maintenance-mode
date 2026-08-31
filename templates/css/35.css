@@ -62,6 +62,20 @@ body {
 	color: #888;
 }
 
+.ecommerce-desc,
+.content-side p.ecommerce-desc {
+	margin-top: 1rem !important;
+	margin-bottom: 3rem !important;
+	line-height: 1.8 !important;
+	display: block !important;
+}
+
+#countdown,
+.content-side #countdown {
+	margin-top: 1.5rem !important;
+	margin-bottom: 2.75rem !important;
+}
+
 /* Countdown timer styling */
 .countdown-number {
 	font-family: 'DM Serif Display', serif;
