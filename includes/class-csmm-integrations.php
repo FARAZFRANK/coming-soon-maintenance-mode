@@ -550,6 +550,91 @@ class CSMM_Integrations {
 	}
 
 	/**
+	 * Test direct SMTP connection and dispatch test email.
+	 */
+	public static function test_smtp( $host, $port, $encryption, $username, $password, $from_email, $from_name, $to_email ) {
+		if ( ! class_exists( 'PHPMailer\PHPMailer\PHPMailer' ) ) {
+			if ( file_exists( ABSPATH . WPINC . '/PHPMailer/PHPMailer.php' ) ) {
+				require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+				require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
+				require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
+			} elseif ( file_exists( ABSPATH . WPINC . '/class-phpmailer.php' ) ) {
+				require_once ABSPATH . WPINC . '/class-phpmailer.php';
+				require_once ABSPATH . WPINC . '/class-smtp.php';
+			}
+		}
+
+		if ( class_exists( 'PHPMailer\PHPMailer\PHPMailer' ) ) {
+			$mail = new \PHPMailer\PHPMailer\PHPMailer( true );
+		} elseif ( class_exists( 'PHPMailer' ) ) {
+			$mail = new \PHPMailer( true );
+		} else {
+			return array(
+				'success' => false,
+				'message' => __( 'PHPMailer library is not available on this server.', 'coming-soon-maintenance-mode' ),
+			);
+		}
+
+		try {
+			$mail->isSMTP();
+			$mail->Host     = sanitize_text_field( $host );
+			$mail->SMTPAuth = ! empty( $username );
+			$mail->Port     = intval( $port ) > 0 ? intval( $port ) : 587;
+			$mail->Username = sanitize_text_field( $username );
+			$mail->Password = $password;
+
+			$enc = strtolower( sanitize_text_field( $encryption ) );
+			if ( 'tls' === $enc || 'ssl' === $enc ) {
+				$mail->SMTPSecure = $enc;
+			} else {
+				$mail->SMTPSecure  = '';
+				$mail->SMTPAutoTLS = false;
+			}
+			$mail->Timeout = 12;
+
+			$sender_email = ! empty( $from_email ) ? sanitize_email( $from_email ) : ( ! empty( $username ) && is_email( $username ) ? sanitize_email( $username ) : get_bloginfo( 'admin_email' ) );
+			$sender_name  = ! empty( $from_name ) ? sanitize_text_field( $from_name ) : get_bloginfo( 'name' );
+
+			$mail->setFrom( $sender_email, $sender_name );
+			$mail->addAddress( sanitize_email( $to_email ) );
+			$mail->isHTML( true );
+			$mail->CharSet = 'UTF-8';
+			$mail->Subject = '[TEST] SMTP Mail Delivery Test - ' . get_bloginfo( 'name' );
+			$mail->Body    = '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 10px; background: #ffffff;">'
+				. '<h2 style="color: #2563eb; margin-top: 0;">🎉 SMTP Mail Delivery Test Successful!</h2>'
+				. '<p style="color: #334155; font-size: 15px; line-height: 1.6;">Congratulations! Your custom SMTP mail server is properly configured with <strong>Coming Soon &amp; Maintenance Mode Pro</strong> and emails are being dispatched reliably.</p>'
+				. '<div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 13px; color: #475569; margin: 20px 0;">'
+				. '<p style="margin: 3px 0;"><strong>SMTP Server Host:</strong> ' . esc_html( $host ) . '</p>'
+				. '<p style="margin: 3px 0;"><strong>Port / Encryption:</strong> ' . esc_html( $port ) . ' (' . strtoupper( esc_html( $enc ) ) . ')</p>'
+				. '<p style="margin: 3px 0;"><strong>Sender:</strong> ' . esc_html( $sender_name ) . ' &lt;' . esc_html( $sender_email ) . '&gt;</p>'
+				. '<p style="margin: 3px 0;"><strong>Recipient:</strong> ' . esc_html( $to_email ) . '</p>'
+				. '<p style="margin: 3px 0;"><strong>Dispatched At:</strong> ' . esc_html( current_time( 'mysql' ) ) . '</p>'
+				. '</div>'
+				. '<p style="color: #64748b; font-size: 12px; margin-bottom: 0;">This is an automated test message sent from Coming Soon Maintenance Mode Pro.</p>'
+				. '</div>';
+
+			$mail->AltBody = "SMTP Mail Delivery Test Successful!\n\nYour custom SMTP server is properly configured.\nHost: " . $host . "\nPort: " . $port . "\nDispatched At: " . current_time( 'mysql' );
+
+			$mail->send();
+
+			return array(
+				'success' => true,
+				'message' => sprintf( __( 'Test email successfully delivered to %s via %s!', 'coming-soon-maintenance-mode' ), $to_email, $host ),
+			);
+		} catch ( \PHPMailer\PHPMailer\Exception $e ) {
+			return array(
+				'success' => false,
+				'message' => __( 'SMTP Error: ', 'coming-soon-maintenance-mode' ) . $mail->ErrorInfo,
+			);
+		} catch ( \Exception $e ) {
+			return array(
+				'success' => false,
+				'message' => __( 'Error: ', 'coming-soon-maintenance-mode' ) . $e->getMessage(),
+			);
+		}
+	}
+
+	/**
 	 * Send test email for admin preview.
 	 */
 	public static function send_test_email( $type, $recipient, $subject, $body ) {

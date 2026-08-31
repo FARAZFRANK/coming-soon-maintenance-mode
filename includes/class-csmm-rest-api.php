@@ -142,6 +142,17 @@ class CSMM_REST_API {
 			)
 		);
 
+		// Test SMTP Connection and Send Test Mail
+		register_rest_route(
+			self::NAMESPACE,
+			'/integrations/test-smtp',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'test_smtp' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
+
 		// Send Test Email
 		register_rest_route(
 			self::NAMESPACE,
@@ -887,6 +898,42 @@ class CSMM_REST_API {
 			return rest_ensure_response( $result );
 		}
 		return new WP_Error( 'webhook_failed', $result['message'], array( 'status' => 400 ) );
+	}
+
+	/**
+	 * Test SMTP connection and send test email.
+	 *
+	 * @param WP_REST_Request $request
+	 */
+	public function test_smtp( $request ) {
+		$params = $request->get_json_params();
+		if ( empty( $params ) ) {
+			$params = $request->get_params();
+		}
+
+		$host       = isset( $params['smtp_host'] ) ? sanitize_text_field( $params['smtp_host'] ) : '';
+		$port       = isset( $params['smtp_port'] ) ? intval( $params['smtp_port'] ) : 587;
+		$encryption = isset( $params['smtp_encryption'] ) ? sanitize_text_field( $params['smtp_encryption'] ) : 'tls';
+		$username   = isset( $params['smtp_username'] ) ? sanitize_text_field( $params['smtp_username'] ) : '';
+		$password   = isset( $params['smtp_password'] ) ? $params['smtp_password'] : '';
+		$from_email = isset( $params['smtp_from_email'] ) ? sanitize_email( $params['smtp_from_email'] ) : '';
+		$from_name  = isset( $params['smtp_from_name'] ) ? sanitize_text_field( $params['smtp_from_name'] ) : '';
+		$recipient  = isset( $params['recipient'] ) ? sanitize_email( $params['recipient'] ) : '';
+
+		if ( empty( $host ) ) {
+			return new WP_Error( 'missing_host', __( 'Please provide an SMTP Host address.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+		}
+
+		if ( empty( $recipient ) || ! is_email( $recipient ) ) {
+			return new WP_Error( 'invalid_recipient', __( 'Please enter a valid recipient email address to send the test email to.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+		}
+
+		$result = CSMM_Integrations::test_smtp( $host, $port, $encryption, $username, $password, $from_email, $from_name, $recipient );
+
+		if ( $result['success'] ) {
+			return rest_ensure_response( $result );
+		}
+		return new WP_Error( 'smtp_failed', $result['message'], array( 'status' => 400 ) );
 	}
 
 	/**

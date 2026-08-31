@@ -168,6 +168,10 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
   const [testingWebhook, setTestingWebhook] = useState(false);
   const [webhookResult, setWebhookResult] = useState(null);
 
+  const [testingSmtp, setTestingSmtp] = useState(false);
+  const [smtpResult, setSmtpResult] = useState(null);
+  const [testSmtpRecipient, setTestSmtpRecipient] = useState('');
+
   // Test Email Dialog State
   const [testEmailDialogOpen, setTestEmailDialogOpen] = useState(false);
   const [testEmailRecipient, setTestEmailRecipient] = useState('');
@@ -267,6 +271,40 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
       if (onNotify) onNotify('Webhook failed: ' + err.message, 'error');
     } finally {
       setTestingWebhook(false);
+    }
+  };
+
+  // Test SMTP Mail Delivery
+  const handleTestSmtp = async () => {
+    const recipient = (testSmtpRecipient || integrations.smtp_from_email || integrations.admin_email_recipient || '').trim();
+    if (!recipient) {
+      if (onNotify) onNotify('Please enter a recipient email address for the test email', 'warning');
+      return;
+    }
+    if (!integrations.smtp_host) {
+      if (onNotify) onNotify('Please enter your SMTP Host address', 'warning');
+      return;
+    }
+    setTestingSmtp(true);
+    setSmtpResult(null);
+    try {
+      const res = await api.testSmtp({
+        smtp_host: integrations.smtp_host,
+        smtp_port: integrations.smtp_port,
+        smtp_encryption: integrations.smtp_encryption,
+        smtp_username: integrations.smtp_username,
+        smtp_password: integrations.smtp_password,
+        smtp_from_email: integrations.smtp_from_email,
+        smtp_from_name: integrations.smtp_from_name,
+        recipient: recipient,
+      });
+      setSmtpResult({ success: true, message: res.message });
+      if (onNotify) onNotify(res.message, 'success');
+    } catch (err) {
+      setSmtpResult({ success: false, message: err.message });
+      if (onNotify) onNotify('SMTP test failed: ' + err.message, 'error');
+    } finally {
+      setTestingSmtp(false);
     }
   };
 
@@ -882,6 +920,45 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                 onChange={(e) => updateIntegration('smtp_from_name', e.target.value)}
                 disabled={!integrations.smtp_enabled}
               />
+            </Grid>
+
+            {/* Test SMTP Mail Delivery Section */}
+            <Grid item xs={12}>
+              <Divider sx={{ my: 1.5 }} />
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1.5, color: 'text.primary', display: 'flex', alignItems: 'center', gap: 1 }}>
+                <ForwardToInboxRoundedIcon sx={{ fontSize: 18, color: '#d97706' }} />
+                Test SMTP Mail Delivery & Connection
+              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                <TextField
+                  size="small"
+                  label="Send Test Email To"
+                  placeholder="admin@yourdomain.com"
+                  value={testSmtpRecipient || integrations.smtp_from_email || integrations.admin_email_recipient || ''}
+                  onChange={(e) => setTestSmtpRecipient(e.target.value)}
+                  disabled={!integrations.smtp_enabled || testingSmtp}
+                  sx={{ minWidth: { xs: '100%', sm: 320 } }}
+                />
+                <Button
+                  variant="outlined"
+                  color="warning"
+                  onClick={handleTestSmtp}
+                  disabled={!integrations.smtp_enabled || !integrations.smtp_host || testingSmtp}
+                  startIcon={testingSmtp ? <CircularProgress size={18} color="inherit" /> : <SendRoundedIcon />}
+                  sx={{ borderRadius: '8px', fontWeight: 600, py: 1 }}
+                >
+                  {testingSmtp ? 'Sending Test Mail...' : 'Send Test Mail'}
+                </Button>
+                {smtpResult && (
+                  <Chip
+                    icon={smtpResult.success ? <CheckCircleRoundedIcon /> : <ErrorOutlineRoundedIcon />}
+                    label={smtpResult.message}
+                    color={smtpResult.success ? 'success' : 'error'}
+                    variant="outlined"
+                    sx={{ borderRadius: '8px', fontWeight: 600, maxWidth: '100%', whiteSpace: 'normal', height: 'auto', py: 0.8 }}
+                  />
+                )}
+              </Box>
             </Grid>
           </Grid>
         </CardContent>

@@ -209,6 +209,18 @@ export const api = {
     });
   },
 
+  async testSmtp(params) {
+    const { nonce } = getRestConfig();
+    return fetchJson(buildUrl('integrations/test-smtp'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      body: JSON.stringify(params),
+    });
+  },
+
   async sendTestEmail(type, recipient, subject, body) {
     const { nonce } = getRestConfig();
     return fetchJson(buildUrl('integrations/send-test-email'), {
