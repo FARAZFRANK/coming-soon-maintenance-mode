@@ -1412,6 +1412,10 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   onChange('bg_gradient_color2', '#0f172a');
                   onChange('bg_gradient_angle', 135);
                   onChange('bg_pattern', 'sakura');
+                  onChange('bg_custom_pattern_url', '');
+                  onChange('bg_custom_pattern_size', 60);
+                  onChange('bg_custom_pattern_repeat', 'repeat');
+                  onChange('bg_custom_pattern_bg', '#0b1120');
                   onChange('bg_overlay_type', 'none');
                   onChange('bg_overlay_color', '#000000');
                   onChange('bg_overlay_opacity', 0.4);
@@ -2030,13 +2034,21 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
 
               {/* Option 4: Graphic Pattern */}
               {settings.bg_type === 'pattern' && (() => {
-                const pat = settings.bg_pattern || 'waves';
+                const pat = settings.bg_pattern || 'sakura';
+                const svgWaves = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40' viewBox='0 0 80 40'%3E%3Cg fill='none' stroke='%230ea5e9' stroke-opacity='0.28' stroke-width='1.5'%3E%3Cpath d='M0 40a40 40 0 0 1 80 0M0 30a30 30 0 0 1 60 0M0 20a20 20 0 0 1 40 0M0 10a10 10 0 0 1 20 0'/%3E%3Cpath d='M40 40a40 40 0 0 1 80 0M40 30a30 30 0 0 1 60 0M40 20a20 20 0 0 1 40 0M40 10a10 10 0 0 1 20 0'/%3E%3Cpath d='M-40 40a40 40 0 0 1 80 0M-40 30a30 30 0 0 1 60 0M-40 20a20 20 0 0 1 40 0M-40 10a10 10 0 0 1 20 0'/%3E%3Cpath d='M20 20a40 40 0 0 1 80 0M20 10a30 30 0 0 1 60 0M20 0a20 20 0 0 1 40 0'/%3E%3Cpath d='M-20 20a40 40 0 0 1 80 0M-20 10a30 30 0 0 1 60 0M-20 0a20 20 0 0 1 40 0'/%3E%3C/g%3E%3C/svg%3E";
+                const svgSakura = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23f472b6' fill-opacity='0.3'%3E%3Cpath d='M50 35c2-6 8-8 12-4s2 10-4 12c-6 2-8 8-12 4s-2-10 4-12z'/%3E%3Cpath d='M50 35c-2-6-8-8-12-4s-2 10 4 12c6 2 8 8 12 4s2-10-4-12z'/%3E%3Ccircle cx='50' cy='35' r='3.5' fill='%23fb7185' fill-opacity='0.55'/%3E%3Cpath d='M0 85c2-6 8-8 12-4s2 10-4 12c-6 2-8 8-12 4s-2-10 4-12z'/%3E%3Cpath d='M0 85c-2-6-8-8-12-4s-2 10 4 12c6 2 8 8 12 4s2-10-4-12z'/%3E%3Ccircle cx='0' cy='85' r='3.5' fill='%23fb7185' fill-opacity='0.55'/%3E%3Cpath d='M100 85c2-6 8-8 12-4s2 10-4 12c-6 2-8 8-12 4s-2-10 4-12z'/%3E%3Cpath d='M100 85c-2-6-8-8-12-4s-2 10 4 12c6 2 8 8 12 4s2-10-4-12z'/%3E%3Ccircle cx='100' cy='85' r='3.5' fill='%23fb7185' fill-opacity='0.55'/%3E%3Cpath d='M85 10c3 0 5 3 4 6s-4 4-7 3s-3-4-1-6c1-2 3-3 4-3z' fill='%23ec4899' fill-opacity='0.35'/%3E%3Cpath d='M20 60c2 2 2 5 0 7s-5 1-7-1s-1-5 2-6c2-1 4-1 5 0z' fill='%23ec4899' fill-opacity='0.35'/%3E%3C/g%3E%3C/svg%3E";
+
                 const patternMap = {
                   sakura: {
                     backgroundColor: '#1a0b18',
-                    backgroundImage:
-                      'radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.45) 10%, transparent 20%), radial-gradient(circle at 20% 20%, rgba(251, 113, 133, 0.4) 15%, transparent 25%), radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.4) 15%, transparent 25%), radial-gradient(circle at 70% 30%, rgba(244, 114, 182, 0.35) 12%, transparent 24%)',
+                    backgroundImage: `url("${svgSakura}")`,
                     backgroundSize: '100px 100px',
+                    backgroundRepeat: 'repeat',
+                  },
+                  waves: {
+                    backgroundColor: '#081226',
+                    backgroundImage: `url("${svgWaves}")`,
+                    backgroundSize: '80px 40px',
                     backgroundRepeat: 'repeat',
                   },
                   hexagons: {
@@ -2060,13 +2072,6 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px',
                     backgroundRepeat: 'repeat',
                   },
-                  waves: {
-                    backgroundColor: '#081226',
-                    backgroundImage:
-                      'radial-gradient(circle at 100% 150%, #081226 24%, rgba(14, 165, 233, 0.35) 25%, rgba(14, 165, 233, 0.35) 28%, #081226 29%, #081226 36%, rgba(14, 165, 233, 0.35) 37%, rgba(14, 165, 233, 0.35) 40%, #081226 41%, #081226 100%), radial-gradient(circle at 0 150%, #081226 24%, rgba(14, 165, 233, 0.35) 25%, rgba(14, 165, 233, 0.35) 28%, #081226 29%, #081226 36%, rgba(14, 165, 233, 0.35) 37%, rgba(14, 165, 233, 0.35) 40%, #081226 41%, #081226 100%), radial-gradient(circle at 50% 100%, rgba(14, 165, 233, 0.35) 10%, #081226 11%, #081226 23%, rgba(14, 165, 233, 0.35) 24%, rgba(14, 165, 233, 0.35) 30%, #081226 31%, #081226 43%, rgba(14, 165, 233, 0.35) 44%, rgba(14, 165, 233, 0.35) 50%, #081226 51%, #081226 100%)',
-                    backgroundSize: '60px 30px',
-                    backgroundRepeat: 'repeat',
-                  },
                   carbon: {
                     backgroundColor: '#0f1117',
                     backgroundImage:
@@ -2088,11 +2093,17 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     backgroundSize: '250px 250px',
                     backgroundRepeat: 'repeat',
                   },
+                  custom_pattern: {
+                    backgroundColor: settings.bg_custom_pattern_bg || '#0b1120',
+                    backgroundImage: settings.bg_custom_pattern_url ? `url("${settings.bg_custom_pattern_url}")` : 'none',
+                    backgroundSize: settings.bg_custom_pattern_size ? `${settings.bg_custom_pattern_size}px` : '60px',
+                    backgroundRepeat: settings.bg_custom_pattern_repeat || 'repeat',
+                  },
                 };
-                const activeStyle = patternMap[pat] || patternMap.waves;
+                const activeStyle = patternMap[pat] || patternMap.sakura;
 
                 return (
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
                     <Box>
                       <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
                         Select Pattern
@@ -2103,16 +2114,206 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         value={pat}
                         onChange={(e) => onChange('bg_pattern', e.target.value)}
                       >
-                        <MenuItem value="waves">Waves</MenuItem>
-                        <MenuItem value="sakura">Sakura</MenuItem>
+                        <MenuItem value="sakura">Sakura (Cherry Blossoms - Seamless SVG)</MenuItem>
+                        <MenuItem value="waves">Waves (Seigaiha Waves - Seamless SVG)</MenuItem>
                         <MenuItem value="hexagons">Hexagons</MenuItem>
                         <MenuItem value="dots">Dots Pattern</MenuItem>
                         <MenuItem value="triangles">Triangles</MenuItem>
                         <MenuItem value="carbon">Carbon Fiber</MenuItem>
                         <MenuItem value="lines">Diagonal Lines</MenuItem>
                         <MenuItem value="stars">Night Stars</MenuItem>
+                        <MenuItem value="custom_pattern">✨ Custom Pattern (Upload SVG / Tile)</MenuItem>
                       </Select>
                     </Box>
+
+                    {/* Custom Pattern Controls */}
+                    {pat === 'custom_pattern' && (
+                      <Paper
+                        variant="outlined"
+                        sx={{
+                          p: 2.5,
+                          borderRadius: '8px !important',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 2,
+                          backgroundColor: (theme) =>
+                            theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.01)',
+                        }}
+                      >
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={() =>
+                              triggerMediaPicker({
+                                title: 'Select Custom Pattern Tile (SVG / PNG / JPG)',
+                                buttonText: 'Use Pattern Tile',
+                                multiple: false,
+                                onSelect: (att) => {
+                                  onChange('bg_custom_pattern_url', att.url);
+                                },
+                              })
+                            }
+                            sx={{ borderRadius: '6px', fontWeight: 600, px: 2.5 }}
+                          >
+                            {settings.bg_custom_pattern_url ? 'Change Pattern Image' : 'Upload / Select Pattern Tile'}
+                          </Button>
+                          {settings.bg_custom_pattern_url && (
+                            <Button
+                              size="small"
+                              color="error"
+                              variant="text"
+                              onClick={() => onChange('bg_custom_pattern_url', '')}
+                              sx={{ fontWeight: 600 }}
+                            >
+                              Remove Pattern
+                            </Button>
+                          )}
+                          {settings.bg_custom_pattern_url && (
+                            <Box
+                              sx={{
+                                width: 38,
+                                height: 38,
+                                borderRadius: '4px',
+                                overflow: 'hidden',
+                                border: '1px solid #cbd5e1',
+                                backgroundColor: settings.bg_custom_pattern_bg || '#0b1120',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                              }}
+                            >
+                              <img
+                                src={settings.bg_custom_pattern_url}
+                                alt="Custom Pattern"
+                                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                              />
+                            </Box>
+                          )}
+                        </Box>
+
+                        <TextField
+                          size="small"
+                          fullWidth
+                          label="Pattern Image URL (or paste external link)"
+                          value={settings.bg_custom_pattern_url || ''}
+                          onChange={(e) => onChange('bg_custom_pattern_url', e.target.value)}
+                          placeholder="https://example.com/wp-content/uploads/pattern.png"
+                        />
+
+                        <Grid container spacing={2.5} alignItems="center">
+                          {/* Pattern Tile Size */}
+                          <Grid item xs={12} sm={6}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                              <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
+                                Tile Size / Scale:
+                              </Typography>
+                              <Typography variant="body2" sx={{ fontWeight: 700, fontSize: '0.85rem' }}>
+                                {settings.bg_custom_pattern_size || 60}px
+                              </Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                              <Slider
+                                value={Number(settings.bg_custom_pattern_size) || 60}
+                                min={10}
+                                max={400}
+                                step={5}
+                                onChange={(_, val) => onChange('bg_custom_pattern_size', val)}
+                                color="primary"
+                                size="small"
+                                sx={{ flex: 1 }}
+                              />
+                              <TextField
+                                size="small"
+                                type="number"
+                                value={settings.bg_custom_pattern_size !== undefined && settings.bg_custom_pattern_size !== '' ? settings.bg_custom_pattern_size : 60}
+                                onChange={(e) => onChange('bg_custom_pattern_size', Math.max(10, Number(e.target.value)))}
+                                sx={{ width: 75 }}
+                                inputProps={{ min: 10, max: 400 }}
+                              />
+                              <Tooltip title="Reset pattern tile size to default (60px)">
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  onClick={() => onChange('bg_custom_pattern_size', 60)}
+                                  sx={{ borderRadius: '6px', fontSize: '0.75rem', textTransform: 'none', py: 0.3 }}
+                                >
+                                  Reset
+                                </Button>
+                              </Tooltip>
+                            </Box>
+                          </Grid>
+
+                          {/* Pattern Repeat Mode */}
+                          <Grid item xs={12} sm={6}>
+                            <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary', display: 'block', mb: 0.75 }}>
+                              Pattern Repeat:
+                            </Typography>
+                            <Select
+                              size="small"
+                              fullWidth
+                              value={settings.bg_custom_pattern_repeat || 'repeat'}
+                              onChange={(e) => onChange('bg_custom_pattern_repeat', e.target.value)}
+                            >
+                              <MenuItem value="repeat">Repeat Both (Tiled Screen - Default)</MenuItem>
+                              <MenuItem value="repeat-x">Repeat Horizontally (X-Axis)</MenuItem>
+                              <MenuItem value="repeat-y">Repeat Vertically (Y-Axis)</MenuItem>
+                              <MenuItem value="no-repeat">Single Center (No Repeat)</MenuItem>
+                            </Select>
+                          </Grid>
+
+                          {/* Pattern Background Base Color */}
+                          <Grid item xs={12}>
+                            <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary', display: 'block', mb: 0.75 }}>
+                              Pattern Base Background Color:
+                            </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, maxWidth: 320 }}>
+                              <Box
+                                component="label"
+                                sx={{
+                                  width: 38,
+                                  height: 38,
+                                  borderRadius: '6px',
+                                  border: '1px solid #cbd5e1',
+                                  backgroundColor: settings.bg_custom_pattern_bg || '#0b1120',
+                                  cursor: 'pointer',
+                                  display: 'inline-block',
+                                  flexShrink: 0,
+                                  overflow: 'hidden',
+                                  boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                                }}
+                              >
+                                <input
+                                  type="color"
+                                  value={settings.bg_custom_pattern_bg && settings.bg_custom_pattern_bg.startsWith('#') ? settings.bg_custom_pattern_bg : '#0b1120'}
+                                  onChange={(e) => onChange('bg_custom_pattern_bg', e.target.value)}
+                                  style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
+                                />
+                              </Box>
+                              <TextField
+                                size="small"
+                                fullWidth
+                                value={settings.bg_custom_pattern_bg !== undefined ? settings.bg_custom_pattern_bg : '#0b1120'}
+                                onChange={(e) => onChange('bg_custom_pattern_bg', e.target.value)}
+                                placeholder="#0b1120"
+                              />
+                              {settings.bg_custom_pattern_bg && (
+                                <Tooltip title="Reset pattern background color to default">
+                                  <Button
+                                    size="small"
+                                    variant="outlined"
+                                    onClick={() => onChange('bg_custom_pattern_bg', '#0b1120')}
+                                    sx={{ borderRadius: '6px', fontSize: '0.75rem', textTransform: 'none', py: 0.3 }}
+                                  >
+                                    Reset
+                                  </Button>
+                                </Tooltip>
+                              )}
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      </Paper>
+                    )}
 
                     {/* Pattern Strip Preview */}
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>

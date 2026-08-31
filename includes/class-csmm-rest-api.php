@@ -309,9 +309,12 @@ class CSMM_REST_API {
 			'bg_video_vimeo_url'   => isset( $content['bg_video_vimeo_url'] ) ? $content['bg_video_vimeo_url'] : ( isset( $content['bg_video_source'] ) && 'vimeo' === $content['bg_video_source'] && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : 'https://vimeo.com/1178283333' ),
 			'bg_video_mp4_url'     => isset( $content['bg_video_mp4_url'] ) ? $content['bg_video_mp4_url'] : ( isset( $content['bg_video_source'] ) && in_array( $content['bg_video_source'], array( 'file', 'mp4' ), true ) && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : '' ),
 			'bg_video_loop'        => ! isset( $content['bg_video_loop'] ) || ! empty( $content['bg_video_loop'] ),
-			'bg_video_poster_url'  => isset( $content['bg_video_poster_url'] ) ? $content['bg_video_poster_url'] : '',
-			'bg_pattern'           => isset( $content['bg_pattern'] ) ? $content['bg_pattern'] : 'sakura',
-			'bg_solid_color'       => isset( $content['bg_solid_color'] ) ? $content['bg_solid_color'] : '#1d1b1b',
+			'bg_pattern'                => isset( $content['bg_pattern'] ) ? $content['bg_pattern'] : 'sakura',
+			'bg_custom_pattern_url'     => isset( $content['bg_custom_pattern_url'] ) ? $content['bg_custom_pattern_url'] : '',
+			'bg_custom_pattern_size'    => isset( $content['bg_custom_pattern_size'] ) ? intval( $content['bg_custom_pattern_size'] ) : 60,
+			'bg_custom_pattern_repeat'  => isset( $content['bg_custom_pattern_repeat'] ) ? $content['bg_custom_pattern_repeat'] : 'repeat',
+			'bg_custom_pattern_bg'      => isset( $content['bg_custom_pattern_bg'] ) ? $content['bg_custom_pattern_bg'] : '#0b1120',
+			'bg_solid_color'            => isset( $content['bg_solid_color'] ) ? $content['bg_solid_color'] : '#1d1b1b',
 			'bg_gradient_type'     => isset( $content['bg_gradient_type'] ) ? $content['bg_gradient_type'] : 'linear',
 			'bg_gradient_color1'   => isset( $content['bg_gradient_color1'] ) ? $content['bg_gradient_color1'] : '#1e3a8a',
 			'bg_gradient_color2'   => isset( $content['bg_gradient_color2'] ) ? $content['bg_gradient_color2'] : '#0f172a',
@@ -616,6 +619,18 @@ class CSMM_REST_API {
 		}
 		if (isset($params['bg_pattern'])) {
 			$content_array['bg_pattern'] = sanitize_text_field($params['bg_pattern']);
+		}
+		if (isset($params['bg_custom_pattern_url'])) {
+			$content_array['bg_custom_pattern_url'] = esc_url_raw($params['bg_custom_pattern_url']);
+		}
+		if (isset($params['bg_custom_pattern_size'])) {
+			$content_array['bg_custom_pattern_size'] = intval($params['bg_custom_pattern_size']);
+		}
+		if (isset($params['bg_custom_pattern_repeat'])) {
+			$content_array['bg_custom_pattern_repeat'] = sanitize_text_field($params['bg_custom_pattern_repeat']);
+		}
+		if (isset($params['bg_custom_pattern_bg'])) {
+			$content_array['bg_custom_pattern_bg'] = sanitize_text_field($params['bg_custom_pattern_bg']);
 		}
 		if (isset($params['bg_solid_color'])) {
 			$content_array['bg_solid_color'] = sanitize_hex_color($params['bg_solid_color']) ? sanitize_hex_color($params['bg_solid_color']) : sanitize_text_field($params['bg_solid_color']);
