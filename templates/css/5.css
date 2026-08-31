@@ -13,8 +13,18 @@
 /* -------------------------------------------------------------------
  * ## site logo  - (_site-layout.scss) 
  * ------------------------------------------------------------------- */
+ .s-home--static.template-two, .template-two {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
+  height: auto !important;
+  padding: 40px 20px !important;
+  box-sizing: border-box !important;
+}
+
  .home-logo {
- margin-top:6rem;
+  margin-top: 2.5rem;
 } 
 
 .home-logo a {
@@ -53,7 +63,9 @@
   background-size: auto 200%, cover;
   background-repeat: no-repeat, no-repeat;
   border: solid #111;
-  margin-bottom: 2em;
+  margin: 0 auto;
+  max-width: 900px;
+  width: 100%;
   position: relative;
   box-shadow: 0 0.5em 2em 0.2em rgb(0 0 0 / 33%), 0 0 0 0.5px #000 inset;
   transition: all 0.1s linear, line-height 0s linear;
@@ -62,11 +74,14 @@
 }
  
 .home-content {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 100%;
+  height: auto;
   vertical-align: middle;
-  padding-bottom: 6rem;
+  padding: 0;
+  margin: auto;
   position: relative;
 }
 
