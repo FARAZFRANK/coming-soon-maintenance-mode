@@ -29,56 +29,55 @@
 <body>
     <div class="background-image"></div>
     <main class="min-h-screen flex items-center justify-center p-4">
-        <div class="main-content w-full max-w-lg text-center">
+        <div class="main-content w-full max-w-lg text-center mx-auto my-auto flex flex-col justify-center items-center">
             
             <!-- Logo -->
-			<div class="mb-3 flex items-center justify-center gap-3">
+			<div class="mb-4 flex items-center justify-center gap-3">
 				<?php if($csmm_logo_id) { ?>
 				<a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
-					<img class="h-8 mb-4" src="<?php echo esc_url( $csmm_logo_url[0] ); ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); ?>">
+					<img class="h-8" src="<?php echo esc_url( $csmm_logo_url[0] ); ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); ?>">
 				</a>
 				<?php } else { ?>
-				<h2 class="brand-logo text-2xl md:text-4xl mb-4">Aura</h2>
+				<h2 class="brand-logo text-2xl md:text-4xl">Aura</h2>
 				<?php } ?>
 			</div>
             <!-- Headline -->
-            <h1 class="title-font text-4xl md:text-6xl text-gray-800 leading-tight mb-4">
+            <h1 class="title-font text-3xl md:text-5xl text-gray-800 leading-tight mb-3">
 				<?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?>
             </h1>
-            <p class="text-gray-600 mb-10 max-w-md mx-auto leading-relaxed">
+            <p class="text-gray-600 mb-5 max-w-md mx-auto leading-relaxed text-sm md:text-base">
                 <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
             </p>
 
             <!-- Countdown Timer -->
 			<?php if($csmm_countdown == 1) { ?>
-			<h3 class=" text-lg tracking-widest text-gray-600 mb-4"><?php if($csmm_countdown_title != "") { echo esc_html( $csmm_countdown_title ); } ?></h3>
-            <div id="countdown" class="grid grid-cols-4 gap-4 mb-10 w-full justify-items-center text-center">
+			<h3 class="text-sm md:text-base tracking-widest text-gray-500 mb-2 font-medium"><?php if($csmm_countdown_title != "") { echo esc_html( $csmm_countdown_title ); } ?></h3>
+            <div id="countdown" class="grid grid-cols-4 gap-4 mb-6 w-full justify-items-center text-center">
                 <div>
-                    <div id="days" class="countdown-number text-3xl md:text-4xl">00</div>
+                    <div id="days" class="countdown-number text-2xl md:text-3xl">00</div>
                     <div class="countdown-label mt-1"><?php esc_html_e( "Days", 'coming-soon-maintenance-mode' ); ?></div>
                 </div>
                 <div>
-                    <div id="hours" class="countdown-number text-3xl md:text-4xl">00</div>
+                    <div id="hours" class="countdown-number text-2xl md:text-3xl">00</div>
                     <div class="countdown-label mt-1"><?php esc_html_e( "Hours", 'coming-soon-maintenance-mode' ); ?></div>
                 </div>
                 <div>
-                    <div id="minutes" class="countdown-number text-3xl md:text-4xl">00</div>
+                    <div id="minutes" class="countdown-number text-2xl md:text-3xl">00</div>
                     <div class="countdown-label mt-1"><?php esc_html_e( "Mins", 'coming-soon-maintenance-mode' ); ?></div>
                 </div>
                 <div>
-                    <div id="seconds" class="countdown-number text-3xl md:text-4xl">00</div>
+                    <div id="seconds" class="countdown-number text-2xl md:text-3xl">00</div>
                     <div class="countdown-label mt-1"><?php esc_html_e( "Secs", 'coming-soon-maintenance-mode' ); ?></div>
                 </div>
             </div>
 			<?php } ?>
 
             <!-- Subscription Form -->
-            <div class="w-full max-w-md mx-auto text-center mb-12">
-                <p class="mb-4 font-light"><?php esc_html_e( 'Be the first to know.', 'coming-soon-maintenance-mode' ); ?></p>
-                <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row gap-3">
-                    <input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Your email address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow p-3 rounded-full focus:outline-none text-center" required>
+            <div class="w-full max-w-md mx-auto text-center mb-6">
+                <form id="subscribe-form" method="post" class="flex flex-row items-center justify-center gap-3 w-full">
+                    <input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Email Address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow px-5 py-3 rounded-full focus:outline-none text-left" required>
                     <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">
-					<button type="submit" class="subscribe-btn py-3 px-8 rounded-full"><?php esc_html_e( 'Subscribe', 'coming-soon-maintenance-mode' ); ?></button>
+					<button type="submit" class="subscribe-btn px-7 py-3 rounded-full whitespace-nowrap uppercase tracking-wider font-medium text-xs md:text-sm"><?php esc_html_e( 'Subscribe', 'coming-soon-maintenance-mode' ); ?></button>
                 </form>
                 <p id="success-message" class="mt-4 text-sm text-green-700 hidden"><?php esc_html_e( "Welcome. We'll be in touch soon.", 'coming-soon-maintenance-mode' ); ?></p>
 				<?php

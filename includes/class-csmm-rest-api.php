@@ -990,7 +990,7 @@ class CSMM_REST_API {
 			7 => 'Cyber Neon Wave', 8 => 'Abstract Vibrant Gradient', 9 => 'Corporate Clean Slate',
 			10 => 'Startup Countdown Box', 11 => 'Elegant Luxury Gold', 12 => 'Modern Split Layout',
 			13 => 'Sunset Vibrant Purple', 14 => 'Deep Space Starlight', 15 => 'Aurora Borealis Glow',
-			16 => 'Animated Video Teaser', 17 => 'Academy & Courses', 18 => 'Beauty & Spa Salon',
+			16 => 'Alien Shooter', 17 => 'Academy & Courses', 18 => 'Beauty & Spa Salon',
 			19 => 'Celebration & Events', 20 => 'Construction & Architecture', 21 => 'Heavy Construction Pro',
 			22 => 'Education & University', 23 => 'Festivals & Concerts', 24 => 'Fashion & Boutique',
 			25 => 'Food & Restaurant', 26 => 'Future & AI Technology', 27 => 'Gaming & Esports',
