@@ -71,14 +71,14 @@ body {
 .main-card .party-desc,
 .main-card p.party-desc {
 	margin-top: 1rem !important;
-	margin-bottom: 2.25rem !important;
-	line-height: 1.7 !important;
+	margin-bottom: 3rem !important;
+	line-height: 1.8 !important;
 }
 
 /* Countdown timer styling */
 .main-card #countdown {
-	margin-top: 0 !important;
-	margin-bottom: 2rem !important;
+	margin-top: 1.5rem !important;
+	margin-bottom: 2.5rem !important;
 }
 
 .countdown-box {
