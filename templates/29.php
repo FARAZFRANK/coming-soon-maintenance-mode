@@ -84,7 +84,7 @@
 
         <!-- Subscription Form -->
         <div class="w-full max-w-md text-center">
-            <p class="mb-4 text-sm font-medium uppercase tracking-widest text-gray-400"><?php esc_html_e( "Get Early Access", 'coming-soon-maintenance-mode' ); ?></p>
+            <p class="mb-4 text-sm font-medium uppercase tracking-widest text-gray-400"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Get Early Access", 'coming-soon-maintenance-mode' ); ?></p>
             <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row gap-3">
                 <input type="email" id="csmm-email" name="csmm-email" placeholder="Enter your email" class="subscribe-input flex-grow p-4 rounded-md focus:outline-none text-center" required>
                 <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">

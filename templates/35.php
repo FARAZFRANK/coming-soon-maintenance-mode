@@ -71,7 +71,7 @@
 
                 <!-- Subscription Form -->
                 <div class="w-full text-left mb-10">
-                    <p class="mb-3 text-sm font-medium text-gray-700"><?php esc_html_e( "Get 15% off your first order.", 'coming-soon-maintenance-mode' ); ?></p>
+                    <p class="mb-3 text-sm font-medium text-gray-700"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Get 15% off your first order.", 'coming-soon-maintenance-mode' ); ?></p>
                     <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row">
                         <input type="email" id="csmm-email" name="csmm-email" placeholder="Enter your email" class="subscribe-input w-full p-3 focus:outline-none" required>
 						<input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">

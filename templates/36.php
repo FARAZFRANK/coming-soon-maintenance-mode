@@ -80,7 +80,7 @@
 
             <!-- Subscription Form -->
             <div class="w-full text-left">
-                <p class="mb-3 text-sm font-semibold text-gray-700"><?php esc_html_e( "Be the first to get your passport stamped.", 'coming-soon-maintenance-mode' ); ?></p>
+                <p class="mb-3 text-sm font-semibold text-gray-700"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Be the first to get your passport stamped.", 'coming-soon-maintenance-mode' ); ?></p>
                 <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row">
                     <input type="email" id="csmm-email" name="csmm-email" placeholder="Enter your email" class="subscribe-input flex-grow p-3 focus:outline-none rounded-l-md" required>
                     <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">

@@ -89,7 +89,7 @@
 
             <!-- Subscription Form -->
             <div class="w-full max-w-lg mx-auto text-center mb-6">
-                <p class="form-label mb-3 font-semibold text-gray-200"><?php esc_html_e( "Get the project blueprints first.", 'coming-soon-maintenance-mode' ); ?></p>
+                <p class="form-label mb-3 font-semibold text-gray-200"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Get the project blueprints first.", 'coming-soon-maintenance-mode' ); ?></p>
                 <form id="subscribe-form" method="post" class="flex flex-row items-center justify-center gap-3 w-full">
                     <input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Enter your email for updates', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow px-4 rounded-sm focus:outline-none text-left h-[48px]" required>
                     <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">

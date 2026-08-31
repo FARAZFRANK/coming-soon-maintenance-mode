@@ -79,7 +79,7 @@
             <!-- Subscription Form -->
 			<?php if($csmm_susbcriber_form == 1) { ?>
             <div class="subscribe-wrapper w-full text-left">
-                <p class="prospectus-form-label text-xs md:text-sm font-semibold text-gray-700"><?php esc_html_e( 'Be the first to receive our new prospectus.', 'coming-soon-maintenance-mode' ); ?></p>
+                <p class="prospectus-form-label text-xs md:text-sm font-semibold text-gray-700"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( 'Be the first to receive our new prospectus.', 'coming-soon-maintenance-mode' ); ?></p>
                 <form id="subscribe-form" method="post" class="flex flex-row items-stretch relative h-[50px] w-full max-w-[460px]">
                     <input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Email Address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow px-4 focus:outline-none rounded-l-md" required>
 					<input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">

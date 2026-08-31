@@ -70,7 +70,7 @@
 
             <!-- Subscription Form -->
             <div class="w-full text-center">
-                <p class="mb-3 font-bold text-lg"><?php esc_html_e( "Your Name on the Guest List", 'coming-soon-maintenance-mode' ); ?></p>
+                <p class="mb-3 font-bold text-lg"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Your Name on the Guest List", 'coming-soon-maintenance-mode' ); ?></p>
                 <form id="subscribe-form" method="post" class="flex flex-col gap-3">
                     <input type="email" id="csmm-email" name="csmm-email" placeholder="Enter your email for access" class="subscribe-input w-full p-3 rounded-md focus:outline-none text-center" required>
                     <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">

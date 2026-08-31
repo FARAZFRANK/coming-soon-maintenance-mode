@@ -82,7 +82,7 @@
 
         <!-- Subscription Form -->
         <div class="w-full max-w-lg text-center mb-8">
-            <p class="mb-4 text-lg text-gray-200"><?php esc_html_e( "Be the first to get opening day reservations.", 'coming-soon-maintenance-mode' ); ?></p>
+            <p class="mb-4 text-lg text-gray-200"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Be the first to get opening day reservations.", 'coming-soon-maintenance-mode' ); ?></p>
             <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row gap-4">
                 <input type="email" id="csmm-email" name="csmm-email" placeholder="Enter your email address" class="subscribe-input flex-grow p-4 rounded-lg focus:outline-none" required>
                 <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">

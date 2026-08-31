@@ -2679,6 +2679,21 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
               </Typography>
 
               <Grid container spacing={2.5}>
+                {/* Headline / Text Above Form */}
+                <Grid item xs={12}>
+                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                    Headline / Text Above Form (Supported across templates)
+                  </Typography>
+                  <TextField
+                    size="small"
+                    fullWidth
+                    value={settings.form_headline_text !== undefined ? settings.form_headline_text : ''}
+                    onChange={(e) => onChange('form_headline_text', e.target.value)}
+                    placeholder="e.g. Get the project blueprints first. / Don't miss the party! / Be the first to receive our new prospectus."
+                    helperText="Customize the headline call-to-action text displayed above the subscriber box. Leave empty to use template default."
+                  />
+                </Grid>
+
                 {/* Placeholder Text */}
                 <Grid item xs={12} sm={6}>
                   <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
@@ -2894,6 +2909,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         variant="outlined"
                         startIcon={<RestartAltRoundedIcon fontSize="small" />}
                         onClick={() => {
+                          onChange('form_headline_text', '');
                           onChange('form_placeholder_text', 'Email Address');
                           onChange('form_btn_text', 'Notify Me');
                           onChange('form_input_bg', 'rgba(0, 0, 0, 0.7)');
@@ -2914,12 +2930,28 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       borderRadius: '8px',
                       backgroundColor: '#161616',
                       display: 'flex',
+                      flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
                       border: '1px solid rgba(255, 255, 255, 0.08)',
                       minHeight: 120,
                     }}
                   >
+                    {settings.form_headline_text && (
+                      <Typography
+                        sx={{
+                          color: '#ffffff',
+                          fontSize: '15px',
+                          fontWeight: 600,
+                          mb: 1.75,
+                          textAlign: 'center',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                          letterSpacing: '0.02em',
+                        }}
+                      >
+                        {settings.form_headline_text}
+                      </Typography>
+                    )}
                     <Box
                       sx={{
                         maxWidth: 540,

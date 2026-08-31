@@ -76,7 +76,7 @@
 
                 <!-- Subscription Form -->
                 <div class="w-full text-left mb-10">
-                    <p class="mb-3 text-gray-300 font-semibold"><?php esc_html_e( "Get project updates and launch news.", 'coming-soon-maintenance-mode' ); ?></p>
+                    <p class="mb-3 text-gray-300 font-semibold"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Get project updates and launch news.", 'coming-soon-maintenance-mode' ); ?></p>
                     <form id="subscribe-form" method="post" class="flex flex-row items-center gap-3 w-full max-w-lg">
 						<input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Your email address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow px-4 rounded-lg focus:outline-none text-left h-[48px]" required>
                         <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">

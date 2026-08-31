@@ -62,7 +62,7 @@
 
         <!-- Subscription Form -->
         <div class="w-full max-w-lg mx-auto text-center mb-8">
-            <p class="mb-4 font-bold text-lg"><?php esc_html_e( "Enter the Arena First!", 'coming-soon-maintenance-mode' ); ?></p>
+            <p class="mb-4 font-bold text-lg"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Enter the Arena First!", 'coming-soon-maintenance-mode' ); ?></p>
             <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row gap-4 items-center justify-center">
                 <input type="email" id="csmm-email" name="csmm-email" placeholder="Enter your email" class="subscribe-input w-full rounded-md focus:outline-none text-center h-[50px]" required>
                 <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">

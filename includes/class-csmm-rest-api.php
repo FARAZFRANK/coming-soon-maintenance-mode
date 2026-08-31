@@ -284,6 +284,7 @@ class CSMM_REST_API {
 			'countdown_label_color'        => isset( $content['countdown_label_color'] ) ? $content['countdown_label_color'] : '',
 			'countdown_box_bg'             => isset( $content['countdown_box_bg'] ) ? $content['countdown_box_bg'] : '',
 			'susbcriber_form'              => isset( $content['susbcriber_form'] ) ? strval( $content['susbcriber_form'] ) : '1',
+			'form_headline_text'           => isset( $content['form_headline_text'] ) ? $content['form_headline_text'] : '',
 			'form_placeholder_text'        => isset( $content['form_placeholder_text'] ) ? $content['form_placeholder_text'] : 'Email Address',
 			'form_btn_text'                => isset( $content['form_btn_text'] ) ? $content['form_btn_text'] : 'Notify Me',
 			'form_input_bg'                => isset( $content['form_input_bg'] ) ? $content['form_input_bg'] : 'rgba(0, 0, 0, 0.7)',
@@ -517,6 +518,9 @@ class CSMM_REST_API {
 		}
 		if ( isset( $params['susbcriber_form'] ) ) {
 			$content_array['susbcriber_form'] = sanitize_text_field( $params['susbcriber_form'] );
+		}
+		if ( isset( $params['form_headline_text'] ) ) {
+			$content_array['form_headline_text'] = sanitize_text_field( $params['form_headline_text'] );
 		}
 		if ( isset( $params['form_placeholder_text'] ) ) {
 			$content_array['form_placeholder_text'] = sanitize_text_field( $params['form_placeholder_text'] );

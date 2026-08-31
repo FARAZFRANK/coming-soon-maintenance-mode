@@ -139,6 +139,7 @@ $csmm_social_icon_color         = isset( $csmm_social_media['social_icon_color']
 $csmm_social_icon_hover_color   = isset( $csmm_social_media['social_icon_hover_color'] ) ? sanitize_hex_color( $csmm_social_media['social_icon_hover_color'] ) : '';
 
 // Subscriber Form UI Settings
+$csmm_form_headline      = isset( $csmm_content['form_headline_text'] ) ? $csmm_content['form_headline_text'] : '';
 $csmm_form_placeholder   = isset( $csmm_content['form_placeholder_text'] ) && '' !== $csmm_content['form_placeholder_text'] ? $csmm_content['form_placeholder_text'] : __( 'Email Address', 'coming-soon-maintenance-mode' );
 $csmm_form_btn_text      = isset( $csmm_content['form_btn_text'] ) && '' !== $csmm_content['form_btn_text'] ? $csmm_content['form_btn_text'] : __( 'Notify Me', 'coming-soon-maintenance-mode' );
 $csmm_form_input_bg      = isset( $csmm_content['form_input_bg'] ) && '' !== $csmm_content['form_input_bg'] ? $csmm_content['form_input_bg'] : 'rgba(0, 0, 0, 0.7)';
@@ -233,12 +234,16 @@ if ( ! $csmm_description_enabled || empty( $csmm_description_raw ) ) {
 	$html = str_replace( $csmm_desc_placeholder, $desc_html, $html );
 }
 
-// 4. Process Form Custom Placeholder & Button Text
+// 4. Process Form Custom Placeholder, Button Text & Headline Text
 if ( ! empty( $csmm_form_placeholder ) ) {
 	$html = preg_replace( '/placeholder="[^"]*"/i', 'placeholder="' . esc_attr( $csmm_form_placeholder ) . '"', $html, 1 );
 }
 if ( ! empty( $csmm_form_btn_text ) ) {
 	$html = preg_replace( '/value="(Notify Me|Subscribe|Sign Up|Join Now)"/i', 'value="' . esc_attr( $csmm_form_btn_text ) . '"', $html, 1 );
+}
+if ( ! empty( $csmm_form_headline ) ) {
+	$headline_escaped = esc_html( $csmm_form_headline );
+	$html = preg_replace( '/(<p[^>]*class="[^"]*(?:prospectus-form-label|form-label)[^"]*"[^>]*>).*?(<\/p>)/is', '$1' . $headline_escaped . '$2', $html, 1 );
 }
 
 // 5. Construct Dynamic Background, Overlay & Form Styles
