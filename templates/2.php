@@ -55,7 +55,7 @@
 		<?php if($csmm_countdown == 1) { ?>
         <div class="template-two-countdown w-full max-w-md mx-auto">
             <?php if($csmm_countdown_title != "") { ?>
-            <p class="countdown-title text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-3"><?php echo esc_html( $csmm_countdown_title ); ?></p>
+            <p class="countdown-title text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold"><?php echo esc_html( $csmm_countdown_title ); ?></p>
             <?php } ?>
             <div id="countdown" class="grid grid-cols-4 gap-4 text-center">
                 <div class="flex flex-col items-center">
@@ -120,7 +120,7 @@
 		<?php } ?>
 
         <!-- Social Media Icons (Centered underneath) -->
-        <ul class="home-social flex flex-row items-center justify-center gap-5 mt-2">
+        <ul class="home-social flex flex-row items-center justify-center gap-5">
             <?php if(empty($csmm_sm_facebook) == false) { ?>
             <li><a href="<?php echo esc_url($csmm_sm_facebook); ?>" target="_blank" class="text-gray-400 hover:text-white transition-colors text-lg"><i class="fa-brands fa-facebook-f"></i></a></li>
             <?php } ?>

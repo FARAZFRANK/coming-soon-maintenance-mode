@@ -40,7 +40,7 @@ html, body, .template-two-body {
 /* 1. Logo */
 .home-logo,
 .template-two-logo {
-	margin-bottom: 2.25rem !important;
+	margin: 0 auto 1.85rem auto !important;
 	display: flex;
 	justify-content: center;
 	position: static !important;
@@ -73,7 +73,7 @@ html, body, .template-two-body {
 	color: #ffffff !important;
 	letter-spacing: 0.08em !important;
 	text-transform: uppercase !important;
-	margin: 0 0 1.25rem 0 !important;
+	margin: 0 auto 1.85rem auto !important;
 	text-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
 	word-break: break-word;
 	text-align: center !important;
@@ -88,7 +88,7 @@ html, body, .template-two-body {
 	font-weight: 400 !important;
 	color: rgba(255, 255, 255, 0.85) !important;
 	max-width: 580px !important;
-	margin: 0 auto 2.5rem auto !important;
+	margin: 0 auto 1.85rem auto !important;
 	line-height: 1.7 !important;
 	letter-spacing: 0.15em !important;
 	text-transform: uppercase !important;
@@ -99,7 +99,7 @@ html, body, .template-two-body {
 /* 4. Countdown */
 .home-content__counter,
 .template-two-countdown {
-	margin: 0 auto 2.75rem auto !important;
+	margin: 0 auto 1.85rem auto !important;
 	width: 100%;
 	text-align: center;
 }
@@ -110,7 +110,7 @@ html, body, .template-two-body {
 	letter-spacing: 0.25em !important;
 	text-transform: uppercase !important;
 	color: rgba(255, 255, 255, 0.65) !important;
-	margin-bottom: 1.25rem !important;
+	margin-bottom: 0.75rem !important;
 	font-weight: 600 !important;
 	text-align: center !important;
 }
@@ -153,7 +153,7 @@ html, body, .template-two-body {
 	color: rgba(255, 255, 255, 0.6) !important;
 	text-transform: uppercase !important;
 	letter-spacing: 0.15em !important;
-	margin-top: 0.5rem !important;
+	margin-top: 0.4rem !important;
 }
 
 /* 5. Subscriber Form */
@@ -161,7 +161,7 @@ html, body, .template-two-body {
 .template-two-form {
 	width: 100%;
 	max-width: 480px !important;
-	margin: 0 auto 2.25rem auto !important;
+	margin: 0 auto 1.85rem auto !important;
 	padding: 0 !important;
 }
 
