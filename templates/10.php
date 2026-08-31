@@ -30,7 +30,7 @@
 <body>
     <!-- home
     ================================================== -->
-    <main class="s-home s-home--static template-two">
+    <main class="s-home s-home--static template-ten">
       
         <div class="home-content s-home--slides">
 			
