@@ -42,12 +42,17 @@ body {
 	margin-bottom: 0.85rem;
 }
 
-.prospectus-desc {
-	margin-bottom: 1.5rem !important;
-	line-height: 1.6;
+.prospectus-desc,
+.prospectus-content p.prospectus-desc {
+	margin-top: 0.75rem !important;
+	margin-bottom: 2.5rem !important;
+	line-height: 1.7 !important;
+	display: block !important;
 }
 
-.countdown-header {
+.countdown-header,
+.prospectus-content h3.countdown-header {
+	margin-top: 1.25rem !important;
 	margin-bottom: 0.75rem !important;
 	font-size: 0.95rem;
 	letter-spacing: 0.1em;
@@ -55,7 +60,7 @@ body {
 }
 
 .prospectus-content #countdown {
-	margin-bottom: 1.75rem !important;
+	margin-bottom: 2rem !important;
 }
 
 .prospectus-form-label {
