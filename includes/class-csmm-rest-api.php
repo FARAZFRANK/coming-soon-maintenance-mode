@@ -326,7 +326,7 @@ class CSMM_REST_API {
 			'social_media'         => array(
 				'facebook'  => isset( $social_media['csmm_sm_facebook'] ) ? $social_media['csmm_sm_facebook'] : '#',
 				'twitter'   => isset( $social_media['csmm_sm_twitter'] ) ? $social_media['csmm_sm_twitter'] : '#',
-				'youtube'   => isset( $social_media['csmm_sm_youtube'] ) ? $social_media['csmm_sm_youtube'] : '#',
+				'youtube'   => isset( $social_media['csmm_sm_youtube'] ) && '' !== $social_media['csmm_sm_youtube'] && '#' !== $social_media['csmm_sm_youtube'] ? $social_media['csmm_sm_youtube'] : 'https://www.youtube.com/watch?v=91AcVUR0O8I',
 				'instagram' => isset( $social_media['csmm_sm_instagram'] ) ? $social_media['csmm_sm_instagram'] : '#',
 				'linkedin'  => isset( $social_media['csmm_sm_linkedin'] ) ? $social_media['csmm_sm_linkedin'] : '',
 				'pinterest' => isset( $social_media['csmm_sm_pinterest'] ) ? $social_media['csmm_sm_pinterest'] : '',

@@ -153,7 +153,7 @@ export default function SocialMediaTab({ settings, onChange }) {
     { key: 'facebook', label: 'Facebook URL', icon: <FacebookRoundedIcon sx={{ color: '#1877f2' }} />, placeholder: 'https://facebook.com/yourbrand' },
     { key: 'twitter', label: 'Twitter / X URL', icon: <TwitterIcon sx={{ color: '#1da1f2' }} />, placeholder: 'https://x.com/yourbrand' },
     { key: 'instagram', label: 'Instagram URL', icon: <InstagramIcon sx={{ color: '#e4405f' }} />, placeholder: 'https://instagram.com/yourbrand' },
-    { key: 'youtube', label: 'YouTube Channel', icon: <YouTubeIcon sx={{ color: '#ff0000' }} />, placeholder: 'https://youtube.com/@yourchannel' },
+    { key: 'youtube', label: 'YouTube Channel', icon: <YouTubeIcon sx={{ color: '#ff0000' }} />, placeholder: 'https://www.youtube.com/watch?v=91AcVUR0O8I' },
     { key: 'linkedin', label: 'LinkedIn Profile/Page', icon: <LinkedInIcon sx={{ color: '#0a66c2' }} />, placeholder: 'https://linkedin.com/company/yourbrand' },
     { key: 'pinterest', label: 'Pinterest Profile', icon: <PinterestIcon sx={{ color: '#bd081c' }} />, placeholder: 'https://pinterest.com/yourbrand' },
     { key: 'whatsapp', label: 'WhatsApp Number/Link', icon: <WhatsAppIcon sx={{ color: '#25d366' }} />, placeholder: 'https://wa.me/1234567890' },

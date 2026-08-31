@@ -122,7 +122,7 @@ $csmm_launch_dt   = $csmm_launch_date . ' ' . $csmm_launch_time;
 // Social Media Links
 $csmm_sm_facebook  = isset( $csmm_social_media['csmm_sm_facebook'] ) ? $csmm_social_media['csmm_sm_facebook'] : '#';
 $csmm_sm_twitter   = isset( $csmm_social_media['csmm_sm_twitter'] ) ? $csmm_social_media['csmm_sm_twitter'] : '#';
-$csmm_sm_youtube   = isset( $csmm_social_media['csmm_sm_youtube'] ) ? $csmm_social_media['csmm_sm_youtube'] : '#';
+$csmm_sm_youtube   = isset( $csmm_social_media['csmm_sm_youtube'] ) && '' !== $csmm_social_media['csmm_sm_youtube'] && '#' !== $csmm_social_media['csmm_sm_youtube'] ? $csmm_social_media['csmm_sm_youtube'] : 'https://www.youtube.com/watch?v=91AcVUR0O8I';
 $csmm_sm_instagram = isset( $csmm_social_media['csmm_sm_instagram'] ) ? $csmm_social_media['csmm_sm_instagram'] : '#';
 $csmm_sm_linkedin  = isset( $csmm_social_media['csmm_sm_linkedin'] ) ? $csmm_social_media['csmm_sm_linkedin'] : '';
 $csmm_sm_pinterest = isset( $csmm_social_media['csmm_sm_pinterest'] ) ? $csmm_social_media['csmm_sm_pinterest'] : '';
