@@ -45,6 +45,15 @@
 	to { opacity: 1; transform: translateY(0); }
 }
 
+.template-22-logo {
+	margin-bottom: 2rem !important;
+}
+
+header h1.title-font {
+	margin-top: 1.5rem !important;
+	margin-bottom: 1rem !important;
+}
+
 /* Custom font for titles */
 .title-font {
 	font-family: 'Poppins', sans-serif;
@@ -72,29 +81,68 @@
 }
 
 /* Subscription form styling */
-.subscribe-input {
-	background: #ffffff;
-	border: 1px solid #CBD5E0;
-	color: #2D3748;
+.main-content #subscribe-form {
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 12px !important;
+	max-width: 520px !important;
+	width: 100% !important;
+	margin: 0 auto !important;
+}
+
+.main-content .subscribe-input {
+	background: #ffffff !important;
+	border: 1px solid #CBD5E0 !important;
+	color: #2D3748 !important;
+	height: 48px !important;
+	line-height: 48px !important;
+	padding: 0 16px !important;
+	border-radius: 6px !important;
+	flex: 1 1 auto !important;
+	width: auto !important;
+	font-family: 'Roboto', sans-serif !important;
+	font-size: 15px !important;
+	box-sizing: border-box !important;
+	text-align: left !important;
+	margin: 0 !important;
 	transition: all 0.3s ease;
 }
-.subscribe-input::placeholder {
-	color: #A0AEC0;
+
+.main-content .subscribe-input::placeholder {
+	color: #A0AEC0 !important;
 }
-.subscribe-input:focus {
-	outline: none;
-	border-color: #007AFF;
-	box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+
+.main-content .subscribe-input:focus {
+	outline: none !important;
+	border-color: #007AFF !important;
+	box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2) !important;
 }
-.subscribe-btn {
-	background-color: #007AFF;
-	color: #fff;
-	border: none;
+
+.main-content .subscribe-btn {
+	background-color: #007AFF !important;
+	color: #fff !important;
+	border: none !important;
+	height: 48px !important;
+	min-height: 48px !important;
+	max-height: 48px !important;
+	line-height: 1 !important;
+	padding: 0 24px !important;
+	border-radius: 6px !important;
+	white-space: nowrap !important;
+	font-weight: 600 !important;
+	position: static !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	box-sizing: border-box !important;
+	margin: 0 !important;
 	transition: all 0.3s ease;
-	font-weight: 600;
 }
-.subscribe-btn:hover {
-	background-color: #0056b3;
+
+.main-content .subscribe-btn:hover {
+	background-color: #0056b3 !important;
 	transform: translateY(-2px);
 	box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
 }

@@ -42,13 +42,13 @@
         <header class="text-center mb-8 md:mb-12">
             <!-- Logo -->
             <?php if($csmm_logo_id) { ?>
-			<div class="mb-6 flex justify-center">
+			<div class="template-22-logo mb-8 flex justify-center">
 			  <a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
 				<img class="h-10 w-auto" src="<?php echo esc_url($csmm_logo_url[0]); ?>" alt="<?php echo esc_attr($csmm_logo_alt); ?>">
 			  </a>
 			</div>
 			<?php } else { ?>
-			<div class="mb-4">
+			<div class="template-22-logo mb-8">
                 <svg class="h-16 w-16 md:h-20 md:w-20 mx-auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="10" stroke="#007AFF" stroke-width="1.5"/>
                     <path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="#007AFF" stroke-width="1.5" stroke-linecap="round"/>
@@ -57,7 +57,7 @@
                 </svg>
             </div>
 			<?php } ?>
-            <h1 class="title-font text-4xl md:text-6xl font-bold"><span class="highlight"><?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?></span></h1>
+            <h1 class="title-font text-4xl md:text-6xl font-bold mt-4"><span class="highlight"><?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?></span></h1>
             <p class="text-lg md:text-xl font-light text-gray-600 mt-4 max-w-3xl mx-auto"><?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?></p>
         </header>
 
@@ -109,12 +109,12 @@
         </div>
 
         <!-- Subscription Form -->
-        <div class="w-full max-w-lg text-center">
+        <div class="w-full max-w-lg text-center mb-6">
             <p class="mb-4 text-lg text-gray-700 font-semibold"><?php esc_html_e( "Get notified when we launch!", 'coming-soon-maintenance-mode' ); ?></p>
-            <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row gap-3">
-                <input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Enter your email address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow p-3 rounded-md focus:outline-none" required>
+            <form id="subscribe-form" method="post" class="flex flex-row items-center justify-center gap-3 w-full">
+                <input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Enter your email address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow px-4 rounded-md focus:outline-none text-left h-[48px]" required>
                 <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">
-				<button type="submit" class="subscribe-btn py-3 px-6 rounded-md"><?php esc_html_e( "Notify Me", 'coming-soon-maintenance-mode' ); ?></button>
+				<button type="submit" class="subscribe-btn px-6 rounded-md whitespace-nowrap font-semibold h-[48px] inline-flex items-center justify-center"><?php esc_html_e( "Notify Me", 'coming-soon-maintenance-mode' ); ?></button>
             </form>
             <p id="success-message" class="mt-4 text-green-600 hidden"><?php esc_html_e( "Awesome! We'll email you on launch day.", 'coming-soon-maintenance-mode' ); ?></p>
 			<?php
