@@ -84,7 +84,7 @@
                 <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row">
                     <input type="email" id="csmm-email" name="csmm-email" placeholder="Enter your email" class="subscribe-input flex-grow p-3 focus:outline-none rounded-l-md" required>
                     <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">
-					<button type="submit" class="subscribe-btn py-3 px-6 rounded-r-md"><?php esc_html_e( "Join Waitlist", 'coming-soon-maintenance-mode' ); ?></button>
+					<button type="submit" class="subscribe-btn py-3 px-6 rounded-r-md"><?php esc_html_e( "Subscribe", 'coming-soon-maintenance-mode' ); ?></button>
                 </form>
                 <p id="success-message" class="mt-3 text-sm text-green-700 hidden"><?php esc_html_e( "Thank you! Your adventure awaits.", 'coming-soon-maintenance-mode' ); ?></p>
 				<?php
