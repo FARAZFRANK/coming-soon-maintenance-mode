@@ -73,7 +73,19 @@ body {
 	text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
 }
 
+.content-side .construction-desc,
+.content-side p.construction-desc {
+	margin-top: 0.75rem !important;
+	margin-bottom: 2.25rem !important;
+	line-height: 1.7 !important;
+}
+
 /* Countdown timer styling */
+.content-side #countdown {
+	margin-top: 0 !important;
+	margin-bottom: 2.25rem !important;
+}
+
 .countdown-box {
 	text-align: left;
 }

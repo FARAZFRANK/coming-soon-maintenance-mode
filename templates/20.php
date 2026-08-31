@@ -48,13 +48,13 @@
                 <h1 class="title-font text-4xl md:text-5xl font-bold leading-tight mb-4">
                     <span class="highlight"><?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?></span>
                 </h1>
-                <p class="text-gray-400 mb-8">
+                <p class="construction-desc text-gray-400 mb-8 max-w-xl leading-relaxed">
                     <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
                 </p>
 
                 <!-- Countdown Timer -->
 				<?php if($csmm_countdown == 1) { ?>
-                <div id="countdown" class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10 text-center w-full">
+                <div id="countdown" class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-8 text-center w-full">
                     <div class="countdown-box">
                         <div id="days" class="countdown-number text-4xl md:text-5xl">00</div>
                         <div class="countdown-label"><?php esc_html_e( "Days", 'coming-soon-maintenance-mode' ); ?></div>
