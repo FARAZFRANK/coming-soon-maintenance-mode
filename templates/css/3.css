@@ -328,24 +328,32 @@ border-right: 1px solid rgb(255 255 255 / 5%);
  * ## home social
  * ------------------------------------------------------------------- */
 .home-social {
-  list-style: none;
-  font-family: inherit;
+  list-style: none !important;
+  font-family: inherit !important;
   margin: 0 !important;
   padding: 0 !important;
-  position: absolute !important;
+  position: fixed !important;
   bottom: 3.5rem !important;
   left: 3.5rem !important;
-  z-index: 15 !important;
+  top: auto !important;
+  right: auto !important;
+  z-index: 999 !important;
   display: flex !important;
   flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
   gap: 1.25rem !important;
+  width: auto !important;
+  height: auto !important;
 }
 
 .home-social li {
-  position: relative;
+  position: relative !important;
   margin: 0 !important;
   padding: 0 !important;
   display: flex !important;
+  width: auto !important;
+  height: auto !important;
 }
 
 .home-social li a {
@@ -364,6 +372,7 @@ border-right: 1px solid rgb(255 255 255 / 5%);
   font-size: 16px !important;
   line-height: 1 !important;
   text-align: center !important;
+  color: inherit !important;
 }
 
 .home-social li a:hover {
@@ -539,33 +548,6 @@ html.no-csstransitions .home-content__main {
     font-size: 1.1rem;
   }
 
-  .home-social {
-    left: 5.5rem;
-  }
-
-}
-
-@media only screen and (max-width:1000px) {
-  .home-content h1 {
-    font-size: 13rem;
-  }
-
-  .home-content h3 {
-    font-size: 3rem;
-  }
-
-  .home-content__button .btn {
-    width: 24rem;
-  }
-
-  .home-content__scroll {
-    right: 6rem;
-  }
-
-  .home-social {
-    left: 4.5rem;
-  }
-
 }
 
 @media only screen and (max-width:900px) {
@@ -580,6 +562,9 @@ html.no-csstransitions .home-content__main {
   .home-social {
     bottom: 2rem !important;
     left: 2rem !important;
+    top: auto !important;
+    right: auto !important;
+    position: fixed !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 1rem !important;
