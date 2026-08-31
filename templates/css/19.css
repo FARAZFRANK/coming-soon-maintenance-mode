@@ -79,32 +79,70 @@ body {
 }
 
 /* Subscription form styling */
-.subscribe-input {
-	background: rgba(0,0,0,0.2);
-	border: 1px solid rgba(255, 255, 255, 0.3);
-	color: #ffffff;
+.main-card #subscribe-form {
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 12px !important;
+	max-width: 480px !important;
+	width: 100% !important;
+	margin: 0 auto !important;
+}
+
+.main-card .subscribe-input {
+	background: rgba(0, 0, 0, 0.25) !important;
+	border: 1px solid rgba(255, 255, 255, 0.3) !important;
+	color: #ffffff !important;
+	height: 48px !important;
+	line-height: 48px !important;
+	padding: 0 20px !important;
+	border-radius: 9999px !important;
+	flex: 1 1 auto !important;
+	width: auto !important;
+	font-family: 'Poppins', sans-serif !important;
+	font-size: 14px !important;
+	box-sizing: border-box !important;
+	text-align: left !important;
 	transition: all 0.3s ease;
 }
-.subscribe-input::placeholder {
-	color: #CE93D8;
+
+.main-card .subscribe-input::placeholder {
+	color: #CE93D8 !important;
+	opacity: 1 !important;
 }
-.subscribe-input:focus {
-	outline: none;
-	border-color: #FFD600;
-	background: rgba(0,0,0,0.3);
+
+.main-card .subscribe-input:focus {
+	outline: none !important;
+	border-color: #FFD600 !important;
+	background: rgba(0, 0, 0, 0.35) !important;
 }
-.subscribe-btn {
-	background-image: linear-gradient(45deg, #F06292 0%, #FFD600 100%);
-	color: #4A148C;
-	border: none;
+
+.main-card .subscribe-btn {
+	background: linear-gradient(45deg, #F06292 0%, #FFD600 100%) !important;
+	background-image: linear-gradient(45deg, #F06292 0%, #FFD600 100%) !important;
+	color: #4A148C !important;
+	border: none !important;
+	height: 48px !important;
+	line-height: 48px !important;
+	padding: 0 28px !important;
+	border-radius: 9999px !important;
+	white-space: nowrap !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.05em !important;
+	text-transform: uppercase !important;
+	position: static !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	box-sizing: border-box !important;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
 	transition: all 0.3s ease;
-	font-weight: 700;
-	text-transform: uppercase;
-	box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
-.subscribe-btn:hover {
-	transform: translateY(-3px) scale(1.05);
-	box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+
+.main-card .subscribe-btn:hover {
+	transform: translateY(-2px) scale(1.03) !important;
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
 }
 /* ------------------------------------------------------------------- 
  * ## home social - (_site-layout.scss) 
