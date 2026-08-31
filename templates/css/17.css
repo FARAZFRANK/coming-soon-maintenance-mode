@@ -12,8 +12,9 @@ body {
 	animation: floatIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 	opacity: 0;
 	transform: translateY(40px);
-	min-height: 620px;
-	align-items: center;
+	min-height: 640px;
+	display: grid;
+	align-items: stretch;
 }
 
 @keyframes floatIn {
@@ -21,6 +22,52 @@ body {
 		opacity: 1;
 		transform: translateY(0);
 	}
+}
+
+/* Left Column Content Container */
+.prospectus-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+	padding: 2.75rem 2.5rem;
+	box-sizing: border-box;
+}
+
+.prospectus-logo {
+	margin-bottom: 1.25rem;
+}
+
+.prospectus-content h1.title-font {
+	margin-bottom: 0.75rem;
+}
+
+.prospectus-desc {
+	margin-bottom: 1.25rem !important;
+	line-height: 1.6;
+}
+
+.countdown-header {
+	margin-bottom: 0.5rem !important;
+	font-size: 0.95rem;
+	letter-spacing: 0.1em;
+	color: #718096;
+}
+
+.prospectus-content #countdown {
+	margin-bottom: 1.25rem !important;
+}
+
+.prospectus-form-label {
+	margin-bottom: 0.5rem !important;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #4A5568;
+}
+
+.subscribe-wrapper {
+	margin-bottom: 1.25rem !important;
+	width: 100%;
 }
 
 /* Image container with mask */
@@ -91,76 +138,113 @@ body {
 }
 
 /* Subscription form styling */
+.prospectus-content #subscribe-form {
+	display: flex;
+	flex-direction: row;
+	height: 48px;
+	width: 100%;
+	max-width: 440px;
+	position: relative;
+}
+
 .subscribe-input {
 	background: #F7FAFC;
 	border: 1px solid #E2E8F0;
 	color: #2D3748;
+	height: 48px !important;
+	flex: 1;
+	padding: 0 16px !important;
+	border-radius: 6px 0 0 6px !important;
+	font-size: 14px;
 	transition: all 0.3s ease;
+	box-sizing: border-box;
 }
+
 .subscribe-input::placeholder {
 	color: #A0AEC0;
 }
+
 .subscribe-input:focus {
 	outline: none;
 	border-color: #B79457;
 	box-shadow: 0 0 0 2px rgba(183, 148, 87, 0.2);
 }
+
 .subscribe-btn {
 	background-color: #1A202C;
 	color: #fff;
 	border: none;
+	height: 48px !important;
+	padding: 0 22px !important;
+	border-radius: 0 6px 6px 0 !important;
+	white-space: nowrap !important;
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.5px;
 	transition: all 0.3s ease;
-	font-weight: 600;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
 }
+
 .subscribe-btn:hover {
 	background-color: #B79457;
 	color: #fff;
 }
 
-
 /* ------------------------------------------------------------------- 
  * ## home social - (_site-layout.scss) 
  * ------------------------------------------------------------------- */
-.home-social {
-  list-style: none;
-  font-family: var(--thm-font);
+.prospectus-content .home-social {
+	list-style: none !important;
+	font-family: var(--thm-font);
+	margin-top: 0.5rem !important;
+	padding: 0 !important;
+	display: flex !important;
+	justify-content: flex-start !important;
+	align-items: center !important;
+	gap: 16px !important;
+	left: 0 !important;
+	right: auto !important;
+	width: auto !important;
 }
 
 .home-social a {
-  color: #B79457;
-  -webkit-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
+	color: #B79457;
+	-webkit-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
 }
 
 .home-social li {
-  position: relative;
-  display: inline-block;
+	position: relative;
+	display: inline-block;
 }
 
 .home-social li a {
-  display: block;
-  width: 36px;
-  height: 36px;
+	display: block;
+	width: 36px;
+	height: 36px;
 }
 
 .home-social i,
 .home-social span {
-  position: absolute;
-  top: 0;
-  line-height: 36px;
-  -webkit-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
+	position: absolute;
+	top: 0;
+	line-height: 36px;
+	-webkit-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
 }
 
 .home-social i {
-  right: 0;
-  text-align: center;
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  font-size: 1.45rem;
+	right: 0;
+	text-align: center;
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	font-size: 1.45rem;
 }
 
 .home-social li:hover i {
- color: var(--thm-primary);
+	color: var(--thm-primary);
 }
