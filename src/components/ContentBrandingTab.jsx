@@ -1411,7 +1411,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   onChange('bg_gradient_color1', '#1e3a8a');
                   onChange('bg_gradient_color2', '#0f172a');
                   onChange('bg_gradient_angle', 135);
-                  onChange('bg_pattern', 'sakura');
+                  onChange('bg_pattern', 'hexagons');
                   onChange('bg_custom_pattern_url', '');
                   onChange('bg_custom_pattern_size', 60);
                   onChange('bg_custom_pattern_repeat', 'repeat');
@@ -2034,23 +2034,9 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
 
               {/* Option 4: Graphic Pattern */}
               {settings.bg_type === 'pattern' && (() => {
-                const pat = settings.bg_pattern || 'sakura';
-                const svgWaves = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40' viewBox='0 0 80 40'%3E%3Cg fill='none' stroke='%230ea5e9' stroke-opacity='0.28' stroke-width='1.5'%3E%3Cpath d='M0 40a40 40 0 0 1 80 0M0 30a30 30 0 0 1 60 0M0 20a20 20 0 0 1 40 0M0 10a10 10 0 0 1 20 0'/%3E%3Cpath d='M40 40a40 40 0 0 1 80 0M40 30a30 30 0 0 1 60 0M40 20a20 20 0 0 1 40 0M40 10a10 10 0 0 1 20 0'/%3E%3Cpath d='M-40 40a40 40 0 0 1 80 0M-40 30a30 30 0 0 1 60 0M-40 20a20 20 0 0 1 40 0M-40 10a10 10 0 0 1 20 0'/%3E%3Cpath d='M20 20a40 40 0 0 1 80 0M20 10a30 30 0 0 1 60 0M20 0a20 20 0 0 1 40 0'/%3E%3Cpath d='M-20 20a40 40 0 0 1 80 0M-20 10a30 30 0 0 1 60 0M-20 0a20 20 0 0 1 40 0'/%3E%3C/g%3E%3C/svg%3E";
-                const svgSakura = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23f472b6' fill-opacity='0.3'%3E%3Cpath d='M50 35c2-6 8-8 12-4s2 10-4 12c-6 2-8 8-12 4s-2-10 4-12z'/%3E%3Cpath d='M50 35c-2-6-8-8-12-4s-2 10 4 12c6 2 8 8 12 4s2-10-4-12z'/%3E%3Ccircle cx='50' cy='35' r='3.5' fill='%23fb7185' fill-opacity='0.55'/%3E%3Cpath d='M0 85c2-6 8-8 12-4s2 10-4 12c-6 2-8 8-12 4s-2-10 4-12z'/%3E%3Cpath d='M0 85c-2-6-8-8-12-4s-2 10 4 12c6 2 8 8 12 4s2-10-4-12z'/%3E%3Ccircle cx='0' cy='85' r='3.5' fill='%23fb7185' fill-opacity='0.55'/%3E%3Cpath d='M100 85c2-6 8-8 12-4s2 10-4 12c-6 2-8 8-12 4s-2-10 4-12z'/%3E%3Cpath d='M100 85c-2-6-8-8-12-4s-2 10 4 12c6 2 8 8 12 4s2-10-4-12z'/%3E%3Ccircle cx='100' cy='85' r='3.5' fill='%23fb7185' fill-opacity='0.55'/%3E%3Cpath d='M85 10c3 0 5 3 4 6s-4 4-7 3s-3-4-1-6c1-2 3-3 4-3z' fill='%23ec4899' fill-opacity='0.35'/%3E%3Cpath d='M20 60c2 2 2 5 0 7s-5 1-7-1s-1-5 2-6c2-1 4-1 5 0z' fill='%23ec4899' fill-opacity='0.35'/%3E%3C/g%3E%3C/svg%3E";
+                const pat = settings.bg_pattern || 'hexagons';
 
                 const patternMap = {
-                  sakura: {
-                    backgroundColor: '#1a0b18',
-                    backgroundImage: `url("${svgSakura}")`,
-                    backgroundSize: '100px 100px',
-                    backgroundRepeat: 'repeat',
-                  },
-                  waves: {
-                    backgroundColor: '#081226',
-                    backgroundImage: `url("${svgWaves}")`,
-                    backgroundSize: '80px 40px',
-                    backgroundRepeat: 'repeat',
-                  },
                   hexagons: {
                     backgroundColor: '#0b1120',
                     backgroundImage:
@@ -2100,7 +2086,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     backgroundRepeat: settings.bg_custom_pattern_repeat || 'repeat',
                   },
                 };
-                const activeStyle = patternMap[pat] || patternMap.sakura;
+                const activeStyle = patternMap[pat] || patternMap.hexagons;
 
                 return (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
@@ -2114,8 +2100,6 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         value={pat}
                         onChange={(e) => onChange('bg_pattern', e.target.value)}
                       >
-                        <MenuItem value="sakura">Sakura (Cherry Blossoms - Seamless SVG)</MenuItem>
-                        <MenuItem value="waves">Waves (Seigaiha Waves - Seamless SVG)</MenuItem>
                         <MenuItem value="hexagons">Hexagons</MenuItem>
                         <MenuItem value="dots">Dots Pattern</MenuItem>
                         <MenuItem value="triangles">Triangles</MenuItem>

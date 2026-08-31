@@ -309,7 +309,7 @@ class CSMM_REST_API {
 			'bg_video_vimeo_url'   => isset( $content['bg_video_vimeo_url'] ) ? $content['bg_video_vimeo_url'] : ( isset( $content['bg_video_source'] ) && 'vimeo' === $content['bg_video_source'] && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : 'https://vimeo.com/1178283333' ),
 			'bg_video_mp4_url'     => isset( $content['bg_video_mp4_url'] ) ? $content['bg_video_mp4_url'] : ( isset( $content['bg_video_source'] ) && in_array( $content['bg_video_source'], array( 'file', 'mp4' ), true ) && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : '' ),
 			'bg_video_loop'        => ! isset( $content['bg_video_loop'] ) || ! empty( $content['bg_video_loop'] ),
-			'bg_pattern'                => isset( $content['bg_pattern'] ) ? $content['bg_pattern'] : 'sakura',
+			'bg_pattern'                => isset( $content['bg_pattern'] ) ? $content['bg_pattern'] : 'hexagons',
 			'bg_custom_pattern_url'     => isset( $content['bg_custom_pattern_url'] ) ? $content['bg_custom_pattern_url'] : '',
 			'bg_custom_pattern_size'    => isset( $content['bg_custom_pattern_size'] ) ? intval( $content['bg_custom_pattern_size'] ) : 60,
 			'bg_custom_pattern_repeat'  => isset( $content['bg_custom_pattern_repeat'] ) ? $content['bg_custom_pattern_repeat'] : 'repeat',
