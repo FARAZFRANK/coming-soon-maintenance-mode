@@ -2035,19 +2035,22 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   sakura: {
                     backgroundColor: '#1a0b18',
                     backgroundImage:
-                      'radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.4) 10%, transparent 20%), radial-gradient(circle at 20% 20%, rgba(251, 113, 133, 0.35) 15%, transparent 25%), radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.35) 15%, transparent 25%), radial-gradient(circle at 70% 30%, rgba(244, 114, 182, 0.3) 12%, transparent 24%)',
+                      'radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.45) 10%, transparent 20%), radial-gradient(circle at 20% 20%, rgba(251, 113, 133, 0.4) 15%, transparent 25%), radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.4) 15%, transparent 25%), radial-gradient(circle at 70% 30%, rgba(244, 114, 182, 0.35) 12%, transparent 24%)',
                     backgroundSize: '100px 100px',
+                    backgroundRepeat: 'repeat',
                   },
                   hexagons: {
                     backgroundColor: '#0b1120',
                     backgroundImage:
-                      'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 0 0, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 0 100%, rgba(99, 102, 241, 0.35) 15%, transparent 16%), radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.35) 15%, transparent 16%)',
+                      'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 0 0, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 0 100%, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.4) 15%, transparent 16%)',
                     backgroundSize: '40px 40px',
+                    backgroundRepeat: 'repeat',
                   },
                   dots: {
                     backgroundColor: '#0b1120',
-                    backgroundImage: 'radial-gradient(rgba(59, 130, 246, 0.5) 2px, transparent 2px)',
+                    backgroundImage: 'radial-gradient(rgba(59, 130, 246, 0.6) 2px, transparent 2px)',
                     backgroundSize: '24px 24px',
+                    backgroundRepeat: 'repeat',
                   },
                   triangles: {
                     backgroundColor: '#090e1a',
@@ -2055,29 +2058,35 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       'linear-gradient(30deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(150deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(30deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(150deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(60deg, rgba(30, 58, 138, 0.35) 25%, transparent 25.5%, transparent 75%, rgba(30, 58, 138, 0.35) 75%, rgba(30, 58, 138, 0.35)), linear-gradient(60deg, rgba(30, 58, 138, 0.35) 25%, transparent 25.5%, transparent 75%, rgba(30, 58, 138, 0.35) 75%, rgba(30, 58, 138, 0.35))',
                     backgroundSize: '80px 140px',
                     backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px',
+                    backgroundRepeat: 'repeat',
                   },
                   waves: {
                     backgroundColor: '#081226',
                     backgroundImage:
-                      'radial-gradient(ellipse at 50% 50%, rgba(14, 165, 233, 0.35) 0%, transparent 60%), repeating-radial-gradient(circle at 0 0, transparent 0, #081226 20px, transparent 21px, rgba(14, 165, 233, 0.25) 22px, transparent 23px)',
-                    backgroundSize: '100% 100%, 60px 60px',
+                      'radial-gradient(circle at 100% 150%, #081226 24%, rgba(14, 165, 233, 0.35) 25%, rgba(14, 165, 233, 0.35) 28%, #081226 29%, #081226 36%, rgba(14, 165, 233, 0.35) 37%, rgba(14, 165, 233, 0.35) 40%, #081226 41%, #081226 100%), radial-gradient(circle at 0 150%, #081226 24%, rgba(14, 165, 233, 0.35) 25%, rgba(14, 165, 233, 0.35) 28%, #081226 29%, #081226 36%, rgba(14, 165, 233, 0.35) 37%, rgba(14, 165, 233, 0.35) 40%, #081226 41%, #081226 100%), radial-gradient(circle at 50% 100%, rgba(14, 165, 233, 0.35) 10%, #081226 11%, #081226 23%, rgba(14, 165, 233, 0.35) 24%, rgba(14, 165, 233, 0.35) 30%, #081226 31%, #081226 43%, rgba(14, 165, 233, 0.35) 44%, rgba(14, 165, 233, 0.35) 50%, #081226 51%, #081226 100%)',
+                    backgroundSize: '60px 30px',
+                    backgroundRepeat: 'repeat',
                   },
                   carbon: {
                     backgroundColor: '#0f1117',
                     backgroundImage:
                       'linear-gradient(27deg, #151821 5px, transparent 5px), linear-gradient(207deg, #151821 5px, transparent 5px), linear-gradient(27deg, #1e2230 5px, transparent 5px), linear-gradient(207deg, #1e2230 5px, transparent 5px), linear-gradient(90deg, #181c27 10px, transparent 10px), linear-gradient(#1b1e2b 25%, #141722 25%, #141722 50%, transparent 50%, transparent 75%, #232838 75%, #232838)',
                     backgroundSize: '20px 20px',
+                    backgroundRepeat: 'repeat',
                   },
                   lines: {
                     backgroundColor: '#0b1120',
                     backgroundImage:
-                      'repeating-linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.2) 2px, transparent 2px, transparent 16px)',
+                      'repeating-linear-gradient(45deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.25) 2px, transparent 2px, transparent 16px)',
+                    backgroundSize: 'auto',
+                    backgroundRepeat: 'repeat',
                   },
                   stars: {
                     backgroundColor: '#030712',
                     backgroundImage:
                       'radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.9), rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, rgba(147,197,253,0.9), rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 230px 190px, #ffffff, rgba(0,0,0,0))',
                     backgroundSize: '250px 250px',
+                    backgroundRepeat: 'repeat',
                   },
                 };
                 const activeStyle = patternMap[pat] || patternMap.waves;
