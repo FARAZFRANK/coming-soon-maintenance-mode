@@ -136,6 +136,18 @@
   color: #9c9c9c;
 }
 
+.home-content p,
+.home-content__main p,
+.home-content__text p {
+  color: #ffffff !important;
+  font-size: 1.8rem;
+  line-height: 1.7;
+  max-width: 780px;
+  margin: 0 auto 3rem auto;
+  font-family: "Nunito Sans", sans-serif;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
 .home-logo img {
   width: auto;
   height: 125px;
