@@ -39,6 +39,20 @@ body {
 	color: #8B5CF6; /* Violet */
 }
 
+.podcast-desc,
+.main-content p.podcast-desc {
+	margin-top: 1rem !important;
+	margin-bottom: 3rem !important;
+	line-height: 1.8 !important;
+	display: block !important;
+}
+
+#countdown,
+.main-content #countdown {
+	margin-top: 1.5rem !important;
+	margin-bottom: 2.75rem !important;
+}
+
 /* Podcast Cover Art Styling */
 .cover-art {
 	border: 1px solid rgba(255, 255, 255, 0.1);

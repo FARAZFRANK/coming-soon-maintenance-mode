@@ -45,12 +45,12 @@
                 <h1 class="title-font text-5xl md:text-6xl text-white mb-4">
                     <?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?>
                 </h1>
-                <p class="text-lg text-gray-400 mb-8">
+                <p class="podcast-desc text-lg text-gray-400 max-w-xl leading-relaxed" style="margin-top: 1rem !important; margin-bottom: 3rem !important; line-height: 1.8 !important;">
                     <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
                 </p>
 
                 <!-- Countdown Timer -->
-                <div id="countdown" class="grid grid-cols-4 gap-4 mb-10 max-w-sm mx-auto md:mx-0">
+                <div id="countdown" class="grid grid-cols-4 gap-4 max-w-sm mx-auto md:mx-0" style="margin-top: 1.5rem !important; margin-bottom: 2.75rem !important;">
                     <div>
                         <div id="days" class="countdown-number text-3xl md:text-4xl">00</div>
                         <div class="countdown-label mt-2"><?php esc_html_e( "Days", 'coming-soon-maintenance-mode' ); ?></div>
