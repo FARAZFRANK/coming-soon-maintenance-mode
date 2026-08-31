@@ -25,9 +25,12 @@
     <link rel="shortcut icon" href="<?php echo get_site_icon_url(); ?>" type="image/x-icon">
 	<link rel="icon" href="<?php echo get_site_icon_url(); ?>" type="image/x-icon">
 </head>
-<body class="template-two-body flex items-center justify-center min-h-screen p-4 text-white">
+<body class="template-two-body relative flex items-center justify-center min-h-screen p-4 text-white overflow-x-hidden bg-cover bg-center bg-no-repeat" style="background-image: url('<?php echo esc_url( CSMM_URL . 'templates/images/temp-2.webp' ); ?>');">
 
-    <main class="template-two-content w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center z-10 py-10 px-4">
+    <!-- Dark cinematic vignette overlay -->
+    <div class="template-two-overlay fixed inset-0 z-0 pointer-events-none" style="background: radial-gradient(circle at center, rgba(10, 6, 12, 0.45) 0%, rgba(10, 6, 12, 0.85) 100%);"></div>
+
+    <main class="template-two-content relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center z-10 py-10 px-4">
         
 		<!-- Logo -->
 		<?php if($csmm_logo_id) { ?>

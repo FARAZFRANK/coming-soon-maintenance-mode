@@ -12,56 +12,29 @@ html, body, .template-two-body {
 	min-height: 100vh;
 	font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 	background-color: #0b070e;
-	color: #ffffff;
-	overflow-x: hidden;
-}
-
-.s-home.template-two {
-	position: relative;
-	min-height: 100vh;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	background-image: url(../images/temp-2.webp);
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
-	padding: 4rem 1.5rem;
-	box-sizing: border-box;
+	background-attachment: fixed;
+	color: #ffffff;
+	position: relative;
 }
 
-/* Dark overlay for rich contrast & readability */
-.s-home.template-two::before {
-	content: '';
-	position: absolute;
+.template-two-overlay {
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: radial-gradient(circle at center, rgba(10, 6, 12, 0.4) 0%, rgba(10, 6, 12, 0.85) 100%);
-	z-index: 1;
+	background: radial-gradient(circle at center, rgba(10, 6, 12, 0.45) 0%, rgba(10, 6, 12, 0.85) 100%);
+	z-index: 0;
+	pointer-events: none;
 }
 
-.home-content {
+.template-two-content {
 	position: relative;
 	z-index: 2;
-	width: 100%;
-	max-width: 900px;
-	margin: 0 auto;
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-}
-
-.home-container {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
 }
 
 /* 1. Logo */
