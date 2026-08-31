@@ -73,26 +73,25 @@ export default function SubscribersTab({ onNotify }) {
 
   const allSelected =
     subscribers.length > 0 &&
-    subscribers.every((item) => selectedIds.map(String).includes(String(item.id)));
+    subscribers.every((item) => selectedIds.some((id) => Number(id) === Number(item.id)));
   const isIndeterminate = selectedIds.length > 0 && !allSelected;
 
-  const handleSelectAll = () => {
+  const handleSelectAll = (e) => {
     if (allSelected) {
-      const pageIds = new Set(subscribers.map((item) => String(item.id)));
-      setSelectedIds((prev) => prev.filter((id) => !pageIds.has(String(id))));
+      const pageIds = new Set(subscribers.map((item) => Number(item.id)));
+      setSelectedIds((prev) => prev.filter((id) => !pageIds.has(Number(id))));
     } else {
-      const pageIds = subscribers.map((item) => String(item.id));
-      setSelectedIds((prev) => Array.from(new Set([...prev.map(String), ...pageIds])));
+      const pageIds = subscribers.map((item) => Number(item.id));
+      setSelectedIds((prev) => Array.from(new Set([...prev.map(Number), ...pageIds])));
     }
   };
 
   const handleToggleRow = (id) => {
-    const idStr = String(id);
-    setSelectedIds((prev) =>
-      prev.map(String).includes(idStr)
-        ? prev.filter((i) => String(i) !== idStr)
-        : [...prev.map(String), idStr]
-    );
+    const numId = Number(id);
+    setSelectedIds((prev) => {
+      const has = prev.some((i) => Number(i) === numId);
+      return has ? prev.filter((i) => Number(i) !== numId) : [...prev.map(Number), numId];
+    });
   };
 
   const handleDeleteConfirm = async () => {
@@ -283,19 +282,13 @@ export default function SubscribersTab({ onNotify }) {
                 <TableRow>
                   <TableCell
                     padding="checkbox"
-                    sx={{ borderColor: 'divider', width: 48, pl: 2, cursor: subscribers.length > 0 ? 'pointer' : 'default' }}
-                    onClick={() => {
-                      if (subscribers.length > 0 && !loading) {
-                        handleSelectAll();
-                      }
-                    }}
+                    sx={{ borderColor: 'divider', width: 48, pl: 2 }}
                   >
                     <Checkbox
                       color="primary"
                       indeterminate={isIndeterminate}
                       checked={allSelected}
                       onChange={handleSelectAll}
-                      onClick={(e) => e.stopPropagation()}
                       disabled={subscribers.length === 0 || loading}
                       inputProps={{ 'aria-label': 'select all subscribers' }}
                     />
@@ -319,12 +312,13 @@ export default function SubscribersTab({ onNotify }) {
                   </TableRow>
                 ) : subscribers.length > 0 ? (
                   subscribers.map((item) => {
-                    const isSelected = selectedIds.map(String).includes(String(item.id));
+                    const isSelected = selectedIds.some((id) => Number(id) === Number(item.id));
                     return (
                       <TableRow
                         key={item.id}
                         hover
                         selected={isSelected}
+                        onClick={() => handleToggleRow(item.id)}
                         sx={{
                           cursor: 'pointer',
                           '&.Mui-selected, &.Mui-selected:hover': {
@@ -335,23 +329,18 @@ export default function SubscribersTab({ onNotify }) {
                         <TableCell
                           padding="checkbox"
                           sx={{ borderColor: 'divider', pl: 2 }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggleRow(item.id);
-                          }}
                         >
                           <Checkbox
                             color="primary"
                             checked={isSelected}
-                            onChange={() => handleToggleRow(item.id)}
-                            onClick={(e) => e.stopPropagation()}
+                            onChange={() => {}}
                             inputProps={{ 'aria-label': `select subscriber ${item.id}` }}
                           />
                         </TableCell>
-                        <TableCell sx={{ color: 'text.secondary', fontWeight: 600, borderColor: 'divider' }} onClick={() => handleToggleRow(item.id)}>
+                        <TableCell sx={{ color: 'text.secondary', fontWeight: 600, borderColor: 'divider' }}>
                           #{item.id}
                         </TableCell>
-                        <TableCell sx={{ borderColor: 'divider' }} onClick={() => handleToggleRow(item.id)}>
+                        <TableCell sx={{ borderColor: 'divider' }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
                             <MarkEmailReadRoundedIcon sx={{ fontSize: 18, color: '#2563eb' }} />
                             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary' }}>
@@ -359,17 +348,20 @@ export default function SubscribersTab({ onNotify }) {
                             </Typography>
                           </Box>
                         </TableCell>
-                        <TableCell sx={{ borderColor: 'divider' }} onClick={() => handleToggleRow(item.id)}>
+                        <TableCell sx={{ borderColor: 'divider' }}>
                           <Chip label={item.ip_address || '127.0.0.1'} size="small" variant="outlined" sx={{ fontSize: '0.75rem', borderRadius: '4px' }} />
                         </TableCell>
-                        <TableCell sx={{ color: 'text.secondary', fontSize: '0.875rem', borderColor: 'divider' }} onClick={() => handleToggleRow(item.id)}>
+                        <TableCell sx={{ color: 'text.secondary', fontSize: '0.875rem', borderColor: 'divider' }}>
                           {item.created_at}
                         </TableCell>
                         <TableCell sx={{ textAlign: 'center', borderColor: 'divider' }} onClick={(e) => e.stopPropagation()}>
                           <IconButton
                             size="small"
                             color="error"
-                            onClick={() => setDeleteId(item.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDeleteId(item.id);
+                            }}
                             title="Delete subscriber"
                             sx={{ borderRadius: '6px' }}
                           >

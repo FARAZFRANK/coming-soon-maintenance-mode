@@ -114,7 +114,21 @@ class CSMM_Subscribers {
 		self::ensure_table_exists();
 
 		$table  = self::get_table_name();
-		$result = $wpdb->delete( $table, array( 'id' => intval( $id ) ), array( '%d' ) );
+		$id_val = intval( $id );
+
+		// Clean from legacy option if exists
+		$subscriber = $wpdb->get_row( $wpdb->prepare( "SELECT email FROM `{$table}` WHERE id = %d", $id_val ) );
+		if ( $subscriber && ! empty( $subscriber->email ) ) {
+			$legacy = get_option( 'cmss_subscriber_list', array() );
+			if ( is_array( $legacy ) ) {
+				$legacy = array_values( array_filter( $legacy, function( $e ) use ( $subscriber ) {
+					return strtolower( trim( $e ) ) !== strtolower( trim( $subscriber->email ) );
+				} ) );
+				update_option( 'cmss_subscriber_list', $legacy );
+			}
+		}
+
+		$result = $wpdb->delete( $table, array( 'id' => $id_val ), array( '%d' ) );
 		return false !== $result;
 	}
 
@@ -135,15 +149,28 @@ class CSMM_Subscribers {
 
 		$table     = self::get_table_name();
 		$clean_ids = array_map( 'intval', $ids );
-		$clean_ids = array_filter( $clean_ids, function( $i ) { return $i > 0; } );
+		$clean_ids = array_values( array_filter( $clean_ids, function( $i ) { return $i > 0; } ) );
 
 		if ( empty( $clean_ids ) ) {
 			return 0;
 		}
 
-		$placeholders = implode( ',', array_fill( 0, count( $clean_ids ), '%d' ) );
-		$sql          = $wpdb->prepare( "DELETE FROM `{$table}` WHERE id IN ($placeholders)", $clean_ids );
-		$result       = $wpdb->query( $sql );
+		$id_list = implode( ',', $clean_ids );
+
+		// Clean from legacy option if exists
+		$subscribers = $wpdb->get_col( "SELECT email FROM `{$table}` WHERE id IN ($id_list)" );
+		if ( ! empty( $subscribers ) ) {
+			$legacy = get_option( 'cmss_subscriber_list', array() );
+			if ( is_array( $legacy ) ) {
+				$deleted_emails = array_map( 'strtolower', array_map( 'trim', $subscribers ) );
+				$legacy = array_values( array_filter( $legacy, function( $e ) use ( $deleted_emails ) {
+					return ! in_array( strtolower( trim( $e ) ), $deleted_emails, true );
+				} ) );
+				update_option( 'cmss_subscriber_list', $legacy );
+			}
+		}
+
+		$result = $wpdb->query( "DELETE FROM `{$table}` WHERE id IN ($id_list)" );
 
 		return false !== $result ? $result : 0;
 	}
