@@ -75,15 +75,16 @@ body {
 
 .content-side .construction-desc,
 .content-side p.construction-desc {
-	margin-top: 0.75rem !important;
-	margin-bottom: 2.25rem !important;
-	line-height: 1.7 !important;
+	margin-top: 1rem !important;
+	margin-bottom: 3rem !important;
+	line-height: 1.8 !important;
 }
 
 /* Countdown timer styling */
-.content-side #countdown {
-	margin-top: 0 !important;
-	margin-bottom: 2.25rem !important;
+.content-side #countdown,
+#countdown {
+	margin-top: 1.5rem !important;
+	margin-bottom: 2.5rem !important;
 }
 
 .countdown-box {
