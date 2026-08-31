@@ -33,7 +33,7 @@
         
 		<!-- Logo -->
 		<?php if($csmm_logo_id) { ?>
-		<div class="mb-6 flex justify-center">
+		<div class="template-27-logo mb-8 flex justify-center">
 		  <a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
 			<img class="h-10 w-auto" src="<?php echo esc_url($csmm_logo_url[0]); ?>" alt="<?php echo esc_attr($csmm_logo_alt); ?>">
 		  </a>
@@ -41,16 +41,16 @@
 		<?php } ?>
 		
         <!-- Header -->
-        <h1 class="title-font text-3xl md:text-5xl mb-4">
+        <h1 class="title-font text-3xl md:text-5xl my-6">
             <?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?>
         </h1>
-        <p class="text-lg text-gray-400 mb-8">
+        <p class="arcade-desc text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed" style="margin-top: 1.5rem !important; margin-bottom: 3rem !important;">
             <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
         </p>
 
         <!-- Countdown Timer -->
 		<?php if($csmm_countdown == 1) { ?>
-        <div class="flex justify-center items-center gap-8 mb-12">
+        <div class="flex justify-center items-center gap-8" style="margin-top: 1.5rem !important; margin-bottom: 3rem !important;">
             <div id="countdown" class="timer-box flex items-center gap-4">
                 <div id="days" class="timer-number text-4xl">00</div>
                 <div id="hours" class="timer-number text-4xl">00</div>
@@ -61,12 +61,12 @@
 		<?php } ?>
 
         <!-- Subscription Form -->
-        <div class="w-full max-w-lg mx-auto text-center">
+        <div class="w-full max-w-lg mx-auto text-center mb-8">
             <p class="mb-4 font-bold text-lg"><?php esc_html_e( "Enter the Arena First!", 'coming-soon-maintenance-mode' ); ?></p>
-            <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row gap-4">
-                <input type="email" id="csmm-email" name="csmm-email" placeholder="Enter your email" class="subscribe-input w-full rounded-md focus:outline-none text-center" required>
+            <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                <input type="email" id="csmm-email" name="csmm-email" placeholder="Enter your email" class="subscribe-input w-full rounded-md focus:outline-none text-center h-[50px]" required>
                 <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">
-				<button type="submit" class="subscribe-btn w-full sm:w-auto rounded-md"><?php esc_html_e( "Join Queue", 'coming-soon-maintenance-mode' ); ?></button>
+				<button type="submit" class="subscribe-btn w-full sm:w-auto rounded-md h-[50px] inline-flex items-center justify-center whitespace-nowrap"><?php esc_html_e( "Join Queue", 'coming-soon-maintenance-mode' ); ?></button>
             </form>
             <p id="success-message" class="mt-4 text-lg text-green-400 hidden"><?php esc_html_e( "You're in! Prepare for battle!", 'coming-soon-maintenance-mode' ); ?></p>
 			<?php
