@@ -155,15 +155,28 @@
  }
 
 
- .home-content h3 {
-   margin-top: 1.2rem;
-   font-family: "Nunito Sans", sans-serif;
-   font-weight: 300;
-   font-size: 3.8rem;
-   line-height: 1.342;
-   font-style: normal;
-   color: #a13a3a;
- }
+  .home-content h3 {
+    margin-top: 1.2rem;
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: 300;
+    font-size: 3.8rem;
+    line-height: 1.342;
+    font-style: normal;
+    color: #a13a3a;
+  }
+
+  .home-content p,
+  .home-content__main p,
+  .home-content__text p {
+    color: #ffffff !important;
+    font-size: 1.8rem;
+    line-height: 1.7;
+    max-width: 750px;
+    margin: 1.5rem auto 2.5rem auto;
+    font-family: "Nunito Sans", sans-serif;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    text-align: center;
+  }
 
  .home-logo {
    position: relative;
