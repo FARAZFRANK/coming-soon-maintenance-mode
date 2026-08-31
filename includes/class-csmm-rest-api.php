@@ -339,6 +339,9 @@ class CSMM_REST_API {
 				'qq'        => isset( $social_media['csmm_sm_qq'] ) ? $social_media['csmm_sm_qq'] : '',
 				'social_icon_size_enabled' => ! empty( $social_media['social_icon_size_enabled'] ),
 				'social_icon_size'         => isset( $social_media['social_icon_size'] ) ? intval( $social_media['social_icon_size'] ) : 24,
+				'social_icon_color_enabled' => ! empty( $social_media['social_icon_color_enabled'] ),
+				'social_icon_color'         => isset( $social_media['social_icon_color'] ) ? sanitize_hex_color( $social_media['social_icon_color'] ) : '',
+				'social_icon_hover_color'   => isset( $social_media['social_icon_hover_color'] ) ? sanitize_hex_color( $social_media['social_icon_hover_color'] ) : '',
 				'custom_channels' => isset( $social_media['custom_channels'] ) && is_array( $social_media['custom_channels'] ) ? $social_media['custom_channels'] : array(),
 			),
 			'seo'                  => array(
@@ -706,6 +709,15 @@ class CSMM_REST_API {
 			}
 			if ( isset( $sm['social_icon_size'] ) ) {
 				$social_array['social_icon_size'] = max( 12, min( 64, intval( $sm['social_icon_size'] ) ) );
+			}
+			if ( isset( $sm['social_icon_color_enabled'] ) ) {
+				$social_array['social_icon_color_enabled'] = ! empty( $sm['social_icon_color_enabled'] );
+			}
+			if ( isset( $sm['social_icon_color'] ) ) {
+				$social_array['social_icon_color'] = sanitize_hex_color( $sm['social_icon_color'] );
+			}
+			if ( isset( $sm['social_icon_hover_color'] ) ) {
+				$social_array['social_icon_hover_color'] = sanitize_hex_color( $sm['social_icon_hover_color'] );
 			}
 
 			update_option( 'csmm_social_media', $social_array );

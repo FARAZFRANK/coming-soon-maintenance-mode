@@ -34,6 +34,73 @@ import LinkRoundedIcon from '@mui/icons-material/LinkRounded';
 import StarsRoundedIcon from '@mui/icons-material/StarsRounded';
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
 
+// Pixel-perfect Color Picker Field seamlessly aligned with standard MUI TextFields
+function ColorPickerField({ label, value, defaultValue = '#ffffff', onChange, helperText }) {
+  const hexVal = value || defaultValue;
+
+  return (
+    <TextField
+      fullWidth
+      size="small"
+      label={label}
+      value={hexVal}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder="#ffffff"
+      helperText={helperText || ' '}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <Box
+              component="label"
+              sx={{
+                width: 22,
+                height: 22,
+                borderRadius: '4px',
+                backgroundColor: hexVal.startsWith('#') ? hexVal : defaultValue,
+                border: '1px solid rgba(0,0,0,0.2)',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
+                cursor: 'pointer',
+                flexShrink: 0,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'transform 0.15s ease',
+                '&:hover': {
+                  transform: 'scale(1.15)',
+                },
+              }}
+            >
+              <input
+                type="color"
+                value={hexVal.startsWith('#') && hexVal.length === 7 ? hexVal : defaultValue}
+                onChange={(e) => onChange(e.target.value)}
+                style={{
+                  position: 'absolute',
+                  top: -10,
+                  left: -10,
+                  width: 50,
+                  height: 50,
+                  opacity: 0,
+                  cursor: 'pointer',
+                }}
+              />
+            </Box>
+          </InputAdornment>
+        ),
+      }}
+      sx={{
+        '& .MuiInputBase-input': {
+          fontFamily: 'Consolas, Monaco, monospace',
+          fontSize: '0.85rem',
+          fontWeight: 600,
+        },
+      }}
+    />
+  );
+}
+
 export default function SocialMediaTab({ settings, onChange }) {
   const social = settings.social_media || {};
   const customChannels = social.custom_channels || [];
@@ -150,106 +217,213 @@ export default function SocialMediaTab({ settings, onChange }) {
         </CardContent>
       </Card>
 
-      {/* 2. Social Icon Appearance & Size Override */}
+      {/* 2. Social Icon Appearance & Overrides (Size, Color, Hover Color) */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
             <Box>
               <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
-                Social Icon Size Override
+                Social Icon Styling & Overrides
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Customize and override the size of all social media icons across frontend templates.
+                Customize the size, icon color, and hover color of all social media icons across frontend templates.
               </Typography>
             </Box>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={!!social.social_icon_size_enabled}
-                  onChange={(e) => {
-                    const checked = e.target.checked;
-                    handleStandardChange('social_icon_size_enabled', checked);
-                    if (checked && (!social.social_icon_size || Number(social.social_icon_size) <= 0)) {
-                      handleStandardChange('social_icon_size', 24);
-                    }
-                  }}
-                  size="small"
-                  color="primary"
-                />
-              }
-              label={
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  Override Icon Size
-                </Typography>
-              }
-              sx={{ mr: 0 }}
-            />
           </Box>
 
-          {social.social_icon_size_enabled && (
-            <Box
-              sx={{
-                p: 2,
-                borderRadius: '8px',
-                backgroundColor: (theme) =>
-                  theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
-                border: '1px solid',
-                borderColor: 'divider',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-                mt: 1.5,
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, maxWidth: 520, flexWrap: 'wrap' }}>
-                <Slider
-                  value={Number(social.social_icon_size) || 24}
-                  min={12}
-                  max={64}
-                  step={1}
-                  onChange={(_, val) => handleStandardChange('social_icon_size', val)}
-                  color="primary"
-                  size="small"
-                  sx={{ flex: 1, minWidth: 140 }}
-                />
-                <TextField
-                  size="small"
-                  type="number"
-                  value={social.social_icon_size !== undefined && social.social_icon_size !== '' ? social.social_icon_size : 24}
-                  onChange={(e) => handleStandardChange('social_icon_size', Number(e.target.value))}
-                  sx={{ width: 80 }}
-                  inputProps={{ min: 12, max: 64 }}
-                />
-                <Typography variant="body2" color="text.secondary">
-                  px
-                </Typography>
-                <Tooltip title="Reset to default icon size (24px)">
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    startIcon={<RestartAltRoundedIcon fontSize="small" />}
-                    onClick={() => handleStandardChange('social_icon_size', 24)}
-                    sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
-                  >
-                    Reset (24px)
-                  </Button>
-                </Tooltip>
-              </Box>
+          <Grid container spacing={2.5} sx={{ mt: 0.5 }}>
+            {/* Size Override Section */}
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  p: 2,
+                  borderRadius: '8px',
+                  backgroundColor: (theme) =>
+                    theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+                  border: '1px solid',
+                  borderColor: 'divider',
+                }}
+              >
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: social.social_icon_size_enabled ? 1.5 : 0, flexWrap: 'wrap', gap: 1 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                    Icon Size Override
+                  </Typography>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={!!social.social_icon_size_enabled}
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+                          handleStandardChange('social_icon_size_enabled', checked);
+                          if (checked && (!social.social_icon_size || Number(social.social_icon_size) <= 0)) {
+                            handleStandardChange('social_icon_size', 24);
+                          }
+                        }}
+                        size="small"
+                        color="primary"
+                      />
+                    }
+                    label={
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                        Override Icon Size
+                      </Typography>
+                    }
+                    sx={{ mr: 0 }}
+                  />
+                </Box>
 
-              {/* Real-time Visual Preview */}
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pt: 1, borderTop: '1px dashed', borderColor: 'divider', flexWrap: 'wrap' }}>
-                <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
-                  Live Icon Size Preview ({social.social_icon_size || 24}px):
+                {social.social_icon_size_enabled && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, maxWidth: 520, flexWrap: 'wrap', pt: 0.5 }}>
+                    <Slider
+                      value={Number(social.social_icon_size) || 24}
+                      min={12}
+                      max={64}
+                      step={1}
+                      onChange={(_, val) => handleStandardChange('social_icon_size', val)}
+                      color="primary"
+                      size="small"
+                      sx={{ flex: 1, minWidth: 140 }}
+                    />
+                    <TextField
+                      size="small"
+                      type="number"
+                      value={social.social_icon_size !== undefined && social.social_icon_size !== '' ? social.social_icon_size : 24}
+                      onChange={(e) => handleStandardChange('social_icon_size', Number(e.target.value))}
+                      sx={{ width: 80 }}
+                      inputProps={{ min: 12, max: 64 }}
+                    />
+                    <Typography variant="body2" color="text.secondary">
+                      px
+                    </Typography>
+                    <Tooltip title="Reset to default icon size (24px)">
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                        onClick={() => handleStandardChange('social_icon_size', 24)}
+                        sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                      >
+                        Reset (24px)
+                      </Button>
+                    </Tooltip>
+                  </Box>
+                )}
+              </Box>
+            </Grid>
+
+            {/* Color & Hover Color Section */}
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  p: 2,
+                  borderRadius: '8px',
+                  backgroundColor: (theme) =>
+                    theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+                  border: '1px solid',
+                  borderColor: 'divider',
+                }}
+              >
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: social.social_icon_color_enabled ? 2 : 0, flexWrap: 'wrap', gap: 1 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                    Icon Color & Hover Color Override
+                  </Typography>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={!!social.social_icon_color_enabled}
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+                          handleStandardChange('social_icon_color_enabled', checked);
+                          if (checked) {
+                            if (!social.social_icon_color) handleStandardChange('social_icon_color', '#ffffff');
+                            if (!social.social_icon_hover_color) handleStandardChange('social_icon_hover_color', '#38bdf8');
+                          }
+                        }}
+                        size="small"
+                        color="primary"
+                      />
+                    }
+                    label={
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                        Override Icon Colors
+                      </Typography>
+                    }
+                    sx={{ mr: 0 }}
+                  />
+                </Box>
+
+                {social.social_icon_color_enabled && (
+                  <Grid container spacing={2.5} sx={{ pt: 0.5 }}>
+                    <Grid item xs={12} sm={6}>
+                      <ColorPickerField
+                        label="Icon Normal Color"
+                        value={social.social_icon_color || '#ffffff'}
+                        defaultValue="#ffffff"
+                        onChange={(val) => handleStandardChange('social_icon_color', val)}
+                        helperText="Default color of all social media icons"
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <ColorPickerField
+                        label="Icon Hover Color"
+                        value={social.social_icon_hover_color || '#38bdf8'}
+                        defaultValue="#38bdf8"
+                        onChange={(val) => handleStandardChange('social_icon_hover_color', val)}
+                        helperText="Color when mouse hovers over icons"
+                      />
+                    </Grid>
+                  </Grid>
+                )}
+              </Box>
+            </Grid>
+
+            {/* Live Interactive Preview */}
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  p: 2,
+                  borderRadius: '8px',
+                  backgroundColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#0f172a' : '#1e293b',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: 2,
+                }}
+              >
+                <Typography variant="caption" sx={{ fontWeight: 700, color: '#94a3b8' }}>
+                  Live Interactive Icon Preview {social.social_icon_size_enabled ? `(${social.social_icon_size || 24}px)` : ''}:
                 </Typography>
-                <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 2, color: 'primary.main' }}>
-                  <FacebookRoundedIcon sx={{ fontSize: `${social.social_icon_size || 24}px` }} />
-                  <TwitterIcon sx={{ fontSize: `${social.social_icon_size || 24}px` }} />
-                  <InstagramIcon sx={{ fontSize: `${social.social_icon_size || 24}px` }} />
-                  <YouTubeIcon sx={{ fontSize: `${social.social_icon_size || 24}px` }} />
+                <Box
+                  sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 2.5,
+                    '& .preview-social-icon': {
+                      fontSize: social.social_icon_size_enabled ? `${social.social_icon_size || 24}px` : '24px',
+                      color: social.social_icon_color_enabled && social.social_icon_color ? social.social_icon_color : '#ffffff',
+                      transition: 'color 0.2s ease, transform 0.2s ease',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      '&:hover': {
+                        color: social.social_icon_color_enabled && social.social_icon_hover_color ? `${social.social_icon_hover_color} !important` : '#38bdf8 !important',
+                        transform: 'translateY(-2px)',
+                      },
+                    },
+                  }}
+                >
+                  <Box className="preview-social-icon"><FacebookRoundedIcon fontSize="inherit" /></Box>
+                  <Box className="preview-social-icon"><TwitterIcon fontSize="inherit" /></Box>
+                  <Box className="preview-social-icon"><InstagramIcon fontSize="inherit" /></Box>
+                  <Box className="preview-social-icon"><YouTubeIcon fontSize="inherit" /></Box>
+                  <Box className="preview-social-icon"><LinkedInIcon fontSize="inherit" /></Box>
                 </Box>
               </Box>
-            </Box>
-          )}
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
 

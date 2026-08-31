@@ -132,9 +132,11 @@ $csmm_sm_behance   = isset( $csmm_social_media['csmm_sm_behance'] ) ? $csmm_soci
 $csmm_sm_dribbble  = isset( $csmm_social_media['csmm_sm_dribbble'] ) ? $csmm_social_media['csmm_sm_dribbble'] : '';
 $csmm_sm_whatsapp  = isset( $csmm_social_media['csmm_sm_whatsapp'] ) ? $csmm_social_media['csmm_sm_whatsapp'] : '';
 $csmm_sm_tiktok    = isset( $csmm_social_media['csmm_sm_tiktok'] ) ? $csmm_social_media['csmm_sm_tiktok'] : '';
-$csmm_sm_qq        = isset( $csmm_social_media['csmm_sm_qq'] ) ? $csmm_social_media['csmm_sm_qq'] : '';
-$csmm_social_icon_size_enabled = ! empty( $csmm_social_media['social_icon_size_enabled'] );
-$csmm_social_icon_size         = isset( $csmm_social_media['social_icon_size'] ) ? intval( $csmm_social_media['social_icon_size'] ) : 24;
+$csmm_social_icon_size_enabled  = ! empty( $csmm_social_media['social_icon_size_enabled'] );
+$csmm_social_icon_size          = isset( $csmm_social_media['social_icon_size'] ) ? intval( $csmm_social_media['social_icon_size'] ) : 24;
+$csmm_social_icon_color_enabled = ! empty( $csmm_social_media['social_icon_color_enabled'] );
+$csmm_social_icon_color         = isset( $csmm_social_media['social_icon_color'] ) ? sanitize_hex_color( $csmm_social_media['social_icon_color'] ) : '';
+$csmm_social_icon_hover_color   = isset( $csmm_social_media['social_icon_hover_color'] ) ? sanitize_hex_color( $csmm_social_media['social_icon_hover_color'] ) : '';
 
 // Subscriber Form UI Settings
 $csmm_form_placeholder   = isset( $csmm_content['form_placeholder_text'] ) && '' !== $csmm_content['form_placeholder_text'] ? $csmm_content['form_placeholder_text'] : __( 'Email Address', 'coming-soon-maintenance-mode' );
@@ -288,11 +290,20 @@ if ( ! $csmm_description_enabled ) {
 	}
 }
 
-// Social Icon Size Override
+// Social Icon Styling & Overrides (Size, Color, Hover Color)
 if ( $csmm_social_icon_size_enabled && $csmm_social_icon_size > 0 ) {
 	$dynamic_css .= ".home-social, .social-links, .social-icons, .social-media, .social, .s-footer .social-list { gap: 16px !important; }\n";
 	$dynamic_css .= ".home-social i, .home-social a i, .home-social li a i, .home-social svg, .social-links i, .social-links a i, .social-icons i, .social-icons a i, .social i, .social a i, .s-footer .social-list i, .s-footer .social-list a i { font-size: {$csmm_social_icon_size}px !important; width: auto !important; height: auto !important; line-height: 1 !important; }\n";
 	$dynamic_css .= ".home-social a, .home-social li a, .social-links a, .social-icons a, .social a { font-size: {$csmm_social_icon_size}px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; }\n";
+}
+
+if ( $csmm_social_icon_color_enabled ) {
+	if ( ! empty( $csmm_social_icon_color ) ) {
+		$dynamic_css .= ".home-social a, .home-social li a, .home-social i, .home-social a i, .home-social li a i, .home-social span, .home-social svg, .social-links a, .social-links i, .social-links a i, .social-icons a, .social-icons i, .social-icons a i, .social a, .social i, .social a i, .s-footer .social-list a, .s-footer .social-list i, .s-footer .social-list a i, .social-icon, a.social-icon { color: {$csmm_social_icon_color} !important; fill: {$csmm_social_icon_color} !important; -webkit-text-fill-color: {$csmm_social_icon_color} !important; }\n";
+	}
+	if ( ! empty( $csmm_social_icon_hover_color ) ) {
+		$dynamic_css .= ".home-social a:hover, .home-social li:hover a, .home-social li a:hover, .home-social a:hover i, .home-social li a:hover i, .home-social li:hover i, .home-social li:hover span, .home-social a:hover svg, .social-links a:hover, .social-links a:hover i, .social-icons a:hover, .social-icons a:hover i, .social a:hover, .social a:hover i, .s-footer .social-list a:hover, .s-footer .social-list a:hover i, .social-icon:hover, a.social-icon:hover { color: {$csmm_social_icon_hover_color} !important; fill: {$csmm_social_icon_hover_color} !important; -webkit-text-fill-color: {$csmm_social_icon_hover_color} !important; }\n";
+	}
 }
 
 // Countdown & Subscriber Form toggles & styling
