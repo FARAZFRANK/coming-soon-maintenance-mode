@@ -34,7 +34,7 @@
         
 		<!-- Logo -->
 		<?php if($csmm_logo_id) { ?>
-		<div class="template-two-logo mb-8 flex justify-center">
+		<div class="template-two-logo flex justify-center">
 		  <a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
 			<img class="h-12 md:h-14 w-auto drop-shadow-lg" src="<?php echo esc_url($csmm_logo_url[0]); ?>" alt="<?php echo esc_attr($csmm_logo_alt); ?>">
 		  </a>
@@ -42,20 +42,20 @@
 		<?php } ?>
 		
         <!-- Title with Monoton Font -->
-        <h1 class="template-two-title title-font mb-4">
+        <h1 class="template-two-title title-font">
             <?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?>
         </h1>
         
         <!-- Description / Subtitle -->
-        <p class="template-two-desc desc-text text-sm md:text-base mb-8 max-w-2xl mx-auto">
+        <p class="template-two-desc desc-text">
             <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
         </p>
 
         <!-- Countdown Timer -->
 		<?php if($csmm_countdown == 1) { ?>
-        <div class="template-two-countdown mb-8 w-full max-w-md mx-auto">
+        <div class="template-two-countdown w-full max-w-md mx-auto">
             <?php if($csmm_countdown_title != "") { ?>
-            <p class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-3"><?php echo esc_html( $csmm_countdown_title ); ?></p>
+            <p class="countdown-title text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-3"><?php echo esc_html( $csmm_countdown_title ); ?></p>
             <?php } ?>
             <div id="countdown" class="grid grid-cols-4 gap-4 text-center">
                 <div class="flex flex-col items-center">
@@ -80,7 +80,7 @@
 
         <!-- Subscription Form -->
 		<?php if($csmm_susbcriber_form == 1) { ?>
-        <div class="template-two-form w-full max-w-md mx-auto mb-8">
+        <div class="template-two-form w-full max-w-md mx-auto">
             <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row items-center justify-center w-full rounded overflow-hidden shadow-2xl">
                 <input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Email Address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input w-full sm:flex-grow h-12 px-4 text-sm focus:outline-none" required>
                 <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">
