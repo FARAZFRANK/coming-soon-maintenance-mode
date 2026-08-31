@@ -61,13 +61,13 @@
             <h1 class="title-font text-4xl md:text-6xl text-white my-6">
 				<span class="highlight"><?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?></span>
             </h1>
-            <p class="blueprint-desc text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p class="blueprint-desc text-gray-400 max-w-2xl mx-auto leading-relaxed" style="margin-bottom: 3rem !important;">
 				<?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
             </p>
 
             <!-- Countdown Timer -->
 				<?php if($csmm_countdown == 1) { ?>
-                <div id="countdown" class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10 w-full max-w-lg mx-auto text-left">
+                <div id="countdown" class="grid grid-cols-2 sm:grid-cols-4 gap-6 w-full max-w-lg mx-auto text-left" style="margin-top: 1.5rem !important; margin-bottom: 2.5rem !important;">
                     <div class="countdown-box">
                         <div id="days" class="countdown-number text-4xl md:text-5xl">00</div>
                         <div class="countdown-label"><?php esc_html_e( "Days", 'coming-soon-maintenance-mode' ); ?></div>

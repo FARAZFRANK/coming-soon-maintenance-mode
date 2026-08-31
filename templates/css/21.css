@@ -77,14 +77,14 @@ body {
 .main-content .blueprint-desc,
 .main-content p.blueprint-desc {
 	margin-top: 1.25rem !important;
-	margin-bottom: 2.25rem !important;
-	line-height: 1.7 !important;
+	margin-bottom: 3rem !important;
+	line-height: 1.8 !important;
 }
 
 /* Countdown timer styling */
 .main-content #countdown {
-	margin-top: 0 !important;
-	margin-bottom: 2.25rem !important;
+	margin-top: 1.5rem !important;
+	margin-bottom: 2.5rem !important;
 }
 
 .countdown-box {
