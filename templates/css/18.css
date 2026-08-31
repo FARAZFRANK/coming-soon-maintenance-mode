@@ -51,6 +51,20 @@ body {
 	color: #B88A8A; /* Rose gold / dusty pink */
 }
 
+.main-content p {
+	margin-bottom: 2rem !important;
+}
+
+.main-content h3 {
+	margin-top: 1.75rem !important;
+	margin-bottom: 1.25rem !important;
+}
+
+#countdown {
+	margin-top: 1rem !important;
+	margin-bottom: 2.25rem !important;
+}
+
 /* Countdown timer styling */
 .countdown-box {
 	border-top: 1px solid rgba(184, 138, 138, 0.2);

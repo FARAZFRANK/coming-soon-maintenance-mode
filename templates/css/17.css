@@ -12,6 +12,8 @@ body {
 	animation: floatIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 	opacity: 0;
 	transform: translateY(40px);
+	min-height: 620px;
+	align-items: center;
 }
 
 @keyframes floatIn {

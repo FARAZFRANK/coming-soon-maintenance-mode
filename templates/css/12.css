@@ -370,19 +370,20 @@
  /* ------------------------------------------------------------------- 
  * ## home social
  * ------------------------------------------------------------------- */
- .home-social {
-   list-style: none;
-   font-family: "Nunito Sans", sans-serif;
-   margin: 0;
-   /* position: absolute; */
-   /* bottom: 3.6rem; */
-   left: 8rem;
-   z-index: 5;
-   display: flex;
-   justify-content: flex-start;
-   align-content: center;
-   gap: 15px;
- }
+  .home-social {
+    list-style: none;
+    font-family: "Nunito Sans", sans-serif;
+    margin: 0 !important;
+    padding: 0 !important;
+    left: auto !important;
+    right: 0 !important;
+    z-index: 5;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 15px;
+    width: auto !important;
+  }
 
  .home-social a {
    color: #FFFFFF;

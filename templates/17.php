@@ -30,9 +30,9 @@
 
     <main class="prospectus-card w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 rounded-lg overflow-hidden">
         <!-- Left Side: Content -->
-        <div class="p-8 md:p-12 flex flex-col justify-center stagger-animation">
+        <div class="p-8 md:p-10 lg:p-12 flex flex-col justify-center my-auto w-full stagger-animation">
             <!-- Logo -->
-			<div class="mb-6 flex items-center gap-3">
+			<div class="mb-4 flex items-center gap-3">
 				<?php if($csmm_logo_id) { ?>
                 <a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
 					<img class="h-8" src="<?php echo esc_url( $csmm_logo_url[0] ); ?>" alt="<?php echo esc_attr( $csmm_logo_alt ); ?>">
@@ -46,31 +46,31 @@
             </div>
 			
             <!-- Headline -->
-            <h1 class="title-font text-4xl md:text-5xl leading-tight mb-4">
+            <h1 class="title-font text-3xl md:text-4xl lg:text-5xl leading-tight mb-3">
                 <span class="highlight"><?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?></span>
             </h1>
-            <p class="text-gray-600 mb-8 leading-relaxed">
+            <p class="text-gray-600 mb-5 leading-relaxed text-sm md:text-base">
                 <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
             </p>
 
             <!-- Countdown Timer -->
 			 <?php if($csmm_countdown == 1) { ?>
-			 <h3 class=" text-lg tracking-widest text-gray-600"><?php if($csmm_countdown_title != "") { echo esc_html( $csmm_countdown_title ); } ?></h3>
-            <div id="countdown" class="grid grid-cols-4 gap-4 mb-10 text-left w-full">
+			 <h3 class="text-sm md:text-base tracking-widest text-gray-500 mb-2 font-medium"><?php if($csmm_countdown_title != "") { echo esc_html( $csmm_countdown_title ); } ?></h3>
+            <div id="countdown" class="grid grid-cols-4 gap-4 mb-5 text-left w-full">
                 <div>
-                    <div id="days" class="countdown-number text-3xl md:text-4xl">00</div>
+                    <div id="days" class="countdown-number text-2xl md:text-3xl">00</div>
                     <div class="countdown-label mt-1"><?php esc_html_e( "Days", 'coming-soon-maintenance-mode' ); ?></div>
                 </div>
                 <div>
-                    <div id="hours" class="countdown-number text-3xl md:text-4xl">00</div>
+                    <div id="hours" class="countdown-number text-2xl md:text-3xl">00</div>
                     <div class="countdown-label mt-1"><?php esc_html_e( "Hours", 'coming-soon-maintenance-mode' ); ?></div>
                 </div>
                 <div>
-                    <div id="minutes" class="countdown-number text-3xl md:text-4xl">00</div>
+                    <div id="minutes" class="countdown-number text-2xl md:text-3xl">00</div>
                     <div class="countdown-label mt-1"><?php esc_html_e( "Mins", 'coming-soon-maintenance-mode' ); ?></div>
                 </div>
                 <div>
-                    <div id="seconds" class="countdown-number text-3xl md:text-4xl">00</div>
+                    <div id="seconds" class="countdown-number text-2xl md:text-3xl">00</div>
                     <div class="countdown-label mt-1"><?php esc_html_e( "Secs", 'coming-soon-maintenance-mode' ); ?></div>
                 </div>
             </div>
@@ -78,12 +78,12 @@
 			
             <!-- Subscription Form -->
 			<?php if($csmm_susbcriber_form == 1) { ?>
-            <div class="w-full text-left mb-4" >
-                <p class="mb-3 text-sm font-semibold text-gray-700"><?php esc_html_e( 'Be the first to receive our new prospectus.', 'coming-soon-maintenance-mode' ); ?></p>
-                <form id="subscribe-form" method="post" class="flex flex-col sm:flex-row">
+            <div class="w-full text-left mb-4">
+                <p class="mb-2 text-xs md:text-sm font-semibold text-gray-700"><?php esc_html_e( 'Be the first to receive our new prospectus.', 'coming-soon-maintenance-mode' ); ?></p>
+                <form id="subscribe-form" method="post" class="flex flex-row relative h-[50px] w-full max-w-[480px]">
                     <input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Email Address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow p-3 focus:outline-none rounded-l-md" required>
 					<input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">
-                    <button type="submit" class="subscribe-btn py-3 px-6 rounded-r-md"><?php esc_html_e( 'Register Interest', 'coming-soon-maintenance-mode' ); ?></button>
+                    <button type="submit" class="subscribe-btn px-5 rounded-r-md whitespace-nowrap text-xs md:text-sm"><?php esc_html_e( 'Register Interest', 'coming-soon-maintenance-mode' ); ?></button>
                 </form>
                 <p id="success-message" class="mt-3 text-sm text-green-700 hidden"><?php esc_html_e( 'Thank you. We will be in touch with more information.', 'coming-soon-maintenance-mode' ); ?></p>
 				<?php
