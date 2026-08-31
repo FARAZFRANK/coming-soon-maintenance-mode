@@ -17,12 +17,16 @@
 /* -------------------------------------------------------------------
  * ## site logo  - (_site-layout.scss) 
  * ------------------------------------------------------------------- */
- .home-logo {
- margin-top:6rem;
+.home-logo {
+  margin-top: 2.5rem !important;
+  margin-bottom: 1.5rem !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 } 
 
 .home-logo a {
-  display: block;
+  display: inline-flex;
   margin: 0;
   padding: 0;
   outline: 0;
@@ -33,17 +37,17 @@
 
 .home-logo a.logo-dark {
   width: auto;
-  height: 90px;
-  border-radius: 50%;
-  display: flex;
-  flex-wrap: nowrap;
+  height: auto;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
 }
 .home-logo a.logo-dark img {
-    width: auto;
-    height: 125px;
+  width: auto;
+  height: 60px;
+  max-height: 70px;
+  object-fit: contain;
 }
 
 /* ------------------------------------------------------------------- 
@@ -51,23 +55,21 @@
  * ------------------------------------------------------------------- */
  
 .frame-ipad {
-  border-width: 3rem;
-  border-radius: 3rem;
-  background-image: linear-gradient(rgb(255 255 255 / 67%), #ffffff), url(../images/temp-7-pattern.webp);
+  border-radius: 2.5rem;
+  background-color: #ffffff !important;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.95)), url(../images/temp-7-pattern.webp) !important;
+  background-size: cover, cover !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-position: center center, left center !important;
   z-index: 100;
   display: block;
-  color: #fff;
+  color: #141414;
   text-align: center;
-  font-family: "SF Pro Display", Helvetica Neue, Arial, sans-serif;
-  background-color: #000;
-  background-size: auto 200%, contain;
-  background-repeat: no-repeat, no-repeat;
-  border: solid var(--thm-primary);
+  font-family: "Montserrat", sans-serif;
+  border: 3px solid var(--thm-primary) !important;
   margin-bottom: 2em;
   position: relative;
-  box-shadow: 0 0.5em 2em 0.2em rgb(0 0 0 / 33%), 0 0 0 0.5px #000 inset;
-  transition: all 0.1s linear, line-height 0s linear;
-  background-position: 50% 100%, left;
+  box-shadow: 0 1em 3em rgba(0, 0, 0, 0.25) !important;
   transform-origin: bottom center;
   width: 100%;
   overflow: hidden;
@@ -78,16 +80,18 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 45%;
+  width: 50%;
   height: 100%;
   background-repeat: no-repeat;
-  background-position: center;
-  -moz-background-size: contain;
-  background-size: auto 200%, cover;
-  background-repeat: no-repeat, no-repeat;
-  background-position: 50% 100%, right;
-  transform-origin: bottom center;
-  background-image: linear-gradient(rgb(0 0 0 / 0%), #00000030), url(../images/temp-7.webp);
+  background-position: center center;
+  background-size: cover;
+  background-image: url(../images/temp-7.webp);
+  z-index: 1;
+}
+
+.frame-ipad .cs-text-wrapper {
+  position: relative;
+  z-index: 2;
 }
  
 .home-content {
@@ -122,18 +126,18 @@
 }
 
 .home-content h1 {
-  margin-top: 3rem;
-  font-size: 4rem;
-  line-height: 1.219;
-  color: #FFFFFF;
+  margin-top: 1.5rem;
+  font-size: 3.8rem;
+  line-height: 1.2;
   letter-spacing: 0;
   font-family: "Montserrat", sans-serif;
-  color: #141414cf;
+  color: #141414 !important;
+  font-weight: 700;
 }
 
 .home-content__text {
-  padding: 30px;
-  margin-left: 40px;
+  padding: 30px 20px;
+  margin-left: 0;
 }
 
 .home-content__main {
