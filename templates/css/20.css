@@ -132,7 +132,9 @@ body {
 	color: #111827 !important;
 	border: none !important;
 	height: 48px !important;
-	line-height: 48px !important;
+	min-height: 48px !important;
+	max-height: 48px !important;
+	line-height: 1 !important;
 	padding: 0 24px !important;
 	border-radius: 8px !important;
 	white-space: nowrap !important;
@@ -144,6 +146,7 @@ body {
 	align-items: center !important;
 	justify-content: center !important;
 	box-sizing: border-box !important;
+	margin: 0 !important;
 	transition: all 0.3s ease;
 }
 

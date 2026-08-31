@@ -78,9 +78,9 @@
                 <div class="w-full text-left mb-10">
                     <p class="mb-3 text-gray-300 font-semibold"><?php esc_html_e( "Get project updates and launch news.", 'coming-soon-maintenance-mode' ); ?></p>
                     <form id="subscribe-form" method="post" class="flex flex-row items-center gap-3 w-full max-w-lg">
-						<input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Your email address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow px-4 py-3 rounded-lg focus:outline-none text-left" required>
+						<input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Your email address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow px-4 rounded-lg focus:outline-none text-left h-[48px]" required>
                         <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">
-						<button type="submit" class="subscribe-btn px-6 py-3 rounded-lg whitespace-nowrap uppercase font-bold tracking-wide text-xs md:text-sm"><?php esc_html_e( "KEEP ME POSTED", 'coming-soon-maintenance-mode' ); ?></button>
+						<button type="submit" class="subscribe-btn px-6 rounded-lg whitespace-nowrap uppercase font-bold tracking-wide text-xs md:text-sm h-[48px] inline-flex items-center justify-center"><?php esc_html_e( "KEEP ME POSTED", 'coming-soon-maintenance-mode' ); ?></button>
                     </form>
                     <p id="success-message" class="mt-3 text-green-400 hidden"><?php esc_html_e( "Thanks! You're on our list.", 'coming-soon-maintenance-mode' ); ?></p>
 					<?php
