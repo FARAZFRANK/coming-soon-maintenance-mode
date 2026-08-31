@@ -1411,7 +1411,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   onChange('bg_gradient_color1', '#1e3a8a');
                   onChange('bg_gradient_color2', '#0f172a');
                   onChange('bg_gradient_angle', 135);
-                  onChange('bg_pattern', 'hexagons');
+                  onChange('bg_pattern', 'lines');
                   onChange('bg_custom_pattern_url', '');
                   onChange('bg_custom_pattern_size', 60);
                   onChange('bg_custom_pattern_repeat', 'repeat');
@@ -2034,9 +2034,16 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
 
               {/* Option 4: Graphic Pattern */}
               {settings.bg_type === 'pattern' && (() => {
-                const pat = settings.bg_pattern || 'hexagons';
+                const pat = settings.bg_pattern || 'lines';
 
                 const patternMap = {
+                  lines: {
+                    backgroundColor: '#0b1120',
+                    backgroundImage:
+                      'repeating-linear-gradient(45deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.25) 2px, transparent 2px, transparent 16px)',
+                    backgroundSize: 'auto',
+                    backgroundRepeat: 'repeat',
+                  },
                   hexagons: {
                     backgroundColor: '#0b1120',
                     backgroundImage:
@@ -2065,13 +2072,6 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     backgroundSize: '20px 20px',
                     backgroundRepeat: 'repeat',
                   },
-                  lines: {
-                    backgroundColor: '#0b1120',
-                    backgroundImage:
-                      'repeating-linear-gradient(45deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.25) 2px, transparent 2px, transparent 16px)',
-                    backgroundSize: 'auto',
-                    backgroundRepeat: 'repeat',
-                  },
                   stars: {
                     backgroundColor: '#030712',
                     backgroundImage:
@@ -2086,7 +2086,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     backgroundRepeat: settings.bg_custom_pattern_repeat || 'repeat',
                   },
                 };
-                const activeStyle = patternMap[pat] || patternMap.hexagons;
+                const activeStyle = patternMap[pat] || patternMap.lines;
 
                 return (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
@@ -2100,11 +2100,11 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         value={pat}
                         onChange={(e) => onChange('bg_pattern', e.target.value)}
                       >
+                        <MenuItem value="lines">Diagonal Lines (Default)</MenuItem>
                         <MenuItem value="hexagons">Hexagons</MenuItem>
                         <MenuItem value="dots">Dots Pattern</MenuItem>
                         <MenuItem value="triangles">Triangles</MenuItem>
                         <MenuItem value="carbon">Carbon Fiber</MenuItem>
-                        <MenuItem value="lines">Diagonal Lines</MenuItem>
                         <MenuItem value="stars">Night Stars</MenuItem>
                         <MenuItem value="custom_pattern">✨ Custom Pattern (Upload SVG / Tile)</MenuItem>
                       </Select>

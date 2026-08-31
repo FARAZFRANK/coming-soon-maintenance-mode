@@ -98,7 +98,7 @@ if ( 'vimeo' === $csmm_bg_video_source ) {
 } else {
 	$csmm_bg_video_url = ! empty( $csmm_bg_video_youtube_url ) ? $csmm_bg_video_youtube_url : ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : 'https://www.youtube.com/watch?v=91AcVUR0O8I' ) );
 }
-$csmm_bg_pattern             = isset( $csmm_content['bg_pattern'] ) ? $csmm_content['bg_pattern'] : 'hexagons';
+$csmm_bg_pattern             = isset( $csmm_content['bg_pattern'] ) ? $csmm_content['bg_pattern'] : 'lines';
 $csmm_bg_custom_pattern_url  = isset( $csmm_content['bg_custom_pattern_url'] ) ? $csmm_content['bg_custom_pattern_url'] : '';
 $csmm_bg_custom_pattern_size = isset( $csmm_content['bg_custom_pattern_size'] ) ? intval( $csmm_content['bg_custom_pattern_size'] ) : 60;
 $csmm_bg_custom_pattern_repeat = isset( $csmm_content['bg_custom_pattern_repeat'] ) ? $csmm_content['bg_custom_pattern_repeat'] : 'repeat';
@@ -387,7 +387,7 @@ if ( 'solid' === $csmm_bg_type ) {
 			$pat_rule = "background-color: {$custom_pat_bg} !important; background-image: none !important;";
 		}
 	} else {
-		$pat_rule = isset( $pattern_css_map[ $csmm_bg_pattern ] ) ? $pattern_css_map[ $csmm_bg_pattern ] : $pattern_css_map['hexagons'];
+		$pat_rule = isset( $pattern_css_map[ $csmm_bg_pattern ] ) ? $pattern_css_map[ $csmm_bg_pattern ] : $pattern_css_map['lines'];
 	}
 
 	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, .template-two, .prospectus-card, .main-card, .split-layout, #particles-js, .home-particles, #bg, .bg-image, .bg-container, .site-wrapper, .page-wrapper, .main-container, .wrapper, #wrapper { {$pat_rule} background-attachment: fixed !important; }\n";
