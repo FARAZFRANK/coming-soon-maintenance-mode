@@ -56,13 +56,13 @@
             
             <div class="divider"></div>
 
-            <p class="text-gray-600 mb-8 max-w-xl mx-auto leading-relaxed">
+            <p class="healthcare-desc text-gray-600 max-w-xl mx-auto leading-relaxed" style="margin-top: 1rem !important; margin-bottom: 3rem !important; line-height: 1.8 !important;">
                 <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
             </p>
 
             <!-- Countdown Timer -->
 			<?php if($csmm_countdown == 1) { ?>
-            <div id="countdown" class="grid grid-cols-4 gap-4 mb-10 w-full max-w-lg mx-auto">
+            <div id="countdown" class="grid grid-cols-4 gap-4 w-full max-w-lg mx-auto" style="margin-top: 1.5rem !important; margin-bottom: 2.75rem !important;">
                 <div>
                     <div id="days" class="countdown-number text-3xl md:text-5xl">00</div>
                     <div class="countdown-label mt-2"><?php esc_html_e( "Days", 'coming-soon-maintenance-mode' ); ?></div>

@@ -50,6 +50,20 @@ body {
 	opacity: 0.5;
 }
 
+.healthcare-desc,
+.main-content p.healthcare-desc {
+	margin-top: 1rem !important;
+	margin-bottom: 3rem !important;
+	line-height: 1.8 !important;
+	display: block !important;
+}
+
+#countdown,
+.main-content #countdown {
+	margin-top: 1.5rem !important;
+	margin-bottom: 2.75rem !important;
+}
+
 /* Countdown timer styling */
 .countdown-number {
 	font-family: 'Nunito Sans', sans-serif;
