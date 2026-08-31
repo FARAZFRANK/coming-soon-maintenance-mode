@@ -35,6 +35,7 @@ body {
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
 	box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+	padding: 3rem 2.5rem !important;
 }
 
 @keyframes fadeIn {
@@ -42,14 +43,8 @@ body {
 	to { opacity: 1; transform: scale(1); }
 }
 
-/* Custom font for titles */
-.title-font {
-	font-family: 'Bebas Neue', sans-serif;
-	letter-spacing: 0.1em;
-}
-
-.highlight {
-	color: #FFD700; /* Marker Yellow */
+.template-logo {
+	margin-bottom: 1.5rem !important;
 }
 
 /* Dashed line animation */
@@ -60,13 +55,35 @@ body {
 	background-size: 10px 1px;
 	border: none;
 	animation: drawLine 2s 0.5s forwards;
+	margin: 1.5rem auto !important;
 }
 
 @keyframes drawLine {
 	to { width: 100%; }
 }
 
+/* Custom font for titles */
+.title-font {
+	font-family: 'Bebas Neue', sans-serif;
+	letter-spacing: 0.1em;
+	margin-top: 1.5rem !important;
+	margin-bottom: 1.25rem !important;
+}
+
+.highlight {
+	color: #FFD700; /* Marker Yellow */
+}
+
+.main-content p.text-gray-400 {
+	margin-bottom: 1.75rem !important;
+	line-height: 1.6;
+}
+
 /* Countdown timer styling */
+.main-content #countdown {
+	margin-bottom: 2rem !important;
+}
+
 .countdown-box {
 	border-left: 2px solid #FFD700;
 	padding-left: 1rem;
@@ -82,32 +99,75 @@ body {
 	letter-spacing: 0.1em;
 }
 
+.form-label {
+	margin-bottom: 0.75rem !important;
+}
+
 /* Subscription form styling */
-.subscribe-input {
-	background: transparent;
-	border: 1px solid rgba(224, 247, 250, 0.3);
-	color: #ffffff;
+.main-content #subscribe-form {
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 12px !important;
+	max-width: 520px !important;
+	width: 100% !important;
+	margin: 0 auto !important;
+}
+
+.main-content .subscribe-input {
+	background: rgba(0, 0, 0, 0.25) !important;
+	border: 1px solid rgba(224, 247, 250, 0.3) !important;
+	color: #ffffff !important;
+	height: 48px !important;
+	line-height: 48px !important;
+	padding: 0 16px !important;
+	border-radius: 4px !important;
+	flex: 1 1 auto !important;
+	width: auto !important;
+	font-family: 'Roboto Mono', monospace !important;
+	font-size: 14px !important;
+	box-sizing: border-box !important;
+	text-align: left !important;
+	margin: 0 !important;
 	transition: all 0.3s ease;
 }
-.subscribe-input::placeholder {
-	color: #6B7280;
+
+.main-content .subscribe-input::placeholder {
+	color: #9CA3AF !important;
 }
-.subscribe-input:focus {
-	outline: none;
-	border-color: #FFD700;
-	background: rgba(255, 215, 0, 0.05);
+
+.main-content .subscribe-input:focus {
+	outline: none !important;
+	border-color: #FFD700 !important;
+	background: rgba(255, 215, 0, 0.05) !important;
 }
-.subscribe-btn {
-	background-color: #FFD700;
-	color: #0D2B45;
-	border: none;
+
+.main-content .subscribe-btn {
+	background-color: #FFD700 !important;
+	color: #0D2B45 !important;
+	border: none !important;
+	height: 48px !important;
+	min-height: 48px !important;
+	max-height: 48px !important;
+	line-height: 1 !important;
+	padding: 0 24px !important;
+	border-radius: 4px !important;
+	white-space: nowrap !important;
+	font-weight: 700 !important;
+	font-family: 'Roboto Mono', monospace !important;
+	position: static !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	box-sizing: border-box !important;
+	margin: 0 !important;
 	transition: all 0.3s ease;
-	font-weight: 700;
-	font-family: 'Roboto Mono', monospace;
 }
-.subscribe-btn:hover {
-	background-color: #ffffff;
-	color: #0D2B45;
+
+.main-content .subscribe-btn:hover {
+	background-color: #ffffff !important;
+	color: #0D2B45 !important;
 }
 
 /* Decorative blueprint elements */
