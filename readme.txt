@@ -26,9 +26,9 @@ The admin dashboard is completely built with **React 18, Vite, Material UI (MUI 
 * **36+ Pre-built Responsive Templates**: One-click activation with interactive desktop/tablet/mobile live preview modals.
 * **Universal SEO Suite**: Auto injects Open Graph meta, Twitter Cards, Canonical links, Google Analytics tracking, and Schema.org structured data across all 36 templates.
 * **Multi-Channel Newsletter APIs**:
-  * **Mailchimp v3 API Sync** (500 Contacts / 1,000 Emails/Mo Free Tier)
-  * **Brevo (Sendinblue) API v3 Sync** (300 Emails/Day & Unlimited Contacts Free Tier)
-  * **MailerLite API Sync** (1,000 Subscribers / 12,000 Emails/Mo Free Tier)
+  * **Mailchimp v3 API Sync** (250 Contacts / 500 Emails/Mo Free Tier)
+  * **Brevo (Sendinblue) API v3 Sync** (300 Emails/Day & Up to 100k Contacts Free Tier)
+  * **MailerLite API Sync** (250 Subscribers / 2,500 Emails/Mo Free Tier)
   * **Zapier / Make / Webhook Dispatcher** (Unlimited Direct Lead Push)
 * **Automated Email Notifications & Custom SMTP**:
   * Admin Lead Alert Email

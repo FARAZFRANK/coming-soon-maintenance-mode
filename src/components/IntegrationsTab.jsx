@@ -435,7 +435,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                     Mailchimp API v3
                   </Typography>
                   <Chip
-                    label="Free Tier: 500 Contacts / 1,000 Emails/Mo"
+                    label="Free Tier: 250 Contacts / 500 Emails/Mo (250/Day)"
                     size="small"
                     color="primary"
                     variant="outlined"
@@ -523,7 +523,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                     Brevo (Sendinblue) API v3
                   </Typography>
                   <Chip
-                    label="Free Tier: 300 Emails/Day (9,000/Mo) & Unlimited Contacts"
+                    label="Free Tier: 300 Emails/Day (~9,000/Mo) & Up to 100k Contacts"
                     size="small"
                     color="info"
                     variant="outlined"
@@ -611,7 +611,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                     MailerLite API
                   </Typography>
                   <Chip
-                    label="Free Tier: 1,000 Subscribers / 12,000 Emails/Mo"
+                    label="Free Tier: 250 Subscribers / 2,500 Emails/Mo"
                     size="small"
                     color="success"
                     variant="outlined"

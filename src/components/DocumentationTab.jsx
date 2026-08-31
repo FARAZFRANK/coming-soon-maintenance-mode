@@ -498,7 +498,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <TableRow>
                   <TableCell sx={{ fontWeight: 600 }}>Mailchimp (v3)</TableCell>
                   <TableCell>
-                    <Chip label="500 Contacts / 1,000 Emails/Mo" size="small" color="primary" variant="outlined" sx={{ fontWeight: 600 }} />
+                    <Chip label="250 Contacts / 500 Emails/Mo (250/Day)" size="small" color="primary" variant="outlined" sx={{ fontWeight: 600 }} />
                   </TableCell>
                   <TableCell>API Key (e.g. key-us21), Audience/List ID</TableCell>
                   <TableCell>Industry standard audience tagging & drip campaigns.</TableCell>
@@ -506,18 +506,18 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <TableRow>
                   <TableCell sx={{ fontWeight: 600 }}>Brevo (Sendinblue)</TableCell>
                   <TableCell>
-                    <Chip label="300 Emails/Day (9,000/Mo) & Unlimited Contacts" size="small" color="info" variant="outlined" sx={{ fontWeight: 600 }} />
+                    <Chip label="300 Emails/Day (~9,000/Mo) & Up to 100k Contacts" size="small" color="info" variant="outlined" sx={{ fontWeight: 600 }} />
                   </TableCell>
                   <TableCell>API Key (v3), Optional List ID</TableCell>
-                  <TableCell>Store unlimited leads for free with daily email quota.</TableCell>
+                  <TableCell>Store up to 100,000 leads for free with 300 daily email quota.</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{ fontWeight: 600 }}>MailerLite</TableCell>
                   <TableCell>
-                    <Chip label="1,000 Subscribers / 12,000 Emails/Mo" size="small" color="success" variant="outlined" sx={{ fontWeight: 600 }} />
+                    <Chip label="250 Subscribers / 2,500 Emails/Mo" size="small" color="success" variant="outlined" sx={{ fontWeight: 600 }} />
                   </TableCell>
                   <TableCell>Bearer API Token, Optional Group ID</TableCell>
-                  <TableCell>Generous free subscriber limit with clean deliverability.</TableCell>
+                  <TableCell>Clean deliverability with advanced campaign builder.</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{ fontWeight: 600 }}>Zapier / Make / Webhooks</TableCell>
