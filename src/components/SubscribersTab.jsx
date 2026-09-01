@@ -79,18 +79,13 @@ export default function SubscribersTab({ onNotify }) {
     subscribers.some((item) => selectedIds.map(Number).includes(Number(item.id))) &&
     !allSelected;
 
-  const handleSelectAll = (event) => {
-    // Determine whether we are selecting or deselecting
-    const shouldSelect = event && event.target && typeof event.target.checked === 'boolean'
-      ? event.target.checked
-      : !allSelected;
-
-    if (shouldSelect) {
-      const pageIds = subscribers.map((item) => Number(item.id));
-      setSelectedIds((prev) => Array.from(new Set([...prev.map(Number), ...pageIds])));
-    } else {
+  const handleSelectAll = () => {
+    if (allSelected) {
       const pageIdSet = new Set(subscribers.map((item) => Number(item.id)));
       setSelectedIds((prev) => prev.filter((id) => !pageIdSet.has(Number(id))));
+    } else {
+      const pageIds = subscribers.map((item) => Number(item.id));
+      setSelectedIds((prev) => Array.from(new Set([...prev.map(Number), ...pageIds])));
     }
   };
 
@@ -290,14 +285,21 @@ export default function SubscribersTab({ onNotify }) {
                 <TableRow>
                   <TableCell
                     padding="checkbox"
-                    sx={{ borderColor: 'divider', width: 48, pl: 2 }}
+                    sx={{ borderColor: 'divider', width: 48, pl: 2, cursor: 'pointer' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (subscribers.length > 0 && !loading) {
+                        handleSelectAll();
+                      }
+                    }}
                   >
                     <Checkbox
                       color="primary"
                       indeterminate={isIndeterminate}
                       checked={allSelected}
-                      onChange={handleSelectAll}
                       disabled={subscribers.length === 0 || loading}
+                      tabIndex={-1}
+                      disableRipple
                       inputProps={{ 'aria-label': 'select all subscribers' }}
                     />
                   </TableCell>

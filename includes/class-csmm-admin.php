@@ -74,11 +74,12 @@ class CSMM_Admin
 		$css_file = $dist_path . 'index.css';
 
 		if (file_exists($css_file)) {
+			$css_ver = CSMM_VERSION . '.' . filemtime($css_file);
 			wp_enqueue_style(
 				'csmm-react-app-css',
 				$dist_url . 'index.css',
 				array(),
-				CSMM_VERSION
+				$css_ver
 			);
 		}
 
@@ -87,11 +88,12 @@ class CSMM_Admin
 		wp_enqueue_script('wp-util');
 
 		if (file_exists($js_file)) {
+			$js_ver = CSMM_VERSION . '.' . filemtime($js_file);
 			wp_enqueue_script(
 				'csmm-react-app-js',
 				$dist_url . 'index.js',
 				array('jquery', 'wp-hooks', 'wp-util', 'media-editor', 'media-views'),
-				CSMM_VERSION,
+				$js_ver,
 				true
 			);
 
