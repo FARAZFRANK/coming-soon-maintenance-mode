@@ -2,7 +2,7 @@
 
 [![WordPress Plugin](https://img.shields.io/badge/WordPress-5.0+-blue.svg)](https://wordpress.org/)
 [![PHP Version](https://img.shields.io/badge/PHP-7.2+-purple.svg)](https://www.php.net/)
-[![Version](https://img.shields.io/badge/version-3.2.3-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
+[![Version](https://img.shields.io/badge/version-3.2.4-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
 [![React](https://img.shields.io/badge/React-18-61dafb.svg)](https://react.dev/)
 [![Material UI](https://img.shields.io/badge/MUI-v5-007fff.svg)](https://mui.com/)
 [![Vite](https://img.shields.io/badge/Vite-5-646cff.svg)](https://vitejs.dev/)
@@ -79,6 +79,17 @@ npm run build
 ---
 
 ## 📋 Changelog
+
+### = 3.2.4 = (01 September 2026)
+* **Communication Engine In-Depth Documentation Guide**: Added comprehensive educational guide in Documentation Tab covering the end-to-end lifecycle of pre-launch lead capture, why direct Newsletter APIs & authenticated SMTP are critical, and step-by-step email branding and live preview workflows.
+* **Refined Professional Docs Styling**: Upgraded all Documentation accordions, badges, and alerts with unified typography and a sleek theme palette.
+* **Frontend Lead Capture Double-Submit Prevention**: Added submission lock state that disables inputs and changes button text to "Subscribing..." to prevent duplicate form hits.
+* **Subscribers Table Multi-Select & Bulk Deletion Fix**: Resolved event bubbling conflict between table rows and checkboxes, enabling smooth multi-row selection and live bulk subscriber deletions.
+* **Admin Dynamic Asset Cache-Busting**: Added dynamic `filemtime` versioning to React admin JS & CSS enqueues, ensuring instant bundle updates without manual browser cache clearing.
+* **Template 2 Typography & Countdown Spacing Polish**: Optimized description margins and launch timer spacing in Template 2 layout.
+* **Template 36 & Side-by-Side Flex Form Layout**: Scoped input padding rules so subscriber placeholder text is never clipped on side-by-side split templates.
+* **MP4 Background Video Looping & Poster Support**: Assigned missing loop and poster options in loader and REST API, with fallback loop event handlers across all browsers.
+* **Template 14 Background Video Update**: Updated default video URL to high-definition deep space starlight MP4 on wpfrank.com with playsinline attributes.
 
 ### = 3.2.3 = (31 August 2026)
 * **Custom SMTP Direct Test Mailer**: Added instant Send Test Mail functionality and connection diagnostics in the Custom SMTP Mail Delivery card to verify server credentials on the fly.

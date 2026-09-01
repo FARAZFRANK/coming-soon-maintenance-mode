@@ -61,7 +61,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
     try {
       const exportData = {
         plugin: 'Coming Soon Maintenance Mode Pro',
-        version: api.getConfig().version || '3.2.3',
+        version: api.getConfig().version || '3.2.4',
         site_url: api.getConfig().siteUrl || '',
         exported_at: new Date().toISOString(),
         settings: settings || {},
@@ -179,7 +179,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <Typography variant="h5" sx={{ fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
                   Coming Soon Maintenance Mode Pro Studio
                 </Typography>
-                <Chip label="v3.2.3" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Chip label="v3.2.4" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
               </Box>
               <Typography variant="body1" sx={{ color: '#94a3b8', maxWidth: 780, lineHeight: 1.6 }}>
                 Comprehensive user guide, implementation workflows, newsletter integrations, SEO configuration, and real-world use cases.
@@ -1183,7 +1183,28 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
           <Stack spacing={2.5}>
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                <Chip label="v3.2.3" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Chip label="v3.2.4" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                  Communication Engine Deep-Dive, Professional Docs Styling & Video/Form Fixes
+                </Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary" component="ul" sx={{ pl: 2.5, m: 0, lineHeight: 1.8 }}>
+                <li><strong>Communication Engine In-Depth Guide:</strong> Added comprehensive documentation on why lead capture, direct Newsletter APIs, and authenticated SMTP are essential, with step-by-step branding and live preview workflows.</li>
+                <li><strong>Refined Professional Styling:</strong> Standardized all Documentation tab accordions, badges, and cards with unified typography and a sleek theme palette.</li>
+                <li><strong>Frontend Lead Capture Lock:</strong> Added submission lock state that disables controls and displays "Subscribing..." to eliminate double-submissions.</li>
+                <li><strong>Subscribers Multi-Select & Bulk Deletions:</strong> Fixed click event bubbling on table rows and header checkbox for smooth bulk operations.</li>
+                <li><strong>Dynamic Admin Asset Cache-Busting:</strong> Added dynamic filemtime versioning to React admin JS & CSS enqueues for instant updates.</li>
+                <li><strong>Template 2 Spacing & Template 36 Form Layout:</strong> Enhanced description and countdown spacing on Template 2, and scoped form input padding to prevent placeholder text clipping.</li>
+                <li><strong>MP4 Background Video Looping & Poster Support:</strong> Fixed background video loop attribute handling and added fallback loop replay handlers.</li>
+                <li><strong>Template 14 Background Video Update:</strong> Updated video URL to high-definition deep space starlight MP4 on wpfrank.com with playsinline attributes.</li>
+              </Typography>
+            </Box>
+
+            <Divider />
+
+            <Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                <Chip label="v3.2.3" color="primary" variant="outlined" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
                 <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                   Custom SMTP Test Mailer, Dynamic Form Headlines, API Guides & UI Polish
                 </Typography>
