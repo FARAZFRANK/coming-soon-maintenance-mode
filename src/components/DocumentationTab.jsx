@@ -485,33 +485,33 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 0.5 }}>
-            <EmailRoundedIcon sx={{ color: 'primary.main', fontSize: 26 }} />
+            <EmailRoundedIcon sx={{ color: 'primary.main', fontSize: 24 }} />
             <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.15rem' }}>
-              📧 Core Communication Engine: What is it, Why is it Essential & How it Works
+              Core Communication Engine: What is it, Why is it Essential & How it Works
             </Typography>
           </Box>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
             Understand the complete lifecycle of pre-launch lead capture, why direct APIs and authenticated SMTP matter, and how to configure automated email templates for maximum launch impact.
           </Typography>
 
-          <Stack spacing={2}>
+          <Stack spacing={1.5}>
             {/* 1. Why Email Marketing is Critical During Coming Soon */}
             <Accordion defaultExpanded elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                  <LightbulbRoundedIcon sx={{ color: '#d97706', fontSize: 22 }} />
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#d97706' }}>
+                  <LightbulbRoundedIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                     1. Why Email & Lead Capture is Essential During Pre-Launch / Maintenance Mode
                   </Typography>
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
-                  <Box sx={{ p: 2, mb: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(217, 119, 6, 0.08)' : '#fffbeb', borderRadius: '8px', border: '1px solid rgba(217, 119, 6, 0.2)' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#b45309', mb: 0.5 }}>
+                  <Box sx={{ p: 2, mb: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                       The Pre-Launch Opportunity:
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.primary' }}>
+                    <Typography variant="body2" color="text.secondary">
                       When a website is under construction or maintenance, visitors cannot browse products, read articles, or hire your services. Without an email capture form, <strong>98% of those visitors will leave and never return</strong>. By collecting emails, you transform dead downtime into a powerful 24/7 lead generation funnel, building an engaged audience that eagerly awaits your launch day.
                     </Typography>
                   </Box>
@@ -535,8 +535,8 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
             <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                  <SyncAltRoundedIcon sx={{ color: '#2563eb', fontSize: 22 }} />
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#2563eb' }}>
+                  <SyncAltRoundedIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                     2. Newsletter APIs Integration (Direct Cloud CRM Sync)
                   </Typography>
                 </Box>
@@ -546,7 +546,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                   <Grid container spacing={2} sx={{ mb: 1 }}>
                     <Grid item xs={12} md={6}>
                       <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'primary.main', mb: 0.5 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                           What is it & Why is it Needed?
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -556,7 +556,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'success.main', mb: 0.5 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                           How it Works & How to Use:
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -577,19 +577,19 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
             <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                  <DnsRoundedIcon sx={{ color: '#059669', fontSize: 22 }} />
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#059669' }}>
+                  <DnsRoundedIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                     3. Custom SMTP Mail Delivery (Eliminating Spam & Ensuring 100% Inbox Delivery)
                   </Typography>
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
-                  <Box sx={{ p: 2, mb: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(5, 150, 105, 0.08)' : '#f0fdf4', borderRadius: '8px', border: '1px solid rgba(5, 150, 105, 0.2)' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#047857', mb: 0.5 }}>
+                  <Box sx={{ p: 2, mb: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                       The Problem with Default WordPress Email (wp_mail):
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.primary' }}>
+                    <Typography variant="body2" color="text.secondary">
                       By default, WordPress uses PHP's unauthenticated <code>mail()</code> function. Because hosting server IPs are often shared and lack DKIM/SPF signatures, major email providers like Gmail, Yahoo, and Outlook automatically flag these emails as <strong>Spam / Junk</strong> or reject them completely.
                     </Typography>
                   </Box>
@@ -618,22 +618,22 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
             <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                  <SendRoundedIcon sx={{ color: '#7c3aed', fontSize: 22 }} />
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#7c3aed' }}>
+                  <SendRoundedIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                     4. Automated Email Templates (Admin Alert, Welcome Email & Site Live Broadcast)
                   </Typography>
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
-                  <Typography variant="body2" sx={{ mb: 2 }}>
+                  <Typography variant="body2" sx={{ mb: 2 }} color="text.secondary">
                     The plugin includes three pre-designed, responsive transactional email templates with dynamic token interpolation:
                   </Typography>
 
                   <Grid container spacing={2} sx={{ mb: 2 }}>
                     <Grid item xs={12} md={4}>
                       <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#2563eb', mb: 0.5 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                           🔔 1. Admin Lead Alert
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -644,7 +644,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                     </Grid>
                     <Grid item xs={12} md={4}>
                       <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#059669', mb: 0.5 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                           💌 2. Subscriber Welcome Email
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -655,7 +655,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                     </Grid>
                     <Grid item xs={12} md={4}>
                       <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#7c3aed', mb: 0.5 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                           🚀 3. Site Live Announcement
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -667,7 +667,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                   </Grid>
 
                   <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary' }}>
                       Supported Dynamic Placeholders:
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -682,8 +682,8 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
             <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                  <PaletteRoundedIcon sx={{ color: '#db2777', fontSize: 22 }} />
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#db2777' }}>
+                  <PaletteRoundedIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                     5. Email Branding, Styling & Visual Identity Studio
                   </Typography>
                 </Box>
@@ -723,8 +723,8 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
             <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                  <VisibilityRoundedIcon sx={{ color: '#0284c7', fontSize: 22 }} />
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0284c7' }}>
+                  <VisibilityRoundedIcon sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                     6. Interactive Live Preview & Instant Test Mailer (Desktop & Mobile Simulation)
                   </Typography>
                 </Box>
@@ -734,7 +734,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                       <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0284c7', mb: 0.5 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                           📱 Real-Time Desktop & Mobile Preview Modal:
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -744,7 +744,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#059669', mb: 0.5 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                           📬 Send Test Email Functionality:
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -784,7 +784,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <TableRow>
                   <TableCell sx={{ fontWeight: 600 }}>Mailchimp (v3)</TableCell>
                   <TableCell>
-                    <Chip label="250 Contacts / 500 Emails/Mo (250/Day)" size="small" color="primary" variant="outlined" sx={{ fontWeight: 600 }} />
+                    <Chip label="250 Contacts / 500 Emails/Mo" size="small" variant="outlined" sx={{ fontWeight: 600 }} />
                   </TableCell>
                   <TableCell>API Key (e.g. key-us21), Audience/List ID</TableCell>
                   <TableCell>Industry standard audience tagging & drip campaigns.</TableCell>
@@ -792,7 +792,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <TableRow>
                   <TableCell sx={{ fontWeight: 600 }}>Brevo (Sendinblue)</TableCell>
                   <TableCell>
-                    <Chip label="300 Emails/Day (~9,000/Mo) & Up to 100k Contacts" size="small" color="info" variant="outlined" sx={{ fontWeight: 600 }} />
+                    <Chip label="300 Emails/Day (~9,000/Mo)" size="small" variant="outlined" sx={{ fontWeight: 600 }} />
                   </TableCell>
                   <TableCell>API Key (v3), Optional List ID</TableCell>
                   <TableCell>Store up to 100,000 leads for free with 300 daily email quota.</TableCell>
@@ -800,7 +800,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <TableRow>
                   <TableCell sx={{ fontWeight: 600 }}>MailerLite</TableCell>
                   <TableCell>
-                    <Chip label="250 Subscribers / 2,500 Emails/Mo" size="small" color="success" variant="outlined" sx={{ fontWeight: 600 }} />
+                    <Chip label="250 Subscribers / 2,500 Emails/Mo" size="small" variant="outlined" sx={{ fontWeight: 600 }} />
                   </TableCell>
                   <TableCell>Bearer API Token, Optional Group ID</TableCell>
                   <TableCell>Clean deliverability with advanced campaign builder.</TableCell>
@@ -808,7 +808,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <TableRow>
                   <TableCell sx={{ fontWeight: 600 }}>Zapier / Make / Webhooks</TableCell>
                   <TableCell>
-                    <Chip label="Unlimited Direct Push" size="small" color="secondary" variant="outlined" sx={{ fontWeight: 600 }} />
+                    <Chip label="Unlimited Direct Push" size="small" variant="outlined" sx={{ fontWeight: 600 }} />
                   </TableCell>
                   <TableCell>Webhook Endpoint URL</TableCell>
                   <TableCell>Connect to Google Sheets, Notion, HubSpot, or ActiveCampaign.</TableCell>
@@ -816,7 +816,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <TableRow>
                   <TableCell sx={{ fontWeight: 600 }}>Custom SMTP Mailer</TableCell>
                   <TableCell>
-                    <Chip label="Gmail (500/day) or Hosting SMTP" size="small" color="warning" variant="outlined" sx={{ fontWeight: 600 }} />
+                    <Chip label="Gmail (500/day) or Hosting SMTP" size="small" variant="outlined" sx={{ fontWeight: 600 }} />
                   </TableCell>
                   <TableCell>Host, Port, TLS/SSL, Username, Password</TableCell>
                   <TableCell>Eliminates spam filtering for Admin & Welcome emails.</TableCell>
@@ -837,21 +837,21 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
             Follow these simple step-by-step instructions to obtain API credentials from your preferred email marketing service and connect them to Coming Soon Pro.
           </Typography>
 
-          <Stack spacing={2}>
+          <Stack spacing={1.5}>
             {/* 1. Mailchimp Guide */}
             <Accordion defaultExpanded elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#2563eb' }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                     1. Mailchimp — Getting API Key & Audience / List ID
                   </Typography>
-                  <Chip label="v3 API" size="small" color="primary" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 700 }} />
+                  <Chip label="v3 API" size="small" variant="outlined" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 600 }} />
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
-                  <Box sx={{ mb: 1.5, p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(37, 99, 235, 0.08)' : '#eff6ff', borderRadius: '8px', border: '1px solid rgba(37, 99, 235, 0.2)' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#1d4ed8', mb: 0.5 }}>
+                  <Box sx={{ mb: 1.5, p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                       How to generate your Mailchimp API Key:
                     </Typography>
                     <ol style={{ margin: 0, paddingLeft: '20px' }}>
@@ -865,7 +865,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                   </Box>
 
                   <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary' }}>
                       How to find your Audience / List ID:
                     </Typography>
                     <ol style={{ margin: 0, paddingLeft: '20px' }}>
@@ -884,16 +884,16 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
             <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0284c7' }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                     2. Brevo (Sendinblue) — Getting API Key (v3) & List ID
                   </Typography>
-                  <Chip label="v3 API" size="small" color="info" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 700 }} />
+                  <Chip label="v3 API" size="small" variant="outlined" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 600 }} />
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
-                  <Box sx={{ mb: 1.5, p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(2, 132, 199, 0.08)' : '#f0f9ff', borderRadius: '8px', border: '1px solid rgba(2, 132, 199, 0.2)' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0369a1', mb: 0.5 }}>
+                  <Box sx={{ mb: 1.5, p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                       How to generate your Brevo API Key:
                     </Typography>
                     <ol style={{ margin: 0, paddingLeft: '20px' }}>
@@ -907,7 +907,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                   </Box>
 
                   <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary' }}>
                       How to find your List ID (Optional):
                     </Typography>
                     <ol style={{ margin: 0, paddingLeft: '20px' }}>
@@ -925,16 +925,16 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
             <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#16a34a' }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                     3. MailerLite — Getting API Token & Group ID
                   </Typography>
-                  <Chip label="Bearer Token" size="small" color="success" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 700 }} />
+                  <Chip label="Bearer Token" size="small" variant="outlined" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 600 }} />
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
-                  <Box sx={{ mb: 1.5, p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(22, 163, 74, 0.08)' : '#f0fdf4', borderRadius: '8px', border: '1px solid rgba(22, 163, 74, 0.2)' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#15803d', mb: 0.5 }}>
+                  <Box sx={{ mb: 1.5, p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                       How to generate your MailerLite API Token:
                     </Typography>
                     <ol style={{ margin: 0, paddingLeft: '20px' }}>
@@ -948,7 +948,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                   </Box>
 
                   <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary' }}>
                       How to find your Group ID (Optional):
                     </Typography>
                     <ol style={{ margin: 0, paddingLeft: '20px' }}>
@@ -966,16 +966,16 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
             <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#7c3aed' }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                     4. Webhooks — Connecting to Zapier, Make (Integromat), or Google Sheets
                   </Typography>
-                  <Chip label="Webhook URL" size="small" color="secondary" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 700 }} />
+                  <Chip label="Webhook URL" size="small" variant="outlined" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 600 }} />
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
-                  <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(124, 58, 237, 0.08)' : '#faf5ff', borderRadius: '8px', border: '1px solid rgba(124, 58, 237, 0.2)' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#6d28d9', mb: 0.5 }}>
+                  <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
                       How to set up a real-time Webhook:
                     </Typography>
                     <ol style={{ margin: 0, paddingLeft: '20px' }}>
@@ -1002,10 +1002,10 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
             Detailed guides for common scenarios to help you get the most out of Coming Soon Pro.
           </Typography>
 
-          <Stack spacing={2}>
-            <Accordion defaultExpanded elevation={0} sx={{ border: '1px solid #e2e8f0', borderRadius: '8px !important' }}>
+          <Stack spacing={1.5}>
+            <Accordion defaultExpanded elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#2563eb' }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                   🎯 Use Case 1: Pre-Launch Viral Lead Capture & Automatic Site Launch
                 </Typography>
               </AccordionSummary>
@@ -1025,9 +1025,9 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
               </AccordionDetails>
             </Accordion>
 
-            <Accordion elevation={0} sx={{ border: '1px solid #e2e8f0', borderRadius: '8px !important' }}>
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#d97706' }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                   🛠️ Use Case 2: Zero-Downtime Maintenance & Google SEO Rank Protection
                 </Typography>
               </AccordionSummary>
@@ -1045,9 +1045,9 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
               </AccordionDetails>
             </Accordion>
 
-            <Accordion elevation={0} sx={{ border: '1px solid #e2e8f0', borderRadius: '8px !important' }}>
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#7c3aed' }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                   ⚡ Use Case 3: Automated CRM Workflows with Zapier / Make Webhooks
                 </Typography>
               </AccordionSummary>
@@ -1065,9 +1065,9 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
               </AccordionDetails>
             </Accordion>
 
-            <Accordion elevation={0} sx={{ border: '1px solid #e2e8f0', borderRadius: '8px !important' }}>
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0284c7' }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                   🌐 Use Case 4: Adding Custom Social Platforms (Discord, Telegram, Threads, GitHub)
                 </Typography>
               </AccordionSummary>
@@ -1131,9 +1131,9 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
           </Box>
 
           <Stack spacing={1.5}>
-            <Accordion elevation={0} sx={{ border: '1px solid #e2e8f0', borderRadius: '8px !important' }}>
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                   Why are my emails going to the Spam folder or not sending?
                 </Typography>
               </AccordionSummary>
@@ -1144,9 +1144,9 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
               </AccordionDetails>
             </Accordion>
 
-            <Accordion elevation={0} sx={{ border: '1px solid #e2e8f0', borderRadius: '8px !important' }}>
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                   How do I preview a different template before activating it?
                 </Typography>
               </AccordionSummary>
@@ -1157,9 +1157,9 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
               </AccordionDetails>
             </Accordion>
 
-            <Accordion elevation={0} sx={{ border: '1px solid #e2e8f0', borderRadius: '8px !important' }}>
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                   How are subscriber leads protected against security vulnerabilities?
                 </Typography>
               </AccordionSummary>
