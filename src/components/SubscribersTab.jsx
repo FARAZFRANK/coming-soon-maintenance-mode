@@ -73,24 +73,32 @@ export default function SubscribersTab({ onNotify }) {
 
   const allSelected =
     subscribers.length > 0 &&
-    subscribers.every((item) => selectedIds.some((id) => Number(id) === Number(item.id)));
-  const isIndeterminate = selectedIds.length > 0 && !allSelected;
+    subscribers.every((item) => selectedIds.map(Number).includes(Number(item.id)));
+  const isIndeterminate =
+    subscribers.length > 0 &&
+    subscribers.some((item) => selectedIds.map(Number).includes(Number(item.id))) &&
+    !allSelected;
 
-  const handleSelectAll = (e) => {
-    if (allSelected) {
-      const pageIdSet = new Set(subscribers.map((item) => Number(item.id)));
-      setSelectedIds((prev) => prev.filter((id) => !pageIdSet.has(Number(id))));
-    } else {
+  const handleSelectAll = (event) => {
+    // Determine whether we are selecting or deselecting
+    const shouldSelect = event && event.target && typeof event.target.checked === 'boolean'
+      ? event.target.checked
+      : !allSelected;
+
+    if (shouldSelect) {
       const pageIds = subscribers.map((item) => Number(item.id));
       setSelectedIds((prev) => Array.from(new Set([...prev.map(Number), ...pageIds])));
+    } else {
+      const pageIdSet = new Set(subscribers.map((item) => Number(item.id)));
+      setSelectedIds((prev) => prev.filter((id) => !pageIdSet.has(Number(id))));
     }
   };
 
   const handleToggleRow = (id) => {
     const numId = Number(id);
     setSelectedIds((prev) => {
-      const exists = prev.some((i) => Number(i) === numId);
-      return exists ? prev.filter((i) => Number(i) !== numId) : [...prev.map(Number), numId];
+      const numList = prev.map(Number);
+      return numList.includes(numId) ? numList.filter((i) => i !== numId) : [...numList, numId];
     });
   };
 
@@ -282,21 +290,13 @@ export default function SubscribersTab({ onNotify }) {
                 <TableRow>
                   <TableCell
                     padding="checkbox"
-                    sx={{ borderColor: 'divider', width: 48, pl: 2, cursor: 'pointer' }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (subscribers.length > 0 && !loading) handleSelectAll(e);
-                    }}
+                    sx={{ borderColor: 'divider', width: 48, pl: 2 }}
                   >
                     <Checkbox
                       color="primary"
                       indeterminate={isIndeterminate}
                       checked={allSelected}
-                      onClick={(e) => e.stopPropagation()}
-                      onChange={(e) => {
-                        e.stopPropagation();
-                        handleSelectAll(e);
-                      }}
+                      onChange={handleSelectAll}
                       disabled={subscribers.length === 0 || loading}
                       inputProps={{ 'aria-label': 'select all subscribers' }}
                     />
@@ -337,19 +337,12 @@ export default function SubscribersTab({ onNotify }) {
                         <TableCell
                           padding="checkbox"
                           sx={{ borderColor: 'divider', pl: 2 }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggleRow(item.id);
-                          }}
                         >
                           <Checkbox
                             color="primary"
                             checked={isSelected}
-                            onClick={(e) => e.stopPropagation()}
-                            onChange={(e) => {
-                              e.stopPropagation();
-                              handleToggleRow(item.id);
-                            }}
+                            tabIndex={-1}
+                            disableRipple
                             inputProps={{ 'aria-label': `select subscriber ${item.id}` }}
                           />
                         </TableCell>
