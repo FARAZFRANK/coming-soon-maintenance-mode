@@ -359,6 +359,7 @@ $dynamic_css .= ".home-content__subscribe, #mc-form, .subscribe-form, .home-cont
 $dynamic_css .= ".home-content__subscribe input[type=\"email\"], #mc-form input[type=\"email\"], input#csmm-email { background: {$csmm_form_input_bg} !important; background-color: {$csmm_form_input_bg} !important; color: {$csmm_form_input_color} !important; border-top-left-radius: {$csmm_form_border_radius}px !important; border-bottom-left-radius: {$csmm_form_border_radius}px !important; border-top-right-radius: 0px !important; border-bottom-right-radius: 0px !important; border: none !important; padding-right: 200px !important; padding-left: 20px !important; box-sizing: border-box !important; width: 100% !important; height: 54px !important; min-height: 54px !important; max-height: 54px !important; line-height: 54px !important; margin: 0 !important; margin-bottom: 0 !important; }\n";
 $dynamic_css .= ".home-content__subscribe input[type=\"email\"]::placeholder, #mc-form input[type=\"email\"]::placeholder, input#csmm-email::placeholder { color: {$csmm_form_input_color} !important; opacity: 0.85 !important; }\n";
 $dynamic_css .= ".home-content__subscribe input[type=\"submit\"], #mc-form input[type=\"submit\"], .home-content__subscribe button, #mc-form button, input[name=\"subscribe\"] { background: {$csmm_form_btn_bg} !important; background-color: {$csmm_form_btn_bg} !important; color: {$csmm_form_btn_color} !important; border-top-right-radius: {$csmm_form_border_radius}px !important; border-bottom-right-radius: {$csmm_form_border_radius}px !important; border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important; border-color: {$csmm_form_btn_bg} !important; border: none !important; height: 54px !important; min-height: 54px !important; max-height: 54px !important; line-height: 54px !important; padding: 0 28px !important; top: 0 !important; right: 0 !important; margin: 0 !important; position: absolute !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; box-sizing: border-box !important; }\n";
+$dynamic_css .= ".home-content__subscribe input:disabled, .home-content__subscribe button:disabled, #mc-form input:disabled, #mc-form button:disabled, form.subscribe-form input:disabled, form.subscribe-form button:disabled, #subscribe-form input:disabled, #subscribe-form button:disabled, .subscribe-input:disabled, .subscribe-btn:disabled { opacity: 0.7 !important; cursor: not-allowed !important; pointer-events: none !important; }\n";
 $dynamic_css .= ".home-content__subscribe label.subscribe-message, #mc-form label.subscribe-message, #mc-form label { position: absolute !important; top: 62px !important; left: 0 !important; right: 0 !important; margin-top: 0 !important; margin-bottom: 0 !important; }\n";
 
 // Template Spacing & Centering Fixes
@@ -635,16 +636,35 @@ $toast_and_ajax_html = '
         e.preventDefault();
         e.stopPropagation();
 
+        if (form.getAttribute("data-csmm-submitting") === "true") {
+          return false;
+        }
+
         var emailVal = (emailInput.value || "").trim();
         if (!emailVal || !emailVal.includes("@")) {
           showCsmmToast("Please enter a valid email address.", true);
           return false;
         }
 
-        var submitBtn = form.querySelector("input[type=\'submit\'], button[type=\'submit\'], input[name=\'subscribe\']");
+        var submitBtn = form.querySelector("input[type=\'submit\'], button[type=\'submit\'], input[name=\'subscribe\'], button");
         var origBtnText = submitBtn ? (submitBtn.value || submitBtn.textContent) : "";
+
+        // Lock form & disable all inputs and buttons
+        form.setAttribute("data-csmm-submitting", "true");
+        var formControls = form.querySelectorAll("input, button, select, textarea");
+        formControls.forEach(function(el) {
+          el.disabled = true;
+          el.setAttribute("disabled", "disabled");
+          el.style.pointerEvents = "none";
+          el.style.cursor = "not-allowed";
+        });
+
+        if (emailInput) {
+          emailInput.style.opacity = "0.7";
+        }
+
         if (submitBtn) {
-          submitBtn.disabled = true;
+          submitBtn.style.opacity = "0.75";
           if (submitBtn.tagName === "INPUT") submitBtn.value = "Subscribing...";
           else submitBtn.textContent = "Subscribing...";
         }
@@ -677,8 +697,21 @@ $toast_and_ajax_html = '
           showCsmmToast("Subscription request failed. Please check your connection.", true);
         })
         .finally(function() {
+          form.removeAttribute("data-csmm-submitting");
+          var formControls = form.querySelectorAll("input, button, select, textarea");
+          formControls.forEach(function(el) {
+            el.disabled = false;
+            el.removeAttribute("disabled");
+            el.style.pointerEvents = "";
+            el.style.cursor = "";
+          });
+
+          if (emailInput) {
+            emailInput.style.opacity = "";
+          }
+
           if (submitBtn) {
-            submitBtn.disabled = false;
+            submitBtn.style.opacity = "";
             if (submitBtn.tagName === "INPUT") submitBtn.value = origBtnText;
             else submitBtn.textContent = origBtnText;
           }
