@@ -41,6 +41,13 @@ import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import BackupRoundedIcon from '@mui/icons-material/BackupRounded';
+import PaletteRoundedIcon from '@mui/icons-material/PaletteRounded';
+import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import SyncAltRoundedIcon from '@mui/icons-material/SyncAltRounded';
+import LightbulbRoundedIcon from '@mui/icons-material/LightbulbRounded';
 import { api } from '../api';
 
 export default function DocumentationTab({ settings, onSettingsUpdate, onNotify }) {
@@ -471,6 +478,285 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
               </Paper>
             </Grid>
           </Grid>
+        </CardContent>
+      </Card>
+
+      {/* 2.1 Deep Dive: Newsletter APIs, Custom SMTP, Automated Email Templates, Branding & Live Preview */}
+      <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 0.5 }}>
+            <EmailRoundedIcon sx={{ color: 'primary.main', fontSize: 26 }} />
+            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.15rem' }}>
+              📧 Core Communication Engine: What is it, Why is it Essential & How it Works
+            </Typography>
+          </Box>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            Understand the complete lifecycle of pre-launch lead capture, why direct APIs and authenticated SMTP matter, and how to configure automated email templates for maximum launch impact.
+          </Typography>
+
+          <Stack spacing={2}>
+            {/* 1. Why Email Marketing is Critical During Coming Soon */}
+            <Accordion defaultExpanded elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  <LightbulbRoundedIcon sx={{ color: '#d97706', fontSize: 22 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#d97706' }}>
+                    1. Why Email & Lead Capture is Essential During Pre-Launch / Maintenance Mode
+                  </Typography>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
+                  <Box sx={{ p: 2, mb: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(217, 119, 6, 0.08)' : '#fffbeb', borderRadius: '8px', border: '1px solid rgba(217, 119, 6, 0.2)' }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#b45309', mb: 0.5 }}>
+                      The Pre-Launch Opportunity:
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.primary' }}>
+                      When a website is under construction or maintenance, visitors cannot browse products, read articles, or hire your services. Without an email capture form, <strong>98% of those visitors will leave and never return</strong>. By collecting emails, you transform dead downtime into a powerful 24/7 lead generation funnel, building an engaged audience that eagerly awaits your launch day.
+                    </Typography>
+                  </Box>
+
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>
+                    The 6-Step Lead Communication Lifecycle:
+                  </Typography>
+                  <ol style={{ margin: 0, paddingLeft: '22px' }}>
+                    <li><strong>Visitor Arrival:</strong> A prospective customer lands on your responsive Coming Soon page and is interested in your upcoming launch.</li>
+                    <li><strong>Instant Local Capture:</strong> The visitor submits their email address. It is instantly saved into your secure, indexed WordPress database (<code>wp_csmm_subscribers</code>).</li>
+                    <li><strong>Automated Cloud Sync:</strong> The plugin asynchronously transmits the subscriber into your connected Newsletter Service (Mailchimp, Brevo, MailerLite, or Zapier).</li>
+                    <li><strong>Admin Alert:</strong> An automated email alert is immediately dispatched to your administrator inbox notifying you of the new lead.</li>
+                    <li><strong>Instant Subscriber Welcome:</strong> The subscriber receives a personalized, branded HTML Welcome Email confirming their waitlist reservation.</li>
+                    <li><strong>Grand Launch Broadcast:</strong> When your countdown timer finishes (or when you switch to Live Mode), the plugin automatically broadcasts the <strong>Site Live Announcement Email</strong> to all subscribers, driving an immediate flood of qualified launch-day traffic!</li>
+                  </ol>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+
+            {/* 2. Newsletter APIs Integration */}
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  <SyncAltRoundedIcon sx={{ color: '#2563eb', fontSize: 22 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#2563eb' }}>
+                    2. Newsletter APIs Integration (Direct Cloud CRM Sync)
+                  </Typography>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
+                  <Grid container spacing={2} sx={{ mb: 1 }}>
+                    <Grid item xs={12} md={6}>
+                      <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'primary.main', mb: 0.5 }}>
+                          What is it & Why is it Needed?
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Direct cloud API connections allow your WordPress site to communicate in real time with enterprise email marketing platforms (Mailchimp v3, Brevo API v3, MailerLite, and Zapier/Make Webhooks). This eliminates manual CSV exports/imports, prevents lost leads, and triggers your marketing drip funnels automatically.
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'success.main', mb: 0.5 }}>
+                          How it Works & How to Use:
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          1. Open the <strong>Newsletter & Integrations</strong> tab.<br />
+                          2. Toggle your preferred service to <strong>Active</strong>.<br />
+                          3. Enter your API Key / Token and Audience/List ID.<br />
+                          4. Click <strong>"Test Connection"</strong> to verify server authentication.<br />
+                          5. Click <strong>Save Changes</strong>. All frontend submissions will now sync seamlessly!
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                  </Grid>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+
+            {/* 3. Custom SMTP Mail Delivery */}
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  <DnsRoundedIcon sx={{ color: '#059669', fontSize: 22 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#059669' }}>
+                    3. Custom SMTP Mail Delivery (Eliminating Spam & Ensuring 100% Inbox Delivery)
+                  </Typography>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
+                  <Box sx={{ p: 2, mb: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(5, 150, 105, 0.08)' : '#f0fdf4', borderRadius: '8px', border: '1px solid rgba(5, 150, 105, 0.2)' }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#047857', mb: 0.5 }}>
+                      The Problem with Default WordPress Email (wp_mail):
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.primary' }}>
+                      By default, WordPress uses PHP's unauthenticated <code>mail()</code> function. Because hosting server IPs are often shared and lack DKIM/SPF signatures, major email providers like Gmail, Yahoo, and Outlook automatically flag these emails as <strong>Spam / Junk</strong> or reject them completely.
+                    </Typography>
+                  </Box>
+
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>
+                    Why Custom SMTP is Essential & How to Set It Up:
+                  </Typography>
+                  <ol style={{ margin: 0, paddingLeft: '22px' }}>
+                    <li><strong>100% Inbox Guarantee:</strong> Authenticated SMTP routes emails through trusted mail servers (Gmail, SendGrid, Amazon SES, Mailgun, Brevo SMTP, or your Web Host SMTP) with proper TLS/SSL encryption and verified domain reputation.</li>
+                    <li><strong>How to Configure:</strong> In <strong>Newsletter & Integrations -&gt; Custom SMTP Mail Delivery</strong>, toggle SMTP to <strong>Enabled</strong>.</li>
+                    <li><strong>Fill in Server Details:</strong>
+                      <ul style={{ paddingLeft: '18px', marginTop: '4px' }}>
+                        <li><strong>SMTP Host:</strong> e.g. <code>smtp.gmail.com</code> (Gmail) or <code>smtp.sendgrid.net</code> (SendGrid).</li>
+                        <li><strong>Port & Encryption:</strong> Port <code>587</code> with <strong>TLS</strong> (recommended) or Port <code>465</code> with <strong>SSL</strong>.</li>
+                        <li><strong>Username & Password:</strong> Your email address and SMTP password (for Gmail, generate a 16-character <em>App Password</em> in your Google Account security settings).</li>
+                        <li><strong>From Name & Email:</strong> The display name and email address your recipients will see.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Instant Test Verification:</strong> Click <strong>"Send Test Mail"</strong> to dispatch a live diagnostic email to verify connectivity before going live!</li>
+                  </ol>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+
+            {/* 4. Automated Email Templates */}
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  <SendRoundedIcon sx={{ color: '#7c3aed', fontSize: 22 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#7c3aed' }}>
+                    4. Automated Email Templates (Admin Alert, Welcome Email & Site Live Broadcast)
+                  </Typography>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
+                  <Typography variant="body2" sx={{ mb: 2 }}>
+                    The plugin includes three pre-designed, responsive transactional email templates with dynamic token interpolation:
+                  </Typography>
+
+                  <Grid container spacing={2} sx={{ mb: 2 }}>
+                    <Grid item xs={12} md={4}>
+                      <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#2563eb', mb: 0.5 }}>
+                          🔔 1. Admin Lead Alert
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          <strong>Trigger:</strong> Instantly when a visitor submits their email.<br />
+                          <strong>Purpose:</strong> Alerts the site owner with subscriber details, submission timestamp, IP address, and referer.
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#059669', mb: 0.5 }}>
+                          💌 2. Subscriber Welcome Email
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          <strong>Trigger:</strong> Immediately sent to the newly subscribed visitor.<br />
+                          <strong>Purpose:</strong> Confirms their waitlist reservation, establishes immediate trust, and highlights upcoming launch benefits.
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#7c3aed', mb: 0.5 }}>
+                          🚀 3. Site Live Announcement
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          <strong>Trigger:</strong> When the countdown timer reaches zero (auto-broadcast) or manually triggered by Admin.<br />
+                          <strong>Purpose:</strong> Broadcasts a launch celebration to <em>all captured subscribers</em> to drive maximum Day-1 traffic.
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                  </Grid>
+
+                  <Box sx={{ p: 2, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#f8fafc', borderRadius: '8px', border: (theme) => `1px solid ${theme.palette.divider}` }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                      Supported Dynamic Placeholders:
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Use tags like <code>&#123;site_name&#125;</code>, <code>&#123;site_url&#125;</code>, <code>&#123;subscriber_email&#125;</code>, <code>&#123;launch_date&#125;</code>, <code>&#123;countdown_time&#125;</code>, <code>&#123;date&#125;</code>, and <code>&#123;ip_address&#125;</code> anywhere in your email subjects and message bodies. They will be automatically replaced with live data upon sending.
+                    </Typography>
+                  </Box>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+
+            {/* 5. Email Branding & Visual Customization */}
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  <PaletteRoundedIcon sx={{ color: '#db2777', fontSize: 22 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#db2777' }}>
+                    5. Email Branding, Styling & Visual Identity Studio
+                  </Typography>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                      <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
+                          🎨 Why Custom Email Branding Matters:
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Plain-text or unstyled emails look suspicious and amateur. Coming Soon Pro features a visual email design system that applies clean card containers, modern typography, mobile-responsive layouts, and custom color accents to ensure all outgoing emails match your official brand identity.
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 0.5 }}>
+                          ⚙️ How to Customize Branding:
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          1. In <strong>Newsletter & Integrations -&gt; Email Template Customization & Branding</strong>, choose your <strong>Header Background Color</strong> (e.g. brand blue or luxury dark).<br />
+                          2. Set your <strong>Footer Background Color</strong> and <strong>Footer Text Color</strong>.<br />
+                          3. Add a personalized <strong>Footer Copyright / Disclaimer Notice</strong>.<br />
+                          4. Your logo and site name are automatically embedded into the header.
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                  </Grid>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+
+            {/* 6. Interactive Live Preview & Test Mailer */}
+            <Accordion elevation={0} sx={{ border: (theme) => `1px solid ${theme.palette.divider}`, borderRadius: '8px !important' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                  <VisibilityRoundedIcon sx={{ color: '#0284c7', fontSize: 22 }} />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0284c7' }}>
+                    6. Interactive Live Preview & Instant Test Mailer (Desktop & Mobile Simulation)
+                  </Typography>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" component="div" sx={{ lineHeight: 1.8 }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                      <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0284c7', mb: 0.5 }}>
+                          📱 Real-Time Desktop & Mobile Preview Modal:
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Click the <strong>"Live Preview Template"</strong> button on any email card to open an interactive simulation modal. You can toggle between <strong>Desktop (600px)</strong> and <strong>Mobile (375px)</strong> viewports to inspect responsive font scaling, button padding, and layout rendering before your emails reach visitors.
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <Paper variant="outlined" sx={{ p: 2, borderRadius: '8px', height: '100%' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#059669', mb: 0.5 }}>
+                          📬 Send Test Email Functionality:
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Click <strong>"Send Test Email"</strong> on any email template card or inside the preview modal. Enter your email address to receive an actual formatted test email in your inbox. This allows you to verify that dynamic tags, colors, and links appear correctly across Gmail, Apple Mail, Outlook, and mobile email apps.
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                  </Grid>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </Stack>
         </CardContent>
       </Card>
 
