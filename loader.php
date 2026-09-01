@@ -377,6 +377,10 @@ $dynamic_css .= ".template-two .home-content { display: flex !important; align-i
 $dynamic_css .= ".template-two .home-content__main { width: 100% !important; max-width: 980px !important; margin: 0 auto !important; padding: 0 !important; }\n";
 $dynamic_css .= ".template-two .frame-ipad { margin: 0 auto !important; max-width: 900px !important; width: 100% !important; box-sizing: border-box !important; }\n";
 $dynamic_css .= ".template-two .home-logo { margin-top: 2rem !important; }\n";
+$dynamic_css .= ".template-two-desc, .template-two-content .csmm-description-content, .template-two .csmm-description-content { margin-bottom: 2.5rem !important; max-width: 680px !important; }\n";
+$dynamic_css .= ".template-two-countdown, .template-two-content .template-two-countdown { margin-top: 2.2rem !important; margin-bottom: 2.5rem !important; }\n";
+$dynamic_css .= ".template-two-countdown .countdown-title { margin-bottom: 1.25rem !important; }\n";
+$dynamic_css .= ".template-two-form, .template-two-content .template-two-form { margin-top: 2.2rem !important; }\n";
 
 // Graphic Background Types - Complete replacement of template background when non-default
 if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', 'slideshow', 'video' ), true ) ) {
