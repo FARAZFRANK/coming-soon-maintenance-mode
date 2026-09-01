@@ -89,6 +89,8 @@ $csmm_bg_video_source        = isset( $csmm_content['bg_video_source'] ) ? $csmm
 $csmm_bg_video_youtube_url   = isset( $csmm_content['bg_video_youtube_url'] ) ? $csmm_content['bg_video_youtube_url'] : '';
 $csmm_bg_video_vimeo_url     = isset( $csmm_content['bg_video_vimeo_url'] ) ? $csmm_content['bg_video_vimeo_url'] : '';
 $csmm_bg_video_mp4_url       = isset( $csmm_content['bg_video_mp4_url'] ) ? $csmm_content['bg_video_mp4_url'] : '';
+$csmm_bg_video_poster_url    = isset( $csmm_content['bg_video_poster_url'] ) ? $csmm_content['bg_video_poster_url'] : '';
+$csmm_bg_video_loop          = ! isset( $csmm_content['bg_video_loop'] ) || ! empty( $csmm_content['bg_video_loop'] );
 
 $csmm_bg_video_url = '';
 if ( 'vimeo' === $csmm_bg_video_source ) {
@@ -545,8 +547,9 @@ if ( 'solid' === $csmm_bg_type ) {
 				$video_bg_html = '<div class="csmm-video-bg"><iframe src="' . esc_url( $embed_src ) . '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>';
 			}
 		} else {
-			$loop_attr = $csmm_bg_video_loop ? 'loop' : '';
-			$video_bg_html = '<div class="csmm-video-bg"><video src="' . esc_url( $v_url ) . '" autoplay muted ' . $loop_attr . ' playsinline style="width: 100%; height: 100%; object-fit: cover;"></video></div>';
+			$loop_attr   = $csmm_bg_video_loop ? 'loop="loop" loop onended="this.currentTime=0;this.play();"' : '';
+			$poster_attr = ! empty( $csmm_bg_video_poster_url ) ? 'poster="' . esc_url( $csmm_bg_video_poster_url ) . '"' : '';
+			$video_bg_html = '<div class="csmm-video-bg"><video src="' . esc_url( $v_url ) . '" autoplay muted ' . $loop_attr . ' ' . $poster_attr . ' playsinline webkit-playsinline style="width: 100%; height: 100%; object-fit: cover;"></video></div>';
 		}
 	}
 }
