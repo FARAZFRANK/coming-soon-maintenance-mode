@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Version & Setup
-$csmm_current_version = get_option( 'csmm_current_version', '3.2.4' );
+$csmm_current_version = get_option( 'csmm_current_version', '3.2.5' );
 
 // Defaults
 $csmm_settings      = get_option( 'csmm_settings', array() );

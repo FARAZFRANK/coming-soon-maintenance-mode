@@ -2,7 +2,7 @@
 
 [![WordPress Plugin](https://img.shields.io/badge/WordPress-5.0+-blue.svg)](https://wordpress.org/)
 [![PHP Version](https://img.shields.io/badge/PHP-7.2+-purple.svg)](https://www.php.net/)
-[![Version](https://img.shields.io/badge/version-3.2.4-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
+[![Version](https://img.shields.io/badge/version-3.2.5-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
 [![React](https://img.shields.io/badge/React-18-61dafb.svg)](https://react.dev/)
 [![Material UI](https://img.shields.io/badge/MUI-v5-007fff.svg)](https://mui.com/)
 [![Vite](https://img.shields.io/badge/Vite-5-646cff.svg)](https://vitejs.dev/)
@@ -10,39 +10,54 @@
 
 **Coming Soon Maintenance Mode Pro** is an enterprise-grade, lightning-fast, and responsive WordPress plugin designed to create stunning Coming Soon pages, Under Construction notices, and Maintenance Mode screens with lead capture.
 
-The admin dashboard is completely built with **React 18, Vite, Material UI (MUI), and WordPress REST API**, providing an ultra-smooth single-page application experience with zero legacy Bootstrap dependencies.
-
----
-
-## 🚀 Tech Stack
-
-| Layer | Technology | Details |
-| :--- | :--- | :--- |
-| **Backend** | **PHP (OOP Singleton)** | Clean modular classes, WordPress REST API (`/wp-json/csmm/v1/`), async handlers |
-| **Database** | **MySQL / MariaDB Custom Table** | Dedicated `wp_csmm_subscribers` table with automated zero-loss migration from `wp_options` |
-| **Frontend (Admin)** | **React 18, Vite, Material UI (MUI v5)** | Modern SPA, tabbed configuration, real-time live iframe previews, zero Bootstrap |
-| **Build System** | **Vite** | Bundled directly to `admin/assets/dist/` |
+The admin dashboard is completely built with **React 18, Vite, Material UI (MUI v5), and WordPress REST API**, providing an ultra-smooth single-page application experience with zero legacy Bootstrap dependencies.
 
 ---
 
 ## 🌟 Key Features
 
-- **3 Website Modes**:
-  - **Disabled / Live**: Website is accessible to all visitors.
-  - **Coming Soon Mode (HTTP 200)**: Show teaser & countdown for new website projects.
-  - **Maintenance Mode (HTTP 503)**: Protect your SEO rankings with HTTP 503 headers during site redesigns and updates.
-- **Selective Targeting**: Apply maintenance mode site-wide or restrict it to specific Posts, Pages, Home, Frontpage, Categories, Tags, or Search.
-- **36+ Pre-built Responsive Templates**: One-click activation with interactive desktop/tablet/mobile live preview modals.
-- **Brand Identity & Media**:
-  - Custom logo upload with native WordPress Media Library integration.
-  - Background image slideshows and video background (Vimeo, YouTube, MP4).
-- **Launch Countdown Timer**: Customizable launch target with automatic switch to Live mode once the countdown expires.
-- **Subscribers Lead Management**:
-  - High-performance lead capture stored in custom database tables.
-  - Search, pagination, deletion, and 1-click secure authenticated CSV export stream.
-- **13+ Social Media Integrations**: Facebook, Twitter/X, Instagram, YouTube, LinkedIn, Pinterest, WhatsApp, TikTok, Behance, Dribbble, Tumblr, Snapchat, and QQ.
-- **Custom CSS Editor**: Add bespoke CSS styles on the fly.
-- **Translation & i18n Ready**: Supports 15+ international languages.
+* **3 Website Modes**:
+  * **Disabled / Live Website**: Website is accessible to all visitors normally.
+  * **Coming Soon Mode (HTTP 200)**: Serves standard HTTP 200 for pre-launch teasers, countdown timers, and email lead capture.
+  * **Maintenance Mode (HTTP 503)**: Returns HTTP 503 with `Retry-After` headers to safeguard SEO keyword rankings during site maintenance.
+* **Selective Targeting**: Apply maintenance mode site-wide or restrict it to specific Posts, Pages, Home, Frontpage, Categories, Tags, or Search.
+* **36+ Pre-built Responsive Templates**: 1-click activation with interactive desktop/tablet/mobile live preview modals.
+* **Universal SEO Suite**: Auto injects Open Graph meta, Twitter Cards, Canonical links, Google Analytics tracking, and Schema.org structured data across all 36 templates.
+* **Multi-Channel Newsletter APIs**:
+  * **Mailchimp v3 API Sync** (250 Contacts / 500 Emails/Mo Free Tier)
+  * **Brevo (Sendinblue) API v3 Sync** (300 Emails/Day & Up to 100k Contacts Free Tier)
+  * **MailerLite API Sync** (250 Subscribers / 2,500 Emails/Mo Free Tier)
+  * **Zapier / Make / Webhook Dispatcher** (Unlimited Direct Lead Push)
+* **Automated Email Notifications & Custom SMTP**:
+  * Admin Lead Alert Email
+  * Subscriber Welcome Email
+  * **Site Live Announcement Email**: Automatically broadcasted to all subscribers when the website goes live.
+  * Full Header, Footer, Colors, and Background Canvas branding customizer.
+  * Interactive Live Email Template Preview modal (Desktop & Smartphone viewports).
+  * Built-in PHPMailer SMTP hook for Gmail, SendGrid, Amazon SES, or hosting mailers.
+* **Dynamic Custom Social Channels**:
+  * Global visibility toggle switch (Enable/Disable across all templates).
+  * 1-Click quick presets for Discord, Telegram, GitHub, Threads, Twitch, Spotify, Medium, Slack, Patreon, Vimeo, and custom Website links.
+  * FontAwesome icon picker with live preview.
+* **Launch Countdown Timer & Auto-Launch**:
+  * Real-time zero-flicker launch countdown timer.
+  * Automatically unlocks live website when the countdown hits zero.
+* **Secure Lead Management**:
+  * Dedicated indexed MySQL table (`wp_csmm_subscribers`).
+  * Search, pagination, deletion, and formula injection sanitized streaming CSV exports.
+* **Custom CSS Code Studio**:
+  * Formatted code editor with syntax color theme and Mac-style title bar.
+* **Comprehensive Documentation Tab**:
+  * Built-in guide with feature matrix, API free limits table, 4 step-by-step use cases, dynamic placeholders cheat sheet, and FAQ.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend Dashboard**: React 18, Vite, Material UI (MUI v5), Emotion.
+* **Backend Architecture**: WordPress REST API (`/wp-json/csmm/v1/`), PHP 7.2+, PHPMailer SMTP.
+* **Database**: Dedicated indexed MySQL table (`wp_csmm_subscribers`).
+* **Templating**: 36 customizable responsive templates with HTML5, CSS3, Flexbox/Grid, and JavaScript.
 
 ---
 
@@ -61,9 +76,7 @@ The admin dashboard is completely built with **React 18, Vite, Material UI (MUI)
 
 ---
 
-## 🛠️ Development & Building Assets
-
-To modify or compile the React admin application:
+## 🚀 Development & Build
 
 ```bash
 # Install dependencies
@@ -79,6 +92,17 @@ npm run build
 ---
 
 ## 📋 Changelog
+
+### = 3.2.5 = (02 September 2026)
+* **Social Media Global Visibility Toggle Switch**: Added dedicated Enable/Disable toggle card in the Social Media tab to easily hide or show social icons site-wide with a single click across all 36 templates.
+* **Universal Email Lead Capture ON/OFF Engine**: Enhanced Email Lead Capture toggle with comprehensive DOM regex stripping and dynamic CSS suppression across all 36 templates.
+* **Automatic Multi-Channel Newsletter API Lead Sync**: Connected direct form submissions across all 36 frontend templates to automatically sync new subscribers to all enabled Newsletter APIs (Mailchimp v3, Brevo API v3, MailerLite API, and Webhooks) plus trigger Welcome Emails and Admin Alerts.
+* **Template 10 Default Media & Content Display Overhaul**: Fixed default background slideshow loading from `temp-10-slides/` when Graphic Background is set to Default Media; updated two-column responsive layout, clean solid white typography, and countdown timer.
+* **Template 13 Live Preview & Frontend UI Parity**: Restored Template 13 original aesthetic matching reference design with fullscreen 3D particle background video coverage, top-left logo and top-right social icons header, inline countdown clock, and bold outline stroke title typography.
+* **Template 17 Content Box Spacing & Subscriber Form Polish**: Perfected vertical content centering, spacing between hero elements, and subscriber form input/button sizing.
+* **Template 19 Double Background & Spacing Fix**: Resolved duplicate background overlay behind the content card and removed unwanted bottom blank spacing when custom image backgrounds are set.
+* **Zero-Flicker Countdown Engine**: Enhanced launch countdown timer with immediate client-side and server-side synchronized timestamp rendering to prevent layout jump or flash on initial page load.
+* **PHP Syntax & Template Integrity**: Conducted complete repository PHP syntax lint validation with zero syntax errors.
 
 ### = 3.2.4 = (01 September 2026)
 * **Communication Engine In-Depth Documentation Guide**: Added comprehensive educational guide in Documentation Tab covering the end-to-end lifecycle of pre-launch lead capture, why direct Newsletter APIs & authenticated SMTP are critical, and step-by-step email branding and live preview workflows.
@@ -126,39 +150,19 @@ npm run build
 * **Multi-Channel Newsletters**: Direct API sync for Mailchimp v3, Brevo (Sendinblue), MailerLite, and Custom Webhooks (Zapier/Make) with live connection testing tools.
 * **Custom SMTP Engine**: Integrated PHPMailer SMTP hook for Gmail, SendGrid, Amazon SES, and hosting mailers.
 * **Automated Email Notifications & Live Preview**:
-  * Admin Lead Alert Email customizer.
-  * Subscriber Welcome Email customizer.
-  * **Site Live Announcement Email**: Automatically broadcasted to all subscribers upon site launch, with 1-click manual broadcast.
-  * Interactive Live Email Template Preview Modal with Desktop and Mobile viewports.
-  * Template Header, Footer, Canvas Colors, and Typography styling customizer.
+  - Admin Lead Alert Email customizer.
+  - Subscriber Welcome Email customizer.
+  - Site Live Announcement Email with automatic broadcast on site launch.
+  - Interactive Live Email Template Preview Modal with Desktop and Mobile viewports.
+  - Template Header, Footer, Canvas Colors, and Typography styling customizer.
 * **Dynamic Custom Social Channels**: Added platform creator with 12+ 1-click presets (Discord, Telegram, Threads, GitHub, Spotify, etc.) and FontAwesome icon selector.
 * **Modern Centered Floating Studio Preloader**: Synchronized light glassmorphic floating loader in PHP and React SPA mounting phases.
-* **Database & Security Layer**: Added dedicated indexed MySQL table `wp_csmm_subscribers` with utf8mb4 index protection and sanitized streaming CSV export.
+* **Database & Security Layer**: Added dedicated indexed MySQL table `wp_csmm_subscribers` with `utf8mb4` index protection and sanitized streaming CSV export.
 * **Custom CSS Code Studio**: Added formatted multiline CSS editor with dark slate developer theme.
 * **Comprehensive Documentation Tab**: Added complete feature matrix, API free tier limits table, real-world use cases, dynamic tags guide, and FAQ.
-
-### = 3.1.0 = (28 Oct 2025)
-* Added 20 new responsive templates (total 36 templates).
-
-### = 3.0.4 = (4 Feb 2025)
-* Favicon icon bug fixed.
-
-### = 3.0.3 = (1 Jan 2025)
-* Added 6 new templates.
-
-### = 3.0.2 = (24 Jan 2024)
-* Added translations for 15+ languages.
-* Subscriber page warning fix.
 
 ---
 
 ## 📄 License
 
-This plugin is free software, licensed under the [GNU General Public License v2 or later](https://www.gnu.org/licenses/gpl-2.0.html).
-
----
-
-## 👨‍💻 Author
-
-Developed by **[FARAZFRANK](https://profiles.wordpress.org/farazfrank/)**  
-Website: [wpfrank.com](https://wpfrank.com/)
+GPLv2 or later. See [LICENSE](LICENSE) for more details.

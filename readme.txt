@@ -4,7 +4,7 @@ Tags: coming soon, maintenance mode, under construction, launch countdown, newsl
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 3.2.4
+Stable tag: 3.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,17 @@ Yes! Logged-in administrators bypass the maintenance screen and can view and edi
 Go to **Newsletter & Integrations** -> **Custom SMTP Mail Delivery**, enable SMTP, and configure your Gmail, SendGrid, or hosting SMTP server.
 
 == Changelog ==
+
+= 3.2.5 = 02 September 2026
+* **Social Media Global Visibility Toggle Switch**: Added dedicated Enable/Disable toggle card in the Social Media tab to easily hide or show social icons site-wide with a single click across all 36 templates.
+* **Universal Email Lead Capture ON/OFF Engine**: Enhanced Email Lead Capture toggle with comprehensive DOM regex stripping and dynamic CSS suppression across all 36 templates.
+* **Automatic Multi-Channel Newsletter API Lead Sync**: Connected direct form submissions across all 36 frontend templates to automatically sync new subscribers to all enabled Newsletter APIs (Mailchimp v3, Brevo API v3, MailerLite API, and Webhooks) plus trigger Welcome Emails and Admin Alerts.
+* **Template 10 Default Media & Content Display Overhaul**: Fixed default background slideshow loading from `temp-10-slides/` when Graphic Background is set to Default Media; updated two-column responsive layout, clean solid white typography, and countdown timer.
+* **Template 13 Live Preview & Frontend UI Parity**: Restored Template 13 original aesthetic matching reference design with fullscreen 3D particle background video coverage, top-left logo and top-right social icons header, inline countdown clock, and bold outline stroke title typography.
+* **Template 17 Content Box Spacing & Subscriber Form Polish**: Perfected vertical content centering, spacing between hero elements, and subscriber form input/button sizing.
+* **Template 19 Double Background & Spacing Fix**: Resolved duplicate background overlay behind the content card and removed unwanted bottom blank spacing when custom image backgrounds are set.
+* **Zero-Flicker Countdown Engine**: Enhanced launch countdown timer with immediate client-side and server-side synchronized timestamp rendering to prevent layout jump or flash on initial page load.
+* **PHP Syntax & Template Integrity**: Conducted complete repository PHP syntax lint validation with zero syntax errors.
 
 = 3.2.4 = 01 September 2026
 * **Communication Engine In-Depth Documentation Guide**: Added comprehensive educational guide in Documentation Tab covering the end-to-end lifecycle of pre-launch lead capture, why direct Newsletter APIs & authenticated SMTP are critical, and step-by-step email branding and live preview workflows.

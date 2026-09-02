@@ -379,7 +379,7 @@ export default function App() {
                       Coming Soon Maintenance Mode Pro
                     </Typography>
                     <Chip
-                      label={`v${api.getConfig().version || '3.2.4'}`}
+                      label={`v${api.getConfig().version || '3.2.5'}`}
                       size="small"
                       sx={{
                         fontWeight: 700,

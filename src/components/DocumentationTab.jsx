@@ -56,12 +56,16 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
   const [isImporting, setIsImporting] = useState(false);
   const fileInputRef = useRef(null);
 
+  const showToast = (message, severity) => {
+    if (onNotify) onNotify(message, severity);
+  };
+
   // 1. Export Settings to JSON file
   const handleExportSettings = () => {
     try {
       const exportData = {
         plugin: 'Coming Soon Maintenance Mode Pro',
-        version: api.getConfig().version || '3.2.4',
+        version: api.getConfig().version || '3.2.5',
         site_url: api.getConfig().siteUrl || '',
         exported_at: new Date().toISOString(),
         settings: settings || {},
@@ -73,105 +77,94 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
       const link = document.createElement('a');
       const dateStr = new Date().toISOString().split('T')[0];
       link.href = url;
-      link.download = `csmm-settings-backup-${dateStr}.json`;
+      link.download = `csmm-pro-settings-${dateStr}.json`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-
-      if (onNotify) {
-        onNotify('Settings backup exported successfully!', 'success');
-      }
-    } catch (err) {
-      if (onNotify) {
-        onNotify('Export failed: ' + err.message, 'error');
-      }
+      showToast('Settings exported successfully to JSON file.', 'success');
+    } catch (e) {
+      showToast('Failed to export settings: ' + e.message, 'error');
     }
   };
 
-  // 2. Trigger File Picker for Import
-  const handleImportClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-      fileInputRef.current.click();
-    }
-  };
-
-  // 3. Process Imported JSON File
-  const handleFileChange = async (e) => {
-    const file = e.target.files?.[0];
+  // 2. Import Settings from JSON file
+  const handleImportFileChange = (e) => {
+    const file = e.target.files[0];
     if (!file) return;
+
+    if (!file.name.endsWith('.json')) {
+      showToast('Invalid file format. Please select a valid .json settings file.', 'error');
+      return;
+    }
 
     const reader = new FileReader();
     reader.onload = async (event) => {
       try {
-        setIsImporting(true);
         const parsed = JSON.parse(event.target.result);
         if (!parsed || typeof parsed !== 'object') {
-          throw new Error('Invalid JSON file structure');
+          throw new Error('Invalid JSON structure.');
         }
 
-        const res = await api.importSettings(parsed);
-        if (res.success) {
-          if (onSettingsUpdate && res.data) {
-            onSettingsUpdate(res.data);
-          }
-          if (onNotify) {
-            onNotify('Settings imported and applied successfully!', 'success');
-          }
-        } else {
-          throw new Error(res.message || 'Failed to import settings');
+        const settingsToImport = parsed.settings || parsed;
+        if (!settingsToImport || typeof settingsToImport !== 'object') {
+          throw new Error('No valid settings object found in JSON file.');
         }
+
+        setIsImporting(true);
+        await api.importSettings(settingsToImport);
+        showToast('Settings imported successfully! Reloading studio...', 'success');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1200);
       } catch (err) {
-        if (onNotify) {
-          onNotify('Import failed: ' + err.message, 'error');
-        }
+        showToast('Failed to import settings: ' + err.message, 'error');
       } finally {
         setIsImporting(false);
+        if (fileInputRef.current) fileInputRef.current.value = '';
       }
     };
     reader.readAsText(file);
   };
 
-  // 4. Factory Reset All Settings
-  const handleConfirmReset = async () => {
+  // 3. Factory Reset Settings
+  const handleFactoryReset = async () => {
     try {
       setIsResetting(true);
-      const res = await api.resetSettings();
-      if (res.success) {
-        if (onSettingsUpdate && res.data) {
-          onSettingsUpdate(res.data);
-        }
-        setResetDialogOpen(false);
-        if (onNotify) {
-          onNotify('All settings have been successfully reset to factory defaults!', 'success');
-        }
-      } else {
-        throw new Error(res.message || 'Failed to reset settings');
-      }
-    } catch (err) {
-      if (onNotify) {
-        onNotify('Reset error: ' + err.message, 'error');
-      }
-    } finally {
+      await api.resetSettings();
+      showToast('Factory reset complete. Restoring default settings...', 'success');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1200);
+    } catch (e) {
+      showToast('Failed to reset settings: ' + e.message, 'error');
       setIsResetting(false);
     }
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3.5 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       {/* Hidden input for Import JSON */}
       <input
         type="file"
         ref={fileInputRef}
-        onChange={handleFileChange}
+        onChange={handleImportFileChange}
         accept=".json,application/json"
         style={{ display: 'none' }}
       />
 
-      {/* 1. Header Hero Card */}
-      <Card elevation={0} sx={{ borderRadius: '12px !important', background: 'linear-gradient(135deg, #1e293b, #0f172a)', color: '#ffffff' }}>
-        <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+      {/* Hero Welcome Card */}
+      <Card
+        elevation={0}
+        sx={{
+          borderRadius: '10px !important',
+          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+          color: '#ffffff',
+          border: '1px solid #334155',
+          p: { xs: 2.5, md: 3.5 },
+        }}
+      >
+        <CardContent sx={{ p: '0 !important' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
@@ -179,7 +172,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <Typography variant="h5" sx={{ fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
                   Coming Soon Maintenance Mode Pro Studio
                 </Typography>
-                <Chip label="v3.2.4" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Chip label="v3.2.5" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
               </Box>
               <Typography variant="body1" sx={{ color: '#94a3b8', maxWidth: 780, lineHeight: 1.6 }}>
                 Comprehensive user guide, implementation workflows, newsletter integrations, SEO configuration, and real-world use cases.
@@ -194,13 +187,11 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
               sx={{
                 borderRadius: '8px',
                 fontWeight: 700,
-                color: '#ffffff !important',
+                textTransform: 'none',
                 backgroundColor: '#2563eb !important',
-                textDecoration: 'none !important',
-                boxShadow: '0 4px 12px rgba(37, 99, 235, 0.35)',
+                color: '#ffffff !important',
                 '&:hover': {
                   backgroundColor: '#1d4ed8 !important',
-                  color: '#ffffff !important',
                 },
                 '&:focus, &:active, &:visited': {
                   color: '#ffffff !important',
@@ -1183,7 +1174,26 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
           <Stack spacing={2.5}>
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                <Chip label="v3.2.4" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Chip label="v3.2.5" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                  Social Media Toggle, Newsletter API Auto Sync, Template 10/13 Parity & Countdown Sync
+                </Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary" component="ul" sx={{ pl: 2.5, m: 0, lineHeight: 1.8 }}>
+                <li><strong>Social Media Global Visibility Switch:</strong> Added dedicated Enable/Disable toggle card in Social Media tab to hide or show social links site-wide across all templates.</li>
+                <li><strong>Universal Email Lead Capture ON/OFF Engine:</strong> Enhanced Email Lead Capture toggle with comprehensive DOM regex stripping and dynamic CSS suppression across all 36 templates.</li>
+                <li><strong>Automatic Multi-Channel Newsletter API Sync:</strong> Frontend form submissions across all templates automatically sync new leads to enabled Newsletter APIs (Mailchimp v3, Brevo API v3, MailerLite, Webhooks) and trigger autoresponder emails.</li>
+                <li><strong>Template 10 Default Media & Content Display Overhaul:</strong> Fixed default background slideshow loading from <code>temp-10-slides/</code>, refreshed two-column responsive layout, clean typography, and countdown timer.</li>
+                <li><strong>Template 13 Live Preview & Frontend Parity:</strong> Restored Template 13 original aesthetic matching reference design with fullscreen 3D particle background video coverage, top-left logo, top-right social icons header, inline countdown clock, and bold outline stroke title typography.</li>
+                <li><strong>Template 17 & 19 Layout Polish:</strong> Perfected vertical content centering, subscriber form input sizing, and resolved duplicate background overlay in Template 19.</li>
+              </Typography>
+            </Box>
+
+            <Divider />
+
+            <Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                <Chip label="v3.2.4" color="default" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
                 <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                   Communication Engine Deep-Dive, Professional Docs Styling & Video/Form Fixes
                 </Typography>
