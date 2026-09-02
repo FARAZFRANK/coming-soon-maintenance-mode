@@ -35,6 +35,8 @@ body {
 	padding: 2.75rem 2.25rem 2rem 2.25rem;
 	max-width: 500px;
 	width: 100%;
+	min-height: auto !important;
+	height: auto !important;
 	margin: auto;
 	text-align: center;
 	position: relative;
