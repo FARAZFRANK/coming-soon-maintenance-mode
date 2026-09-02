@@ -22,16 +22,18 @@ body {
 
 /* Main content card */
 .main-card {
-	background: rgba(255, 255, 255, 0.05);
+	background: rgba(255, 255, 255, 0.08);
 	border: 1px solid rgba(255, 255, 255, 0.2);
 	backdrop-filter: blur(15px);
 	-webkit-backdrop-filter: blur(15px);
 	position: relative;
-	z-index: 1;
-	animation: popIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
-	transform: scale(0.8);
+	z-index: 2;
+	animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+	transform: scale(0.9);
 	opacity: 0;
-	padding: 2.75rem 2.5rem !important;
+	padding: 2.25rem 2rem !important;
+	max-width: 580px !important;
+	margin: 1.5rem auto !important;
 }
 
 @keyframes popIn {
@@ -42,7 +44,7 @@ body {
 }
 
 .home-logo {
-	margin-bottom: 1.25rem !important;
+	margin-bottom: 1rem !important;
 }
 
 .subtitle {
@@ -51,7 +53,7 @@ body {
 	text-transform: uppercase;
 	letter-spacing: 0.2em;
 	color: #F06292; /* Bright Pink */
-	margin-bottom: 0.5rem !important;
+	margin-bottom: 0.35rem !important;
 }
 
 /* Custom font for titles */
@@ -60,8 +62,8 @@ body {
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
 	text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-	margin-top: 0.5rem !important;
-	margin-bottom: 1.25rem !important;
+	margin-top: 0.25rem !important;
+	margin-bottom: 0.75rem !important;
 }
 
 .highlight {
@@ -70,15 +72,15 @@ body {
 
 .main-card .party-desc,
 .main-card p.party-desc {
-	margin-top: 1rem !important;
-	margin-bottom: 3rem !important;
-	line-height: 1.8 !important;
+	margin-top: 0.5rem !important;
+	margin-bottom: 1.5rem !important;
+	line-height: 1.65 !important;
 }
 
 /* Countdown timer styling */
 .main-card #countdown {
-	margin-top: 1.5rem !important;
-	margin-bottom: 2.5rem !important;
+	margin-top: 0.75rem !important;
+	margin-bottom: 1.5rem !important;
 }
 
 .countdown-box {

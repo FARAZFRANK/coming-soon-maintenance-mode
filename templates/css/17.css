@@ -12,7 +12,9 @@ body {
 	animation: floatIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 	opacity: 0;
 	transform: translateY(40px);
-	min-height: 640px;
+	min-height: auto;
+	max-width: 1040px;
+	margin: 2rem auto;
 	display: grid;
 	align-items: stretch;
 }
@@ -28,50 +30,50 @@ body {
 .prospectus-content {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
-	height: 100%;
-	padding: 3.5rem 3rem;
+	justify-content: flex-start;
+	padding: 2.75rem 2.5rem;
 	box-sizing: border-box;
 }
 
 .prospectus-logo {
-	margin-bottom: 1.5rem;
+	margin-bottom: 1.25rem;
 }
 
 .prospectus-content h1.title-font {
-	margin-bottom: 0.85rem;
+	margin-bottom: 0.75rem;
 }
 
 .prospectus-desc,
 .prospectus-content p.prospectus-desc {
-	margin-top: 0.75rem !important;
-	margin-bottom: 2.5rem !important;
-	line-height: 1.7 !important;
+	margin-top: 0.5rem !important;
+	margin-bottom: 1.5rem !important;
+	line-height: 1.65 !important;
 	display: block !important;
 }
 
 .countdown-header,
 .prospectus-content h3.countdown-header {
-	margin-top: 1.25rem !important;
-	margin-bottom: 0.75rem !important;
+	margin-top: 0.5rem !important;
+	margin-bottom: 0.5rem !important;
 	font-size: 0.95rem;
 	letter-spacing: 0.1em;
 	color: #718096;
 }
 
 .prospectus-content #countdown {
-	margin-bottom: 2rem !important;
+	margin-top: 0.25rem !important;
+	margin-bottom: 1.5rem !important;
 }
 
 .prospectus-form-label {
-	margin-bottom: 0.75rem !important;
+	margin-bottom: 0.5rem !important;
 	font-size: 0.85rem;
 	font-weight: 600;
 	color: #4A5568;
 }
 
 .subscribe-wrapper {
-	margin-bottom: 1.5rem !important;
+	margin-bottom: 1rem !important;
 	width: 100%;
 }
 

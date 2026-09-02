@@ -29,7 +29,19 @@ body {
 
 /* Main content container */
 .main-content {
-	animation: fadeIn 2s ease-out;
+	position: relative !important;
+	z-index: 2 !important;
+	animation: fadeIn 1.2s ease-out forwards;
+}
+
+body.has-video-bg .main-content,
+.has-video-bg .main-content {
+	background: rgba(251, 246, 245, 0.94) !important;
+	backdrop-filter: blur(16px) !important;
+	-webkit-backdrop-filter: blur(16px) !important;
+	padding: 2.75rem 2.25rem !important;
+	border-radius: 1.5rem !important;
+	box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35) !important;
 }
 
 @keyframes fadeIn {

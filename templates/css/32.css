@@ -17,9 +17,20 @@ body {
 	background: radial-gradient(circle at top, rgba(139, 92, 246, 0.15), transparent 40%);
 }
 
+body.has-custom-bg .background-gradient,
+body.has-video-bg .background-gradient,
+body.has-slideshow-bg .background-gradient,
+.has-custom-bg .background-gradient,
+.has-video-bg .background-gradient,
+.has-slideshow-bg .background-gradient {
+	display: none !important;
+}
+
 /* Main content container */
 .main-content {
-	animation: fadeIn 2s ease-out;
+	position: relative !important;
+	z-index: 2 !important;
+	animation: fadeIn 1.2s ease-out forwards;
 }
 
 @keyframes fadeIn {
@@ -41,16 +52,16 @@ body {
 
 .podcast-desc,
 .main-content p.podcast-desc {
-	margin-top: 1rem !important;
-	margin-bottom: 3rem !important;
-	line-height: 1.8 !important;
+	margin-top: 0.5rem !important;
+	margin-bottom: 1.5rem !important;
+	line-height: 1.65 !important;
 	display: block !important;
 }
 
 #countdown,
 .main-content #countdown {
-	margin-top: 1.5rem !important;
-	margin-bottom: 2.75rem !important;
+	margin-top: 0.75rem !important;
+	margin-bottom: 1.5rem !important;
 }
 
 /* Podcast Cover Art Styling */
