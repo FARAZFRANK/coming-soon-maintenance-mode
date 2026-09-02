@@ -351,6 +351,7 @@ class CSMM_REST_API {
 			'bg_overlay_opacity'   => isset( $content['bg_overlay_opacity'] ) ? floatval( $content['bg_overlay_opacity'] ) : 0.4,
 			'bg_blur'              => isset( $content['bg_blur'] ) ? intval( $content['bg_blur'] ) : 0,
 			'social_media'         => array(
+				'enabled'   => ! isset( $social_media['enabled'] ) || ! empty( $social_media['enabled'] ),
 				'facebook'  => isset( $social_media['csmm_sm_facebook'] ) ? $social_media['csmm_sm_facebook'] : '#',
 				'twitter'   => isset( $social_media['csmm_sm_twitter'] ) ? $social_media['csmm_sm_twitter'] : '#',
 				'youtube'   => isset( $social_media['csmm_sm_youtube'] ) && '' !== $social_media['csmm_sm_youtube'] && '#' !== $social_media['csmm_sm_youtube'] ? $social_media['csmm_sm_youtube'] : 'https://www.youtube.com/watch?v=91AcVUR0O8I',
@@ -699,6 +700,7 @@ class CSMM_REST_API {
 		if ( isset( $params['social_media'] ) && is_array( $params['social_media'] ) ) {
 			$sm = $params['social_media'];
 			$social_array = array(
+				'enabled'           => ! isset( $sm['enabled'] ) || ! empty( $sm['enabled'] ),
 				'csmm_sm_facebook'  => isset( $sm['facebook'] ) ? esc_url_raw( $sm['facebook'] ) : '',
 				'csmm_sm_twitter'   => isset( $sm['twitter'] ) ? esc_url_raw( $sm['twitter'] ) : '',
 				'csmm_sm_youtube'   => isset( $sm['youtube'] ) ? esc_url_raw( $sm['youtube'] ) : '',

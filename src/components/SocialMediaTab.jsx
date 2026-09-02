@@ -18,6 +18,7 @@ import {
   FormControlLabel,
   Checkbox,
   Slider,
+  Switch,
 } from '@mui/material';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -181,10 +182,40 @@ export default function SocialMediaTab({ settings, onChange }) {
     { name: 'Website / Blog', icon: 'fa-solid fa-globe' },
   ];
 
+  const isSocialEnabled = social.enabled !== false;
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3.5 }}>
-      {/* 1. Standard Social Platforms */}
+      {/* 0. Enable / Disable Social Media Icons Card */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
+        <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+            <Box>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
+                Social Media Icons Display
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Enable or disable the display of all social media icons across your coming soon and maintenance mode templates.
+              </Typography>
+            </Box>
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={isSocialEnabled}
+                  onChange={(e) => handleStandardChange('enabled', e.target.checked)}
+                  color="primary"
+                />
+              }
+              label={isSocialEnabled ? 'Enabled' : 'Disabled'}
+              sx={{ mr: 0 }}
+            />
+          </Box>
+        </CardContent>
+      </Card>
+
+      {/* 1. Standard Social Platforms */}
+      <Card elevation={0} sx={{ borderRadius: '10px !important', opacity: isSocialEnabled ? 1 : 0.65, transition: 'opacity 0.3s ease' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1.1rem' }}>
             Standard Social Channels

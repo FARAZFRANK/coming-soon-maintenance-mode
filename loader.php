@@ -125,23 +125,44 @@ $csmm_launch_time = date( 'H:i:s', strtotime( $csmm_countdown_time ) );
 $csmm_launch_dt   = $csmm_launch_date . ' ' . $csmm_launch_time;
 
 // Social Media Links
-$csmm_sm_facebook  = isset( $csmm_social_media['csmm_sm_facebook'] ) ? $csmm_social_media['csmm_sm_facebook'] : '#';
-$csmm_sm_twitter   = isset( $csmm_social_media['csmm_sm_twitter'] ) ? $csmm_social_media['csmm_sm_twitter'] : '#';
-$csmm_sm_youtube   = isset( $csmm_social_media['csmm_sm_youtube'] ) && '' !== $csmm_social_media['csmm_sm_youtube'] && '#' !== $csmm_social_media['csmm_sm_youtube'] ? $csmm_social_media['csmm_sm_youtube'] : 'https://www.youtube.com/watch?v=91AcVUR0O8I';
-$csmm_sm_instagram = isset( $csmm_social_media['csmm_sm_instagram'] ) ? $csmm_social_media['csmm_sm_instagram'] : '#';
-$csmm_sm_linkedin  = isset( $csmm_social_media['csmm_sm_linkedin'] ) ? $csmm_social_media['csmm_sm_linkedin'] : '';
-$csmm_sm_pinterest = isset( $csmm_social_media['csmm_sm_pinterest'] ) ? $csmm_social_media['csmm_sm_pinterest'] : '';
-$csmm_sm_tumblr    = isset( $csmm_social_media['csmm_sm_tumblr'] ) ? $csmm_social_media['csmm_sm_tumblr'] : '';
-$csmm_sm_snapchat  = isset( $csmm_social_media['csmm_sm_snapchat'] ) ? $csmm_social_media['csmm_sm_snapchat'] : '';
-$csmm_sm_behance   = isset( $csmm_social_media['csmm_sm_behance'] ) ? $csmm_social_media['csmm_sm_behance'] : '';
-$csmm_sm_dribbble  = isset( $csmm_social_media['csmm_sm_dribbble'] ) ? $csmm_social_media['csmm_sm_dribbble'] : '';
-$csmm_sm_whatsapp  = isset( $csmm_social_media['csmm_sm_whatsapp'] ) ? $csmm_social_media['csmm_sm_whatsapp'] : '';
-$csmm_sm_tiktok    = isset( $csmm_social_media['csmm_sm_tiktok'] ) ? $csmm_social_media['csmm_sm_tiktok'] : '';
-$csmm_social_icon_size_enabled  = ! empty( $csmm_social_media['social_icon_size_enabled'] );
-$csmm_social_icon_size          = isset( $csmm_social_media['social_icon_size'] ) ? intval( $csmm_social_media['social_icon_size'] ) : 24;
-$csmm_social_icon_color_enabled = ! empty( $csmm_social_media['social_icon_color_enabled'] );
-$csmm_social_icon_color         = isset( $csmm_social_media['social_icon_color'] ) ? sanitize_hex_color( $csmm_social_media['social_icon_color'] ) : '';
-$csmm_social_icon_hover_color   = isset( $csmm_social_media['social_icon_hover_color'] ) ? sanitize_hex_color( $csmm_social_media['social_icon_hover_color'] ) : '';
+$csmm_social_media_enabled = ! isset( $csmm_social_media['enabled'] ) || ! empty( $csmm_social_media['enabled'] );
+if ( $csmm_social_media_enabled ) {
+	$csmm_sm_facebook  = isset( $csmm_social_media['csmm_sm_facebook'] ) ? $csmm_social_media['csmm_sm_facebook'] : '#';
+	$csmm_sm_twitter   = isset( $csmm_social_media['csmm_sm_twitter'] ) ? $csmm_social_media['csmm_sm_twitter'] : '#';
+	$csmm_sm_youtube   = isset( $csmm_social_media['csmm_sm_youtube'] ) && '' !== $csmm_social_media['csmm_sm_youtube'] && '#' !== $csmm_social_media['csmm_sm_youtube'] ? $csmm_social_media['csmm_sm_youtube'] : 'https://www.youtube.com/watch?v=91AcVUR0O8I';
+	$csmm_sm_instagram = isset( $csmm_social_media['csmm_sm_instagram'] ) ? $csmm_social_media['csmm_sm_instagram'] : '#';
+	$csmm_sm_linkedin  = isset( $csmm_social_media['csmm_sm_linkedin'] ) ? $csmm_social_media['csmm_sm_linkedin'] : '';
+	$csmm_sm_pinterest = isset( $csmm_social_media['csmm_sm_pinterest'] ) ? $csmm_social_media['csmm_sm_pinterest'] : '';
+	$csmm_sm_tumblr    = isset( $csmm_social_media['csmm_sm_tumblr'] ) ? $csmm_social_media['csmm_sm_tumblr'] : '';
+	$csmm_sm_snapchat  = isset( $csmm_social_media['csmm_sm_snapchat'] ) ? $csmm_social_media['csmm_sm_snapchat'] : '';
+	$csmm_sm_behance   = isset( $csmm_social_media['csmm_sm_behance'] ) ? $csmm_social_media['csmm_sm_behance'] : '';
+	$csmm_sm_dribbble  = isset( $csmm_social_media['csmm_sm_dribbble'] ) ? $csmm_social_media['csmm_sm_dribbble'] : '';
+	$csmm_sm_whatsapp  = isset( $csmm_social_media['csmm_sm_whatsapp'] ) ? $csmm_social_media['csmm_sm_whatsapp'] : '';
+	$csmm_sm_tiktok    = isset( $csmm_social_media['csmm_sm_tiktok'] ) ? $csmm_social_media['csmm_sm_tiktok'] : '';
+	$csmm_social_icon_size_enabled  = ! empty( $csmm_social_media['social_icon_size_enabled'] );
+	$csmm_social_icon_size          = isset( $csmm_social_media['social_icon_size'] ) ? intval( $csmm_social_media['social_icon_size'] ) : 24;
+	$csmm_social_icon_color_enabled = ! empty( $csmm_social_media['social_icon_color_enabled'] );
+	$csmm_social_icon_color         = isset( $csmm_social_media['social_icon_color'] ) ? sanitize_hex_color( $csmm_social_media['social_icon_color'] ) : '';
+	$csmm_social_icon_hover_color   = isset( $csmm_social_media['social_icon_hover_color'] ) ? sanitize_hex_color( $csmm_social_media['social_icon_hover_color'] ) : '';
+} else {
+	$csmm_sm_facebook  = '';
+	$csmm_sm_twitter   = '';
+	$csmm_sm_youtube   = '';
+	$csmm_sm_instagram = '';
+	$csmm_sm_linkedin  = '';
+	$csmm_sm_pinterest = '';
+	$csmm_sm_tumblr    = '';
+	$csmm_sm_snapchat  = '';
+	$csmm_sm_behance   = '';
+	$csmm_sm_dribbble  = '';
+	$csmm_sm_whatsapp  = '';
+	$csmm_sm_tiktok    = '';
+	$csmm_social_icon_size_enabled  = false;
+	$csmm_social_icon_size          = 24;
+	$csmm_social_icon_color_enabled = false;
+	$csmm_social_icon_color         = '';
+	$csmm_social_icon_hover_color   = '';
+}
 
 // Subscriber Form UI Settings
 $csmm_form_headline      = isset( $csmm_content['form_headline_text'] ) ? $csmm_content['form_headline_text'] : '';
@@ -171,18 +192,24 @@ if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', '
 }
 
 // 1. Inject Custom Social Media Channels into <ul class="home-social">
-$custom_channels = isset( $csmm_social_media['custom_channels'] ) && is_array( $csmm_social_media['custom_channels'] ) ? $csmm_social_media['custom_channels'] : array();
-$custom_social_html = '';
-foreach ( $custom_channels as $ch ) {
-	if ( ! empty( $ch['url'] ) ) {
-		$icon  = ! empty( $ch['icon'] ) ? esc_attr( $ch['icon'] ) : 'fa-solid fa-globe';
-		$title = ! empty( $ch['title'] ) ? esc_attr( $ch['title'] ) : '';
-		$custom_social_html .= '<li><a href="' . esc_url( $ch['url'] ) . '" target="_blank" title="' . $title . '"><i class="' . $icon . '" aria-hidden="true"></i></a></li>' . "\n";
+if ( $csmm_social_media_enabled ) {
+	$custom_channels = isset( $csmm_social_media['custom_channels'] ) && is_array( $csmm_social_media['custom_channels'] ) ? $csmm_social_media['custom_channels'] : array();
+	$custom_social_html = '';
+	foreach ( $custom_channels as $ch ) {
+		if ( ! empty( $ch['url'] ) ) {
+			$icon  = ! empty( $ch['icon'] ) ? esc_attr( $ch['icon'] ) : 'fa-solid fa-globe';
+			$title = ! empty( $ch['title'] ) ? esc_attr( $ch['title'] ) : '';
+			$custom_social_html .= '<li><a href="' . esc_url( $ch['url'] ) . '" target="_blank" title="' . $title . '"><i class="' . $icon . '" aria-hidden="true"></i></a></li>' . "\n";
+		}
 	}
-}
 
-if ( ! empty( $custom_social_html ) && preg_match( '/<\/ul>(\s*<!-- end home-social -->)?/i', $html ) ) {
-	$html = preg_replace( '/(<\/ul>(\s*<!-- end home-social -->)?)/i', $custom_social_html . '$1', $html, 1 );
+	if ( ! empty( $custom_social_html ) && preg_match( '/<\/ul>(\s*<!-- end home-social -->)?/i', $html ) ) {
+		$html = preg_replace( '/(<\/ul>(\s*<!-- end home-social -->)?)/i', $custom_social_html . '$1', $html, 1 );
+	}
+} else {
+	// Strip all social media ul/div elements when disabled
+	$html = preg_replace( '/<ul[^>]*class=["\'][^"\']*home-social[^"\']*["\'][^>]*>.*?<\/ul>/is', '', $html );
+	$html = preg_replace( '/<div[^>]*class=["\'][^"\']*(?:social-links|social-icons|home-content__social|social-wrapper)[^"\']*["\'][^>]*>.*?<\/div>/is', '', $html );
 }
 
 // 2. Process Logo across all templates (Text, Graphic with height/link, or Disabled)
@@ -301,18 +328,22 @@ if ( ! $csmm_description_enabled ) {
 }
 
 // Social Icon Styling & Overrides (Size, Color, Hover Color)
-if ( $csmm_social_icon_size_enabled && $csmm_social_icon_size > 0 ) {
-	$dynamic_css .= ".home-social, .social-links, .social-icons, .social-media, .social, .s-footer .social-list { gap: 16px !important; }\n";
-	$dynamic_css .= ".home-social i, .home-social a i, .home-social li a i, .home-social svg, .social-links i, .social-links a i, .social-icons i, .social-icons a i, .social i, .social a i, .s-footer .social-list i, .s-footer .social-list a i { font-size: {$csmm_social_icon_size}px !important; width: auto !important; height: auto !important; line-height: 1 !important; }\n";
-	$dynamic_css .= ".home-social a, .home-social li a, .social-links a, .social-icons a, .social a { font-size: {$csmm_social_icon_size}px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; }\n";
-}
-
-if ( $csmm_social_icon_color_enabled ) {
-	if ( ! empty( $csmm_social_icon_color ) ) {
-		$dynamic_css .= ".home-social a, .home-social li a, .home-social i, .home-social a i, .home-social li a i, .home-social span, .home-social svg, .social-links a, .social-links i, .social-links a i, .social-icons a, .social-icons i, .social-icons a i, .social a, .social i, .social a i, .s-footer .social-list a, .s-footer .social-list i, .s-footer .social-list a i, .social-icon, a.social-icon { color: {$csmm_social_icon_color} !important; fill: {$csmm_social_icon_color} !important; -webkit-text-fill-color: {$csmm_social_icon_color} !important; }\n";
+if ( ! $csmm_social_media_enabled ) {
+	$dynamic_css .= ".home-social, ul.home-social, .social-links, .social-icons, .home-content__social, #social-media, .social-media-container, .social-wrapper, .social, .s-footer .social-list { display: none !important; opacity: 0 !important; visibility: hidden !important; height: 0 !important; margin: 0 !important; padding: 0 !important; pointer-events: none !important; }\n";
+} else {
+	if ( $csmm_social_icon_size_enabled && $csmm_social_icon_size > 0 ) {
+		$dynamic_css .= ".home-social, .social-links, .social-icons, .social-media, .social, .s-footer .social-list { gap: 16px !important; }\n";
+		$dynamic_css .= ".home-social i, .home-social a i, .home-social li a i, .home-social svg, .social-links i, .social-links a i, .social-icons i, .social-icons a i, .social i, .social a i, .s-footer .social-list i, .s-footer .social-list a i { font-size: {$csmm_social_icon_size}px !important; width: auto !important; height: auto !important; line-height: 1 !important; }\n";
+		$dynamic_css .= ".home-social a, .home-social li a, .social-links a, .social-icons a, .social a { font-size: {$csmm_social_icon_size}px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; }\n";
 	}
-	if ( ! empty( $csmm_social_icon_hover_color ) ) {
-		$dynamic_css .= ".home-social a:hover, .home-social li:hover a, .home-social li a:hover, .home-social a:hover i, .home-social li a:hover i, .home-social li:hover i, .home-social li:hover span, .home-social a:hover svg, .social-links a:hover, .social-links a:hover i, .social-icons a:hover, .social-icons a:hover i, .social a:hover, .social a:hover i, .s-footer .social-list a:hover, .s-footer .social-list a:hover i, .social-icon:hover, a.social-icon:hover { color: {$csmm_social_icon_hover_color} !important; fill: {$csmm_social_icon_hover_color} !important; -webkit-text-fill-color: {$csmm_social_icon_hover_color} !important; }\n";
+
+	if ( $csmm_social_icon_color_enabled ) {
+		if ( ! empty( $csmm_social_icon_color ) ) {
+			$dynamic_css .= ".home-social a, .home-social li a, .home-social i, .home-social a i, .home-social li a i, .home-social span, .home-social svg, .social-links a, .social-links i, .social-links a i, .social-icons a, .social-icons i, .social-icons a i, .social a, .social i, .social a i, .s-footer .social-list a, .s-footer .social-list i, .s-footer .social-list a i, .social-icon, a.social-icon { color: {$csmm_social_icon_color} !important; fill: {$csmm_social_icon_color} !important; -webkit-text-fill-color: {$csmm_social_icon_color} !important; }\n";
+		}
+		if ( ! empty( $csmm_social_icon_hover_color ) ) {
+			$dynamic_css .= ".home-social a:hover, .home-social li:hover a, .home-social li a:hover, .home-social a:hover i, .home-social li a:hover i, .home-social li:hover i, .home-social li:hover span, .home-social a:hover svg, .social-links a:hover, .social-links a:hover i, .social-icons a:hover, .social-icons a:hover i, .social a:hover, .social a:hover i, .s-footer .social-list a:hover, .s-footer .social-list a:hover i, .social-icon:hover, a.social-icon:hover { color: {$csmm_social_icon_hover_color} !important; fill: {$csmm_social_icon_hover_color} !important; -webkit-text-fill-color: {$csmm_social_icon_hover_color} !important; }\n";
+		}
 	}
 }
 
