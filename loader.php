@@ -456,9 +456,17 @@ if ( 'solid' === $csmm_bg_type ) {
 		} elseif ( 'fill' === $csmm_bg_image_size || 'stretch' === $csmm_bg_image_size ) {
 			$bg_size_val = '100% 100%';
 		}
-		$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
-		// For half-image split templates (Template 34, 35, etc.), set custom image specifically on the half image container!
-		$dynamic_css .= ".image-side, .split-layout .image-side { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; display: block !important; opacity: 1 !important; visibility: visible !important; }\n";
+		if ( in_array( intval( $csmm_template_id ), array( 20, 24, 34, 35 ), true ) ) {
+			// For half-image split templates (Templates 34, 35, 20, 24):
+			// Apply the custom background image ONLY to the half image container (.image-side), preserving the clean white content half!
+			$dynamic_css .= ".image-side, .split-layout .image-side { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; display: block !important; opacity: 1 !important; visibility: visible !important; }\n";
+			$dynamic_css .= ".split-layout { display: grid !important; }\n";
+			$dynamic_css .= "body, html { background: #FFFFFF !important; background-color: #FFFFFF !important; background-image: none !important; }\n";
+			$dynamic_css .= ".content-side, .split-layout .content-side { background-color: #FFFFFF !important; background: #FFFFFF !important; }\n";
+		} else {
+			// Full-screen templates
+			$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
+		}
 	}
 } elseif ( 'slideshow' === $csmm_bg_type ) {
 	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .s-home--static, .s-home--particles, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: transparent !important; background-color: transparent !important; background-image: none !important; }\n";
