@@ -274,9 +274,11 @@
 				arrows: false,
 				dots: false,
 				autoplay: true,
-				autoplaySpeed: 2000,
+				autoplaySpeed: 3000,
 				fade: true,
-				speed: 2000
+				speed: 1000,
+				pauseOnHover: false,
+				pauseOnFocus: false
 			});
 		}
     });
