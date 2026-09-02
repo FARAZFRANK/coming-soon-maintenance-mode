@@ -24,6 +24,18 @@ if ( isset( $_GET['template_preview'] ) && current_user_can( 'manage_options' ) 
 	}
 }
 
+// Central Subscriber Form Processing & Integrations Pipeline Dispatch
+if ( 'POST' === $_SERVER['REQUEST_METHOD'] && ! empty( $_POST['csmm-email'] ) ) {
+	if ( isset( $_POST['csmm-email-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['csmm-email-nonce'] ) ), 'csmm-email-nonce' ) ) {
+		$csmm_sub_email = sanitize_email( wp_unslash( $_POST['csmm-email'] ) );
+		if ( is_email( $csmm_sub_email ) ) {
+			if ( class_exists( 'CSMM_Subscribers' ) ) {
+				CSMM_Subscribers::add_subscriber( $csmm_sub_email );
+			}
+		}
+	}
+}
+
 // Logo Setup
 $csmm_logo_type           = isset( $csmm_content['logo_type'] ) ? $csmm_content['logo_type'] : 'graphic';
 $csmm_logo_enabled        = isset( $csmm_content['logo_enabled'] ) ? ( '1' === strval( $csmm_content['logo_enabled'] ) ) : ( 'disabled' !== $csmm_logo_type );

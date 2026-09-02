@@ -156,11 +156,13 @@
                                                     // append new email subscriber
                                                     array_push($cmss_subscriber_list, $csmm_new_subscriber);
                                                     update_option('cmss_subscriber_list', $cmss_subscriber_list);
-                                                    $csmm_flag = 1;
+									if ( class_exists( 'CSMM_Subscribers' ) ) { CSMM_Subscribers::add_subscriber( $csmm_new_subscriber ); }
+									$csmm_flag = 1;
                                                 }
                                             } else {
                                                 update_option('cmss_subscriber_list', array($csmm_new_subscriber));
-                                                $csmm_flag = 1;
+									if ( class_exists( 'CSMM_Subscribers' ) ) { CSMM_Subscribers::add_subscriber( $csmm_new_subscriber ); }
+									$csmm_flag = 1;
                                             }
                                         }
                                     }
