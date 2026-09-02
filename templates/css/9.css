@@ -795,3 +795,67 @@ html.no-csstransitions .home-content__main {
   }
 
 }
+
+/* Subscription Form Styling */
+.home-content__subscribe {
+  max-width: 480px;
+  margin: 3rem auto 0 auto;
+  padding: 0;
+  position: relative;
+  text-align: center;
+}
+
+.home-content__subscribe form#mc-form {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  display: block;
+}
+
+#mc-form input[type="email"] {
+  width: 100%;
+  height: 5.4rem;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  padding: 1.2rem 160px 1.2rem 24px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  margin-bottom: 1.8rem;
+  box-sizing: border-box;
+}
+
+#mc-form input[type="email"]::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+#mc-form input[type="submit"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 5.4rem;
+  padding: 0 28px;
+  color: #FFFFFF;
+  background: var(--thm-primary, #1F0528);
+  border: 1px solid var(--thm-primary, #1F0528);
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+  font-size: 1.3rem;
+  transition: all 0.3s ease;
+}
+
+#mc-form input[type="submit"]:hover {
+  background: #3a0d4c;
+  border-color: #3a0d4c;
+}
+
+.subscribe-message {
+  display: block;
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 0.5rem;
+}

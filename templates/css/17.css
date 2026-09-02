@@ -1,22 +1,41 @@
 /* Custom styles for the prospectus theme */
 body {
 	font-family: 'Poppins', sans-serif;
-	background-color: #F1F1F1; /* Light gray textured background */
+	background-color: #F1F1F1;
 	color: #1A202C;
+	margin: 0;
+	padding: 1.5rem;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
 }
 
 /* Main content card */
 .prospectus-card {
 	background-color: #FFFFFF;
-	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-	animation: floatIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+	box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.2);
+	border-radius: 12px;
+	animation: floatIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 	opacity: 0;
-	transform: translateY(40px);
-	min-height: auto;
-	max-width: 960px;
-	margin: 1.5rem auto;
+	transform: translateY(30px);
+	max-width: 880px;
+	width: 100%;
+	margin: auto;
 	display: grid;
-	align-items: stretch;
+	grid-template-columns: 1fr;
+	overflow: hidden;
+	position: relative;
+	z-index: 2;
+}
+
+@media (min-width: 1024px) {
+	.prospectus-card {
+		grid-template-columns: 1.15fr 0.85fr;
+		min-height: 480px;
+		max-height: 540px;
+	}
 }
 
 @keyframes floatIn {
@@ -30,64 +49,169 @@ body {
 .prospectus-content {
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
-	padding: 2.75rem 2.5rem;
+	justify-content: center;
+	padding: 2.25rem 2.25rem;
 	box-sizing: border-box;
 }
 
 .prospectus-logo {
-	margin-bottom: 1.25rem;
+	margin-bottom: 1rem;
+}
+
+.prospectus-logo img,
+.prospectus-logo svg {
+	height: 28px;
+	width: auto;
 }
 
 .prospectus-content h1.title-font {
-	margin-bottom: 0.75rem;
+	margin: 0 0 0.4rem 0;
+	font-size: 2.1rem;
+	line-height: 1.2;
 }
 
 .prospectus-desc,
 .prospectus-content p.prospectus-desc {
-	margin-top: 0.5rem !important;
-	margin-bottom: 1.5rem !important;
-	line-height: 1.65 !important;
+	margin: 0 0 1.15rem 0 !important;
+	line-height: 1.55 !important;
+	font-size: 0.85rem !important;
+	color: #4A5568 !important;
 	display: block !important;
 }
 
 .countdown-header,
 .prospectus-content h3.countdown-header {
-	margin-top: 0.5rem !important;
-	margin-bottom: 0.5rem !important;
-	font-size: 0.95rem;
-	letter-spacing: 0.1em;
+	margin: 0 0 0.35rem 0 !important;
+	font-size: 0.85rem;
+	letter-spacing: 0.02em;
 	color: #718096;
+	font-weight: 500;
 }
 
 .prospectus-content #countdown {
-	margin-top: 0.25rem !important;
-	margin-bottom: 1.5rem !important;
+	margin: 0 0 1.25rem 0 !important;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1rem;
+	width: 100%;
+	max-width: 320px;
+}
+
+/* Countdown timer styling */
+.countdown-number {
+	font-family: 'Playfair Display', serif;
+	font-size: 1.65rem;
+	font-weight: 700;
+	color: #1A202C;
+	line-height: 1;
+}
+
+.countdown-label {
+	color: #718096;
+	font-size: 0.65rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	margin-top: 0.2rem;
 }
 
 .prospectus-form-label {
-	margin-bottom: 0.5rem !important;
-	font-size: 0.85rem;
+	margin: 0 0 0.4rem 0 !important;
+	font-size: 0.78rem;
 	font-weight: 600;
-	color: #4A5568;
+	color: #2D3748;
 }
 
 .subscribe-wrapper {
-	margin-bottom: 1rem !important;
+	margin-bottom: 0 !important;
 	width: 100%;
+}
+
+/* Subscription form styling */
+.prospectus-content #subscribe-form {
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: stretch !important;
+	height: 42px !important;
+	min-height: 42px !important;
+	max-height: 42px !important;
+	width: 100% !important;
+	max-width: 360px !important;
+	position: relative !important;
+	margin: 0 !important;
+}
+
+.prospectus-content .subscribe-input {
+	background: #F7FAFC !important;
+	border: 1px solid #E2E8F0 !important;
+	border-right: none !important;
+	color: #2D3748 !important;
+	height: 42px !important;
+	min-height: 42px !important;
+	max-height: 42px !important;
+	line-height: 42px !important;
+	flex: 1 1 auto !important;
+	padding: 0 14px !important;
+	border-radius: 4px 0 0 4px !important;
+	font-size: 13px !important;
+	transition: all 0.3s ease;
+	box-sizing: border-box !important;
+	margin: 0 !important;
+}
+
+.prospectus-content .subscribe-input::placeholder {
+	color: #A0AEC0 !important;
+}
+
+.prospectus-content .subscribe-input:focus {
+	outline: none !important;
+	border-color: #1A202C !important;
+}
+
+.prospectus-content .subscribe-btn {
+	background-color: #1A202C !important;
+	color: #fff !important;
+	border: 1px solid #1A202C !important;
+	height: 42px !important;
+	min-height: 42px !important;
+	max-height: 42px !important;
+	line-height: 42px !important;
+	padding: 0 18px !important;
+	border-radius: 0 4px 4px 0 !important;
+	white-space: nowrap !important;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.5px !important;
+	transition: all 0.3s ease;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	box-sizing: border-box !important;
+	margin: 0 !important;
+	position: static !important;
+	cursor: pointer !important;
+}
+
+.prospectus-content .subscribe-btn:hover {
+	background-color: #2D3748 !important;
+	border-color: #2D3748 !important;
+	color: #fff !important;
 }
 
 /* Image container with mask */
 .image-container {
-	clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
-	animation: revealImage 1.5s 0.5s ease-out forwards;
+	height: 100%;
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+	clip-path: polygon(0 0, 100% 0, 100% 88%, 0% 100%);
+	animation: revealImage 1.2s 0.3s ease-out forwards;
 	opacity: 0;
 }
 
 @keyframes revealImage {
 	from {
 		opacity: 0;
-		transform: scale(1.05);
+		transform: scale(1.04);
 	}
 	to {
 		opacity: 1;
@@ -96,11 +220,15 @@ body {
 }
 
 .image-container img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
 	transition: transform 0.5s ease-out;
 }
 
 .prospectus-card:hover .image-container img {
-	transform: scale(1.05);
+	transform: scale(1.03);
 }
 
 /* Custom font for titles */
@@ -115,14 +243,14 @@ body {
 }
 
 .stagger-animation > * {
-	animation: fadeInChild 1s 1s ease-out forwards;
+	animation: fadeInChild 0.8s 0.3s ease-out forwards;
 	opacity: 0;
-	transform: translateY(10px);
+	transform: translateY(8px);
 }
 
-.stagger-animation > *:nth-child(2) { animation-delay: 1.2s; }
-.stagger-animation > *:nth-child(3) { animation-delay: 1.4s; }
-.stagger-animation > *:nth-child(4) { animation-delay: 1.6s; }
+.stagger-animation > *:nth-child(2) { animation-delay: 0.4s; }
+.stagger-animation > *:nth-child(3) { animation-delay: 0.5s; }
+.stagger-animation > *:nth-child(4) { animation-delay: 0.6s; }
 
 @keyframes fadeInChild {
 	to {
@@ -131,142 +259,33 @@ body {
 	}
 }
 
-/* Countdown timer styling */
-.countdown-number {
-	font-family: 'Playfair Display', serif;
-	color: #1A202C;
-	line-height: 1;
-}
-.countdown-label {
-	color: #718096;
-	font-size: 0.7rem;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
-}
-
-/* Subscription form styling */
-.prospectus-content #subscribe-form {
-	display: flex !important;
-	flex-direction: row !important;
-	align-items: stretch !important;
-	height: 50px !important;
-	min-height: 50px !important;
-	max-height: 50px !important;
-	width: 100% !important;
-	max-width: 440px !important;
-	position: relative !important;
-	margin: 0 !important;
-}
-
-.prospectus-content .subscribe-input {
-	background: #F7FAFC !important;
-	border: 1px solid #E2E8F0 !important;
-	border-right: none !important;
-	color: #2D3748 !important;
-	height: 50px !important;
-	min-height: 50px !important;
-	max-height: 50px !important;
-	line-height: 50px !important;
-	flex: 1 1 auto !important;
-	padding: 0 16px !important;
-	border-radius: 6px 0 0 6px !important;
-	font-size: 14px !important;
-	transition: all 0.3s ease;
-	box-sizing: border-box !important;
-	margin: 0 !important;
-}
-
-.prospectus-content .subscribe-input::placeholder {
-	color: #A0AEC0 !important;
-}
-
-.prospectus-content .subscribe-input:focus {
-	outline: none !important;
-	border-color: #B79457 !important;
-	box-shadow: 0 0 0 2px rgba(183, 148, 87, 0.2) !important;
-}
-
-.prospectus-content .subscribe-btn {
-	background-color: #1A202C !important;
-	color: #fff !important;
-	border: 1px solid #1A202C !important;
-	height: 50px !important;
-	min-height: 50px !important;
-	max-height: 50px !important;
-	line-height: 50px !important;
-	padding: 0 24px !important;
-	border-radius: 0 6px 6px 0 !important;
-	white-space: nowrap !important;
-	font-size: 13px !important;
-	font-weight: 600 !important;
-	letter-spacing: 0.5px !important;
-	transition: all 0.3s ease;
-	display: inline-flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-	box-sizing: border-box !important;
-	margin: 0 !important;
-	position: static !important;
-}
-
-.prospectus-content .subscribe-btn:hover {
-	background-color: #B79457 !important;
-	border-color: #B79457 !important;
-	color: #fff !important;
-}
-
 /* ------------------------------------------------------------------- 
  * ## home social - (_site-layout.scss) 
  * ------------------------------------------------------------------- */
 .prospectus-content .home-social {
 	list-style: none !important;
-	font-family: var(--thm-font);
-	margin-top: 0.5rem !important;
+	margin: 0.85rem 0 0 0 !important;
 	padding: 0 !important;
 	display: flex !important;
 	justify-content: flex-start !important;
 	align-items: center !important;
-	gap: 18px !important;
-	left: 0 !important;
-	right: auto !important;
+	gap: 14px !important;
+	position: static !important;
 	width: auto !important;
 }
 
 .home-social a {
 	color: #B79457;
-	-webkit-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	font-size: 1rem;
 }
 
-.home-social li {
-	position: relative;
-	display: inline-block;
-}
-
-.home-social li a {
-	display: block;
-	width: 36px;
-	height: 36px;
-}
-
-.home-social i,
-.home-social span {
-	position: absolute;
-	top: 0;
-	line-height: 36px;
-	-webkit-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
-}
-
-.home-social i {
-	right: 0;
-	text-align: center;
-	display: inline-block;
-	width: 36px;
-	height: 36px;
-	font-size: 1.45rem;
-}
-
-.home-social li:hover i {
-	color: var(--thm-primary);
+.home-social a:hover {
+	color: #1A202C;
+	transform: translateY(-2px);
 }

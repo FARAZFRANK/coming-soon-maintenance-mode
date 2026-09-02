@@ -40,7 +40,7 @@
 
         <div class="home-content">
 
-            <div class="row home-content__main">
+            <div class="row home-content__main text-center">
 				
 				<?php if($csmm_logo_id) { ?>
                 <div class="home-logo">

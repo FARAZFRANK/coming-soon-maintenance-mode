@@ -28,7 +28,7 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-4 md:p-8">
 
-    <main class="prospectus-card w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 rounded-lg overflow-hidden">
+    <main class="prospectus-card">
         <!-- Left Side: Content -->
         <div class="prospectus-content stagger-animation">
             <!-- Logo -->
@@ -168,8 +168,8 @@
 			</ul> <!-- end home-social -->
         </div>
         <!-- Right Side: Image -->
-        <div class="image-container min-h-[50vh] lg:min-h-full">
-            <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop" alt="University campus" class="w-full h-full object-cover">
+        <div class="image-container hidden lg:block">
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop" alt="Graduation Celebration" class="w-full h-full object-cover">
         </div>
     </main>
 	<?php 
