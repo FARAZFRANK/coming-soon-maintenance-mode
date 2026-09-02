@@ -42,16 +42,59 @@
             </video>
         </div>
 
-        <div class="home-content">
-
-            <?php if ($csmm_logo_id) { ?>
-                <div class="home-logo">
+        <header class="home-header">
+            <div class="home-logo">
+                <?php if ($csmm_logo_id) { ?>
                     <a href="<?php echo ! empty( $csmm_logo_link ) ? esc_url( $csmm_logo_link ) : esc_url( home_url( '/' ) ); ?>">
                         <img src="<?php echo esc_url($csmm_logo_url[0]); ?>" alt="<?php echo esc_attr($csmm_logo_alt); ?>">
                     </a>
-                </div>
-            <?php } ?>
+                <?php } ?>
+            </div>
 
+            <ul class="home-social">
+                <?php if (empty($csmm_sm_facebook) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_facebook); ?>" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_twitter) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_twitter); ?>" target="_blank"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_youtube) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_youtube); ?>" target="_blank"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_instagram) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_instagram); ?>" target="_blank"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_linkedin) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_linkedin); ?>" target="_blank"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_pinterest) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_pinterest); ?>" target="_blank"><i class="fa-brands fa-pinterest" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_tumblr) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_tumblr); ?>" target="_blank"><i class="fa-brands fa-tumblr" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_snapchat) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_snapchat); ?>" target="_blank"><i class="fa-brands fa-snapchat" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_behance) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_behance); ?>" target="_blank"><i class="fa-brands fa-behance" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_dribbble) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_dribbble); ?>" target="_blank"><i class="fa-brands fa-dribbble" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_whatsapp) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_whatsapp); ?>" target="_blank"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_tiktok) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_tiktok); ?>" target="_blank"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a></li>
+                <?php } ?>
+                <?php if (empty($csmm_sm_qq) == false) { ?>
+                    <li><a href="<?php echo esc_url($csmm_sm_qq); ?>" target="_blank"><i class="fa-brands fa-qq" aria-hidden="true"></i></a></li>
+                <?php } ?>
+            </ul>
+        </header>
+
+        <div class="home-content">
             <div class="row home-content__main">
 
                 <?php if ($csmm_countdown == 1) { ?>
@@ -94,7 +137,6 @@
                                 <?php
                                 $csmm_flag = 0;
                                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                    // add new email subscriber start
                                     if (sanitize_text_field(wp_unslash(isset($_POST['csmm-email-nonce']))) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['csmm-email-nonce'])), 'csmm-email-nonce')) {
                                         $csmm_new_subscriber = sanitize_text_field($_POST['csmm-email']);
                                         if (filter_var($csmm_new_subscriber, FILTER_VALIDATE_EMAIL) !== false) {
@@ -115,14 +157,11 @@
                                             }
                                         }
                                     }
-                                    // add new email subscriber end
                                     
-                                    // on countdown end live the site start
                                     if (sanitize_text_field(wp_unslash(isset($_POST['nonce']))) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'csmm-save')) {
                                         update_option('csmm_settings', array('website_mode' => 3));
                                         wp_die();
                                     }
-                                    // on countdown end live the site end
                                 }
                                 if ($csmm_flag == 1) echo esc_html_e('subscribed', 'coming-soon-maintenance-mode');
                                 ?>
@@ -131,50 +170,7 @@
                     </div>
                 <?php } ?>
 
-                <ul class="home-social">
-                    <?php if (empty($csmm_sm_facebook) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_facebook); ?>" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_twitter) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_twitter); ?>" target="_blank"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_youtube) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_youtube); ?>" target="_blank"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_instagram) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_instagram); ?>" target="_blank"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_linkedin) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_linkedin); ?>" target="_blank"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_pinterest) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_pinterest); ?>" target="_blank"><i class="fa-brands fa-pinterest" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_tumblr) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_tumblr); ?>" target="_blank"><i class="fa-brands fa-tumblr" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_snapchat) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_snapchat); ?>" target="_blank"><i class="fa-brands fa-snapchat" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_behance) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_behance); ?>" target="_blank"><i class="fa-brands fa-behance" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_dribbble) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_dribbble); ?>" target="_blank"><i class="fa-brands fa-dribbble" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_whatsapp) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_whatsapp); ?>" target="_blank"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_tiktok) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_tiktok); ?>" target="_blank"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                    <?php if (empty($csmm_sm_qq) == false) { ?>
-                        <li><a href="<?php echo esc_url($csmm_sm_qq); ?>" target="_blank"><i class="fa-brands fa-qq" aria-hidden="true"></i></a></li>
-                    <?php } ?>
-                </ul> <!-- end home-social -->
-
             </div> <!-- end home-content__main -->
-
         </div> <!-- end home-content -->
 
     </section>
