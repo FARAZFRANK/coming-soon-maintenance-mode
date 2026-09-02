@@ -325,184 +325,196 @@ export default function App() {
       <CssBaseline />
       <Box sx={{ pb: 6, pt: { xs: 1, sm: 1.5 }, backgroundColor: 'background.default', minHeight: '100vh', transition: 'background-color 0.25s ease' }}>
         <Container maxWidth={false} sx={{ px: { xs: 1.5, sm: 2.5, md: 3.5 } }}>
-          {/* Top Header Card - Sticky Header */}
-          <Paper
-            elevation={0}
+          {/* Sticky Header & Navigation Container */}
+          <Box
             sx={{
               position: 'sticky',
               top: { xs: '46px', md: '32px' },
               zIndex: 1100,
-              p: { xs: 1.75, md: 2.25 },
-              mt: { xs: 0.5, sm: 1 },
-              mb: 2.5,
+              pt: { xs: 0.5, sm: 1 },
+              pb: 1,
+              mb: 1.5,
+              backgroundColor: 'background.default',
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: 2,
-              borderRadius: '10px !important',
-              border: `1px solid ${currentTheme.palette.divider}`,
-              backgroundColor: themeMode === 'dark' ? 'rgba(30, 41, 59, 0.98)' : 'rgba(255, 255, 255, 0.98)',
-              backdropFilter: 'blur(12px)',
-              boxShadow: themeMode === 'dark' ? '0 10px 30px rgba(0,0,0,0.5)' : '0 10px 30px rgba(0,0,0,0.08)',
+              flexDirection: 'column',
+              gap: 1.5,
             }}
           >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Box
-                sx={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: '10px',
-                  background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#ffffff',
-                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)',
-                }}
-              >
-                <AccessTimeFilledRoundedIcon sx={{ fontSize: 26 }} />
-              </Box>
-              <Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                  <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1.2 }}>
-                    Coming Soon Maintenance Mode Pro
-                  </Typography>
-                  <Chip
-                    label={`v${api.getConfig().version || '3.2.4'}`}
-                    size="small"
-                    sx={{
-                      fontWeight: 700,
-                      fontSize: '0.75rem',
-                      height: 22,
-                      backgroundColor: themeMode === 'dark' ? '#334155' : '#f1f5f9',
-                      color: themeMode === 'dark' ? '#cbd5e1' : '#475569',
-                      borderRadius: '6px',
-                    }}
-                  />
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 0.5 }}>
-                  <Chip
-                    label={modeBadge.label}
-                    color={modeBadge.color}
-                    size="small"
-                    sx={{ fontWeight: 700, fontSize: '0.75rem', height: 22, borderRadius: '6px' }}
-                  />
-                  <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500 }}>
-                    by FARAZFRANK
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-              {/* Theme Mode Toggle Button */}
-              <Tooltip title={themeMode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
-                <IconButton
-                  onClick={toggleThemeMode}
+            {/* Top Header Card */}
+            <Paper
+              elevation={0}
+              sx={{
+                p: { xs: 1.75, md: 2.25 },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: 2,
+                borderRadius: '10px !important',
+                border: `1px solid ${currentTheme.palette.divider}`,
+                backgroundColor: themeMode === 'dark' ? 'rgba(30, 41, 59, 0.98)' : 'rgba(255, 255, 255, 0.98)',
+                backdropFilter: 'blur(12px)',
+                boxShadow: themeMode === 'dark' ? '0 4px 20px rgba(0,0,0,0.4)' : '0 4px 20px rgba(0,0,0,0.06)',
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Box
                   sx={{
-                    borderRadius: '8px',
-                    border: '1px solid',
-                    borderColor: themeMode === 'dark' ? '#475569' : '#cbd5e1',
-                    backgroundColor: themeMode === 'dark' ? '#334155' : '#f8fafc',
-                    color: themeMode === 'dark' ? '#fbbf24' : '#64748b',
-                    transition: 'all 0.2s ease',
-                    '&:hover': {
-                      backgroundColor: themeMode === 'dark' ? '#475569' : '#f1f5f9',
-                      borderColor: themeMode === 'dark' ? '#64748b' : '#94a3b8',
-                      transform: 'rotate(15deg)',
-                    },
-                    p: '8px',
+                    width: 44,
+                    height: 44,
+                    borderRadius: '10px',
+                    background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#ffffff',
+                    boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)',
                   }}
                 >
-                  {themeMode === 'dark' ? (
-                    <LightModeRoundedIcon sx={{ fontSize: 20, color: '#f59e0b' }} />
-                  ) : (
-                    <DarkModeRoundedIcon sx={{ fontSize: 20, color: '#475569' }} />
-                  )}
-                </IconButton>
-              </Tooltip>
+                  <AccessTimeFilledRoundedIcon sx={{ fontSize: 26 }} />
+                </Box>
+                <Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1.2 }}>
+                      Coming Soon Maintenance Mode Pro
+                    </Typography>
+                    <Chip
+                      label={`v${api.getConfig().version || '3.2.4'}`}
+                      size="small"
+                      sx={{
+                        fontWeight: 700,
+                        fontSize: '0.75rem',
+                        height: 22,
+                        backgroundColor: themeMode === 'dark' ? '#334155' : '#f1f5f9',
+                        color: themeMode === 'dark' ? '#cbd5e1' : '#475569',
+                        borderRadius: '6px',
+                      }}
+                    />
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 0.5 }}>
+                    <Chip
+                      label={modeBadge.label}
+                      color={modeBadge.color}
+                      size="small"
+                      sx={{ fontWeight: 700, fontSize: '0.75rem', height: 22, borderRadius: '6px' }}
+                    />
+                    <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500 }}>
+                      by FARAZFRANK
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
 
-              <Button
-                variant="outlined"
-                component="a"
-                href={settings?.preview_url || '#'}
-                target="_blank"
-                startIcon={<VisibilityRoundedIcon />}
-                sx={{
-                  borderColor: themeMode === 'dark' ? '#475569' : '#cbd5e1',
-                  color: themeMode === 'dark' ? '#f1f5f9 !important' : '#334155 !important',
-                  backgroundColor: themeMode === 'dark' ? 'rgba(51, 65, 85, 0.4)' : '#ffffff',
-                  fontWeight: 600,
-                  borderRadius: '8px',
-                  textDecoration: 'none !important',
-                  transition: 'all 0.2s ease',
-                  '&:hover': {
-                    borderColor: themeMode === 'dark' ? '#60a5fa' : '#2563eb',
-                    backgroundColor: themeMode === 'dark' ? 'rgba(59, 130, 246, 0.15)' : 'rgba(37, 99, 235, 0.08)',
-                    color: themeMode === 'dark' ? '#60a5fa !important' : '#2563eb !important',
-                  },
-                  '&:focus, &:active, &:visited': {
-                    color: themeMode === 'dark' ? '#f1f5f9 !important' : '#334155 !important',
-                  },
-                  '&:visited:hover': {
-                    color: themeMode === 'dark' ? '#60a5fa !important' : '#2563eb !important',
-                  },
-                }}
-              >
-                Live Preview
-              </Button>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                {/* Theme Mode Toggle Button */}
+                <Tooltip title={themeMode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
+                  <IconButton
+                    onClick={toggleThemeMode}
+                    sx={{
+                      borderRadius: '8px',
+                      border: '1px solid',
+                      borderColor: themeMode === 'dark' ? '#475569' : '#cbd5e1',
+                      backgroundColor: themeMode === 'dark' ? '#334155' : '#f8fafc',
+                      color: themeMode === 'dark' ? '#fbbf24' : '#64748b',
+                      transition: 'all 0.2s ease',
+                      '&:hover': {
+                        backgroundColor: themeMode === 'dark' ? '#475569' : '#f1f5f9',
+                        borderColor: themeMode === 'dark' ? '#64748b' : '#94a3b8',
+                        transform: 'rotate(15deg)',
+                      },
+                      p: '8px',
+                    }}
+                  >
+                    {themeMode === 'dark' ? (
+                      <LightModeRoundedIcon sx={{ fontSize: 20, color: '#f59e0b' }} />
+                    ) : (
+                      <DarkModeRoundedIcon sx={{ fontSize: 20, color: '#475569' }} />
+                    )}
+                  </IconButton>
+                </Tooltip>
 
-              <Badge color="warning" variant="dot" invisible={!hasChanges}>
                 <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={saving ? <CircularProgress size={18} color="inherit" /> : <SaveRoundedIcon />}
-                  onClick={handleSave}
-                  disabled={saving}
-                  sx={{ px: 3, fontWeight: 700, borderRadius: '8px' }}
+                  variant="outlined"
+                  component="a"
+                  href={settings?.preview_url || '#'}
+                  target="_blank"
+                  startIcon={<VisibilityRoundedIcon />}
+                  sx={{
+                    borderColor: themeMode === 'dark' ? '#475569' : '#cbd5e1',
+                    color: themeMode === 'dark' ? '#f1f5f9 !important' : '#334155 !important',
+                    backgroundColor: themeMode === 'dark' ? 'rgba(51, 65, 85, 0.4)' : '#ffffff',
+                    fontWeight: 600,
+                    borderRadius: '8px',
+                    textDecoration: 'none !important',
+                    transition: 'all 0.2s ease',
+                    '&:hover': {
+                      borderColor: themeMode === 'dark' ? '#60a5fa' : '#2563eb',
+                      backgroundColor: themeMode === 'dark' ? 'rgba(59, 130, 246, 0.15)' : 'rgba(37, 99, 235, 0.08)',
+                      color: themeMode === 'dark' ? '#60a5fa !important' : '#2563eb !important',
+                    },
+                    '&:focus, &:active, &:visited': {
+                      color: themeMode === 'dark' ? '#f1f5f9 !important' : '#334155 !important',
+                    },
+                    '&:visited:hover': {
+                      color: themeMode === 'dark' ? '#60a5fa !important' : '#2563eb !important',
+                    },
+                  }}
                 >
-                  {saving ? 'Saving Changes...' : 'Save Changes'}
+                  Live Preview
                 </Button>
-              </Badge>
-            </Box>
-          </Paper>
 
-          {/* Tab Navigation */}
-          <Paper
-            elevation={0}
-            sx={{
-              mb: 2.5,
-              borderRadius: '10px !important',
-              border: `1px solid ${currentTheme.palette.divider}`,
-              backgroundColor: 'background.paper',
-            }}
-          >
-            <Tabs
-              value={tabIndex}
-              onChange={(_, newTab) => {
-                setTabIndex(newTab);
-                try {
-                  localStorage.setItem('csmm_active_tab', String(newTab));
-                } catch (e) {
-                  console.warn('Could not save tab', e);
-                }
+                <Badge color="warning" variant="dot" invisible={!hasChanges}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={saving ? <CircularProgress size={18} color="inherit" /> : <SaveRoundedIcon />}
+                    onClick={handleSave}
+                    disabled={saving}
+                    sx={{ px: 3, fontWeight: 700, borderRadius: '8px' }}
+                  >
+                    {saving ? 'Saving Changes...' : 'Save Changes'}
+                  </Button>
+                </Badge>
+              </Box>
+            </Paper>
+
+            {/* Tab Navigation Card */}
+            <Paper
+              elevation={0}
+              sx={{
+                borderRadius: '10px !important',
+                border: `1px solid ${currentTheme.palette.divider}`,
+                backgroundColor: themeMode === 'dark' ? 'rgba(30, 41, 59, 0.98)' : 'rgba(255, 255, 255, 0.98)',
+                backdropFilter: 'blur(12px)',
+                boxShadow: themeMode === 'dark' ? '0 8px 24px rgba(0,0,0,0.4)' : '0 8px 24px rgba(0,0,0,0.06)',
               }}
-              variant="scrollable"
-              scrollButtons="auto"
-              textColor="primary"
-              indicatorColor="primary"
-              sx={{ px: 1.5 }}
             >
-              <Tab icon={<TuneRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Website Mode" />
-              <Tab icon={<DashboardCustomizeRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Templates (36)" />
-              <Tab icon={<PaletteRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Content, Branding & SEO" />
-              <Tab icon={<ShareRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Social Media" />
-              <Tab icon={<MarkEmailReadRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Newsletter & Integrations" />
-              <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Subscribers" />
-              <Tab icon={<MenuBookRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Documentation" />
-            </Tabs>
-          </Paper>
+              <Tabs
+                value={tabIndex}
+                onChange={(_, newTab) => {
+                  setTabIndex(newTab);
+                  try {
+                    localStorage.setItem('csmm_active_tab', String(newTab));
+                  } catch (e) {
+                    console.warn('Could not save tab', e);
+                  }
+                }}
+                variant="scrollable"
+                scrollButtons="auto"
+                textColor="primary"
+                indicatorColor="primary"
+                sx={{ px: 1.5 }}
+              >
+                <Tab icon={<TuneRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Website Mode" />
+                <Tab icon={<DashboardCustomizeRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Templates (36)" />
+                <Tab icon={<PaletteRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Content, Branding & SEO" />
+                <Tab icon={<ShareRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Social Media" />
+                <Tab icon={<MarkEmailReadRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Newsletter & Integrations" />
+                <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Subscribers" />
+                <Tab icon={<MenuBookRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Documentation" />
+              </Tabs>
+            </Paper>
+          </Box>
 
           {/* Tab Content Panels */}
           <Box sx={{ mt: 1 }}>
