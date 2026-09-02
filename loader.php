@@ -417,14 +417,16 @@ if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', '
 $video_bg_html = '';
 
 if ( 'solid' === $csmm_bg_type ) {
-	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$csmm_bg_solid_color} !important; background-color: {$csmm_bg_solid_color} !important; background-image: none !important; }\n";
+	$dynamic_css .= "html { background-image: none !important; }\n";
+	$dynamic_css .= "body, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$csmm_bg_solid_color} !important; background-color: {$csmm_bg_solid_color} !important; background-image: none !important; }\n";
 } elseif ( 'gradient' === $csmm_bg_type ) {
 	if ( 'radial' === $csmm_bg_gradient_type ) {
 		$grad = "radial-gradient(circle, {$csmm_bg_gradient_color1} 0%, {$csmm_bg_gradient_color2} 100%)";
 	} else {
 		$grad = "linear-gradient({$csmm_bg_gradient_angle}deg, {$csmm_bg_gradient_color1} 0%, {$csmm_bg_gradient_color2} 100%)";
 	}
-	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$grad} !important; background-image: {$grad} !important; }\n";
+	$dynamic_css .= "html { background-image: none !important; }\n";
+	$dynamic_css .= "body, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$grad} !important; background-image: {$grad} !important; background-attachment: fixed !important; }\n";
 } elseif ( 'pattern' === $csmm_bg_type ) {
 	$pattern_css_map = array(
 		'hexagons'       => "background-color: #0b1120 !important; background-image: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 0 0, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 0 100%, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.4) 15%, transparent 16%) !important; background-size: 40px 40px !important; background-repeat: repeat !important;",
@@ -451,7 +453,8 @@ if ( 'solid' === $csmm_bg_type ) {
 		$pat_rule = isset( $pattern_css_map[ $csmm_bg_pattern ] ) ? $pattern_css_map[ $csmm_bg_pattern ] : $pattern_css_map['lines'];
 	}
 
-	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container, .site-wrapper, .page-wrapper, .main-container, .wrapper, #wrapper { {$pat_rule} background-attachment: fixed !important; }\n";
+	$dynamic_css .= "html { background-image: none !important; }\n";
+	$dynamic_css .= "body, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container, .site-wrapper, .page-wrapper, .main-container, .wrapper, #wrapper { {$pat_rule} background-attachment: fixed !important; }\n";
 } elseif ( 'custom' === $csmm_bg_type ) {
 	$custom_img_url = '';
 	if ( ! empty( $csmm_bg_custom_images ) && ! empty( $csmm_bg_custom_images[0]['url'] ) ) {
@@ -478,7 +481,8 @@ if ( 'solid' === $csmm_bg_type ) {
 			$dynamic_css .= ".content-side, .split-layout .content-side { background-color: #FFFFFF !important; background: #FFFFFF !important; }\n";
 		} else {
 			// Full-screen templates
-			$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
+			$dynamic_css .= "html { background-image: none !important; background: transparent !important; }\n";
+			$dynamic_css .= "body, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }\n";
 		}
 	}
 } elseif ( 'slideshow' === $csmm_bg_type ) {
