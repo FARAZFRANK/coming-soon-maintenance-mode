@@ -222,16 +222,10 @@
             var doc = document.documentElement;
             doc.setAttribute('data-useragent', navigator.userAgent);
             // svg fallback
-            if (!Modernizr.svg) {
-                jQuery(".home-logo img").attr("src", "images/logo.png");
-            }
-
-            <?php if ($csmm_countdown == 1) { ?>
-                
-
-                
-        });
+                    if (!Modernizr.svg) {
+            jQuery(".home-logo img").attr("src", "images/logo.png");
+        }
+    });
     </script>
 </body>
-
 </html>
