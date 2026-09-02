@@ -83,7 +83,7 @@
                 <form id="subscribe-form" method="post" class="flex flex-row items-stretch relative h-[50px] w-full max-w-[460px]">
                     <input type="email" id="csmm-email" name="csmm-email" placeholder="<?php esc_attr_e( 'Email Address', 'coming-soon-maintenance-mode' ); ?>" class="subscribe-input flex-grow px-4 focus:outline-none rounded-l-md" required>
 					<input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">
-                    <button type="submit" class="subscribe-btn px-6 rounded-r-md whitespace-nowrap text-xs md:text-sm uppercase tracking-wider font-semibold"><?php esc_html_e( 'Register', 'coming-soon-maintenance-mode' ); ?></button>
+                    <button type="submit" class="subscribe-btn px-6 rounded-r-md whitespace-nowrap text-xs md:text-sm uppercase tracking-wider font-semibold"><?php esc_html_e( 'Register Interest', 'coming-soon-maintenance-mode' ); ?></button>
                 </form>
                 <p id="success-message" class="mt-3 text-sm text-green-700 hidden"><?php esc_html_e( 'Thank you. We will be in touch with more information.', 'coming-soon-maintenance-mode' ); ?></p>
 				<?php
