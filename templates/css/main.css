@@ -69,8 +69,10 @@ html {
 
 html,
 body {
-  height: 100%;  /* prevent horizontal scrolling */
-  overflow: hidden;
+  min-height: 100%;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
