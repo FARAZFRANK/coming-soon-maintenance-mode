@@ -742,6 +742,117 @@ $toast_and_ajax_html = '
 </script>
 ';
 
+// Universal Pure Vanilla JS Real-Time Countdown Engine for all 36 Templates
+if ( '1' === strval( $csmm_countdown ) ) {
+	$csmm_target_timestamp = strtotime( $csmm_countdown_date . ' ' . $csmm_countdown_time ) * 1000;
+	$toast_and_ajax_html .= '
+<!-- CSMM Universal Pure Vanilla JS Real-Time Countdown Engine -->
+<script id="csmm-universal-countdown-engine">
+(function() {
+  var targetTimestamp = ' . json_encode( $csmm_target_timestamp ) . ';
+  if (!targetTimestamp) return;
+
+  function pad(n) {
+    return n < 10 ? "0" + n : String(n);
+  }
+
+  function tick() {
+    var now = Date.now();
+    var diff = targetTimestamp - now;
+
+    var days = 0, hours = 0, minutes = 0, seconds = 0;
+    var isFinished = false;
+
+    if (diff > 0) {
+      days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    } else {
+      isFinished = true;
+    }
+
+    var strDays = pad(days);
+    var strHours = pad(hours);
+    var strMins = pad(minutes);
+    var strSecs = pad(seconds);
+
+    // 1. Update elements with specific IDs or classes (Templates 2, 17-36)
+    var elDays = document.getElementById("days");
+    var elHours = document.getElementById("hours");
+    var elMins = document.getElementById("minutes");
+    var elSecs = document.getElementById("seconds");
+
+    if (elDays) elDays.textContent = strDays;
+    if (elHours) elHours.textContent = strHours;
+    if (elMins) elMins.textContent = strMins;
+    if (elSecs) elSecs.textContent = strSecs;
+
+    // 2. Update .home-content__clock (Templates 1-16)
+    var clocks = document.querySelectorAll(".home-content__clock");
+    clocks.forEach(function(clock) {
+      var dEl = clock.querySelector(".time.days, .days");
+      var hEl = clock.querySelector(".time.hours, .hours");
+      var mEl = clock.querySelector(".time.minutes, .minutes");
+      var sEl = clock.querySelector(".time.seconds, .seconds");
+
+      if (dEl) {
+        var span = dEl.querySelector("span");
+        var lbl = span ? span.outerHTML : "<span>D</span>";
+        dEl.innerHTML = strDays + " " + lbl;
+      }
+      if (hEl) {
+        var span = hEl.querySelector("span");
+        var lbl = span ? span.outerHTML : "<span>H</span>";
+        hEl.innerHTML = strHours + " " + lbl;
+      }
+      if (mEl) {
+        var span = mEl.querySelector("span");
+        var lbl = span ? span.outerHTML : "<span>M</span>";
+        mEl.innerHTML = strMins + " " + lbl;
+      }
+      if (sEl) {
+        var span = sEl.querySelector("span");
+        var lbl = span ? span.outerHTML : "<span>S</span>";
+        sEl.innerHTML = strSecs + " " + lbl;
+      }
+    });
+
+    if (isFinished && !window._csmmCountdownFinished) {
+      window._csmmCountdownFinished = true;
+      try {
+        var params = new URLSearchParams();
+        params.append("action", "csmm_save");
+        params.append("tab", "setings");
+        params.append("website_mode", "3");
+        params.append("nonce", "' . esc_js( wp_create_nonce( 'csmm-save' ) ) . '");
+
+        fetch("' . esc_url( admin_url( 'admin-ajax.php' ) ) . '", {
+          method: "POST",
+          body: params,
+          credentials: "same-origin"
+        }).then(function() {
+          setTimeout(function() {
+            location.reload();
+          }, 1500);
+        }).catch(function() {});
+      } catch(e) {}
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() {
+      tick();
+      setInterval(tick, 1000);
+    });
+  } else {
+    tick();
+    setInterval(tick, 1000);
+  }
+})();
+</script>';
+}
+
 // 7. Inject Dynamic CSS, Overlay, Toast and SEO Meta into output HTML
 if ( preg_match( '/<\/head>/i', $html ) ) {
 	$html = preg_replace( '/<\/head>/i', $dynamic_css . '</head>', $html, 1 );

@@ -172,7 +172,7 @@
         $csmm_include_url = $csmm_include_url . '/';
     }
     ?>
-    <script src="<?php echo esc_url($csmm_include_url); ?>js/jquery/jquery.js"></script>
+    <script src="<?php echo esc_url($csmm_include_url); ?>js/jquery/jquery.min.js"></script>
     <script>
     jQuery( document ).ready(function() {
         <?php if($csmm_countdown == 1) { ?>

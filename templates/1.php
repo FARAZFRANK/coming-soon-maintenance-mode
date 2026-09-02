@@ -198,11 +198,11 @@
         $csmm_include_url = $csmm_include_url . '/';
     }
     ?>
-    <script src="<?php echo esc_url($csmm_include_url); ?>js/jquery/jquery.js"></script>
+    <script src="<?php echo esc_url($csmm_include_url); ?>js/jquery/jquery.min.js"></script>
     <?php if ( 'default' === $csmm_bg_type ) { ?>
-    <script src="<?php echo esc_js(CSMM_URL.'templates/js/particles.min.js'); ?>"></script>
-    <script src="<?php echo esc_js(CSMM_URL.'templates/js/plugins.js'); ?>"></script>
-    <script src="<?php echo esc_js(CSMM_URL.'templates/js/polygons.js'); ?>"></script>
+    <script src="<?php echo esc_url(CSMM_URL.'templates/js/particles.min.js'); ?>"></script>
+    <script src="<?php echo esc_url(CSMM_URL.'templates/js/plugins.js'); ?>"></script>
+    <script src="<?php echo esc_url(CSMM_URL.'templates/js/polygons.js'); ?>"></script>
     <?php } ?>
     <script>
     jQuery( document ).ready(function() {
