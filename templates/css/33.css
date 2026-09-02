@@ -18,6 +18,15 @@ body {
 .title-font {
 	font-family: 'Source Serif Pro', serif;
 	font-weight: 700;
+	margin-top: 1rem !important;
+	margin-bottom: 2rem !important;
+	line-height: 1.15 !important;
+}
+
+header p {
+	margin-top: 2rem !important;
+	margin-bottom: 2.5rem !important;
+	line-height: 1.7 !important;
 }
 
 /* Animated text reveal */

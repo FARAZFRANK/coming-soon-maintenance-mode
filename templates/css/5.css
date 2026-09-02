@@ -64,13 +64,15 @@
   background-repeat: no-repeat, no-repeat;
   border: solid #111;
   margin: 0 auto;
-  max-width: 900px;
+  max-width: 860px;
   width: 100%;
   position: relative;
   box-shadow: 0 0.5em 2em 0.2em rgb(0 0 0 / 33%), 0 0 0 0.5px #000 inset;
   transition: all 0.1s linear, line-height 0s linear;
   background-position: 50% 100%, center;
   transform-origin: bottom center;
+  padding: 40px 35px 35px 35px !important;
+  box-sizing: border-box !important;
 }
  
 .home-content {
@@ -108,8 +110,9 @@
 }
 
 .home-content h1 {
-  margin-top:3rem;
-  font-size: 14rem;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 8.5rem;
   line-height: 1.219;
   color: #FFFFFF;
   letter-spacing: 0;
@@ -123,16 +126,27 @@
 }
 
 .home-content__main {
-  padding-top:15rem;
+  padding-top: 4rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+}
+
+.home-content__text {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .home-content__text p {
-  font-size:16px;
+  font-size: 16px;
+  line-height: 1.7;
   color: #ffffffd9;
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 1.5rem auto 2.5rem auto;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .home-content__subscribe {

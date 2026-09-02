@@ -220,67 +220,9 @@
             }
 
             <?php if ($csmm_countdown == 1) { ?>
-                /* final countdown
-                 * ------------------------------------------------------ */
-                var CsmmFinalCountdown = function() {
-                    var finalDate = new Date("<?php echo esc_js($csmm_launch_dt); ?>").getTime(); // date format: March 25, 2024 15:37:25
-                    // updating countdown time start
-                    jQuery('.home-content__clock').countdown(finalDate)
-                        .on('update.countdown', function(event) {
-                            var str = '<div class=\"time days\">' +
-                                '%D <span>D</span>' +
-                                '</div></div>' +
-                                '<div class=\"time hours\">' +
-                                '%H <span>H</span></div>' +
-                                '<div class=\"time minutes\">' +
-                                '%M <span>M</span></div>' +
-                                '<div class=\"time seconds\">' +
-                                '%S <span>S</span>';
-                            jQuery(this)
-                                .html(event.strftime(str));
-                        });
-                    // updating countdown time end
+                
 
-                    // when countdown time finish start
-                    jQuery('.home-content__clock').countdown(finalDate)
-                        .on('finish.countdown', function(event) {
-                            jQuery.ajax({
-                                type: 'POST',
-                                url: '<?php echo get_site_url(); ?>',
-                                data: {
-                                    'action': 'csmm_save', //this is the name of the AJAX method called in WordPress
-                                    'tab': 'setings',
-                                    'website_mode': 3,
-                                    'nonce': "<?php echo esc_js(wp_create_nonce('csmm-save')); ?>",
-                                },
-                                success: function(result) {
-                                    // hide loading start
-                                    jQuery(".home-content__counter").fadeOut("slow");
-                                    jQuery(function() {
-                                        // it will wait for 1 sec. and then will fire
-                                        setTimeout(function() {
-                                            location.reload();
-                                            //window.location.href = "<?php echo get_site_url(); ?>";
-                                        }, 1000);
-                                    });
-                                    // hide loading end
-                                },
-                                error: function() {
-                                    //alert("error");
-                                }
-                            });
-                        });
-                    // when countdown time finish end
-                };
-            <?php } ?>
-
-                /* initialize
-                 * ----------------------------------------------- */
-                (function ssInit() {
-                    <?php if ($csmm_countdown == 1) { ?>
-                        CsmmFinalCountdown();
-                    <?php } ?>
-                })();
+                
         });
     </script>
 </body>

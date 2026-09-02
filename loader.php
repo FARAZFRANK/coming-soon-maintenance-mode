@@ -796,26 +796,17 @@ if ( '1' === strval( $csmm_countdown ) ) {
       var mEl = clock.querySelector(".time.minutes, .minutes");
       var sEl = clock.querySelector(".time.seconds, .seconds");
 
-      if (dEl) {
-        var span = dEl.querySelector("span");
-        var lbl = span ? span.outerHTML : "<span>D</span>";
-        dEl.innerHTML = strDays + " " + lbl;
+      function setClockUnit(el, val, defaultLabel) {
+        if (!el) return;
+        var span = el.querySelector("span");
+        var lbl = (span && span.textContent) ? span.textContent.trim() : defaultLabel;
+        el.innerHTML = val + " <span>" + lbl + "</span>";
       }
-      if (hEl) {
-        var span = hEl.querySelector("span");
-        var lbl = span ? span.outerHTML : "<span>H</span>";
-        hEl.innerHTML = strHours + " " + lbl;
-      }
-      if (mEl) {
-        var span = mEl.querySelector("span");
-        var lbl = span ? span.outerHTML : "<span>M</span>";
-        mEl.innerHTML = strMins + " " + lbl;
-      }
-      if (sEl) {
-        var span = sEl.querySelector("span");
-        var lbl = span ? span.outerHTML : "<span>S</span>";
-        sEl.innerHTML = strSecs + " " + lbl;
-      }
+
+      setClockUnit(dEl, strDays, "D");
+      setClockUnit(hEl, strHours, "H");
+      setClockUnit(mEl, strMins, "M");
+      setClockUnit(sEl, strSecs, "S");
     });
 
     if (isFinished && !window._csmmCountdownFinished) {

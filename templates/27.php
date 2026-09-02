@@ -51,10 +51,13 @@
         <!-- Countdown Timer -->
 		<?php if($csmm_countdown == 1) { ?>
         <div class="flex justify-center items-center gap-8" style="margin-top: 1.5rem !important; margin-bottom: 3rem !important;">
-            <div id="countdown" class="timer-box flex items-center gap-4">
+            <div id="countdown" class="timer-box flex items-center gap-3 md:gap-4">
                 <div id="days" class="timer-number text-4xl">00</div>
+                <span class="text-3xl text-gray-400 font-bold opacity-70">:</span>
                 <div id="hours" class="timer-number text-4xl">00</div>
+                <span class="text-3xl text-gray-400 font-bold opacity-70">:</span>
                 <div id="minutes" class="timer-number text-4xl">00</div>
+                <span class="text-3xl text-gray-400 font-bold opacity-70">:</span>
                 <div id="seconds" class="timer-number text-4xl">00</div>
             </div>
         </div>
@@ -151,69 +154,6 @@
         </div>
     </main>
 
-    <script>
-        // --- Countdown Timer Logic ---
-        <?php if($csmm_countdown == 1) { ?>
-		// 1. (Optional) Pass these from PHP via wp_localize_script for cleaner code:
-		const ajaxUrl    = location.href;
-		const ajaxAction = "csmm_save";
-		const ajaxNonce  = "<?php echo esc_js( wp_create_nonce('csmm-save') ); ?>";
-		
-		const cd = document.getElementById('countdown');
-		
-		// 2. Your countdown function
-		const countdown = () => {
-		  const launchDate = new Date('<?php echo esc_js($csmm_launch_dt); ?>').getTime();
-		  const now        = Date.now();
-		  const distance   = launchDate - now;
-
-		  // FINISHED
-		  if (distance < 0) {
-			clearInterval(interval);
-			// 3. Send your AJAX “finish” ping back to WP
-			fetch(ajaxUrl, {
-			  method: 'POST',
-			  credentials: 'same-origin',
-			  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			  body: new URLSearchParams({
-				action:       ajaxAction,
-				'tab': 'setings',
-				'website_mode': 3,
-				nonce:        ajaxNonce
-			  })
-			})
-			.then(res => {
-			  if (!res.ok) throw new Error(res.statusText);
-			  return res.text();
-			})
-			.then(() => {
-			  // 4. Fadeout & reload after 1s
-			  cd.style.transition = 'opacity 0.5s ease';
-			  cd.style.opacity    = '0';
-			  setTimeout(() => location.reload(), 1000);
-			})
-			.catch(err => console.error('Countdown finish AJAX error:', err));
-
-			return;
-		  }
-
-		  // TICK — update values
-		  const days    = Math.floor(distance / (1000 * 60 * 60 * 24));
-		  const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		  const minutes = Math.floor((distance % (1000 * 60 * 60))      / (1000 * 60));
-		  const seconds = Math.floor((distance % (1000 * 60))           / 1000);
-
-		  document.getElementById('days').innerText = days.toString().padStart(2, '0');
-            document.getElementById('hours').innerText = `:${hours.toString().padStart(2, '0')}`;
-            document.getElementById('minutes').innerText = `:${minutes.toString().padStart(2, '0')}`;
-            document.getElementById('seconds').innerText = `:${seconds.toString().padStart(2, '0')}`;
-		};
-
-		// 5. Kick it off every second
-		const interval = setInterval(countdown, 1000);
-
-		<?php } ?>
-    </script>
-
+    </main>
 </body>
 </html>
