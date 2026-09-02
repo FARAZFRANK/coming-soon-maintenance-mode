@@ -173,37 +173,5 @@
     }
     ?>
     <script src="<?php echo esc_url($csmm_include_url); ?>js/jquery/jquery.min.js"></script>
-    <script>
-    jQuery( document ).ready(function() {
-        <?php if($csmm_countdown == 1) { ?>
-        const targetDate = new Date("<?php echo esc_js($csmm_launch_dt); ?>").getTime();
-        
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const difference = targetDate - now;
-            
-            if (difference > 0) {
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                
-                jQuery('#days').text(String(days).padStart(2, '0'));
-                jQuery('#hours').text(String(hours).padStart(2, '0'));
-                jQuery('#minutes').text(String(minutes).padStart(2, '0'));
-                jQuery('#seconds').text(String(seconds).padStart(2, '0'));
-            } else {
-                jQuery('#days').text('00');
-                jQuery('#hours').text('00');
-                jQuery('#minutes').text('00');
-                jQuery('#seconds').text('00');
-            }
-        }
-        
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-        <?php } ?>
-    });
-    </script>
-</body>
+    </body>
 </html>

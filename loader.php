@@ -783,10 +783,16 @@ if ( '1' === strval( $csmm_countdown ) ) {
     var elMins = document.getElementById("minutes");
     var elSecs = document.getElementById("seconds");
 
-    if (elDays) elDays.textContent = strDays;
-    if (elHours) elHours.textContent = strHours;
-    if (elMins) elMins.textContent = strMins;
-    if (elSecs) elSecs.textContent = strSecs;
+    function updateText(el, val) {
+      if (el && el.textContent !== val) {
+        el.textContent = val;
+      }
+    }
+
+    updateText(elDays, strDays);
+    updateText(elHours, strHours);
+    updateText(elMins, strMins);
+    updateText(elSecs, strSecs);
 
     // 2. Update .home-content__clock (Templates 1-16)
     var clocks = document.querySelectorAll(".home-content__clock");
@@ -800,7 +806,10 @@ if ( '1' === strval( $csmm_countdown ) ) {
         if (!el) return;
         var span = el.querySelector("span");
         var lbl = (span && span.textContent) ? span.textContent.trim() : defaultLabel;
-        el.innerHTML = val + " <span>" + lbl + "</span>";
+        var newHtml = val + " <span>" + lbl + "</span>";
+        if (el.innerHTML !== newHtml) {
+          el.innerHTML = newHtml;
+        }
       }
 
       setClockUnit(dEl, strDays, "D");
