@@ -392,9 +392,12 @@ $dynamic_css .= ".template-two-form, .template-two-content .template-two-form { 
 if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', 'slideshow', 'video' ), true ) ) {
 	$dynamic_css .= ".s-home::before, .s-home::after, .s-home--static::before, .s-home--particles::before, .s-home .overlay, .s-home .gradient-overlay, .home-overlay, .grid-overlay, .s-home .grid-overlay, .home-slider, .home-slider-img, .home-slider-img::before, .parallax-mirror, .parallax-slider, .PhotoZoom_iframe__LeuQM, .PhotoZoom_image__iR_Ia, video.PhotoZoom_iframe__LeuQM, #vjs_video_3_html5_api, .video-background, #main-video, #gameCanvas, #gameOver, .blueprint-bg, .blueprint-element, .background-shapes, .background-shapes .shape, .overlay, #network-canvas, #particles-canvas, .image-background, .background-pattern, .background-elements, .hills, .sun, .cloud { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; background-image: none !important; background: none !important; }\n";
 	$dynamic_css .= "#particles-js, .home-particles, .particles-js-canvas-el, #particles-js canvas { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }\n";
-	$dynamic_css .= ".image-side, .background-image, .background-gradient { display: none !important; opacity: 0 !important; visibility: hidden !important; animation: none !important; }\n";
-	$dynamic_css .= ".split-layout { display: flex !important; align-items: center !important; justify-content: center !important; min-height: 100vh !important; }\n";
-	$dynamic_css .= ".split-layout .content-side { max-width: 620px !important; width: 100% !important; margin: 2rem auto !important; border-radius: 1.25rem !important; position: relative !important; z-index: 2 !important; }\n";
+	if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'slideshow', 'video' ), true ) ) {
+		$dynamic_css .= ".image-side { display: none !important; opacity: 0 !important; visibility: hidden !important; animation: none !important; }\n";
+		$dynamic_css .= ".split-layout { display: flex !important; align-items: center !important; justify-content: center !important; min-height: 100vh !important; }\n";
+		$dynamic_css .= ".split-layout .content-side { max-width: 620px !important; width: 100% !important; margin: 2rem auto !important; border-radius: 1.25rem !important; position: relative !important; z-index: 2 !important; }\n";
+	}
+	$dynamic_css .= ".background-image, .background-gradient { display: none !important; opacity: 0 !important; visibility: hidden !important; animation: none !important; }\n";
 	$dynamic_css .= ".home-content, .s-home .row, .home-content__main, .main-content, main, .prospectus-card, .main-card, .content-side { position: relative !important; z-index: 2 !important; }\n";
 }
 
@@ -454,6 +457,8 @@ if ( 'solid' === $csmm_bg_type ) {
 			$bg_size_val = '100% 100%';
 		}
 		$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; }\n";
+		// For half-image split templates (Template 34, 35, etc.), set custom image specifically on the half image container!
+		$dynamic_css .= ".image-side, .split-layout .image-side { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; display: block !important; opacity: 1 !important; visibility: visible !important; }\n";
 	}
 } elseif ( 'slideshow' === $csmm_bg_type ) {
 	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .s-home--static, .s-home--particles, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: transparent !important; background-color: transparent !important; background-image: none !important; }\n";

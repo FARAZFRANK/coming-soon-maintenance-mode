@@ -64,16 +64,16 @@ body {
 
 .ecommerce-desc,
 .content-side p.ecommerce-desc {
-	margin-top: 1rem !important;
-	margin-bottom: 3rem !important;
-	line-height: 1.8 !important;
+	margin-top: 0.5rem !important;
+	margin-bottom: 1.5rem !important;
+	line-height: 1.65 !important;
 	display: block !important;
 }
 
 #countdown,
 .content-side #countdown {
-	margin-top: 1.5rem !important;
-	margin-bottom: 2.75rem !important;
+	margin-top: 0.75rem !important;
+	margin-bottom: 1.5rem !important;
 }
 
 /* Countdown timer styling */

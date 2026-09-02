@@ -49,13 +49,13 @@
             <h1 class="title-font text-3xl md:text-4xl lg:text-5xl leading-tight mb-3">
                 <span class="highlight"><?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?></span>
             </h1>
-            <p class="prospectus-desc text-gray-600 leading-relaxed text-sm md:text-base" style="margin-bottom: 2.5rem !important;">
+            <p class="prospectus-desc text-gray-600 leading-relaxed text-sm md:text-base">
                 <?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?>
             </p>
 
             <!-- Countdown Timer -->
 			 <?php if($csmm_countdown == 1) { ?>
-			 <h3 class="countdown-header text-sm md:text-base tracking-widest text-gray-500 font-medium" style="margin-top: 1.25rem !important; margin-bottom: 0.75rem !important;"><?php if($csmm_countdown_title != "") { echo esc_html( $csmm_countdown_title ); } ?></h3>
+			 <h3 class="countdown-header text-sm md:text-base tracking-widest text-gray-500 font-medium"><?php if($csmm_countdown_title != "") { echo esc_html( $csmm_countdown_title ); } ?></h3>
             <div id="countdown" class="grid grid-cols-4 gap-4 text-left w-full">
                 <div>
                     <div id="days" class="countdown-number text-2xl md:text-3xl">00</div>
