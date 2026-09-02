@@ -98,7 +98,8 @@ if ( 'vimeo' === $csmm_bg_video_source ) {
 } elseif ( 'file' === $csmm_bg_video_source || 'mp4' === $csmm_bg_video_source ) {
 	$csmm_bg_video_url = ! empty( $csmm_bg_video_mp4_url ) ? $csmm_bg_video_mp4_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : '' );
 } else {
-	$csmm_bg_video_url = ! empty( $csmm_bg_video_youtube_url ) ? $csmm_bg_video_youtube_url : ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : 'https://www.youtube.com/watch?v=91AcVUR0O8I' ) );
+	$yt_cand = ! empty( $csmm_bg_video_youtube_url ) ? $csmm_bg_video_youtube_url : ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : '' ) );
+	$csmm_bg_video_url = ( ! empty( $yt_cand ) && false !== strpos( $yt_cand, 'youtu' ) ) ? $yt_cand : 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
 }
 $csmm_bg_pattern             = isset( $csmm_content['bg_pattern'] ) ? $csmm_content['bg_pattern'] : 'lines';
 $csmm_bg_custom_pattern_url  = isset( $csmm_content['bg_custom_pattern_url'] ) ? $csmm_content['bg_custom_pattern_url'] : '';

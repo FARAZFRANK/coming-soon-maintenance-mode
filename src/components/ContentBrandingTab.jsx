@@ -1442,6 +1442,26 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   if (newType === 'solid' && !settings.bg_solid_color) {
                     onChange('bg_solid_color', '#1d1b1b');
                   }
+                  if (newType === 'video') {
+                    if (!settings.bg_video_source) {
+                      onChange('bg_video_source', 'youtube');
+                    }
+                    const currentYt = settings.bg_video_youtube_url;
+                    if (!currentYt || !currentYt.includes('youtu') || currentYt.includes('vimeo')) {
+                      const ytUrl = 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
+                      onChange('bg_video_youtube_url', ytUrl);
+                      if (!settings.bg_video_source || settings.bg_video_source === 'youtube') {
+                        onChange('bg_video_url', ytUrl);
+                        onChange('video_url', ytUrl);
+                      }
+                    }
+                    if (settings.bg_video_loop === undefined || settings.bg_video_loop === null) {
+                      onChange('bg_video_loop', true);
+                    }
+                    onChange('bg_overlay_type', 'none');
+                    onChange('bg_overlay_opacity', 0);
+                    onChange('bg_blur', 0);
+                  }
                 }}
                 sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
               >
@@ -1860,7 +1880,9 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           onChange('bg_video_url', mp4Val);
                           onChange('video_url', mp4Val);
                         } else {
-                          const ytVal = settings.bg_video_youtube_url || 'https://www.youtube.com/watch?v=91AcVUR0O8I';
+                          const ytVal = (settings.bg_video_youtube_url && settings.bg_video_youtube_url.includes('youtu'))
+                            ? settings.bg_video_youtube_url
+                            : 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
                           onChange('bg_video_url', ytVal);
                           onChange('video_url', ytVal);
                         }
@@ -1879,14 +1901,25 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         size="small"
                         fullWidth
                         label="Enter YouTube URL"
-                        value={settings.bg_video_youtube_url !== undefined ? settings.bg_video_youtube_url : (settings.bg_video_url || settings.video_url || 'https://www.youtube.com/watch?v=91AcVUR0O8I')}
+                        value={(() => {
+                          if (settings.bg_video_youtube_url !== undefined && settings.bg_video_youtube_url !== '') {
+                            return settings.bg_video_youtube_url;
+                          }
+                          if (settings.bg_video_url && settings.bg_video_url.includes('youtu')) {
+                            return settings.bg_video_url;
+                          }
+                          if (settings.video_url && settings.video_url.includes('youtu')) {
+                            return settings.video_url;
+                          }
+                          return 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
+                        })()}
                         onChange={(e) => {
                           const val = e.target.value;
                           onChange('bg_video_youtube_url', val);
                           onChange('bg_video_url', val);
                           onChange('video_url', val);
                         }}
-                        placeholder="https://www.youtube.com/watch?v=91AcVUR0O8I"
+                        placeholder="https://www.youtube.com/watch?v=LXb3EKWsInQ"
                       />
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <Button
@@ -1894,7 +1927,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           variant="outlined"
                           startIcon={<RestartAltRoundedIcon fontSize="small" />}
                           onClick={() => {
-                            const defaultYt = 'https://www.youtube.com/watch?v=91AcVUR0O8I';
+                            const defaultYt = 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
                             onChange('bg_video_youtube_url', defaultYt);
                             onChange('bg_video_url', defaultYt);
                             onChange('video_url', defaultYt);

@@ -316,8 +316,14 @@ class CSMM_REST_API {
 			'bg_mobile_enabled'    => ! empty( $content['bg_mobile_enabled'] ),
 			'bg_mobile_image_url'  => isset( $content['bg_mobile_image_url'] ) ? $content['bg_mobile_image_url'] : '',
 			'bg_video_source'      => isset( $content['bg_video_source'] ) ? $content['bg_video_source'] : 'youtube',
-			'bg_video_url'         => isset( $content['bg_video_url'] ) ? $content['bg_video_url'] : ( isset( $content['video_url'] ) ? $content['video_url'] : '' ),
-			'bg_video_youtube_url' => isset( $content['bg_video_youtube_url'] ) ? $content['bg_video_youtube_url'] : ( ( ! isset( $content['bg_video_source'] ) || 'youtube' === $content['bg_video_source'] ) && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : ( isset( $content['video_url'] ) ? $content['video_url'] : 'https://www.youtube.com/watch?v=91AcVUR0O8I' ) ),
+			'bg_video_url'         => isset( $content['bg_video_url'] ) ? $content['bg_video_url'] : ( isset( $content['video_url'] ) ? $content['video_url'] : 'https://www.youtube.com/watch?v=LXb3EKWsInQ' ),
+			'bg_video_youtube_url' => isset( $content['bg_video_youtube_url'] ) && ! empty( $content['bg_video_youtube_url'] ) && false !== strpos( $content['bg_video_youtube_url'], 'youtu' )
+				? $content['bg_video_youtube_url']
+				: ( ( ! isset( $content['bg_video_source'] ) || 'youtube' === $content['bg_video_source'] ) && ! empty( $content['bg_video_url'] ) && false !== strpos( $content['bg_video_url'], 'youtu' )
+					? $content['bg_video_url']
+					: ( isset( $content['video_url'] ) && ! empty( $content['video_url'] ) && false !== strpos( $content['video_url'], 'youtu' )
+						? $content['video_url']
+						: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' ) ),
 			'bg_video_vimeo_url'   => isset( $content['bg_video_vimeo_url'] ) ? $content['bg_video_vimeo_url'] : ( isset( $content['bg_video_source'] ) && 'vimeo' === $content['bg_video_source'] && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : 'https://vimeo.com/1178283333' ),
 			'bg_video_mp4_url'     => isset( $content['bg_video_mp4_url'] ) ? $content['bg_video_mp4_url'] : ( isset( $content['bg_video_source'] ) && in_array( $content['bg_video_source'], array( 'file', 'mp4' ), true ) && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : '' ),
 			'bg_video_poster_url'  => isset( $content['bg_video_poster_url'] ) ? $content['bg_video_poster_url'] : '',
