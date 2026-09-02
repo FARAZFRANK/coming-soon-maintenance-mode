@@ -28,7 +28,7 @@
 <body>
     <canvas id="confetti-canvas"></canvas>
 
-    <main class="main-card w-full max-w-2xl text-center rounded-2xl p-8 sm:p-12 m-4">
+    <main class="main-card">
         
 		<!--  Logo -->
 		<?php if($csmm_logo_id) { ?>
@@ -115,9 +115,8 @@
 				// on countdown end live the site end
 			}
 			?>
-		</div>
 		
-		<div class="flex justify-center space-x-4 mt-6">
+		<div class="social-container">
 			<ul class="home-social">
 				<?php if(empty($csmm_sm_facebook) == false) { ?>
 				<li><a href="<?php echo esc_url($csmm_sm_facebook); ?>" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
