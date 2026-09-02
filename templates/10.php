@@ -36,37 +36,46 @@
 			
 			<div class="home-slider">
 				<?php
-				$slides_to_show = array();
-				if ( ! empty( $csmm_slide_ids ) && is_array( $csmm_slide_ids ) ) {
-					if ( isset( $csmm_slide_ids['csmm-slide-id'] ) && is_array( $csmm_slide_ids['csmm-slide-id'] ) ) {
-						$slides_to_show = $csmm_slide_ids['csmm-slide-id'];
-					} elseif ( isset( $csmm_slide_ids[0] ) ) {
-						$slides_to_show = $csmm_slide_ids;
+				$show_default_slides = ( 'default' === $csmm_bg_type || empty( $csmm_bg_type ) );
+				if ( ! $show_default_slides && 'slideshow' === $csmm_bg_type ) {
+					$slides_to_show = array();
+					if ( ! empty( $csmm_bg_slideshow_images ) && is_array( $csmm_bg_slideshow_images ) ) {
+						$slides_to_show = $csmm_bg_slideshow_images;
+					} elseif ( ! empty( $csmm_slide_ids ) && is_array( $csmm_slide_ids ) ) {
+						if ( isset( $csmm_slide_ids['csmm-slide-id'] ) && is_array( $csmm_slide_ids['csmm-slide-id'] ) ) {
+							$slides_to_show = $csmm_slide_ids['csmm-slide-id'];
+						} elseif ( isset( $csmm_slide_ids[0] ) ) {
+							$slides_to_show = $csmm_slide_ids;
+						}
+					}
+					if ( ! empty( $slides_to_show ) ) {
+						foreach ( $slides_to_show as $csmm_slide_value ) {
+							$slide_url_str = '';
+							if ( is_array( $csmm_slide_value ) && ! empty( $csmm_slide_value['url'] ) ) {
+								$slide_url_str = $csmm_slide_value['url'];
+							} elseif ( is_numeric( $csmm_slide_value ) ) {
+								$csmm_slide_url = wp_get_attachment_image_src( $csmm_slide_value, 'full', true );
+								if ( $csmm_slide_url && ! empty( $csmm_slide_url[0] ) ) {
+									$slide_url_str = $csmm_slide_url[0];
+								}
+							} elseif ( is_string( $csmm_slide_value ) ) {
+								$slide_url_str = $csmm_slide_value;
+							}
+							if ( ! empty( $slide_url_str ) ) {
+						?>
+						<div class="home-slider-img" style="background-image: url('<?php echo esc_url( $slide_url_str ); ?>');"></div>
+						<?php
+							}
+						}
+					} else {
+						$show_default_slides = true;
 					}
 				}
-				if ( ! empty( $slides_to_show ) ) {
-					foreach ( $slides_to_show as $csmm_slide_value ) {
-						$slide_url_str = '';
-						if ( is_array( $csmm_slide_value ) && ! empty( $csmm_slide_value['url'] ) ) {
-							$slide_url_str = $csmm_slide_value['url'];
-						} elseif ( is_numeric( $csmm_slide_value ) ) {
-							$csmm_slide_url = wp_get_attachment_image_src( $csmm_slide_value, 'full', true );
-							if ( $csmm_slide_url && ! empty( $csmm_slide_url[0] ) ) {
-								$slide_url_str = $csmm_slide_url[0];
-							}
-						} elseif ( is_string( $csmm_slide_value ) ) {
-							$slide_url_str = $csmm_slide_value;
-						}
-						if ( ! empty( $slide_url_str ) ) {
-					?>
-					<div class="home-slider-img" style="background-image: url(<?php echo esc_url( $slide_url_str ); ?>);"></div>
-					<?php
-						}
-					}
-				} else {
-					echo '<div class="home-slider-img" style="background-image: url('. esc_url( CSMM_URL.'templates/images/temp-10-slides/1.webp') .');"></div>';
-					echo '<div class="home-slider-img" style="background-image: url('. esc_url( CSMM_URL.'templates/images/temp-10-slides/2.webp') .');"></div>';
-					echo '<div class="home-slider-img" style="background-image: url('. esc_url( CSMM_URL.'templates/images/temp-10-slides/3.webp') .');"></div>';
+
+				if ( $show_default_slides ) {
+					echo '<div class="home-slider-img" style="background-image: url(\''. esc_url( CSMM_URL.'templates/images/temp-10-slides/1.webp') .'\');"></div>';
+					echo '<div class="home-slider-img" style="background-image: url(\''. esc_url( CSMM_URL.'templates/images/temp-10-slides/2.webp') .'\');"></div>';
+					echo '<div class="home-slider-img" style="background-image: url(\''. esc_url( CSMM_URL.'templates/images/temp-10-slides/3.webp') .'\');"></div>';
 				}
 				?>
 			</div>
