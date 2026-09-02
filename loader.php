@@ -94,9 +94,11 @@ $csmm_bg_video_loop          = ! isset( $csmm_content['bg_video_loop'] ) || ! em
 
 $csmm_bg_video_url = '';
 if ( 'vimeo' === $csmm_bg_video_source ) {
-	$csmm_bg_video_url = ! empty( $csmm_bg_video_vimeo_url ) ? $csmm_bg_video_vimeo_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : 'https://vimeo.com/1178283333' );
+	$v_cand = ! empty( $csmm_bg_video_vimeo_url ) ? $csmm_bg_video_vimeo_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : '' );
+	$csmm_bg_video_url = ( ! empty( $v_cand ) && false !== strpos( $v_cand, 'vimeo' ) ) ? $v_cand : 'https://vimeo.com/1178283333';
 } elseif ( 'file' === $csmm_bg_video_source || 'mp4' === $csmm_bg_video_source ) {
-	$csmm_bg_video_url = ! empty( $csmm_bg_video_mp4_url ) ? $csmm_bg_video_mp4_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : '' );
+	$mp4_cand = ! empty( $csmm_bg_video_mp4_url ) ? $csmm_bg_video_mp4_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : '' );
+	$csmm_bg_video_url = ( ! empty( $mp4_cand ) && false !== strpos( $mp4_cand, '.mp4' ) ) ? $mp4_cand : 'https://wpfrank.com/wp-content/uploads/2026/09/coming-soon-maintenance-mode-pro-default-video.mp4';
 } else {
 	$yt_cand = ! empty( $csmm_bg_video_youtube_url ) ? $csmm_bg_video_youtube_url : ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : '' ) );
 	$csmm_bg_video_url = ( ! empty( $yt_cand ) && false !== strpos( $yt_cand, 'youtu' ) ) ? $yt_cand : 'https://www.youtube.com/watch?v=LXb3EKWsInQ';

@@ -1446,15 +1446,35 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     if (!settings.bg_video_source) {
                       onChange('bg_video_source', 'youtube');
                     }
+                    const ytUrl = 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
+                    const vimeoUrl = 'https://vimeo.com/1178283333';
+                    const mp4Url = 'https://wpfrank.com/wp-content/uploads/2026/09/coming-soon-maintenance-mode-pro-default-video.mp4';
+
                     const currentYt = settings.bg_video_youtube_url;
-                    if (!currentYt || !currentYt.includes('youtu') || currentYt.includes('vimeo')) {
-                      const ytUrl = 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
+                    if (!currentYt || !currentYt.includes('youtu') || currentYt.includes('vimeo') || currentYt.includes('.mp4')) {
                       onChange('bg_video_youtube_url', ytUrl);
-                      if (!settings.bg_video_source || settings.bg_video_source === 'youtube') {
-                        onChange('bg_video_url', ytUrl);
-                        onChange('video_url', ytUrl);
-                      }
                     }
+                    const currentVimeo = settings.bg_video_vimeo_url;
+                    if (!currentVimeo || !currentVimeo.includes('vimeo')) {
+                      onChange('bg_video_vimeo_url', vimeoUrl);
+                    }
+                    const currentMp4 = settings.bg_video_mp4_url;
+                    if (!currentMp4 || !currentMp4.includes('.mp4') || currentMp4.includes('youtu') || currentMp4.includes('vimeo')) {
+                      onChange('bg_video_mp4_url', mp4Url);
+                    }
+
+                    const activeSource = settings.bg_video_source || 'youtube';
+                    if (activeSource === 'vimeo') {
+                      onChange('bg_video_url', settings.bg_video_vimeo_url || vimeoUrl);
+                      onChange('video_url', settings.bg_video_vimeo_url || vimeoUrl);
+                    } else if (activeSource === 'file' || activeSource === 'mp4') {
+                      onChange('bg_video_url', settings.bg_video_mp4_url || mp4Url);
+                      onChange('video_url', settings.bg_video_mp4_url || mp4Url);
+                    } else {
+                      onChange('bg_video_url', settings.bg_video_youtube_url || ytUrl);
+                      onChange('video_url', settings.bg_video_youtube_url || ytUrl);
+                    }
+
                     if (settings.bg_video_loop === undefined || settings.bg_video_loop === null) {
                       onChange('bg_video_loop', true);
                     }
@@ -1872,11 +1892,15 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         const newSource = e.target.value;
                         onChange('bg_video_source', newSource);
                         if (newSource === 'vimeo') {
-                          const vVal = settings.bg_video_vimeo_url || 'https://vimeo.com/1178283333';
+                          const vVal = (settings.bg_video_vimeo_url && settings.bg_video_vimeo_url.includes('vimeo'))
+                            ? settings.bg_video_vimeo_url
+                            : 'https://vimeo.com/1178283333';
                           onChange('bg_video_url', vVal);
                           onChange('video_url', vVal);
                         } else if (newSource === 'file') {
-                          const mp4Val = settings.bg_video_mp4_url || '';
+                          const mp4Val = (settings.bg_video_mp4_url && settings.bg_video_mp4_url.includes('.mp4'))
+                            ? settings.bg_video_mp4_url
+                            : 'https://wpfrank.com/wp-content/uploads/2026/09/coming-soon-maintenance-mode-pro-default-video.mp4';
                           onChange('bg_video_url', mp4Val);
                           onChange('video_url', mp4Val);
                         } else {
@@ -1947,7 +1971,15 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         size="small"
                         fullWidth
                         label="Enter Vimeo URL"
-                        value={settings.bg_video_vimeo_url !== undefined ? settings.bg_video_vimeo_url : (settings.bg_video_url || 'https://vimeo.com/1178283333')}
+                        value={(() => {
+                          if (settings.bg_video_vimeo_url !== undefined && settings.bg_video_vimeo_url !== '') {
+                            return settings.bg_video_vimeo_url;
+                          }
+                          if (settings.bg_video_url && settings.bg_video_url.includes('vimeo')) {
+                            return settings.bg_video_url;
+                          }
+                          return 'https://vimeo.com/1178283333';
+                        })()}
                         onChange={(e) => {
                           const val = e.target.value;
                           onChange('bg_video_vimeo_url', val);
@@ -1982,16 +2014,24 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         size="small"
                         fullWidth
                         label="Direct MP4 Video URL"
-                        value={settings.bg_video_mp4_url !== undefined ? settings.bg_video_mp4_url : (settings.bg_video_url || '')}
+                        value={(() => {
+                          if (settings.bg_video_mp4_url !== undefined && settings.bg_video_mp4_url !== '') {
+                            return settings.bg_video_mp4_url;
+                          }
+                          if (settings.bg_video_url && settings.bg_video_url.includes('.mp4')) {
+                            return settings.bg_video_url;
+                          }
+                          return 'https://wpfrank.com/wp-content/uploads/2026/09/coming-soon-maintenance-mode-pro-default-video.mp4';
+                        })()}
                         onChange={(e) => {
                           const val = e.target.value;
                           onChange('bg_video_mp4_url', val);
                           onChange('bg_video_url', val);
                           onChange('video_url', val);
                         }}
-                        placeholder="https://example.com/wp-content/uploads/video.mp4"
+                        placeholder="https://wpfrank.com/wp-content/uploads/2026/09/coming-soon-maintenance-mode-pro-default-video.mp4"
                       />
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
                         <Button
                           variant="outlined"
                           size="small"
@@ -2012,6 +2052,20 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           sx={{ borderRadius: '6px', fontWeight: 600 }}
                         >
                           Upload / Select MP4 Video
+                        </Button>
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                          onClick={() => {
+                            const defaultMp4 = 'https://wpfrank.com/wp-content/uploads/2026/09/coming-soon-maintenance-mode-pro-default-video.mp4';
+                            onChange('bg_video_mp4_url', defaultMp4);
+                            onChange('bg_video_url', defaultMp4);
+                            onChange('video_url', defaultMp4);
+                          }}
+                          sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.3 }}
+                        >
+                          Reset Default MP4 Video
                         </Button>
                         {settings.bg_video_mp4_url && (
                           <Typography variant="caption" color="text.secondary" sx={{ wordBreak: 'break-all' }}>

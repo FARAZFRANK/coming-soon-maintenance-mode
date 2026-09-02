@@ -324,8 +324,16 @@ class CSMM_REST_API {
 					: ( isset( $content['video_url'] ) && ! empty( $content['video_url'] ) && false !== strpos( $content['video_url'], 'youtu' )
 						? $content['video_url']
 						: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' ) ),
-			'bg_video_vimeo_url'   => isset( $content['bg_video_vimeo_url'] ) ? $content['bg_video_vimeo_url'] : ( isset( $content['bg_video_source'] ) && 'vimeo' === $content['bg_video_source'] && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : 'https://vimeo.com/1178283333' ),
-			'bg_video_mp4_url'     => isset( $content['bg_video_mp4_url'] ) ? $content['bg_video_mp4_url'] : ( isset( $content['bg_video_source'] ) && in_array( $content['bg_video_source'], array( 'file', 'mp4' ), true ) && ! empty( $content['bg_video_url'] ) ? $content['bg_video_url'] : '' ),
+			'bg_video_vimeo_url'   => isset( $content['bg_video_vimeo_url'] ) && ! empty( $content['bg_video_vimeo_url'] ) && false !== strpos( $content['bg_video_vimeo_url'], 'vimeo' )
+				? $content['bg_video_vimeo_url']
+				: ( isset( $content['bg_video_source'] ) && 'vimeo' === $content['bg_video_source'] && ! empty( $content['bg_video_url'] ) && false !== strpos( $content['bg_video_url'], 'vimeo' )
+					? $content['bg_video_url']
+					: 'https://vimeo.com/1178283333' ),
+			'bg_video_mp4_url'     => isset( $content['bg_video_mp4_url'] ) && ! empty( $content['bg_video_mp4_url'] ) && false !== strpos( $content['bg_video_mp4_url'], '.mp4' )
+				? $content['bg_video_mp4_url']
+				: ( isset( $content['bg_video_source'] ) && in_array( $content['bg_video_source'], array( 'file', 'mp4' ), true ) && ! empty( $content['bg_video_url'] ) && false !== strpos( $content['bg_video_url'], '.mp4' )
+					? $content['bg_video_url']
+					: 'https://wpfrank.com/wp-content/uploads/2026/09/coming-soon-maintenance-mode-pro-default-video.mp4' ),
 			'bg_video_poster_url'  => isset( $content['bg_video_poster_url'] ) ? $content['bg_video_poster_url'] : '',
 			'bg_video_loop'        => ! isset( $content['bg_video_loop'] ) || ! empty( $content['bg_video_loop'] ),
 			'bg_pattern'                => isset( $content['bg_pattern'] ) ? $content['bg_pattern'] : 'lines',
