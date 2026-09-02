@@ -212,7 +212,13 @@ if ( $csmm_social_media_enabled ) {
 	$html = preg_replace( '/<div[^>]*class=["\'][^"\']*(?:social-links|social-icons|home-content__social|social-wrapper)[^"\']*["\'][^>]*>.*?<\/div>/is', '', $html );
 }
 
-// 2. Process Logo across all templates (Text, Graphic with height/link, or Disabled)
+// 2. Process Subscriber Form (Email Lead Capture) when Disabled
+if ( '0' === strval( $csmm_susbcriber_form ) ) {
+	$html = preg_replace( '/<div[^>]*class=["\'][^"\']*(?:home-content__subscribe|subscribe-wrapper|template-two-form)[^"\']*["\'][^>]*>.*?<\/div>/is', '', $html );
+	$html = preg_replace( '/<form[^>]*id=["\'](?:subscribe-form|mc-form)["\'][^>]*>.*?<\/form>/is', '', $html );
+}
+
+// 3. Process Logo across all templates (Text, Graphic with height/link, or Disabled)
 if ( ! $csmm_logo_enabled || 'disabled' === $csmm_logo_type ) {
 	$html = preg_replace( '/<div class="home-logo">.*?<\/div>/is', '', $html );
 	$html = preg_replace( '/<div class="[^"]*mb-6[^"]*">\s*<a[^>]*>\s*<img[^>]*>\s*<\/a>\s*<\/div>/is', '', $html );
@@ -387,7 +393,7 @@ if ( '0' === strval( $csmm_countdown ) ) {
 	}
 }
 if ( '0' === strval( $csmm_susbcriber_form ) ) {
-	$dynamic_css .= ".home-content__subscribe, #mc-form { display: none !important; }\n";
+	$dynamic_css .= ".home-content__subscribe, #mc-form, #subscribe-form, .subscribe-form, .subscribe-wrapper, .subscribe-box, .template-two-form, .prospectus-content #subscribe-form, .prospectus-form-label, .party-form, .notify-wrapper, .newsletter-form, .subscription-form, .form-container, .main-card #subscribe-form, .split-layout #subscribe-form, .content-side #subscribe-form, .postcard #subscribe-form, .template-one-form, .form-wrapper, form.subscribe-form { display: none !important; opacity: 0 !important; visibility: hidden !important; height: 0 !important; margin: 0 !important; padding: 0 !important; pointer-events: none !important; }\n";
 }
 
 // Subscriber Form Input & Button Styling (Absolute Overlay Style for Templates 1-16)

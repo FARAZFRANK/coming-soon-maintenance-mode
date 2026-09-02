@@ -76,6 +76,7 @@
 				<?php } ?>
 				
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
                 <!-- Subscription Form -->
                 <div class="w-full text-center mb-10">
                     <p class="mb-4 text-sm font-medium"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Join the exclusive preview list.", 'coming-soon-maintenance-mode' ); ?></p>
@@ -123,6 +124,7 @@
 					}
 					?>
                 </div>
+            <?php } ?>
                 
                 <!-- Social Media & Footer -->
                 <div class="border-t border-gray-200 pt-6 flex flex-col items-center w-full">

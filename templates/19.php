@@ -69,6 +69,7 @@
         </div>
 		<?php } ?>
 		
+            <?php if($csmm_susbcriber_form == 1) { ?>
         <!-- Subscription Form -->
         <div class="w-full max-w-md mx-auto text-center mb-6">
             <p class="mb-3 font-bold text-lg"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Don't miss the party!", 'coming-soon-maintenance-mode' ); ?></p>
@@ -115,6 +116,7 @@
 				// on countdown end live the site end
 			}
 			?>
+            <?php } ?>
 		
 		<div class="social-container">
 			<ul class="home-social">

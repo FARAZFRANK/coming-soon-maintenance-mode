@@ -82,6 +82,7 @@
             </div>
 			<?php } ?>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
             <!-- Subscription Form -->
             <div class="w-full max-w-lg mx-auto text-center mb-10">
                 <p class="mb-3 font-semibold text-gray-700"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Receive updates and opening day information.", 'coming-soon-maintenance-mode' ); ?></p>
@@ -128,6 +129,7 @@
 				}
 				?>
             </div>
+            <?php } ?>
             
             <!-- Social Media Icons -->
             <div class="flex justify-center space-x-6">

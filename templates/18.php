@@ -72,6 +72,7 @@
             </div>
 			<?php } ?>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
             <!-- Subscription Form -->
             <div class="w-full max-w-md mx-auto text-center mb-6">
                 <form id="subscribe-form" method="post" class="flex flex-row items-center justify-center gap-3 w-full">
@@ -117,6 +118,7 @@
 				}
 				?>
 			</div>
+            <?php } ?>
             
             <div class="flex justify-center space-x-6">
                 <ul class="home-social">

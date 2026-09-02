@@ -108,6 +108,7 @@
             </div>
         </div>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
         <!-- Subscription Form -->
         <div class="w-full max-w-lg text-center mb-6">
             <p class="mb-4 text-lg text-gray-700 font-semibold"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Get notified when we launch!", 'coming-soon-maintenance-mode' ); ?></p>
@@ -154,6 +155,7 @@
 			}
 			?>
         </div>
+            <?php } ?>
 		<div class="flex justify-center space-x-4">
 			<ul class="home-social">
 				<?php if(empty($csmm_sm_facebook) == false) { ?>

@@ -63,6 +63,7 @@
         </div>
 		<?php } ?>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
         <!-- Subscription Form -->
         <div class="w-full max-w-lg mx-auto text-center mb-8">
             <p class="mb-4 font-bold text-lg"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Enter the Arena First!", 'coming-soon-maintenance-mode' ); ?></p>
@@ -109,6 +110,7 @@
 			}
 			?>
         </div>
+            <?php } ?>
 		<div class="flex justify-center space-x-6">
             <ul class="home-social">
 				<?php if(empty($csmm_sm_facebook) == false) { ?>

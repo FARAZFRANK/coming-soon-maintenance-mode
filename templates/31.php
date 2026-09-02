@@ -84,6 +84,7 @@
                 </div>
             </div>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
             <!-- Subscription Form -->
             <div class="w-full max-w-md mx-auto text-center">
                 <p class="mb-4 font-bold text-lg text-gray-700"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Join the Circle Time!", 'coming-soon-maintenance-mode' ); ?></p>
@@ -128,6 +129,7 @@
 					// on countdown end live the site end
 				}
 				?>
+            <?php } ?>
                 <p id="success-message" class="mt-4 text-sm text-green-700 hidden"><?php esc_html_e( "Yay! We'll see you soon!", 'coming-soon-maintenance-mode' ); ?></p>
             </div>
             <!-- Social Media Icons -->

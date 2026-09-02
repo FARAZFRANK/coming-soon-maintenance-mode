@@ -69,6 +69,7 @@
                     </div>
                 </div>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
                 <!-- Subscription Form -->
                 <div class="w-full text-left mb-10">
                     <p class="mb-3 text-sm font-medium text-gray-700"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Get 15% off your first order.", 'coming-soon-maintenance-mode' ); ?></p>
@@ -115,6 +116,7 @@
 					}
 					?>
                 </div>
+            <?php } ?>
                 
                 <!-- Social Media Icons -->
 				<div class="border-t border-gray-200 flex justify-left">

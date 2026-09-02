@@ -74,6 +74,7 @@
                 </div>
 				<?php } ?>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
                 <!-- Subscription Form -->
                 <div class="w-full text-left mb-10">
                     <p class="mb-3 text-gray-300 font-semibold"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Get project updates and launch news.", 'coming-soon-maintenance-mode' ); ?></p>
@@ -120,6 +121,7 @@
 					}
 					?>
 				</div>
+            <?php } ?>
                 
                 <!-- Social Media & Footer -->
                 <div class="border-t border-gray-700 pt-6 flex justify-between items-center">

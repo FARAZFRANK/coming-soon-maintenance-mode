@@ -80,6 +80,7 @@
         </div>
 		<?php } ?>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
         <!-- Subscription Form -->
         <div class="w-full max-w-lg text-center mb-8">
             <p class="mb-4 text-lg text-gray-200"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Be the first to get opening day reservations.", 'coming-soon-maintenance-mode' ); ?></p>
@@ -127,6 +128,7 @@
 			}
 			?>
         </div>
+            <?php } ?>
 
         <!-- Social Media Icons -->
         <div class="flex justify-center space-x-6">

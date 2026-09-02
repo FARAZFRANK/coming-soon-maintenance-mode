@@ -73,6 +73,7 @@
         </div>
 		<?php } ?>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
         <!-- Subscription Form -->
         <div class="w-full max-w-md mx-auto">
             <p class="mb-4 font-semibold text-gray-300"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Get notified at launch.", 'coming-soon-maintenance-mode' ); ?></p>
@@ -120,6 +121,7 @@
 			}
 			?>
         </div>
+            <?php } ?>
 		<!-- Social Media Icons -->
         <div class="flex justify-center space-x-6">
             <ul class="home-social">

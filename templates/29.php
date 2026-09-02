@@ -82,6 +82,7 @@
         </div>
 		<?php } ?>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
         <!-- Subscription Form -->
         <div class="w-full max-w-md text-center">
             <p class="mb-4 text-sm font-medium uppercase tracking-widest text-gray-400"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Get Early Access", 'coming-soon-maintenance-mode' ); ?></p>
@@ -128,6 +129,7 @@
 			}
 			?>
         </div>
+            <?php } ?>
 		<div class="flex justify-center space-x-6">
             <ul class="home-social">
 				<?php if(empty($csmm_sm_facebook) == false) { ?>

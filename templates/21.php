@@ -87,6 +87,7 @@
                 </div>
 				<?php } ?>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
             <!-- Subscription Form -->
             <div class="w-full max-w-lg mx-auto text-center mb-6">
                 <p class="form-label mb-3 font-semibold text-gray-200"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Get the project blueprints first.", 'coming-soon-maintenance-mode' ); ?></p>
@@ -134,6 +135,7 @@
 				}
 				?>
             </div>
+            <?php } ?>
             <div class="flex justify-center space-x-4">
 				<ul class="home-social">
 					<?php if(empty($csmm_sm_facebook) == false) { ?>

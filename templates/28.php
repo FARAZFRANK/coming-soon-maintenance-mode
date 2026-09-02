@@ -81,6 +81,7 @@
         </div>
 		<?php } ?>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
         <!-- Subscription Form -->
         <div class="w-full max-w-md mx-auto">
             <p class="mb-4 font-semibold text-gray-700"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Join the movement. Be the first to know.", 'coming-soon-maintenance-mode' ); ?></p>
@@ -127,6 +128,7 @@
 			}
 			?>
 		</div>
+            <?php } ?>
 		<div class="flex justify-center space-x-6">
             <ul class="home-social">
 				<?php if(empty($csmm_sm_facebook) == false) { ?>

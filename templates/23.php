@@ -68,6 +68,7 @@
             </div>
 		<?php } ?>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
             <!-- Subscription Form -->
             <div class="w-full text-center">
                 <p class="mb-3 font-bold text-lg"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Your Name on the Guest List", 'coming-soon-maintenance-mode' ); ?></p>
@@ -114,6 +115,7 @@
 			}
 			?>
 			</div>
+            <?php } ?>
 			
 			<div class="flex justify-center space-x-4">
 				<ul class="home-social">

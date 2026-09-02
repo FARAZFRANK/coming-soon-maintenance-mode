@@ -69,6 +69,7 @@
                     </div>
                 </div>
 
+            <?php if($csmm_susbcriber_form == 1) { ?>
                 <!-- Subscription Form -->
                 <div class="w-full mb-10">
                     <p class="mb-3 font-semibold text-gray-300"><?php echo ! empty( $csmm_form_headline ) ? esc_html( $csmm_form_headline ) : esc_html__( "Subscribe to be notified on launch day.", 'coming-soon-maintenance-mode' ); ?></p>
@@ -113,6 +114,7 @@
 						// on countdown end live the site end
 					}
 					?>
+            <?php } ?>
                     <p id="success-message" class="mt-3 text-sm text-green-400 hidden"><?php esc_html_e( "You're on the list! We'll let you know.", 'coming-soon-maintenance-mode' ); ?></p>
                 </div>
                 
