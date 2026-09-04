@@ -2597,8 +2597,8 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                 </Box>
               )}
 
-              {/* Common Overlay & Blur Settings (Only for Custom Backgrounds) */}
-              {settings.bg_type && settings.bg_type !== 'default' && (
+              {/* Common Overlay & Blur Settings (Only for Images, Video, Slideshow, Pattern - Excluded from Default Media, Solid Color, and Gradient Color) */}
+              {settings.bg_type && !['default', 'solid', 'gradient'].includes(settings.bg_type) && (
                 <>
                   <Divider sx={{ my: 3 }} />
 
