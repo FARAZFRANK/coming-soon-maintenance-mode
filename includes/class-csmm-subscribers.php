@@ -258,13 +258,20 @@ class CSMM_Subscribers {
 
 		$filename = 'csmm-subscribers-' . gmdate( 'Y-m-d-His' ) . '.csv';
 
+		while ( ob_get_level() > 0 ) {
+			ob_end_clean();
+		}
+
 		header( 'Content-Type: text/csv; charset=utf-8' );
 		header( 'Content-Disposition: attachment; filename=' . $filename );
 		header( 'Pragma: no-cache' );
 		header( 'Expires: 0' );
 
 		$output = fopen( 'php://output', 'w' );
-		fputcsv( $output, array( '#', 'Email Address', 'IP Address', 'Subscribed At' ) );
+		// Output UTF-8 BOM for Excel compatibility
+		fprintf( $output, chr( 0xEF ) . chr( 0xBB ) . chr( 0xBF ) );
+
+		fputcsv( $output, array( '#', 'Email Address', 'IP Address', 'Subscribed At' ), ',', '"', '\\' );
 
 		if ( ! empty( $subscribers ) ) {
 			$counter = 1;
@@ -281,7 +288,10 @@ class CSMM_Subscribers {
 						$clean_email,
 						$row['ip_address'],
 						$row['created_at'],
-					)
+					),
+					',',
+					'"',
+					'\\'
 				);
 			}
 		}

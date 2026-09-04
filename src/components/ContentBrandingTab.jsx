@@ -45,6 +45,7 @@ import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
 import PermMediaRoundedIcon from '@mui/icons-material/PermMediaRounded';
 import WallpaperRoundedIcon from '@mui/icons-material/WallpaperRounded';
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
+import ModernDatePicker from './ModernDatePicker';
 import { api } from '../api';
 
 export default function ContentBrandingTab({ settings = {}, onChange }) {
@@ -1127,13 +1128,11 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
               </Grid>
 
               <Grid item xs={12} md={4}>
-                <TextField
+                <ModernDatePicker
                   label="Target Launch Date"
-                  type="date"
                   fullWidth
                   value={settings.countdown_date || ''}
-                  onChange={(e) => onChange('countdown_date', e.target.value)}
-                  InputLabelProps={{ shrink: true }}
+                  onChange={(newDate) => onChange('countdown_date', newDate)}
                 />
               </Grid>
 
@@ -1539,7 +1538,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   </Box>
 
                   <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7, mt: 0.5 }}>
-                    Default setting par har active template ki <strong>Template-Specific Background Settings</strong> naturally apply hongi. Agar aap apna custom background use karna chahte hain, toh left side ke options (<em>Custom Images, Video, Graphic Pattern, Solid Color, Gradient Color</em>) configure and use kar sakte hain.
+                    By default, the active template's built-in <strong>Template-Specific Background Settings</strong> will be applied automatically. If you wish to use a custom background instead, select and configure any of the background options on the left (<em>Custom Images, Background Slideshow, Video, Graphic Pattern, Solid Color, Gradient Color</em>).
                   </Typography>
                 </Paper>
               )}
@@ -2860,7 +2859,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         height: 38,
                         borderRadius: '6px',
                         border: '1px solid #cbd5e1',
-                        backgroundColor: settings.form_input_color || '#ffffff',
+                        backgroundColor: settings.form_input_color || '#FFFFFF',
                         cursor: 'pointer',
                         display: 'inline-block',
                         flexShrink: 0,
@@ -2870,7 +2869,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     >
                       <input
                         type="color"
-                        value={settings.form_input_color && settings.form_input_color.startsWith('#') ? settings.form_input_color : '#ffffff'}
+                        value={settings.form_input_color && settings.form_input_color.startsWith('#') ? settings.form_input_color : '#FFFFFF'}
                         onChange={(e) => onChange('form_input_color', e.target.value)}
                         style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
                       />
@@ -2878,9 +2877,9 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     <TextField
                       size="small"
                       fullWidth
-                      value={settings.form_input_color !== undefined ? settings.form_input_color : '#ffffff'}
+                      value={settings.form_input_color !== undefined && settings.form_input_color !== '' ? settings.form_input_color : '#FFFFFF'}
                       onChange={(e) => onChange('form_input_color', e.target.value)}
-                      placeholder="#ffffff"
+                      placeholder="#FFFFFF"
                     />
                   </Box>
                 </Grid>
@@ -3000,9 +2999,9 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           onChange('form_placeholder_text', 'Email Address');
                           onChange('form_btn_text', 'Notify Me');
                           onChange('form_input_bg', 'rgba(0, 0, 0, 0.7)');
-                          onChange('form_input_color', '#ffffff');
+                          onChange('form_input_color', '#FFFFFF');
                           onChange('form_btn_bg', '#e11d48');
-                          onChange('form_btn_color', '#ffffff');
+                          onChange('form_btn_color', '#FFFFFF');
                           onChange('form_border_radius', 0);
                         }}
                         sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.3 }}
@@ -3027,7 +3026,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     {settings.form_headline_text && (
                       <Typography
                         sx={{
-                          color: '#ffffff',
+                          color: '#FFFFFF',
                           fontSize: '15px',
                           fontWeight: 600,
                           mb: 1.75,
@@ -3070,7 +3069,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       >
                         <Typography
                           sx={{
-                            color: settings.form_input_color || '#ffffff',
+                            color: settings.form_input_color || '#FFFFFF',
                             opacity: 0.9,
                             fontSize: '15px',
                             fontWeight: 500,

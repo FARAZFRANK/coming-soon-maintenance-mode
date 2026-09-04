@@ -140,10 +140,18 @@ class CSMM_Activator {
 					'countdown_title' => 'Launching In...',
 					'countdown_date'  => $countdown_date,
 					'countdown_time'  => '10:00',
-					'susbcriber_form' => '1',
-					'video_url'       => 'https://player.vimeo.com/video/427528336?title=0&portrait=0&byline=0&autoplay=1&loop=1&muted=true',
-					'slide_ids'       => array(),
-					'custom_css'      => '',
+					'susbcriber_form'       => '1',
+					'form_headline_text'    => '',
+					'form_placeholder_text' => 'Email Address',
+					'form_btn_text'         => 'Notify Me',
+					'form_input_bg'         => 'rgba(0, 0, 0, 0.7)',
+					'form_input_color'      => '#FFFFFF',
+					'form_btn_bg'           => '#e11d48',
+					'form_btn_color'        => '#FFFFFF',
+					'form_border_radius'    => 0,
+					'video_url'             => 'https://player.vimeo.com/video/427528336?title=0&portrait=0&byline=0&autoplay=1&loop=1&muted=true',
+					'slide_ids'             => array(),
+					'custom_css'            => '',
 				)
 			);
 		}

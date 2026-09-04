@@ -15,6 +15,7 @@ class CSMM_Integrations {
 	public static function init() {
 		add_action( 'phpmailer_init', array( __CLASS__, 'setup_smtp' ) );
 		add_action( 'update_option_csmm_settings', array( __CLASS__, 'on_mode_change' ), 10, 3 );
+		add_action( 'csmm_process_launch_email_queue_cron', array( __CLASS__, 'process_queue_batch' ) );
 	}
 
 	/**
@@ -508,9 +509,10 @@ class CSMM_Integrations {
 	}
 
 	/**
-	 * Broadcast site live announcement email to ALL registered subscribers.
+	 * Broadcast site live announcement email to ALL registered subscribers via safe Background Queue.
+	 * Handles 1,000+ subscriber lists reliably using chunking and background batch delivery.
 	 *
-	 * @return array Status and number of dispatched emails.
+	 * @return array Status and number of queued/dispatched emails.
 	 */
 	public static function broadcast_site_launch_email() {
 		$integrations = get_option( 'csmm_integrations', array() );
@@ -523,7 +525,18 @@ class CSMM_Integrations {
 			);
 		}
 
-		$emails = CSMM_Subscribers::get_all_subscriber_emails();
+		$raw_emails = CSMM_Subscribers::get_all_subscriber_emails();
+		$emails     = array();
+		if ( ! empty( $raw_emails ) && is_array( $raw_emails ) ) {
+			foreach ( $raw_emails as $e ) {
+				$clean = sanitize_email( strtolower( trim( $e ) ) );
+				if ( is_email( $clean ) ) {
+					$emails[] = $clean;
+				}
+			}
+			$emails = array_values( array_unique( $emails ) );
+		}
+
 		if ( empty( $emails ) ) {
 			return array(
 				'success' => true,
@@ -532,20 +545,139 @@ class CSMM_Integrations {
 			);
 		}
 
-		$sent_count = 0;
-		foreach ( $emails as $email ) {
+		// Initialize background queue structure
+		$queue = array(
+			'status'     => 'processing',
+			'total'      => count( $emails ),
+			'processed'  => 0,
+			'failed'     => 0,
+			'remaining'  => $emails,
+			'batch_size' => 50,
+			'started_at' => current_time( 'mysql' ),
+			'updated_at' => current_time( 'mysql' ),
+		);
+
+		update_option( 'csmm_launch_email_queue', $queue, false );
+
+		// Process initial batch immediately (up to 20 emails) for zero-latency start
+		$initial_batch_size = min( 20, count( $queue['remaining'] ) );
+		$initial_batch      = array_splice( $queue['remaining'], 0, $initial_batch_size );
+
+		foreach ( $initial_batch as $email ) {
+			$sent = self::send_launch_notification( $email, $integrations );
+			if ( $sent ) {
+				$queue['processed']++;
+			} else {
+				$queue['failed']++;
+			}
+		}
+
+		$queue['updated_at'] = current_time( 'mysql' );
+
+		// If remaining emails exist, schedule WP-Cron background batch worker
+		if ( ! empty( $queue['remaining'] ) ) {
+			update_option( 'csmm_launch_email_queue', $queue, false );
+
+			if ( ! wp_next_scheduled( 'csmm_process_launch_email_queue_cron' ) ) {
+				wp_schedule_single_event( time(), 'csmm_process_launch_email_queue_cron' );
+			}
+			if ( function_exists( 'spawn_cron' ) ) {
+				spawn_cron();
+			}
+
+			return array(
+				'success'   => true,
+				'message'   => sprintf(
+					__( 'Broadcast started! Dispatched first %d emails immediately. Remaining %d emails are queued in background batches.', 'coming-soon-maintenance-mode' ),
+					$queue['processed'],
+					count( $queue['remaining'] )
+				),
+				'count'     => $queue['total'],
+				'processed' => $queue['processed'],
+				'remaining' => count( $queue['remaining'] ),
+				'status'    => 'processing',
+			);
+		}
+
+		// All processed immediately
+		$queue['status'] = 'completed';
+		update_option( 'csmm_launch_email_queue', $queue, false );
+
+		return array(
+			'success'   => true,
+			'message'   => sprintf( __( 'Site Live announcement successfully sent to all %d subscribers!', 'coming-soon-maintenance-mode' ), $queue['processed'] ),
+			'count'     => $queue['total'],
+			'processed' => $queue['processed'],
+			'status'    => 'completed',
+		);
+	}
+
+	/**
+	 * Background WP-Cron Batch Worker.
+	 * Processes chunks of 50 emails per run safely without memory or timeout issues.
+	 */
+	public static function process_queue_batch() {
+		$queue = get_option( 'csmm_launch_email_queue', array() );
+
+		if ( empty( $queue ) || empty( $queue['remaining'] ) || 'processing' !== ( isset( $queue['status'] ) ? $queue['status'] : '' ) ) {
+			return;
+		}
+
+		$integrations = get_option( 'csmm_integrations', array() );
+		$batch_size   = isset( $queue['batch_size'] ) ? intval( $queue['batch_size'] ) : 50;
+		$batch        = array_splice( $queue['remaining'], 0, $batch_size );
+
+		foreach ( $batch as $email ) {
 			if ( is_email( $email ) ) {
 				$sent = self::send_launch_notification( $email, $integrations );
 				if ( $sent ) {
-					$sent_count++;
+					$queue['processed']++;
+				} else {
+					$queue['failed']++;
 				}
 			}
 		}
 
+		$queue['updated_at'] = current_time( 'mysql' );
+
+		// If more emails remain, schedule next batch in 5 seconds
+		if ( ! empty( $queue['remaining'] ) ) {
+			update_option( 'csmm_launch_email_queue', $queue, false );
+
+			wp_schedule_single_event( time() + 5, 'csmm_process_launch_email_queue_cron' );
+			if ( function_exists( 'spawn_cron' ) ) {
+				spawn_cron();
+			}
+		} else {
+			$queue['status'] = 'completed';
+			update_option( 'csmm_launch_email_queue', $queue, false );
+			wp_clear_scheduled_hook( 'csmm_process_launch_email_queue_cron' );
+		}
+	}
+
+	/**
+	 * Get current background queue progress status.
+	 */
+	public static function get_queue_status() {
+		$queue = get_option( 'csmm_launch_email_queue', array() );
+		if ( empty( $queue ) ) {
+			return array(
+				'status'    => 'idle',
+				'total'     => 0,
+				'processed' => 0,
+				'failed'    => 0,
+				'remaining' => 0,
+			);
+		}
+
 		return array(
-			'success' => true,
-			'message' => sprintf( __( 'Site Live announcement successfully sent to %d subscribers!', 'coming-soon-maintenance-mode' ), $sent_count ),
-			'count'   => $sent_count,
+			'status'     => isset( $queue['status'] ) ? $queue['status'] : 'idle',
+			'total'      => isset( $queue['total'] ) ? intval( $queue['total'] ) : 0,
+			'processed'  => isset( $queue['processed'] ) ? intval( $queue['processed'] ) : 0,
+			'failed'     => isset( $queue['failed'] ) ? intval( $queue['failed'] ) : 0,
+			'remaining'  => isset( $queue['remaining'] ) && is_array( $queue['remaining'] ) ? count( $queue['remaining'] ) : 0,
+			'started_at' => isset( $queue['started_at'] ) ? $queue['started_at'] : '',
+			'updated_at' => isset( $queue['updated_at'] ) ? $queue['updated_at'] : '',
 		);
 	}
 

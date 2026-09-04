@@ -142,10 +142,16 @@ class CSMM_Frontend {
 			$countdown_time = isset( $content['countdown_time'] ) ? $content['countdown_time'] : '00:00';
 
 			if ( $countdown_date ) {
-				$launch_timestamp = strtotime( "$countdown_date $countdown_time" );
-				$now_timestamp    = current_datetime()->getTimestamp();
+				try {
+					$tz = wp_timezone();
+					$launch_dt = new DateTime( "$countdown_date $countdown_time", $tz );
+					$launch_timestamp = $launch_dt->getTimestamp();
+				} catch ( Exception $e ) {
+					$launch_timestamp = strtotime( "$countdown_date $countdown_time" );
+				}
+				$now_timestamp = time();
 
-				if ( $now_timestamp > $launch_timestamp ) {
+				if ( $now_timestamp >= $launch_timestamp ) {
 					$settings = get_option( 'csmm_settings', array() );
 					$settings['website_mode'] = 3;
 					update_option( 'csmm_settings', $settings );

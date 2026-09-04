@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Version & Setup
-$csmm_current_version = get_option( 'csmm_current_version', '3.2.5' );
+$csmm_current_version = get_option( 'csmm_current_version', '3.2.6' );
 
 // Defaults
 $csmm_settings      = get_option( 'csmm_settings', array() );
@@ -827,12 +827,28 @@ $toast_and_ajax_html = '
 
 // Universal Pure Vanilla JS Real-Time Countdown Engine for all 36 Templates
 if ( '1' === strval( $csmm_countdown ) ) {
-	$csmm_target_timestamp = strtotime( $csmm_countdown_date . ' ' . $csmm_countdown_time ) * 1000;
 	$toast_and_ajax_html .= '
 <!-- CSMM Universal Pure Vanilla JS Real-Time Countdown Engine -->
 <script id="csmm-universal-countdown-engine">
 (function() {
-  var targetTimestamp = ' . json_encode( $csmm_target_timestamp ) . ';
+  var countdownDateStr = ' . json_encode( $csmm_countdown_date ) . ';
+  var countdownTimeStr = ' . json_encode( $csmm_countdown_time ) . ';
+  if (!countdownDateStr) return;
+
+  var targetTimestamp = 0;
+  var dParts = countdownDateStr.split("-");
+  var tParts = (countdownTimeStr || "00:00").split(":");
+  if (dParts.length === 3) {
+    var targetDate = new Date(
+      parseInt(dParts[0], 10),
+      parseInt(dParts[1], 10) - 1,
+      parseInt(dParts[2], 10),
+      parseInt(tParts[0] || 0, 10),
+      parseInt(tParts[1] || 0, 10),
+      0
+    );
+    targetTimestamp = targetDate.getTime();
+  }
   if (!targetTimestamp) return;
 
   function pad(n) {
@@ -901,36 +917,46 @@ if ( '1' === strval( $csmm_countdown ) ) {
       setClockUnit(sEl, strSecs, "S");
     });
 
-    if (isFinished && !window._csmmCountdownFinished) {
-      window._csmmCountdownFinished = true;
-      try {
-        var params = new URLSearchParams();
-        params.append("action", "csmm_save");
-        params.append("tab", "setings");
-        params.append("website_mode", "3");
-        params.append("nonce", "' . esc_js( wp_create_nonce( 'csmm-save' ) ) . '");
+    if (isFinished) {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
 
-        fetch("' . esc_url( admin_url( 'admin-ajax.php' ) ) . '", {
-          method: "POST",
-          body: params,
-          credentials: "same-origin"
-        }).then(function() {
-          setTimeout(function() {
-            location.reload();
-          }, 1500);
-        }).catch(function() {});
+      // Never auto-reload or loop in Live Preview mode
+      var isPreview = (window.location.search.indexOf("csmm=true") !== -1 || window.location.search.indexOf("preview=true") !== -1);
+      if (isPreview) {
+        return;
+      }
+
+      // Safe single reload for frontend visitors once timer finishes
+      if (!window._csmmAutoLaunched) {
+        window._csmmAutoLaunched = true;
+        try {
+          if (!sessionStorage.getItem("csmm_auto_launch_attempted")) {
+            sessionStorage.setItem("csmm_auto_launch_attempted", "1");
+            setTimeout(function() {
+              window.location.reload();
+            }, 1200);
+          }
+        } catch(e) {}
+      }
+    } else {
+      try {
+        sessionStorage.removeItem("csmm_auto_launch_attempted");
       } catch(e) {}
     }
   }
 
+  var timerInterval = null;
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function() {
       tick();
-      setInterval(tick, 1000);
+      if (!timerInterval) timerInterval = setInterval(tick, 1000);
     });
   } else {
     tick();
-    setInterval(tick, 1000);
+    if (!timerInterval) timerInterval = setInterval(tick, 1000);
   }
 })();
 </script>';

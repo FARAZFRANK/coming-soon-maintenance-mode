@@ -175,6 +175,17 @@ class CSMM_REST_API {
 			)
 		);
 
+		// Broadcast Queue Status
+		register_rest_route(
+			self::NAMESPACE,
+			'/integrations/queue-status',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_queue_status' ),
+				'permission_callback' => array( $this, 'admin_permissions_check' ),
+			)
+		);
+
 		// Import Plugin Settings
 		register_rest_route(
 			self::NAMESPACE,
@@ -299,9 +310,9 @@ class CSMM_REST_API {
 			'form_placeholder_text'        => isset( $content['form_placeholder_text'] ) ? $content['form_placeholder_text'] : 'Email Address',
 			'form_btn_text'                => isset( $content['form_btn_text'] ) ? $content['form_btn_text'] : 'Notify Me',
 			'form_input_bg'                => isset( $content['form_input_bg'] ) ? $content['form_input_bg'] : 'rgba(0, 0, 0, 0.7)',
-			'form_input_color'             => isset( $content['form_input_color'] ) ? $content['form_input_color'] : '#ffffff',
-			'form_btn_bg'                  => isset( $content['form_btn_bg'] ) ? $content['form_btn_bg'] : '#e11d48',
-			'form_btn_color'       => isset( $content['form_btn_color'] ) ? $content['form_btn_color'] : '#ffffff',
+			'form_input_color'             => isset( $content['form_input_color'] ) && '' !== $content['form_input_color'] ? $content['form_input_color'] : '#FFFFFF',
+			'form_btn_bg'                  => isset( $content['form_btn_bg'] ) && '' !== $content['form_btn_bg'] ? $content['form_btn_bg'] : '#e11d48',
+			'form_btn_color'               => isset( $content['form_btn_color'] ) && '' !== $content['form_btn_color'] ? $content['form_btn_color'] : '#FFFFFF',
 			'form_border_radius'   => isset( $content['form_border_radius'] ) ? intval( $content['form_border_radius'] ) : 0,
 			'video_url'            => isset( $content['video_url'] ) ? $content['video_url'] : '',
 			'custom_css'           => isset( $content['custom_css'] ) ? $content['custom_css'] : '',
@@ -521,6 +532,9 @@ class CSMM_REST_API {
 		}
 		if ( isset( $params['countdown_title'] ) ) {
 			$content_array['countdown_title'] = sanitize_text_field( $params['countdown_title'] );
+		}
+		if ( isset( $params['countdown_date'] ) ) {
+			$content_array['countdown_date'] = sanitize_text_field( $params['countdown_date'] );
 		}
 		if ( isset( $params['countdown_time'] ) ) {
 			$content_array['countdown_time'] = sanitize_text_field( $params['countdown_time'] );
@@ -827,6 +841,14 @@ class CSMM_REST_API {
 	 */
 	public function broadcast_launch_email() {
 		$result = CSMM_Integrations::broadcast_site_launch_email();
+		return rest_ensure_response( $result );
+	}
+
+	/**
+	 * Get Launch Email Broadcast Queue Progress Status.
+	 */
+	public function get_queue_status() {
+		$result = CSMM_Integrations::get_queue_status();
 		return rest_ensure_response( $result );
 	}
 

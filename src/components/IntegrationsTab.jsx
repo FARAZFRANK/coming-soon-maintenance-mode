@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Card,
@@ -16,6 +16,7 @@ import {
   DialogContent,
   DialogActions,
   CircularProgress,
+  LinearProgress,
   Tabs,
   Tab,
   Stack,
@@ -178,9 +179,33 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
   const [testEmailType, setTestEmailType] = useState('welcome');
   const [sendingTestEmail, setSendingTestEmail] = useState(false);
 
-  // Broadcast Launch Dialog State
+  // Broadcast Launch Dialog & Background Queue State
   const [broadcastDialogOpen, setBroadcastDialogOpen] = useState(false);
   const [broadcasting, setBroadcasting] = useState(false);
+  const [queueStatus, setQueueStatus] = useState(null);
+
+  const fetchQueueStatus = async () => {
+    try {
+      const res = await api.getQueueStatus();
+      if (res) setQueueStatus(res);
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    fetchQueueStatus();
+  }, []);
+
+  useEffect(() => {
+    let interval = null;
+    if (queueStatus && queueStatus.status === 'processing') {
+      interval = setInterval(() => {
+        fetchQueueStatus();
+      }, 3000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [queueStatus?.status]);
 
   // Live Email Preview Modal State
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
@@ -349,8 +374,9 @@ export default function IntegrationsTab({ data, onChange, onNotify }) {
     setBroadcasting(true);
     try {
       const res = await api.broadcastLaunchEmail();
-      if (onNotify) onNotify(res.message || 'Site Live announcement broadcast complete!', res.success ? 'success' : 'error');
+      if (onNotify) onNotify(res.message || 'Site Live announcement broadcast started!', res.success ? 'success' : 'error');
       setBroadcastDialogOpen(false);
+      fetchQueueStatus();
     } catch (err) {
       if (onNotify) onNotify('Broadcast failed: ' + err.message, 'error');
     } finally {
@@ -1251,6 +1277,66 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
                     </Button>
                   </Box>
                 </Grid>
+
+                {/* Background Queue Progress Indicator */}
+                {queueStatus && queueStatus.total > 0 && (
+                  <Grid item xs={12}>
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2.5,
+                        borderRadius: '10px !important',
+                        borderColor: queueStatus.status === 'processing' ? 'primary.main' : 'divider',
+                        backgroundColor: (theme) =>
+                          theme.palette.mode === 'dark'
+                            ? queueStatus.status === 'processing'
+                              ? 'rgba(37, 99, 235, 0.08)'
+                              : 'rgba(255, 255, 255, 0.02)'
+                            : queueStatus.status === 'processing'
+                            ? '#eff6ff'
+                            : '#f8fafc',
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5, flexWrap: 'wrap', gap: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          {queueStatus.status === 'processing' ? (
+                            <CircularProgress size={18} />
+                          ) : (
+                            <CheckCircleRoundedIcon sx={{ color: 'success.main', fontSize: 20 }} />
+                          )}
+                          <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                            {queueStatus.status === 'processing'
+                              ? '🚀 Background Email Batch Queue in Progress...'
+                              : '✅ Broadcast Queue Completed'}
+                          </Typography>
+                        </Box>
+                        <Chip
+                          label={`${queueStatus.processed} / ${queueStatus.total} Sent (${Math.round((queueStatus.processed / (queueStatus.total || 1)) * 100)}%)`}
+                          color={queueStatus.status === 'processing' ? 'primary' : 'success'}
+                          size="small"
+                          sx={{ fontWeight: 700, borderRadius: '6px' }}
+                        />
+                      </Box>
+                      <LinearProgress
+                        variant="determinate"
+                        value={Math.round((queueStatus.processed / (queueStatus.total || 1)) * 100)}
+                        sx={{ height: 8, borderRadius: 4, mb: 1 }}
+                      />
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
+                        <Typography variant="caption" color="text.secondary">
+                          {queueStatus.status === 'processing'
+                            ? `Safe chunking active (50 emails/batch via WP-Cron). ${queueStatus.remaining} emails remaining.`
+                            : `All ${queueStatus.total} subscriber emails processed successfully without timeouts.`}
+                        </Typography>
+                        {queueStatus.updated_at && (
+                          <Typography variant="caption" color="text.secondary">
+                            Last activity: {queueStatus.updated_at}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Paper>
+                  </Grid>
+                )}
               </Grid>
             </Box>
           )}

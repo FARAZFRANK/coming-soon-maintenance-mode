@@ -10,7 +10,7 @@ const getRestConfig = () => {
     previewUrl: data.previewUrl || '',
     siteUrl: data.siteUrl || '',
     pluginUrl: data.pluginUrl || '',
-    version: data.version || '3.2.5',
+    version: data.version || '3.2.6',
     user: data.user || { name: 'Admin', can_manage: true },
   };
 };
@@ -243,6 +243,10 @@ export const api = {
       },
       body: JSON.stringify({}),
     });
+  },
+
+  async getQueueStatus() {
+    return fetchJson(buildUrl('integrations/queue-status'));
   },
 
   async importSettings(settingsData) {

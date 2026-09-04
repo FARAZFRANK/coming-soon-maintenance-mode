@@ -4,7 +4,7 @@ Tags: coming soon, maintenance mode, under construction, launch countdown, newsl
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 3.2.5
+Stable tag: 3.2.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,16 @@ Yes! Logged-in administrators bypass the maintenance screen and can view and edi
 Go to **Newsletter & Integrations** -> **Custom SMTP Mail Delivery**, enable SMTP, and configure your Gmail, SendGrid, or hosting SMTP server.
 
 == Changelog ==
+
+= 3.2.6 = 04 September 2026
+* **Enterprise-Grade Background Email Queue & Batch Worker**: Implemented WP-Cron asynchronous batch delivery (50 emails/chunk) with zero-latency initiation, live progress bar in Admin Studio, and auto-cleanup to handle 1,000+ subscriber lists reliably without server timeouts.
+* **Client-Side Accurate Timezone Countdown Engine**: Re-engineered countdown calculation to parse target datetime directly in visitor's local timezone, eliminating UTC offset gaps (e.g. 5.5 hours discrepancy).
+* **Countdown Expiry Zero-Finish Refresh Loop Guard**: Added `clearInterval` timer detachment, live preview mode immunity, and `sessionStorage` single-reload latch to prevent infinite reload loops upon timer completion.
+* **PHP 8.4+ CSV Streaming Compatibility**: Explicitly passed escape parameters to `fputcsv()`, cleared output buffer streams, and added UTF-8 BOM headers for Microsoft Excel compatibility.
+* **Documentation Studio Stability**: Resolved `handleImportClick` and `handleConfirmReset` ReferenceErrors in Settings Import/Export and Factory Reset dialogs.
+* **Modern Glassmorphic DatePicker Component**: Built lightweight, theme-adaptive custom DatePicker with month navigation, click-outside dismiss, and zero external date library bloat.
+* **Subscriber Form Input & Placeholder Styling Default**: Aligned input/placeholder font color default to `#FFFFFF` across admin controls, Live Form Preview, activator, and frontend CSS.
+* **Template-Specific Backgrounds & Custom Background Guidance**: Added clear explanatory guidance and contextual controls for template-specific backgrounds versus custom image/video/pattern/gradient overlays.
 
 = 3.2.5 = 02 September 2026
 * **Social Media Global Visibility Toggle Switch**: Added dedicated Enable/Disable toggle card in the Social Media tab to easily hide or show social icons site-wide with a single click across all 36 templates.

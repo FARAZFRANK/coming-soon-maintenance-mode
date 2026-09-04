@@ -47,7 +47,7 @@
                     }
                 }
                 if ( ! empty( $slides_to_show ) ) {
-                    foreach ( $slides_to_show as $csmm_slide_value ) {
+                    foreach ( $slides_to_show as $idx => $csmm_slide_value ) {
                         $slide_url_str = '';
                         if ( is_array( $csmm_slide_value ) && ! empty( $csmm_slide_value['url'] ) ) {
                             $slide_url_str = $csmm_slide_value['url'];
@@ -60,8 +60,9 @@
                             $slide_url_str = $csmm_slide_value;
                         }
                         if ( ! empty( $slide_url_str ) ) {
+                            $active_cls = ( 0 === $idx ) ? ' active' : '';
                     ?>
-                    <div class="home-slider-img" style="background-image: url('<?php echo esc_url( $slide_url_str ); ?>');"></div>
+                    <div class="home-slider-img<?php echo $active_cls; ?>" style="background-image: url('<?php echo esc_url( $slide_url_str ); ?>');"></div>
                     <?php
                         }
                     }
@@ -71,7 +72,7 @@
             }
 
             if ( $show_default_slides ) {
-                echo '<div class="home-slider-img" style="background-image: url(\''. esc_url( CSMM_URL.'templates/images/temp-10-slides/1.webp') .'\');"></div>';
+                echo '<div class="home-slider-img active" style="background-image: url(\''. esc_url( CSMM_URL.'templates/images/temp-10-slides/1.webp') .'\');"></div>';
                 echo '<div class="home-slider-img" style="background-image: url(\''. esc_url( CSMM_URL.'templates/images/temp-10-slides/2.webp') .'\');"></div>';
                 echo '<div class="home-slider-img" style="background-image: url(\''. esc_url( CSMM_URL.'templates/images/temp-10-slides/3.webp') .'\');"></div>';
             }
@@ -258,47 +259,31 @@
     <script src="<?php echo esc_url(CSMM_URL.'templates/js/plugins.js'); ?>"></script>
     <script>
     jQuery( document ).ready(function() {
-        // Add the User Agent to the <html>
-        // will be used for IE10 detection (Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0))
         var doc = document.documentElement;
         doc.setAttribute('data-useragent', navigator.userAgent);
-        // svg fallback
-        if (!Modernizr.svg) {
+        if (typeof Modernizr !== 'undefined' && !Modernizr.svg) {
             jQuery(".home-logo img").attr("src", "images/logo.png");
         }
-
-		/* slick slider
-		* ------------------------------------------------------ */
-		if (jQuery('.home-slider').length) {
-			jQuery('.home-slider').slick({
-				arrows: false,
-				dots: false,
-				autoplay: true,
-				autoplaySpeed: 3000,
-				fade: true,
-				speed: 1000,
-				pauseOnHover: false,
-				pauseOnFocus: false
-			});
-		}
     });
-	
-   /* Preloader
-	* -------------------------------------------------- */
-	/* var $WIN = jQuery(window);
-	var CsmmPreloader = function() {
-		jQuery("html").addClass('ss-preload');
-		$WIN.on('load', function() {
-			// will first fade out the loading animation 
-			jQuery("#loader").fadeOut("slow", function() {
-				// will fade out the whole DIV that covers the website.
-				jQuery("#preloader").delay(100).fadeOut("slow");
-			}); 
-			// for hero content animations 
-			jQuery("html").removeClass('ss-preload');
-			jQuery("html").addClass('ss-loaded');
-		});
-	}; */
+
+    (function() {
+        function initSlideRotator() {
+            var slides = document.querySelectorAll('.home-slider .home-slider-img');
+            if (slides.length <= 1) return;
+            var current = 0;
+            setInterval(function() {
+                slides[current].classList.remove('active');
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+            }, 3500);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSlideRotator);
+        } else {
+            initSlideRotator();
+        }
+    })();
     </script>
 </body>
 </html>

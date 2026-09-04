@@ -65,7 +65,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
     try {
       const exportData = {
         plugin: 'Coming Soon Maintenance Mode Pro',
-        version: api.getConfig().version || '3.2.5',
+        version: api.getConfig().version || '3.2.6',
         site_url: api.getConfig().siteUrl || '',
         exported_at: new Date().toISOString(),
         settings: settings || {},
@@ -127,8 +127,14 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
     reader.readAsText(file);
   };
 
-  // 3. Factory Reset Settings
-  const handleFactoryReset = async () => {
+  const handleImportClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  // 3. Factory Reset Settings (Confirm Dialog Action)
+  const handleConfirmReset = async () => {
     try {
       setIsResetting(true);
       await api.resetSettings();
@@ -141,6 +147,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
       setIsResetting(false);
     }
   };
+  const handleFactoryReset = handleConfirmReset;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -172,7 +179,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                 <Typography variant="h5" sx={{ fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
                   Coming Soon Maintenance Mode Pro Studio
                 </Typography>
-                <Chip label="v3.2.5" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Chip label="v3.2.6" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
               </Box>
               <Typography variant="body1" sx={{ color: '#94a3b8', maxWidth: 780, lineHeight: 1.6 }}>
                 Comprehensive user guide, implementation workflows, newsletter integrations, SEO configuration, and real-world use cases.
@@ -1174,7 +1181,27 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
           <Stack spacing={2.5}>
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                <Chip label="v3.2.5" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Chip label="v3.2.6" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
+                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                  Background Email Queue Worker, Countdown Timezone Engine, PHP 8.4 CSV & Documentation Fixes
+                </Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary" component="ul" sx={{ pl: 2.5, m: 0, lineHeight: 1.8 }}>
+                <li><strong>Enterprise-Grade Background Email Queue:</strong> Implemented WP-Cron asynchronous batch delivery (50 emails/chunk) with zero-latency initiation, live progress bar in Admin Studio, and auto-cleanup to handle 1,000+ subscriber lists reliably.</li>
+                <li><strong>Client-Side Accurate Timezone Countdown Engine:</strong> Re-engineered countdown calculation to parse target datetime directly in visitor's local timezone, eliminating UTC offset gaps (e.g. 5.5 hours discrepancy).</li>
+                <li><strong>Countdown Expiry Zero-Finish Refresh Loop Guard:</strong> Added <code>clearInterval</code> timer detachment, live preview mode immunity, and <code>sessionStorage</code> single-reload latch to prevent infinite reload loops upon timer completion.</li>
+                <li><strong>PHP 8.4+ CSV Streaming Compatibility:</strong> Explicitly passed escape parameters to <code>fputcsv()</code>, cleared output buffer streams, and added UTF-8 BOM headers for Microsoft Excel compatibility.</li>
+                <li><strong>Documentation Studio Stability:</strong> Resolved <code>handleImportClick</code> and <code>handleConfirmReset</code> ReferenceErrors in Settings Import/Export and Factory Reset dialogs.</li>
+                <li><strong>Modern Glassmorphic DatePicker Component:</strong> Built lightweight, theme-adaptive custom DatePicker with month navigation, click-outside dismiss, and zero external date library bloat.</li>
+                <li><strong>Subscriber Form Input & Placeholder Styling Default:</strong> Aligned input/placeholder font color default to <code>#FFFFFF</code> across admin controls, Live Form Preview, activator, and frontend CSS.</li>
+              </Typography>
+            </Box>
+
+            <Divider />
+
+            <Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                <Chip label="v3.2.5" color="secondary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
                 <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                   Social Media Toggle, Newsletter API Auto Sync, Template 10/13 Parity & Countdown Sync
                 </Typography>
