@@ -327,14 +327,14 @@ class CSMM_REST_API {
 			'bg_mobile_enabled'    => ! empty( $content['bg_mobile_enabled'] ),
 			'bg_mobile_image_url'  => isset( $content['bg_mobile_image_url'] ) ? $content['bg_mobile_image_url'] : '',
 			'bg_video_source'      => isset( $content['bg_video_source'] ) ? $content['bg_video_source'] : 'youtube',
-			'bg_video_url'         => isset( $content['bg_video_url'] ) ? $content['bg_video_url'] : ( isset( $content['video_url'] ) ? $content['video_url'] : 'https://www.youtube.com/watch?v=LXb3EKWsInQ' ),
+			'bg_video_url'         => isset( $content['bg_video_url'] ) ? $content['bg_video_url'] : ( isset( $content['video_url'] ) ? $content['video_url'] : 'https://www.youtube.com/watch?v=KLuTLF3x9sA' ),
 			'bg_video_youtube_url' => isset( $content['bg_video_youtube_url'] ) && ! empty( $content['bg_video_youtube_url'] ) && false !== strpos( $content['bg_video_youtube_url'], 'youtu' )
 				? $content['bg_video_youtube_url']
 				: ( ( ! isset( $content['bg_video_source'] ) || 'youtube' === $content['bg_video_source'] ) && ! empty( $content['bg_video_url'] ) && false !== strpos( $content['bg_video_url'], 'youtu' )
 					? $content['bg_video_url']
 					: ( isset( $content['video_url'] ) && ! empty( $content['video_url'] ) && false !== strpos( $content['video_url'], 'youtu' )
 						? $content['video_url']
-						: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' ) ),
+						: 'https://www.youtube.com/watch?v=KLuTLF3x9sA' ) ),
 			'bg_video_vimeo_url'   => isset( $content['bg_video_vimeo_url'] ) && ! empty( $content['bg_video_vimeo_url'] ) && false !== strpos( $content['bg_video_vimeo_url'], 'vimeo' )
 				? $content['bg_video_vimeo_url']
 				: ( isset( $content['bg_video_source'] ) && 'vimeo' === $content['bg_video_source'] && ! empty( $content['bg_video_url'] ) && false !== strpos( $content['bg_video_url'], 'vimeo' )

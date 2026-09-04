@@ -1450,7 +1450,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     if (!settings.bg_video_source) {
                       onChange('bg_video_source', 'youtube');
                     }
-                    const ytUrl = 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
+                    const ytUrl = 'https://www.youtube.com/watch?v=KLuTLF3x9sA';
                     const vimeoUrl = 'https://vimeo.com/1178283333';
                     const mp4Url = 'https://wpfrank.com/wp-content/uploads/2026/09/coming-soon-maintenance-mode-pro-default-video.mp4';
 
@@ -1910,7 +1910,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                         } else {
                           const ytVal = (settings.bg_video_youtube_url && settings.bg_video_youtube_url.includes('youtu'))
                             ? settings.bg_video_youtube_url
-                            : 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
+                            : 'https://www.youtube.com/watch?v=KLuTLF3x9sA';
                           onChange('bg_video_url', ytVal);
                           onChange('video_url', ytVal);
                         }
@@ -1939,7 +1939,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           if (settings.video_url && settings.video_url.includes('youtu')) {
                             return settings.video_url;
                           }
-                          return 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
+                          return 'https://www.youtube.com/watch?v=KLuTLF3x9sA';
                         })()}
                         onChange={(e) => {
                           const val = e.target.value;
@@ -1947,7 +1947,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           onChange('bg_video_url', val);
                           onChange('video_url', val);
                         }}
-                        placeholder="https://www.youtube.com/watch?v=LXb3EKWsInQ"
+                        placeholder="https://www.youtube.com/watch?v=KLuTLF3x9sA"
                       />
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <Button
@@ -1955,7 +1955,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           variant="outlined"
                           startIcon={<RestartAltRoundedIcon fontSize="small" />}
                           onClick={() => {
-                            const defaultYt = 'https://www.youtube.com/watch?v=LXb3EKWsInQ';
+                            const defaultYt = 'https://www.youtube.com/watch?v=KLuTLF3x9sA';
                             onChange('bg_video_youtube_url', defaultYt);
                             onChange('bg_video_url', defaultYt);
                             onChange('video_url', defaultYt);
