@@ -1417,7 +1417,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   onChange('bg_custom_pattern_bg', '#0b1120');
                   onChange('bg_overlay_type', 'none');
                   onChange('bg_overlay_color', '#000000');
-                  onChange('bg_overlay_opacity', 0.4);
+                  onChange('bg_overlay_opacity', 0);
                   onChange('bg_blur', 0);
                 }}
                 sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
@@ -1435,8 +1435,13 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                 onChange={(e) => {
                   const newType = e.target.value;
                   onChange('bg_type', newType);
-                  if (['custom', 'slideshow', 'video', 'pattern', 'solid'].includes(newType) && (!settings.bg_overlay_type || settings.bg_overlay_type === 'solid')) {
-                    onChange('bg_overlay_type', 'none');
+                  if (['custom', 'slideshow', 'video', 'pattern', 'solid'].includes(newType)) {
+                    if (!settings.bg_overlay_type || settings.bg_overlay_type === 'solid') {
+                      onChange('bg_overlay_type', 'none');
+                    }
+                    if (settings.bg_overlay_opacity === undefined || settings.bg_overlay_opacity === null || settings.bg_overlay_opacity === 0.4) {
+                      onChange('bg_overlay_opacity', 0);
+                    }
                   }
                   if (newType === 'solid' && !settings.bg_solid_color) {
                     onChange('bg_solid_color', '#1d1b1b');
@@ -2669,11 +2674,11 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           Background Overlay Opacity
                         </Typography>
                         <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
-                          {settings.bg_overlay_opacity !== undefined ? settings.bg_overlay_opacity : 0.4}
+                          {settings.bg_overlay_opacity !== undefined ? settings.bg_overlay_opacity : 0}
                         </Typography>
                       </Box>
                       <Slider
-                        value={settings.bg_overlay_opacity !== undefined ? Number(settings.bg_overlay_opacity) : 0.4}
+                        value={settings.bg_overlay_opacity !== undefined ? Number(settings.bg_overlay_opacity) : 0}
                         min={0}
                         max={1}
                         step={0.05}
@@ -2713,7 +2718,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                           onClick={() => {
                             onChange('bg_overlay_type', 'none');
                             onChange('bg_overlay_color', '#000000');
-                            onChange('bg_overlay_opacity', 0.4);
+                            onChange('bg_overlay_opacity', 0);
                             onChange('bg_blur', 0);
                           }}
                           sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}

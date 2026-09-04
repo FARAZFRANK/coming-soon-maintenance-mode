@@ -359,7 +359,7 @@ class CSMM_REST_API {
 			'bg_gradient_angle'    => isset( $content['bg_gradient_angle'] ) ? intval( $content['bg_gradient_angle'] ) : 135,
 			'bg_overlay_type'      => isset( $content['bg_overlay_type'] ) ? $content['bg_overlay_type'] : 'solid',
 			'bg_overlay_color'     => isset( $content['bg_overlay_color'] ) ? $content['bg_overlay_color'] : '#000000',
-			'bg_overlay_opacity'   => isset( $content['bg_overlay_opacity'] ) ? floatval( $content['bg_overlay_opacity'] ) : 0.4,
+			'bg_overlay_opacity'   => isset( $content['bg_overlay_opacity'] ) ? floatval( $content['bg_overlay_opacity'] ) : 0,
 			'bg_blur'              => isset( $content['bg_blur'] ) ? intval( $content['bg_blur'] ) : 0,
 			'social_media'         => array(
 				'enabled'   => ! isset( $social_media['enabled'] ) || ! empty( $social_media['enabled'] ),

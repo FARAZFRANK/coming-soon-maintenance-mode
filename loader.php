@@ -128,7 +128,7 @@ $csmm_bg_gradient_angle      = isset( $csmm_content['bg_gradient_angle'] ) ? int
 $default_overlay             = in_array( $csmm_bg_type, array( 'custom', 'slideshow', 'video', 'pattern', 'solid' ), true ) ? 'none' : 'solid';
 $csmm_bg_overlay_type     = ( isset( $csmm_content['bg_overlay_type'] ) && '' !== $csmm_content['bg_overlay_type'] ) ? $csmm_content['bg_overlay_type'] : $default_overlay;
 $csmm_bg_overlay_color    = isset( $csmm_content['bg_overlay_color'] ) ? $csmm_content['bg_overlay_color'] : '#000000';
-$csmm_bg_overlay_opacity  = isset( $csmm_content['bg_overlay_opacity'] ) ? floatval( $csmm_content['bg_overlay_opacity'] ) : 0.4;
+$csmm_bg_overlay_opacity  = isset( $csmm_content['bg_overlay_opacity'] ) ? floatval( $csmm_content['bg_overlay_opacity'] ) : 0;
 $csmm_bg_blur             = isset( $csmm_content['bg_blur'] ) ? intval( $csmm_content['bg_blur'] ) : 0;
 
 // Launch timestamp string (e.g., 'October 25, 2026 10:00:00')
