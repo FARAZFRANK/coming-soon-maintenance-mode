@@ -108,17 +108,18 @@ class CSMM_REST_API {
 			$template_id = 1;
 		}
 
-		$logo_id  = isset( $content['logo'] ) ? $content['logo'] : '1';
+		$logo_id  = isset( $content['logo'] ) && '' !== $content['logo'] ? $content['logo'] : '';
 		$logo_url = '';
 		if ( ! empty( $logo_id ) && is_numeric( $logo_id ) ) {
-			$img_src = wp_get_attachment_image_src( $logo_id, 'medium', false );
+			$img_src = wp_get_attachment_image_src( intval( $logo_id ), 'medium', false );
 			if ( $img_src ) {
 				$logo_url = $img_src[0];
 			}
 		}
 
 		if ( empty( $logo_url ) ) {
-			$logo_url = CSMM_URL . 'templates/images/logo-w.png';
+			$default_logo = in_array( intval( $template_id ), array( 4, 8 ), true ) ? 'logo-b.png' : 'logo-w.png';
+			$logo_url     = CSMM_URL . 'templates/images/' . $default_logo;
 		}
 
 		// Parse slides

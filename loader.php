@@ -57,10 +57,11 @@ $csmm_logo_link           = ( isset( $csmm_content['logo_link'] ) && '' !== $csm
 $csmm_logo_height_enabled = ! empty( $csmm_content['logo_height_enabled'] );
 $csmm_logo_height         = isset( $csmm_content['logo_height'] ) ? intval( $csmm_content['logo_height'] ) : 100;
 $csmm_logo_alt            = 'coming-soon-logo';
-$csmm_logo_url            = array( CSMM_URL . 'templates/images/logo-w.png' );
+$default_logo_file        = in_array( intval( $csmm_template_id ), array( 4, 8 ), true ) ? 'logo-b.png' : 'logo-w.png';
+$csmm_logo_url            = array( CSMM_URL . 'templates/images/' . $default_logo_file );
 
-if ( ! empty( $csmm_logo_id ) && is_numeric( $csmm_logo_id ) ) {
-	$medium_src = wp_get_attachment_image_src( $csmm_logo_id, 'full', false );
+if ( ! empty( $csmm_content['logo'] ) && is_numeric( $csmm_content['logo'] ) ) {
+	$medium_src = wp_get_attachment_image_src( intval( $csmm_content['logo'] ), 'full', false );
 	if ( $medium_src ) {
 		$csmm_logo_url = $medium_src;
 	}
@@ -262,16 +263,15 @@ if ( ! $csmm_logo_enabled || 'disabled' === $csmm_logo_type ) {
 // Title toggle & font size / color override (Supported across all 36 templates)
 if ( ! $csmm_title_enabled ) {
 	$dynamic_css .= "h1, .home-content__text h1, .home-content h1, .title, .title-font, .reveal-text, .hero-title, .section-title, .main-title, .highlight, h1 span.highlight, h1.title-font, .banner-text h1, .display-1, .display-2 { display: none !important; }\n";
-} else {
+} elseif ( $csmm_title_font_size_enabled ) {
 	$title_rules = array();
-	if ( $csmm_title_font_size_enabled && $csmm_title_font_size > 0 ) {
+	if ( $csmm_title_font_size > 0 ) {
 		$title_rules[] = "font-size: {$csmm_title_font_size}px !important";
 		$title_rules[] = "line-height: 1.2 !important";
 	}
-	$effective_title_color = ! empty( $csmm_title_color ) ? $csmm_title_color : ( 4 === $csmm_template_id ? '#000000' : '' );
-	if ( ! empty( $effective_title_color ) ) {
-		$title_rules[] = "color: {$effective_title_color} !important";
-		$title_rules[] = "-webkit-text-fill-color: {$effective_title_color} !important";
+	if ( ! empty( $csmm_title_color ) ) {
+		$title_rules[] = "color: {$csmm_title_color} !important";
+		$title_rules[] = "-webkit-text-fill-color: {$csmm_title_color} !important";
 		$title_rules[] = "background-image: none !important";
 		$title_rules[] = "background: none !important";
 	}
@@ -284,15 +284,14 @@ if ( ! $csmm_title_enabled ) {
 // Description toggle & font size / color override (Supported across all 36 templates)
 if ( ! $csmm_description_enabled ) {
 	$dynamic_css .= ".csmm-description-content, .home-content__text p, .home-content p, #postcard-message-container, #postcard-message, .description, .hero-desc, .section-desc, .sub-title, .content p, .lead { display: none !important; }\n";
-} else {
+} elseif ( $csmm_description_font_size_enabled ) {
 	$desc_rules = array();
-	if ( $csmm_description_font_size_enabled && $csmm_description_font_size > 0 ) {
+	if ( $csmm_description_font_size > 0 ) {
 		$desc_rules[] = "font-size: {$csmm_description_font_size}px !important";
 		$desc_rules[] = "line-height: 1.6 !important";
 	}
-	$effective_desc_color = ! empty( $csmm_description_color ) ? $csmm_description_color : ( 4 === $csmm_template_id ? '#000000' : '' );
-	if ( ! empty( $effective_desc_color ) ) {
-		$desc_rules[] = "color: {$effective_desc_color} !important";
+	if ( ! empty( $csmm_description_color ) ) {
+		$desc_rules[] = "color: {$csmm_description_color} !important";
 	}
 	if ( ! empty( $desc_rules ) ) {
 		$desc_rule_str = implode( '; ', $desc_rules );
@@ -408,13 +407,26 @@ $dynamic_css .= ".template-two-countdown, .template-two-content .template-two-co
 $dynamic_css .= ".template-two-countdown .countdown-title { margin-bottom: 1.25rem !important; }\n";
 $dynamic_css .= ".template-two-form, .template-two-content .template-two-form { margin-top: 2.2rem !important; }\n";
 
-// Template 4: Default title and description to #000000 for high-contrast readability against bright background
-if ( 4 === $csmm_template_id ) {
-	if ( empty( $csmm_title_color ) ) {
-		$dynamic_css .= ".home-content h1, .home-content__text h1 { color: #000000 !important; }\n";
+// Template Defaults: ONLY Templates 4 and 8 default to Black (#000000), Templates 1, 11, and 15 default to White (#ffffff)
+if ( in_array( intval( $csmm_template_id ), array( 4, 8 ), true ) ) {
+	if ( empty( $csmm_title_font_size_enabled ) || empty( $csmm_title_color ) ) {
+		$dynamic_css .= "h1, .home-content h1, .home-content__text h1 { color: #000000 !important; -webkit-text-fill-color: #000000 !important; }\n";
 	}
-	if ( empty( $csmm_description_color ) ) {
-		$dynamic_css .= ".home-content__text p, .home-content p, .home-content__text .csmm-description-content, .home-content__text .csmm-description-content p { color: #000000 !important; }\n";
+	if ( empty( $csmm_description_font_size_enabled ) || empty( $csmm_description_color ) ) {
+		$dynamic_css .= ".home-content__text p, .home-content p, .csmm-description-content, .csmm-description-content p { color: #000000 !important; }\n";
+	}
+} else {
+	if ( empty( $csmm_title_font_size_enabled ) || empty( $csmm_title_color ) ) {
+		if ( 1 === intval( $csmm_template_id ) ) {
+			$dynamic_css .= ".home-content h1, .home-content__text h1 { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }\n";
+		} elseif ( 11 === intval( $csmm_template_id ) ) {
+			$dynamic_css .= ".home-content h1 { -webkit-text-stroke-color: #ffffff !important; color: transparent !important; }\n";
+		} elseif ( 15 === intval( $csmm_template_id ) ) {
+			$dynamic_css .= ".home-content h1 { -webkit-text-stroke-color: #ffffff !important; }\n";
+		}
+	}
+	if ( empty( $csmm_description_font_size_enabled ) || empty( $csmm_description_color ) ) {
+		$dynamic_css .= ".home-content__text p, .home-content p, .home-content__main p, .csmm-description-content, .csmm-description-content p { color: #ffffff !important; }\n";
 	}
 }
 
