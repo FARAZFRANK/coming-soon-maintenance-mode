@@ -146,7 +146,7 @@ class CSMM_REST_API {
 		}
 
 		$current_date   = date( 'Y-m-d' );
-		$countdown_date = isset( $content['countdown_date'] ) ? $content['countdown_date'] : date( 'Y-m-d', strtotime( $current_date . ' +30 days' ) );
+		$countdown_date = ( ! empty( $content['countdown_date'] ) && strtotime( $content['countdown_date'] ) > time() ) ? $content['countdown_date'] : date( 'Y-m-d', strtotime( $current_date . ' +30 days' ) );
 
 		$response = array(
 			'website_mode'         => $website_mode,

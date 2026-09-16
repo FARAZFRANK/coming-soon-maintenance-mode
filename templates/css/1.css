@@ -52,12 +52,27 @@
 /* ------------------------------------------------------------------- 
  * ## home content - (_site-layout.scss) 
  * ------------------------------------------------------------------- */
+.template-one.s-home {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 100vh !important;
+  height: auto !important;
+  box-sizing: border-box !important;
+  padding: 40px 20px !important;
+}
+
 .home-content {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 100%;
-  vertical-align: middle;
-  padding-bottom: 6rem;
+  height: auto;
+  min-height: 100%;
+  padding: 0;
+  margin: auto;
   position: relative;
 }
 
@@ -80,7 +95,10 @@
 }
 
 .home-content__main {
-  padding-top:15rem;
+  padding-top: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 960px;
   position: relative;
   overflow: hidden;
 }

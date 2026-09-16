@@ -187,7 +187,7 @@ export default function FreeVsProTab() {
               startIcon={<RocketLaunchRoundedIcon />}
               sx={{
                 background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-                color: '#ffffff',
+                color: '#ffffff !important',
                 fontWeight: 800,
                 fontSize: '0.92rem',
                 borderRadius: '8px',
@@ -195,13 +195,14 @@ export default function FreeVsProTab() {
                 py: 1.2,
                 textTransform: 'none',
                 boxShadow: '0 4px 14px rgba(245, 158, 11, 0.4)',
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)',
+                '&:hover, &:focus, &:active': {
+                  color: '#ffffff !important',
+                  background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%) !important',
                   boxShadow: '0 6px 18px rgba(245, 158, 11, 0.5)',
                 },
               }}
             >
-              Get Coming Soon Pro Now 🚀
+              Get Coming Soon Pro Now
             </Button>
 
             <Button
@@ -210,10 +211,10 @@ export default function FreeVsProTab() {
               href={PRO_URLS.demo}
               target="_blank"
               rel="noopener noreferrer"
-              startIcon={<VisibilityRoundedIcon />}
+              startIcon={<VisibilityRoundedIcon sx={{ color: '#ffffff !important' }} />}
               sx={{
-                color: '#ffffff',
-                borderColor: 'rgba(255, 255, 255, 0.3)',
+                color: '#ffffff !important',
+                borderColor: 'rgba(255, 255, 255, 0.35)',
                 fontWeight: 700,
                 fontSize: '0.92rem',
                 borderRadius: '8px',
@@ -221,9 +222,14 @@ export default function FreeVsProTab() {
                 py: 1.2,
                 textTransform: 'none',
                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                '&:hover': {
-                  borderColor: '#ffffff',
-                  backgroundColor: 'rgba(255, 255, 255, 0.12)',
+                transition: 'all 0.2s ease-in-out',
+                '&:hover, &:focus, &:active': {
+                  color: '#ffffff !important',
+                  borderColor: '#ffffff !important',
+                  backgroundColor: 'rgba(255, 255, 255, 0.16) !important',
+                },
+                '& .MuiButton-startIcon': {
+                  color: '#ffffff !important',
                 },
               }}
             >
@@ -236,17 +242,21 @@ export default function FreeVsProTab() {
               href={PRO_URLS.details}
               target="_blank"
               rel="noopener noreferrer"
-              endIcon={<OpenInNewRoundedIcon sx={{ fontSize: 16 }} />}
+              endIcon={<OpenInNewRoundedIcon sx={{ fontSize: 16, color: '#93c5fd !important' }} />}
               sx={{
-                color: '#93c5fd',
+                color: '#93c5fd !important',
                 fontWeight: 700,
                 fontSize: '0.92rem',
                 px: 2,
                 py: 1.2,
                 textTransform: 'none',
-                '&:hover': {
-                  color: '#bfdbfe',
-                  backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                transition: 'all 0.2s ease-in-out',
+                '&:hover, &:focus, &:active': {
+                  color: '#ffffff !important',
+                  backgroundColor: 'rgba(59, 130, 246, 0.15) !important',
+                },
+                '&:hover .MuiSvgIcon-root': {
+                  color: '#ffffff !important',
                 },
               }}
             >
@@ -553,12 +563,12 @@ export default function FreeVsProTab() {
               py: 1.2,
               textTransform: 'none',
               boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)',
-              '&:hover': {
-                background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)',
+              '&:hover, &:focus, &:active': {
+                background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%) !important',
               },
             }}
           >
-            Upgrade to Pro 🚀
+            Upgrade to Pro
           </Button>
 
           <Button
@@ -572,13 +582,15 @@ export default function FreeVsProTab() {
               fontSize: '0.88rem',
               borderRadius: '8px',
               borderColor: 'rgba(245, 158, 11, 0.5)',
-              color: (theme) => (theme.palette.mode === 'dark' ? '#fbbf24' : '#b45309'),
+              color: (theme) => (theme.palette.mode === 'dark' ? '#fbbf24 !important' : '#b45309 !important'),
               px: 2.5,
               py: 1.2,
               textTransform: 'none',
-              '&:hover': {
-                borderColor: '#f59e0b',
-                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+              transition: 'all 0.2s ease-in-out',
+              '&:hover, &:focus, &:active': {
+                borderColor: '#f59e0b !important',
+                color: (theme) => (theme.palette.mode === 'dark' ? '#fde68a !important' : '#78350f !important'),
+                backgroundColor: 'rgba(245, 158, 11, 0.12) !important',
               },
             }}
           >

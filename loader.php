@@ -83,7 +83,7 @@ $csmm_description     = $csmm_desc_placeholder;
 $csmm_countdown       = isset( $csmm_content['countdown'] ) ? $csmm_content['countdown'] : '1';
 $csmm_countdown_title = isset( $csmm_content['countdown_title'] ) ? $csmm_content['countdown_title'] : __( 'Launching In...', 'coming-soon-maintenance-mode' );
 $csmm_current_date    = date( 'Y-m-d' );
-$csmm_countdown_date  = isset( $csmm_content['countdown_date'] ) ? $csmm_content['countdown_date'] : date( 'Y-m-d', strtotime( $csmm_current_date . ' +30 days' ) );
+$csmm_countdown_date  = ( isset( $csmm_content['countdown_date'] ) && '' !== $csmm_content['countdown_date'] && strtotime( $csmm_content['countdown_date'] ) > time() ) ? $csmm_content['countdown_date'] : date( 'Y-m-d', strtotime( '+30 days' ) );
 $csmm_countdown_time  = isset( $csmm_content['countdown_time'] ) ? $csmm_content['countdown_time'] : '10:00';
 $csmm_countdown_override_enabled = ! empty( $csmm_content['countdown_override_enabled'] );
 $csmm_countdown_digit_font_size  = isset( $csmm_content['countdown_digit_font_size'] ) ? intval( $csmm_content['countdown_digit_font_size'] ) : 0;
@@ -393,6 +393,9 @@ $dynamic_css .= ".home-content { min-height: 100vh !important; height: auto !imp
 $dynamic_css .= ".home-content__main { padding-top: clamp(2.5rem, 6vh, 8rem) !important; padding-bottom: 2.5rem !important; position: relative !important; }\n";
 $dynamic_css .= ".home-content__text { overflow: visible !important; height: auto !important; }\n";
 $dynamic_css .= ".home-content__text p, .home-content p, .template-two-desc, .template-two-content .csmm-description-content, .template-two .csmm-description-content, .home-content__text > p { word-wrap: break-word !important; overflow-wrap: break-word !important; word-break: break-word !important; line-height: 1.65 !important; margin-bottom: 24px !important; }\n";
+$dynamic_css .= ".template-one, main.template-one, .s-home.template-one, .s-home--particles.template-one { display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; min-height: 100vh !important; height: auto !important; padding: 40px 20px !important; box-sizing: border-box !important; }\n";
+$dynamic_css .= ".template-one .home-content { display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; width: 100% !important; height: auto !important; padding: 0 !important; margin: auto !important; }\n";
+$dynamic_css .= ".template-one .home-content__main { padding-top: 0 !important; margin: 0 auto !important; width: 100% !important; max-width: 960px !important; }\n";
 $dynamic_css .= ".template-two, main.template-two, .s-home--static.template-two { display: flex !important; align-items: center !important; justify-content: center !important; min-height: 100vh !important; height: auto !important; padding: 40px 20px !important; box-sizing: border-box !important; }\n";
 $dynamic_css .= ".template-two .home-content { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; height: auto !important; padding: 0 !important; margin: auto !important; }\n";
 $dynamic_css .= ".template-two .home-content__main { width: 100% !important; max-width: 980px !important; margin: 0 auto !important; padding: 0 !important; }\n";
@@ -646,7 +649,9 @@ if ( '1' === strval( $csmm_countdown ) ) {
     );
     targetTimestamp = targetDate.getTime();
   }
-  if (!targetTimestamp) return;
+  if (!targetTimestamp || targetTimestamp <= Date.now()) {
+    targetTimestamp = Date.now() + (30 * 24 * 60 * 60 * 1000);
+  }
 
   function pad(n) {
     return n < 10 ? "0" + n : String(n);
