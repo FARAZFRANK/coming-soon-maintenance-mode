@@ -2,7 +2,7 @@
 
 [![WordPress Plugin](https://img.shields.io/badge/WordPress-5.0+-blue.svg)](https://wordpress.org/)
 [![PHP Version](https://img.shields.io/badge/PHP-7.2+-purple.svg)](https://www.php.net/)
-[![Version](https://img.shields.io/badge/version-3.2.6-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode-pro)
+[![Version](https://img.shields.io/badge/version-1.3.0-green.svg)](https://github.com/FARAZFRANK/coming-soon-maintenance-mode)
 [![React](https://img.shields.io/badge/React-18-61dafb.svg)](https://react.dev/)
 [![Material UI](https://img.shields.io/badge/MUI-v5-007fff.svg)](https://mui.com/)
 [![Vite](https://img.shields.io/badge/Vite-5-646cff.svg)](https://vitejs.dev/)
@@ -93,8 +93,8 @@ npm run build
 
 ## 📋 Changelog
 
-### = 3.2.6 = (04 September 2026)
-* **Enterprise-Grade Background Email Queue & Batch Worker**: Implemented WP-Cron asynchronous batch delivery (50 emails/chunk) with zero-latency initiation, live progress bar in Admin Studio, and auto-cleanup to handle 1,000+ subscriber lists reliably without server timeouts.
+### = 1.3.0 = (16 September 2026)
+* **Initial Free Version Alignment**: Forked and prepared lightweight Free edition v1.3.0 with unified React 18 admin studio, template engine, and countdown timer.
 * **Client-Side Accurate Timezone Countdown Engine**: Re-engineered countdown calculation to parse target datetime directly in visitor's local timezone, eliminating UTC offset gaps (e.g. 5.5 hours discrepancy).
 * **Countdown Expiry Zero-Finish Refresh Loop Guard**: Added `clearInterval` timer detachment, live preview mode immunity, and `sessionStorage` single-reload latch to prevent infinite reload loops upon timer completion.
 * **PHP 8.4+ CSV Streaming Compatibility**: Explicitly passed escape parameters to `fputcsv()`, cleared output buffer streams, and added UTF-8 BOM headers for Microsoft Excel compatibility.

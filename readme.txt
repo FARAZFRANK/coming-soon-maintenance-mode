@@ -1,171 +1,285 @@
-=== Coming Soon Maintenance Mode Pro ===
-Contributors: farazfrank
-Tags: coming soon, maintenance mode, under construction, launch countdown, newsletter, mailchimp, brevo, mailerlite, smtp, seo
+=== Coming Soon Maintenance Mode ===
+Contributors: awordpresslife, razipathhan, hanif0991, muhammadshahid, fkfaisalkhan007, sharikkhan007, zishlife, FARAZFRANK
+Tags: coming soon, maintenance mode, landing page, under construction page, SEO friendly
 Requires at least: 5.0
-Tested up to: 6.7
-Requires PHP: 7.2
-Stable tag: 3.2.6
+Tested up to: 7.1
+Stable tag: 1.3.0
+Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Create high-converting, lightning-fast Coming Soon, Under Construction, and Maintenance Mode pages with React 18 Studio, Newsletter APIs, SMTP, and SEO Suite.
+A Coming Soon and Maintenance Mode plugin to manage your site's availability with responsive templates and SEO-friendly features.
 
 == Description ==
 
-**Coming Soon Maintenance Mode Pro** is an enterprise-grade, lightning-fast WordPress plugin designed to create stunning Coming Soon pages, Under Construction notices, and Maintenance Mode screens with lead capture.
+The Coming Soon and Maintenance Mode plugin enables WordPress users to set up a temporary landing page or a maintenance screen while working on their site. This tool helps site administrators manage visitor access during website construction, updates, or downtime.
 
-The admin dashboard is completely built with **React 18, Vite, Material UI (MUI v5), and WordPress REST API**, providing an ultra-smooth single-page application experience with zero legacy Bootstrap dependencies.
+Pro Version Demo: **[Coming Soon Maintenance Mode Demo](https://wpfrank.com/demo/coming-soon-maintenance-mode-pro)**
+Buy Pro Version: **[Buy Coming Soon Maintenance Mode](https://wpfrank.com/wordpress-plugins/coming-soon-maintenance-mode-pro/)**
 
-### 🌟 Key Highlights & Features:
+### Video Tutorial - Free Version
 
-* **3 Website Modes**:
-  * **Disabled / Website Live**: Website is accessible to all visitors.
-  * **Coming Soon Mode (HTTP 200)**: Show teaser, countdown timer, and lead capture for upcoming launches.
-  * **Maintenance Mode (HTTP 503)**: Return proper `503 Service Unavailable` with `Retry-After` headers to protect SEO ranking during site upgrades.
-* **Selective Targeting**: Apply maintenance mode site-wide or restrict it to specific Posts, Pages, Home, Frontpage, Categories, Tags, or Search.
-* **36+ Pre-built Responsive Templates**: One-click activation with interactive desktop/tablet/mobile live preview modals.
-* **Universal SEO Suite**: Auto injects Open Graph meta, Twitter Cards, Canonical links, Google Analytics tracking, and Schema.org structured data across all 36 templates.
-* **Multi-Channel Newsletter APIs**:
-  * **Mailchimp v3 API Sync** (250 Contacts / 500 Emails/Mo Free Tier)
-  * **Brevo (Sendinblue) API v3 Sync** (300 Emails/Day & Up to 100k Contacts Free Tier)
-  * **MailerLite API Sync** (250 Subscribers / 2,500 Emails/Mo Free Tier)
-  * **Zapier / Make / Webhook Dispatcher** (Unlimited Direct Lead Push)
-* **Automated Email Notifications & Custom SMTP**:
-  * Admin Lead Alert Email
-  * Subscriber Welcome Email
-  * **Site Live Announcement Email**: Automatically broadcasted to all subscribers when the website goes live.
-  * Full Header, Footer, Colors, and Background Canvas branding customizer.
-  * Interactive Live Email Template Preview modal (Desktop & Smartphone viewports).
-  * Built-in PHPMailer SMTP hook for Gmail, SendGrid, Amazon SES, or hosting mailers.
-* **Dynamic Custom Social Channels**:
-  * 1-Click quick presets for Discord, Telegram, GitHub, Threads, Twitch, Spotify, Medium, Slack, Patreon, Vimeo, and custom Website links.
-  * FontAwesome icon picker with live preview.
-* **Launch Countdown Timer & Auto-Launch**:
-  * Real-time countdown timer.
-  * Automatically unlocks live website when the countdown hits zero.
-* **Secure Lead Management**:
-  * Dedicated indexed MySQL table (`wp_csmm_subscribers`).
-  * Search, pagination, deletion, and formula injection sanitized streaming CSV exports.
-* **Custom CSS Code Studio**:
-  * Formatted code editor with syntax color theme and Mac-style title bar.
-* **Comprehensive Documentation Tab**:
-  * Built-in guide with feature matrix, API free limits table, 4 step-by-step use cases, dynamic placeholders cheat sheet, and FAQ.
+[youtube https://www.youtube.com/watch?v=HYVdcnvPi08]
+
+Detailed configuration options are available to customize the look and feel of your coming soon page without writing code. The plugin is designed to be responsive, ensuring that your temporary page looks functional on various devices, including desktops, tablets, and mobile phones.
+
+Search engine optimization is a key consideration for this plugin. It allows search engines to crawl your coming soon page, which can help maintain your site's presence even when the main content is not yet visible. 
+
+### Key Features
+
+*   **Coming Soon Mode:** Activate a coming soon page to inform visitors about your upcoming site launch.
+*   **Multiple templates:** Comes with 35+ prebuilt templates ready to shine.
+*   **Maintenance Mode:** Display a maintenance message when performing updates or fixing issues.
+*   **Responsive Design:** Templates are built to adapt to different screen sizes.
+*   **Customization:** Adjust background images, colors, and text to align with your content.
+*   **SEO Protection:** Emits intelligent HTTP status codes (200 OK for Coming Soon, 503 for Maintenance) so search engines know exactly how to handle your site without dropping your rankings.
+*   **Bootstrap 5 Interface:** Uses a modern interface for backend settings.
+*   **Countdown Timer:** Optionally display a timer to indicate when the site will be live.
+*   **Auto Launch:** Schedule your site to go live automatically.
+*   **Import & Export Settings:** Easily export your plugin configurations as a JSON file and import them to another site.
+*   **Factory Reset:** Reset all plugin settings, template selections, and social media data to default state.
+
+### What You Get in the Free Version
+
+*   **One Click Setup:** Get started quickly without complicated configuration steps.
+*   **Super Fast and Handy:** Lightweight plugin that won't slow down your site.
+*   **Minimal Design:** Clean, distraction-free templates that focus on your message.
+*   **Free Responsive Templates:** Choose from professionally designed templates that work on all devices.
+*   **Customization Settings:** Personalize colors, backgrounds, and content to match your brand.
+*   **Website Auto Launch:** Set a date and time for your site to go live automatically.
+*   **Settings Management:** Full support for exporting, importing, and factory resetting plugin settings.
+
+### Upgrade to Pro for More Power
+
+The Pro version includes everything in the free version, plus:
+
+*   **35+ Premium Templates:** Access a wide variety of professionally designed templates.
+*   **Video Support:** Add background videos to make your page more engaging.
+*   **Pre Built Templates:** Ready-to-use designs that require minimal setup.
+*   **Advanced Plugin Settings:** Fine-tune every aspect of your coming soon page.
+*   **Social Media Profiling:** Connect your social accounts to build your audience before launch.
+*   **Custom CSS:** Add your own styles for complete design control.
+
+### Video Tutorial - Pro Version
+
+[youtube https://www.youtube.com/watch?v=hgd1lziA7Mk]
+
+Use the Coming Soon mode when you are building a new website and want to collect leads or inform visitors before the official launch. The Maintenance Mode is suitable for existing websites that need to be taken offline temporarily for updates or troubleshooting.
+
+== Third-Party Libraries ==
+
+This plugin utilizes several third-party libraries to provide its features. In accordance with WordPress.org guidelines, the source code for these libraries is documented below:
+
+*   **Bootstrap** (v5.2.3 and v3.3.7): https://github.com/twbs/bootstrap - License: MIT
+*   **Font Awesome Free** (v6.2.1): https://github.com/FortAwesome/Font-Awesome - License: CC BY 4.0, SIL OFL 1.1, MIT
+*   **Particles.js** (v2.0.0): https://github.com/VincentGarreau/particles.js - License: MIT
+*   **Slick Carousel** (v1.6.0): https://github.com/kenwheeler/slick - License: MIT
+*   **jQuery Countdown** (v2.2.0): https://github.com/hilios/jQuery.countdown - License: MIT
+*   **jQuery Placeholder** (v2.1.2): https://github.com/mathiasbynens/jquery-placeholder - License: MIT
 
 == Installation ==
 
-1. Upload the plugin folder `coming-soon-maintenance-mode-pro` to your `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Navigate to **Coming Soon Pro** in the admin sidebar to customize your page, template, newsletter APIs, and SEO settings.
+1.  Upload the plugin files to the `/wp-content/plugins/` directory, or install the plugin through the WordPress plugins screen.
+2.  Activate the plugin through the 'Plugins' screen in WordPress.
+3.  Use the plugin settings panel to configure your Coming Soon or Maintenance Mode page.
+4.  For detailed visual instructions, refer to the [Plugin Documentation](https://www.youtube.com/channel/UCqbxQzbTEE2p3o33fKB5NIQ/).
 
 == Frequently Asked Questions ==
 
-= Does Maintenance Mode hurt my Google SEO rankings? =
-No! Coming Soon Maintenance Mode Pro automatically sends a proper `HTTP 503 Service Unavailable` header along with `Retry-After: 3600`. Search engine crawlers understand the downtime is temporary and maintain your existing keyword rankings.
+= How do I activate the Coming Soon or Maintenance Mode? =
 
-= Can logged-in administrators browse the live website? =
-Yes! Logged-in administrators bypass the maintenance screen and can view and edit the live site normally.
+After installing the plugin, go to your WordPress dashboard and navigate to the plugin settings. You'll find an option to enable either Coming Soon or Maintenance Mode. Simply select your preferred mode and save the settings.
 
-= How do I prevent notification emails from going to the Spam folder? =
-Go to **Newsletter & Integrations** -> **Custom SMTP Mail Delivery**, enable SMTP, and configure your Gmail, SendGrid, or hosting SMTP server.
+= Will logged-in users see the coming soon page? =
+
+No, by default, logged-in administrators and users with appropriate permissions can view the live site while visitors see the coming soon page. This allows you to work on your site while it's in maintenance mode.
+
+= Can I customize the coming soon page design? =
+
+Yes, the plugin offers extensive customization options. You can change backgrounds, colors, fonts, add your logo, customize text, and choose from multiple responsive templates to match your brand.
+
+= How do I schedule my site to go live automatically? =
+
+The plugin includes an auto-launch feature. In the settings, you can set a specific date and time for your site to automatically switch from coming soon mode to live mode without manual intervention.
+
+= Does this plugin affect SEO? =
+
+Yes! The plugin uses intelligent HTTP status codes to protect your Google rankings:
+- **Coming Soon Mode** returns a `200 OK` status, telling Google that your new website is actively being built and should start being indexed.
+- **Maintenance Mode** returns a strict `503 Service Unavailable` status. This acts as a "Do Not Disturb" sign for search engines, telling them your site is just down for quick repairs and they should come back later without dropping your search rankings!
+
+= Can I collect email addresses from visitors? =
+
+Yes, But only in Pro version many templates include built-in email subscription forms. You can collect visitor emails to build your audience before your official launch.
+
+= Will the plugin work with my theme? =
+
+Yes, the plugin works independently of your WordPress theme. It displays a standalone coming soon page that doesn't rely on your theme's design.
+
+= Can I preview the coming soon page before activating it? =
+
+Yes, you can preview your coming soon page while logged in as an administrator before making it live to visitors.
+
+= How do I add social media links? =
+
+The plugin includes social media options in the settings panel. You can add links to your Facebook, Twitter, Instagram, and other social profiles in Pro.
+
+= Is the plugin compatible with caching plugins? =
+
+Yes, the plugin is designed to work with popular caching plugins. However, you may need to clear your cache after activating or deactivating the coming soon mode.
+
+= Can I use custom CSS? =
+
+Yes, the Pro version includes a custom CSS option that allows you to add your own styles for complete design control.
+
+= What's the difference between Coming Soon and Maintenance Mode? =
+
+Coming Soon mode is typically used for new websites that haven't launched yet, while Maintenance Mode is used for existing sites that are temporarily offline for updates or repairs.
+
+= Can I use it on commercial websites? =
+
+Yes, this plugin is released under the GPL license, allowing usage on any website, including commercial projects.
+
+= How do I switch back to a live site? =
+
+Go to the plugin settings and change the status to "Live" or "Disabled" to deactivate the coming soon or maintenance page and make your site publicly accessible.
+
+= Does it work with multisite installations? =
+
+Yes, the plugin is compatible with WordPress multisite installations and can be activated on individual sites within your network.
+
+= Can I add a countdown timer? =
+
+Yes, the plugin includes countdown timer functionality. You can set a launch date and the timer will automatically count down to that moment.
+
+= What happens if I deactivate the plugin? =
+
+If you deactivate the plugin, your site will immediately become publicly accessible again. All your settings will be saved if you decide to reactivate it later.
+
+= Is the plugin translation ready? =
+
+Yes, the plugin is translation ready and supports multiple languages, making it easy to create coming soon pages in your preferred language.
+
+= How do I get support? =
+
+For support questions, please visit the WordPress.org support forum for this plugin. Pro version users receive priority support through our dedicated support channels.
+
+== Screenshots ==
+
+1.  Free Template 1
+2.  Free Template 2
+3.  Free Template 3
+4.  Free Template 4
+5.  Free Template 5
+6.  Coming Soon Mode Setting
+7.  Maintenance Mode Settings
+8.  Template Settings
+9.  Content Configuration Settings
+10. Social Media Settings
 
 == Changelog ==
 
-= 3.2.6 = 04 September 2026
-* **Enterprise-Grade Background Email Queue & Batch Worker**: Implemented WP-Cron asynchronous batch delivery (50 emails/chunk) with zero-latency initiation, live progress bar in Admin Studio, and auto-cleanup to handle 1,000+ subscriber lists reliably without server timeouts.
-* **Client-Side Accurate Timezone Countdown Engine**: Re-engineered countdown calculation to parse target datetime directly in visitor's local timezone, eliminating UTC offset gaps (e.g. 5.5 hours discrepancy).
-* **Countdown Expiry Zero-Finish Refresh Loop Guard**: Added `clearInterval` timer detachment, live preview mode immunity, and `sessionStorage` single-reload latch to prevent infinite reload loops upon timer completion.
-* **PHP 8.4+ CSV Streaming Compatibility**: Explicitly passed escape parameters to `fputcsv()`, cleared output buffer streams, and added UTF-8 BOM headers for Microsoft Excel compatibility.
-* **Documentation Studio Stability**: Resolved `handleImportClick` and `handleConfirmReset` ReferenceErrors in Settings Import/Export and Factory Reset dialogs.
-* **Modern Glassmorphic DatePicker Component**: Built lightweight, theme-adaptive custom DatePicker with month navigation, click-outside dismiss, and zero external date library bloat.
-* **Subscriber Form Input & Placeholder Styling Default**: Aligned input/placeholder font color default to `#FFFFFF` across admin controls, Live Form Preview, activator, and frontend CSS.
-* **Template-Specific Backgrounds & Custom Background Guidance**: Added clear explanatory guidance and contextual controls for template-specific backgrounds versus custom image/video/pattern/gradient overlays.
+= 1.2.0 =
+*   New: Added dedicated "Our Plugins" and "Our Themes" dashboard pages with responsive showcase grids (June 29, 2026).
+*   Security: Bundled SweetAlert2 locally to eliminate remote CDN script execution for WP.org compliance (June 29, 2026).
+*   Update: Modernized admin banner action buttons with custom gradients and icon designs (June 29, 2026).
+*   Fixed: Resolved countdown date default initialization on plugin reset and activation to current date + 1 month (June 29, 2026).
+*   Cleaned: Completely removed deprecated "More Products" page and cleaned up legacy assets (June 29, 2026).
+*   Cleaned: Removed custom promo notice banner and updated Pro version pricing to $19.00 (June 29, 2026).
 
-= 3.2.5 = 02 September 2026
-* **Social Media Global Visibility Toggle Switch**: Added dedicated Enable/Disable toggle card in the Social Media tab to easily hide or show social icons site-wide with a single click across all 36 templates.
-* **Universal Email Lead Capture ON/OFF Engine**: Enhanced Email Lead Capture toggle with comprehensive DOM regex stripping and dynamic CSS suppression across all 36 templates.
-* **Automatic Multi-Channel Newsletter API Lead Sync**: Connected direct form submissions across all 36 frontend templates to automatically sync new subscribers to all enabled Newsletter APIs (Mailchimp v3, Brevo API v3, MailerLite API, and Webhooks) plus trigger Welcome Emails and Admin Alerts.
-* **Template 10 Default Media & Content Display Overhaul**: Fixed default background slideshow loading from `temp-10-slides/` when Graphic Background is set to Default Media; updated two-column responsive layout, clean solid white typography, and countdown timer.
-* **Template 13 Live Preview & Frontend UI Parity**: Restored Template 13 original aesthetic matching reference design with fullscreen 3D particle background video coverage, top-left logo and top-right social icons header, inline countdown clock, and bold outline stroke title typography.
-* **Template 17 Content Box Spacing & Subscriber Form Polish**: Perfected vertical content centering, spacing between hero elements, and subscriber form input/button sizing.
-* **Template 19 Double Background & Spacing Fix**: Resolved duplicate background overlay behind the content card and removed unwanted bottom blank spacing when custom image backgrounds are set.
-* **Zero-Flicker Countdown Engine**: Enhanced launch countdown timer with immediate client-side and server-side synchronized timestamp rendering to prevent layout jump or flash on initial page load.
-* **PHP Syntax & Template Integrity**: Conducted complete repository PHP syntax lint validation with zero syntax errors.
+= 1.1.9 =
+*   New: Added a dedicated Tools tab with Factory Reset and Import/Export configuration capabilities (June 17, 2026).
+*   Update: Replaced browser alerts with beautiful, modern SweetAlert2 popups for all confirmation dialogs (June 17, 2026).
+*   Update: Perfected vertical centering layout for Template 1 (June 17, 2026).
 
-= 3.2.4 = 01 September 2026
-* **Communication Engine In-Depth Documentation Guide**: Added comprehensive educational guide in Documentation Tab covering the end-to-end lifecycle of pre-launch lead capture, why direct Newsletter APIs & authenticated SMTP are critical, and step-by-step email branding and live preview workflows.
-* **Refined Professional Docs Styling**: Upgraded all Documentation accordions, badges, and alerts with unified typography and a sleek theme palette.
-* **Frontend Lead Capture Double-Submit Prevention**: Added submission lock state that disables inputs and changes button text to "Subscribing..." to prevent duplicate form hits.
-* **Subscribers Table Multi-Select & Bulk Deletion Fix**: Resolved event bubbling conflict between table rows and checkboxes, enabling smooth multi-row selection and live bulk subscriber deletions.
-* **Admin Dynamic Asset Cache-Busting**: Added dynamic `filemtime` versioning to React admin JS & CSS enqueues, ensuring instant bundle updates without manual browser cache clearing.
-* **Template 2 Typography & Countdown Spacing Polish**: Optimized description margins and launch timer spacing in Template 2 layout.
-* **Template 36 & Side-by-Side Flex Form Layout**: Scoped input padding rules so subscriber placeholder text is never clipped on side-by-side split templates.
-* **MP4 Background Video Looping & Poster Support**: Assigned missing loop and poster options in loader and REST API, with fallback loop event handlers across all browsers.
-* **Template 14 Background Video Update**: Updated default video URL to high-definition deep space starlight MP4 on wpfrank.com with playsinline attributes.
+= 1.1.8 =
+*   Update: Overhauled responsive layouts, fixed vertical centering bugs, and perfected mobile spacing and font scaling for Templates 3, 4, and 5 (June 17, 2026).
 
-= 3.2.3 = 31 August 2026
-* **Custom SMTP Direct Test Mailer**: Added instant Send Test Mail functionality and connection diagnostics in the Custom SMTP Mail Delivery card to verify server credentials on the fly.
-* **Form Headline Text Setting**: Added customizable `Form Headline Text` under Email Lead Capture settings with dynamic support across templates 17–36.
-* **Newsletter API Setup Guide & 2026 Plan Limits**: Added comprehensive step-by-step API key retrieval tutorials and verified official free tier limits in Documentation and Integrations tabs.
-* **Subscribers Multi-Select & Bulk Deletion Fix**: Resolved event double-firing issue on table rows and header checkbox for smooth bulk subscriber selection and deletion.
-* **Modal Dialog Input & Placeholder Alignment**: Fixed WordPress core admin CSS bleed into MUI Dialog portals, ensuring pixel-perfect input placeholder, label, and fieldset rendering in both Dark and Light modes.
+= 1.1.7 =
+*   Update: Added default countdown date to current date + 1 month on plugin activation.
 
-= 3.2.2 = 30 August 2026
-* **Plugin Settings Backup, Export & JSON Import**: Added complete JSON configuration file download and restore upload support with schema verification, enabling seamless migration across staging and production sites.
-* **Factory Reset System**: Added complete plugin factory reset option in Documentation Tab with high-visibility warning alert modal and backup recommendation.
-* **Title & Description Override Suite (All 36 Templates)**: Renamed controls to `Override Title` and `Override Description`, adding custom Font Size sliders and Text Color swatches + hex inputs with reset buttons across all template layouts.
-* **Launch Countdown Timer Override**: Added `Override Countdown` setting with dedicated Digits & Labels font size sliders and color pickers mapped to all countdown variations.
-* **Sticky Dashboard Header**: Implemented sticky first card with responsive WordPress admin bar alignment (`top: 32px` / `top: 46px`), enhanced elevation shadow, and backdrop blur.
-* **Graphic Background & Solid Color Enhancements**: Updated Solid Color default to `#1d1b1b` with overlay `none`, and added dedicated Reset buttons for Solid Color, Gradient, Pattern, and Overlay settings.
-* **Synchronized Subscriber Form Live Preview**: Aligned dashboard Live Form Preview with the exact frontend search/subscribe bar appearance, fixing real-time input background color rendering overrides.
-* **Preloader & Performance Optimization**: Eliminated duplicate loaders and white screen flash by pre-hydrating workspace state in `wp_localize_script`; resolved horizontal scrollbars via `overflow-x: clip`.
+= 1.1.6 =
+*   SEO: Added proper HTTP status codes (200 OK for Coming Soon mode and 503 Service Unavailable with Retry-After for Maintenance mode) to comply with SEO best practices (June 17, 2026).
 
-= 3.2.1 = 25 August 2026
-* **WordPress Media Library Integration**: Fixed script dependencies (`media-editor`, `media-views`) and isolated Vite output bundle with IIFE format to prevent global scope variable conflicts (`window.wp`), enabling smooth native media upload and selection modal for Brand Logo and Custom Background images.
-* **Universal Content & Branding Engine**: Added full multi-template compatibility in `loader.php` ensuring all 36 templates respect Logo (Text, Graphic with height slider and custom link, or Disabled), WYSIWYG rich HTML description and shortcodes support, custom Google Fonts, and custom CSS.
-* **Graphic Background Suite**: Added solid background colors, 2-color linear and radial gradients, 7 geometric background patterns (Dots, Hexagons, Waves, Carbon, Diagonal, Sakura, Stars), custom images, mobile background override (< 768px), and real-time backdrop blur filter.
-* **Newsletter Form & Button Customizer**: Added complete UI appearance customization for frontend lead capture forms: custom input placeholder, button label, input background color, input text/placeholder color, button background color, button text color, and border-radius slider (0px - 30px) with live real-time form preview in the dashboard.
-* **AJAX Lead Capture & Floating Toast**: Added universal asynchronous zero-page-reload form submission with a sleek bottom-corner floating success/error toast notification across all templates.
-* **Subscribers Multi-Select & Bulk Delete**: Added multi-row select-all checkboxes, selected count badge toolbar, and secure bulk delete REST API endpoint.
-* **Seamless Dark Mode Preloader**: Fixed dark mode reload flash by immediately synchronizing PHP preloader styles with localStorage theme preference.
-* **Sticky Studio Header & Compact Sliders**: Implemented sticky top header card with responsive WordPress admin bar alignment (`top: 32px` / `top: 46px`), glassmorphic backdrop blur, and compact slider range controls (`maxWidth: 360px`).
-* **UI & Theme Polish**: Refined light mode background to neutral `#ececec` palette.
+= 1.1.5 =
+*   Requirement: Renamed all generic function, class, constant, and variable prefixes to 'comisoma' for WP.org guideline compliance.
+*   Update: Implemented database option migration to preserve user settings during prefix rename.
+*   Update: Fixed case consistency for plugin constants and renamed internal JS functions.
+*   Update: Adjusted admin menu position to a lower priority (position 81) to comply with WordPress.org guidelines.
+*   Compliance: Documented third-party library sources in readme.txt for human-readable code compliance.
+*   Update: Replaced background videos with statically served images (`temp-11-fg.webp`, `temp-15-fg.webp`) for Template 11 and Template 15 as per the latest requirements.
+*   Update: Removed redundant `templates/videos/` directory to further optimize plugin weight.
+*   Update: Pruned unused third-party libraries (Lity, Pace, Modernizr, Bootstrap) and CSS to reduce plugin file size.
+*   Compliance: Removed restricted Pro functionality code (Custom CSS logic) from the free version.
+*   Update: Minimalist layout refinements for Templates 11 and 15.
 
-= 3.2.0 = 24 August 2026
-* **React 18 Admin Dashboard**: Complete overhaul with Vite, Material UI (MUI v5), and WordPress REST API (`/wp-json/csmm/v1/`).
-* **Legacy Cleanup**: Completely removed legacy Bootstrap, jQuery UI tabs, and inline script dependencies from Admin.
-* **Universal SEO Suite**: Added Open Graph, Twitter Cards, Canonical links, Google Analytics, and Schema.org JSON-LD structured data to all 36 templates.
-* **Multi-Channel Newsletters**: Direct API sync for Mailchimp v3, Brevo (Sendinblue), MailerLite, and Custom Webhooks (Zapier/Make) with live connection testing tools.
-* **Custom SMTP Engine**: Integrated PHPMailer SMTP hook for Gmail, SendGrid, Amazon SES, and hosting mailers.
-* **Automated Email Templates & Live Preview**:
-  * Admin Lead Alert Email customizer.
-  * Subscriber Welcome Email customizer.
-  * **Site Live Announcement Email**: Automatically broadcasted to all subscribers upon site launch, with 1-click manual broadcast.
-  * Interactive Live Email Template Preview Modal with Desktop and Mobile viewports.
-  * Template Header, Footer, Canvas Colors, and Typography styling customizer.
-* **Dynamic Custom Social Channels**: Added platform creator with 12+ 1-click presets (Discord, Telegram, Threads, GitHub, Spotify, etc.) and FontAwesome icon selector.
-* **Modern Centered Floating Studio Preloader**: Redesigned PHP pre-mount and React loaders into a synchronized light glassmorphic floating card.
-* **Database & Security Layer**: Added dedicated indexed MySQL table `wp_csmm_subscribers` with utf8mb4 index protection and sanitized streaming CSV export.
-* **Custom CSS Code Studio**: Added formatted multiline CSS editor with dark slate developer theme.
-* **Comprehensive Documentation Tab**: Added complete feature matrix, API free tier limits table, real-world use cases, dynamic tags guide, and FAQ.
+= 1.1.4 =
+*   Security: Updated Modernizr library to 3.13.1 to resolve outdated footprint vulnerabilities.
+*   Update: Refactored inline scripts and styles from all templates to use WordPress core `wp_enqueue_*` functions for better performance and compliance.
 
-= 3.1.0 = 28 October 2025
-* Added 20 new responsive templates (expanding collection to 36 templates).
+= 1.1.3 =
+*   Security: Fixed broken nonce verification in AJAX save handler
+*   Security: Removed unauthenticated AJAX endpoint (wp_ajax_nopriv_csmm_save)
+*   Security: Used require_once for core file includes (plugin-install.php, theme-install.php) per WP.org guidelines
+*   Fixed: Removed auto-activation of plugins after install — install and activate are now separate user actions
+*   Fixed: Added proper capability checks to all AJAX handlers for plugin/theme install, update, and activate
+*   Update: Removed duplicate inline JavaScript in favour of properly enqueued external script
 
-= 3.0.4 = 4 February 2025
-* Fixed favicon icon rendering bug.
+= 1.1.2 =
+*   Update: Cleaned up plugin dashboard for WordPress.org guidelines compliance by removing Pro up-sells
+*   Update: Added a dedicated Pro Features menu page
+*   Update: UI modernization for Pro features layout
 
-= 3.0.3 = 1 January 2025
-* Added 6 new pre-built templates.
+= 1.1.1 =
+*   Fixed: Logo upload not showing preview after selecting image
+*   Fixed: Logo setting not saving on form save
+*   Fixed: Mismatched Requires PHP version in readme.txt
+*   Fixed: Added direct file access protection to all template files
+*   Fixed: Removed offloaded remote video URLs from templates 11 and 15
+*   Security: Added nonce verification for logo upload AJAX request
 
-= 3.0.2 = 24 January 2024
-* Added translations for 15+ international languages.
-* Fixed subscriber page warning notice.
+= 1.1.0 =
+*   Plugin is migrated to new website
+*   All interlinks updated
+*   Plugin Check plugin all error fixed.
 
-= 3.0.1 = 23 May 2023
-* Fixed social media icon mobile display.
-* Improved template mobile responsiveness.
+= 1.0.9 =
+*   Favicon Icon bug fixed.
 
-= 3.0.0 = 10 January 2023
-* Introduced 3 Website Modes (Live, Coming Soon HTTP 200, Maintenance HTTP 503).
-* Initial 10 pre-built responsive templates.
-* Lead capture and subscriber management.
+= 1.0.8 =
+*   Testing WordPress 6.7.1
+*   Template 11, 15 Added
+*   Bug Fix: Fixed.
+
+= 1.0.7 =
+*   Logo upload issue fixed
+*   Promo banner size issue fixed
+*   All PCP error fixed
+
+= 1.0.6 =
+*   Vulnerability issue fixed, reported by Wordfence.com
+*   Admin banner code sanitized and escaped properly
+
+= 1.0.5 =
+*   Updated to latest version of WordPress
+*   Add info banner to admin
+
+= 1.0.4 =
+*   The truck version was not committed so recommitted with that version
+
+= 1.0.3 =
+*   Plugin now available into 15 language translations: Arabic, Chinese, Finnish, French, German, Hindi, Hungarian, Italian, Indonesian, Japanese, Dutch, Russian, Spanish, Polish, Portuguese.
+
+= 1.0.2 =
+*   Update
+
+= 1.0.1 =
+*   video tutorial added and docs tab updated
+
+= 1.0.0 =
+*   starter version
+
+== Upgrade Notice ==
+
+= 1.1.0 =
+*   Standard update with bug fixes and improvements.
