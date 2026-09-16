@@ -49,6 +49,78 @@ import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRou
 import ModernDatePicker from './ModernDatePicker';
 import { api } from '../api';
 
+function ProBadge() {
+  return (
+    <Box
+      component="span"
+      sx={{
+        background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+        color: '#ffffff',
+        borderRadius: '4px',
+        px: 0.6,
+        py: 0.15,
+        fontSize: '0.62rem',
+        fontWeight: 800,
+        letterSpacing: '0.5px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 0.3,
+        boxShadow: '0 1px 4px rgba(245, 158, 11, 0.3)',
+        ml: 0.8,
+      }}
+    >
+      <WorkspacePremiumRoundedIcon sx={{ fontSize: 11 }} />
+      PRO
+    </Box>
+  );
+}
+
+function ProFeatureAlert({ title, description }) {
+  return (
+    <Alert
+      severity="warning"
+      icon={<WorkspacePremiumRoundedIcon sx={{ color: '#f59e0b' }} />}
+      action={
+        <Button
+          variant="contained"
+          size="small"
+          component="a"
+          href="https://wpfrank.com/wordpress-plugins/coming-soon-maintenance-mode-pro/"
+          target="_blank"
+          rel="noopener noreferrer"
+          startIcon={<WorkspacePremiumRoundedIcon sx={{ fontSize: 14 }} />}
+          sx={{
+            background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+            color: '#ffffff',
+            fontWeight: 700,
+            borderRadius: '6px',
+            fontSize: '0.75rem',
+            textTransform: 'none',
+            px: 1.6,
+            py: 0.4,
+            boxShadow: '0 2px 6px rgba(245, 158, 11, 0.3)',
+            '&:hover': {
+              background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)',
+            },
+          }}
+        >
+          Upgrade to Pro
+        </Button>
+      }
+      sx={{
+        borderRadius: '8px',
+        backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(245, 158, 11, 0.08)'),
+        border: '1px solid rgba(245, 158, 11, 0.25)',
+        color: (theme) => (theme.palette.mode === 'dark' ? '#fbbf24' : '#b45309'),
+        '& .MuiAlert-icon': { color: '#f59e0b' },
+        alignItems: 'center',
+      }}
+    >
+      <strong>{title}</strong> {description || 'is a Pro feature. Upgrade to Pro to enable this option on your coming soon page.'}
+    </Alert>
+  );
+}
+
 export default function ContentBrandingTab({ settings = {}, onChange }) {
   const [editorMode, setEditorMode] = useState('visual'); // 'visual' | 'code'
   const [formatBlock, setFormatBlock] = useState('p');
@@ -1492,11 +1564,47 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
               >
                 <FormControlLabel value="default" control={<Radio color="primary" />} label="Default Media" />
                 <FormControlLabel value="custom" control={<Radio color="primary" />} label="Custom Images" />
-                <FormControlLabel value="slideshow" control={<Radio color="primary" />} label="Background Slideshow" />
-                <FormControlLabel value="video" control={<Radio color="primary" />} label="Video" />
-                <FormControlLabel value="pattern" control={<Radio color="primary" />} label="Graphic Pattern" />
+                <FormControlLabel
+                  value="slideshow"
+                  control={<Radio color="primary" />}
+                  label={
+                    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                      <span>Background Slideshow</span>
+                      <ProBadge />
+                    </Box>
+                  }
+                />
+                <FormControlLabel
+                  value="video"
+                  control={<Radio color="primary" />}
+                  label={
+                    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                      <span>Video</span>
+                      <ProBadge />
+                    </Box>
+                  }
+                />
+                <FormControlLabel
+                  value="pattern"
+                  control={<Radio color="primary" />}
+                  label={
+                    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                      <span>Graphic Pattern</span>
+                      <ProBadge />
+                    </Box>
+                  }
+                />
                 <FormControlLabel value="solid" control={<Radio color="primary" />} label="Solid Color" />
-                <FormControlLabel value="gradient" control={<Radio color="primary" />} label="Gradient Color" />
+                <FormControlLabel
+                  value="gradient"
+                  control={<Radio color="primary" />}
+                  label={
+                    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                      <span>Gradient Color</span>
+                      <ProBadge />
+                    </Box>
+                  }
+                />
               </RadioGroup>
             </Grid>
 
@@ -1544,7 +1652,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                   </Box>
 
                   <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7, mt: 0.5 }}>
-                    By default, the active template's built-in <strong>Template-Specific Background Settings</strong> will be applied automatically. If you wish to use a custom background instead, select and configure any of the background options on the left (<em>Custom Images, Background Slideshow, Video, Graphic Pattern, Solid Color, Gradient Color</em>).
+                    By default, the active template's built-in <strong>Template-Specific Background Settings</strong> will be applied automatically. If you wish to use a custom background instead, select and configure any of the background options on the left (<em>Custom Images, Solid Color, or Pro options: Background Slideshow, Video, Graphic Pattern, Gradient Color</em>).
                   </Typography>
                 </Paper>
               )}
@@ -1697,10 +1805,15 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                 </Box>
               )}
 
-              {/* Option: Background Slideshow */}
+              {/* Option: Background Slideshow (Pro Feature) */}
               {settings.bg_type === 'slideshow' && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                  {(() => {
+                  <ProFeatureAlert
+                    title="Background Slideshow"
+                    description="is a Pro feature. Upgrade to Pro to create animated background slideshows for your coming soon page."
+                  />
+                  <Box sx={{ opacity: 0.55, pointerEvents: 'none', userSelect: 'none', display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                    {(() => {
                     const slideshowImages = (settings.bg_slideshow_images && settings.bg_slideshow_images.length > 0)
                       ? settings.bg_slideshow_images
                       : (settings.slides && settings.slides.length > 0)
@@ -1880,11 +1993,17 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                     </Grid>
                   </Grid>
                 </Box>
-              )}
+              </Box>
+            )}
 
-              {/* Option 3: Video Background */}
+              {/* Option 3: Video Background (Pro Feature) */}
               {settings.bg_type === 'video' && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <ProFeatureAlert
+                    title="Video Background"
+                    description="is a Pro feature. Upgrade to Pro to use YouTube, Vimeo, or self-hosted video backgrounds."
+                  />
+                  <Box sx={{ opacity: 0.55, pointerEvents: 'none', userSelect: 'none', display: 'flex', flexDirection: 'column', gap: 2 }}>
                   <Box>
                     <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
                       Select Video Source
@@ -2121,6 +2240,7 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       </Box>
                     )}
                   </Box>
+                  </Box>
                 </Box>
               )}
 
@@ -2182,7 +2302,12 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
 
                 return (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                    <Box>
+                    <ProFeatureAlert
+                      title="Graphic Pattern"
+                      description="is a Pro feature. Upgrade to Pro to use geometric and graphic pattern backgrounds."
+                    />
+                    <Box sx={{ opacity: 0.55, pointerEvents: 'none', userSelect: 'none', display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                      <Box>
                       <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
                         Select Pattern
                       </Typography>
@@ -2409,8 +2534,9 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                       />
                     </Box>
                   </Box>
-                );
-              })()}
+                </Box>
+              );
+            })()}
 
               {/* Option 5: Solid Color */}
               {settings.bg_type === 'solid' && (
@@ -2476,135 +2602,141 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                 </Box>
               )}
 
-              {/* Option 6: Gradient Color */}
+              {/* Option 6: Gradient Color (Pro Feature) */}
               {settings.bg_type === 'gradient' && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} sm={4}>
-                      <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
-                        Gradient Type
-                      </Typography>
-                      <Select
-                        size="small"
-                        fullWidth
-                        value={settings.bg_gradient_type || 'linear'}
-                        onChange={(e) => onChange('bg_gradient_type', e.target.value)}
-                      >
-                        <MenuItem value="linear">Linear Gradient</MenuItem>
-                        <MenuItem value="radial">Radial Gradient</MenuItem>
-                      </Select>
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                      <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
-                        Color 1
-                      </Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Box
-                          component="label"
-                          sx={{
-                            width: 38,
-                            height: 38,
-                            borderRadius: '6px',
-                            border: '1px solid #cbd5e1',
-                            backgroundColor: settings.bg_gradient_color1 || '#1e3a8a',
-                            cursor: 'pointer',
-                            display: 'inline-block',
-                            flexShrink: 0,
-                            overflow: 'hidden',
-                            boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                          }}
+                  <ProFeatureAlert
+                    title="Gradient Color"
+                    description="is a Pro feature. Upgrade to Pro to customize linear and radial gradient backgrounds."
+                  />
+                  <Box sx={{ opacity: 0.55, pointerEvents: 'none', userSelect: 'none', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Grid container spacing={2} alignItems="center">
+                      <Grid item xs={12} sm={4}>
+                        <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
+                          Gradient Type
+                        </Typography>
+                        <Select
+                          size="small"
+                          fullWidth
+                          value={settings.bg_gradient_type || 'linear'}
+                          onChange={(e) => onChange('bg_gradient_type', e.target.value)}
                         >
-                          <input
-                            type="color"
+                          <MenuItem value="linear">Linear Gradient</MenuItem>
+                          <MenuItem value="radial">Radial Gradient</MenuItem>
+                        </Select>
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
+                          Color 1
+                        </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <Box
+                            component="label"
+                            sx={{
+                              width: 38,
+                              height: 38,
+                              borderRadius: '6px',
+                              border: '1px solid #cbd5e1',
+                              backgroundColor: settings.bg_gradient_color1 || '#1e3a8a',
+                              cursor: 'pointer',
+                              display: 'inline-block',
+                              flexShrink: 0,
+                              overflow: 'hidden',
+                              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
+                            }}
+                          >
+                            <input
+                              type="color"
+                              value={settings.bg_gradient_color1 || '#1e3a8a'}
+                              onChange={(e) => onChange('bg_gradient_color1', e.target.value)}
+                              style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
+                            />
+                          </Box>
+                          <TextField
+                            size="small"
+                            fullWidth
                             value={settings.bg_gradient_color1 || '#1e3a8a'}
                             onChange={(e) => onChange('bg_gradient_color1', e.target.value)}
-                            style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
+                            placeholder="#1e3a8a"
                           />
                         </Box>
-                        <TextField
-                          size="small"
-                          fullWidth
-                          value={settings.bg_gradient_color1 || '#1e3a8a'}
-                          onChange={(e) => onChange('bg_gradient_color1', e.target.value)}
-                          placeholder="#1e3a8a"
-                        />
-                      </Box>
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                      <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
-                        Color 2
-                      </Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Box
-                          component="label"
-                          sx={{
-                            width: 38,
-                            height: 38,
-                            borderRadius: '6px',
-                            border: '1px solid #cbd5e1',
-                            backgroundColor: settings.bg_gradient_color2 || '#0f172a',
-                            cursor: 'pointer',
-                            display: 'inline-block',
-                            flexShrink: 0,
-                            overflow: 'hidden',
-                            boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                          }}
-                        >
-                          <input
-                            type="color"
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
+                          Color 2
+                        </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <Box
+                            component="label"
+                            sx={{
+                              width: 38,
+                              height: 38,
+                              borderRadius: '6px',
+                              border: '1px solid #cbd5e1',
+                              backgroundColor: settings.bg_gradient_color2 || '#0f172a',
+                              cursor: 'pointer',
+                              display: 'inline-block',
+                              flexShrink: 0,
+                              overflow: 'hidden',
+                              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
+                            }}
+                          >
+                            <input
+                              type="color"
+                              value={settings.bg_gradient_color2 || '#0f172a'}
+                              onChange={(e) => onChange('bg_gradient_color2', e.target.value)}
+                              style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
+                            />
+                          </Box>
+                          <TextField
+                            size="small"
+                            fullWidth
                             value={settings.bg_gradient_color2 || '#0f172a'}
                             onChange={(e) => onChange('bg_gradient_color2', e.target.value)}
-                            style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
+                            placeholder="#0f172a"
                           />
                         </Box>
-                        <TextField
-                          size="small"
-                          fullWidth
-                          value={settings.bg_gradient_color2 || '#0f172a'}
-                          onChange={(e) => onChange('bg_gradient_color2', e.target.value)}
-                          placeholder="#0f172a"
-                        />
-                      </Box>
+                      </Grid>
                     </Grid>
-                  </Grid>
 
-                  <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                    <Tooltip title="Reset gradient settings to default">
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        startIcon={<RestartAltRoundedIcon fontSize="small" />}
-                        onClick={() => {
-                          onChange('bg_gradient_type', 'linear');
-                          onChange('bg_gradient_color1', '#1e3a8a');
-                          onChange('bg_gradient_color2', '#0f172a');
-                          onChange('bg_gradient_angle', 135);
-                        }}
-                        sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
-                      >
-                        Reset Gradient
-                      </Button>
-                    </Tooltip>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+                      <Tooltip title="Reset gradient settings to default">
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                          onClick={() => {
+                            onChange('bg_gradient_type', 'linear');
+                            onChange('bg_gradient_color1', '#1e3a8a');
+                            onChange('bg_gradient_color2', '#0f172a');
+                            onChange('bg_gradient_angle', 135);
+                          }}
+                          sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.4 }}
+                        >
+                          Reset Gradient
+                        </Button>
+                      </Tooltip>
+                    </Box>
+
+                    {/* Gradient Preview */}
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        width: '100%',
+                        height: 180,
+                        borderRadius: '8px !important',
+                        background:
+                          settings.bg_gradient_type === 'radial'
+                            ? `radial-gradient(circle, ${settings.bg_gradient_color1 || '#1e3a8a'} 0%, ${settings.bg_gradient_color2 || '#0f172a'} 100%)`
+                            : `linear-gradient(${settings.bg_gradient_angle || 135}deg, ${settings.bg_gradient_color1 || '#1e3a8a'} 0%, ${settings.bg_gradient_color2 || '#0f172a'} 100%)`,
+                      }}
+                    />
                   </Box>
-
-                  {/* Gradient Preview */}
-                  <Paper
-                    variant="outlined"
-                    sx={{
-                      width: '100%',
-                      height: 180,
-                      borderRadius: '8px !important',
-                      background:
-                        settings.bg_gradient_type === 'radial'
-                          ? `radial-gradient(circle, ${settings.bg_gradient_color1 || '#1e3a8a'} 0%, ${settings.bg_gradient_color2 || '#0f172a'} 100%)`
-                          : `linear-gradient(${settings.bg_gradient_angle || 135}deg, ${settings.bg_gradient_color1 || '#1e3a8a'} 0%, ${settings.bg_gradient_color2 || '#0f172a'} 100%)`,
-                    }}
-                  />
                 </Box>
               )}
 
-              {/* Common Overlay & Blur Settings (Only for Custom Images, Background Slideshow, and Video - Excluded from Default Media, Graphic Pattern, Solid Color, and Gradient Color) */}
-              {['custom', 'slideshow', 'video'].includes(settings.bg_type) && (
+              {/* Common Overlay & Blur Settings (Only for Custom Images in Free Edition) */}
+              {settings.bg_type === 'custom' && (
                 <>
                   <Divider sx={{ my: 3 }} />
 

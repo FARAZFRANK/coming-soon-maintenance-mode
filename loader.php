@@ -84,49 +84,19 @@ $csmm_video_url                  = isset( $csmm_content['video_url'] ) ? $csmm_c
 $csmm_custom_css                 = ''; // Custom CSS Overrides is a Pro feature, disabled in free edition
 $csmm_slide_ids       = isset( $csmm_content['slide_ids'] ) && is_array( $csmm_content['slide_ids'] ) ? $csmm_content['slide_ids'] : array();
 
-// Graphic Background Settings
-$csmm_bg_type                = isset( $csmm_content['bg_type'] ) ? $csmm_content['bg_type'] : 'default';
+// Graphic Background Settings (Free supports 'default', 'custom', 'solid')
+$csmm_bg_type_raw            = isset( $csmm_content['bg_type'] ) ? $csmm_content['bg_type'] : 'default';
+$csmm_bg_type                = in_array( $csmm_bg_type_raw, array( 'default', 'custom', 'solid' ), true ) ? $csmm_bg_type_raw : 'default';
 $csmm_bg_custom_images       = isset( $csmm_content['bg_custom_images'] ) && is_array( $csmm_content['bg_custom_images'] ) ? $csmm_content['bg_custom_images'] : array();
 $csmm_bg_image_size          = isset( $csmm_content['bg_image_size'] ) ? $csmm_content['bg_image_size'] : 'cover';
-$csmm_bg_slideshow_images    = isset( $csmm_content['bg_slideshow_images'] ) && is_array( $csmm_content['bg_slideshow_images'] ) ? $csmm_content['bg_slideshow_images'] : ( ! empty( $slides_data ) ? $slides_data : array() );
-$csmm_bg_slideshow_speed     = isset( $csmm_content['bg_slideshow_speed'] ) ? max( 2, intval( $csmm_content['bg_slideshow_speed'] ) ) : 5;
-$csmm_bg_slideshow_animation = isset( $csmm_content['bg_slideshow_animation'] ) ? $csmm_content['bg_slideshow_animation'] : 'fade';
-$csmm_bg_slideshow_scale     = isset( $csmm_content['bg_slideshow_scale'] ) ? $csmm_content['bg_slideshow_scale'] : 'cover';
 $csmm_bg_mobile_enabled      = ! empty( $csmm_content['bg_mobile_enabled'] );
 $csmm_bg_mobile_image_url    = isset( $csmm_content['bg_mobile_image_url'] ) ? $csmm_content['bg_mobile_image_url'] : '';
-$csmm_bg_video_source        = isset( $csmm_content['bg_video_source'] ) ? $csmm_content['bg_video_source'] : 'youtube';
-$csmm_bg_video_youtube_url   = isset( $csmm_content['bg_video_youtube_url'] ) ? $csmm_content['bg_video_youtube_url'] : '';
-$csmm_bg_video_vimeo_url     = isset( $csmm_content['bg_video_vimeo_url'] ) ? $csmm_content['bg_video_vimeo_url'] : '';
-$csmm_bg_video_mp4_url       = isset( $csmm_content['bg_video_mp4_url'] ) ? $csmm_content['bg_video_mp4_url'] : '';
-$csmm_bg_video_poster_url    = isset( $csmm_content['bg_video_poster_url'] ) ? $csmm_content['bg_video_poster_url'] : '';
-$csmm_bg_video_loop          = ! isset( $csmm_content['bg_video_loop'] ) || ! empty( $csmm_content['bg_video_loop'] );
-
-$csmm_bg_video_url = '';
-if ( 'vimeo' === $csmm_bg_video_source ) {
-	$v_cand = ! empty( $csmm_bg_video_vimeo_url ) ? $csmm_bg_video_vimeo_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : '' );
-	$csmm_bg_video_url = ( ! empty( $v_cand ) && false !== strpos( $v_cand, 'vimeo' ) ) ? $v_cand : 'https://vimeo.com/1178283333';
-} elseif ( 'file' === $csmm_bg_video_source || 'mp4' === $csmm_bg_video_source ) {
-	$mp4_cand = ! empty( $csmm_bg_video_mp4_url ) ? $csmm_bg_video_mp4_url : ( isset( $csmm_content['bg_video_url'] ) ? $csmm_content['bg_video_url'] : '' );
-	$csmm_bg_video_url = ( ! empty( $mp4_cand ) && false !== strpos( $mp4_cand, '.mp4' ) ) ? $mp4_cand : 'https://wpfrank.com/wp-content/uploads/2026/09/coming-soon-maintenance-mode-pro-default-video.mp4';
-} else {
-	$yt_cand = ! empty( $csmm_bg_video_youtube_url ) ? $csmm_bg_video_youtube_url : ( isset( $csmm_content['bg_video_url'] ) && '' !== $csmm_content['bg_video_url'] ? $csmm_content['bg_video_url'] : ( isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : '' ) );
-	$csmm_bg_video_url = ( ! empty( $yt_cand ) && false !== strpos( $yt_cand, 'youtu' ) ) ? $yt_cand : 'https://www.youtube.com/watch?v=KLuTLF3x9sA';
-}
-$csmm_bg_pattern             = isset( $csmm_content['bg_pattern'] ) ? $csmm_content['bg_pattern'] : 'lines';
-$csmm_bg_custom_pattern_url  = isset( $csmm_content['bg_custom_pattern_url'] ) ? $csmm_content['bg_custom_pattern_url'] : '';
-$csmm_bg_custom_pattern_size = isset( $csmm_content['bg_custom_pattern_size'] ) ? intval( $csmm_content['bg_custom_pattern_size'] ) : 60;
-$csmm_bg_custom_pattern_repeat = isset( $csmm_content['bg_custom_pattern_repeat'] ) ? $csmm_content['bg_custom_pattern_repeat'] : 'repeat';
-$csmm_bg_custom_pattern_bg   = isset( $csmm_content['bg_custom_pattern_bg'] ) ? $csmm_content['bg_custom_pattern_bg'] : '#0b1120';
 $csmm_bg_solid_color         = isset( $csmm_content['bg_solid_color'] ) ? $csmm_content['bg_solid_color'] : '#1d1b1b';
-$csmm_bg_gradient_type       = isset( $csmm_content['bg_gradient_type'] ) ? $csmm_content['bg_gradient_type'] : 'linear';
-$csmm_bg_gradient_color1     = isset( $csmm_content['bg_gradient_color1'] ) ? $csmm_content['bg_gradient_color1'] : '#1e3a8a';
-$csmm_bg_gradient_color2     = isset( $csmm_content['bg_gradient_color2'] ) ? $csmm_content['bg_gradient_color2'] : '#0f172a';
-$csmm_bg_gradient_angle      = isset( $csmm_content['bg_gradient_angle'] ) ? intval( $csmm_content['bg_gradient_angle'] ) : 135;
-$default_overlay             = in_array( $csmm_bg_type, array( 'custom', 'slideshow', 'video', 'pattern', 'solid' ), true ) ? 'none' : 'solid';
-$csmm_bg_overlay_type     = ( isset( $csmm_content['bg_overlay_type'] ) && '' !== $csmm_content['bg_overlay_type'] ) ? $csmm_content['bg_overlay_type'] : $default_overlay;
-$csmm_bg_overlay_color    = isset( $csmm_content['bg_overlay_color'] ) ? $csmm_content['bg_overlay_color'] : '#000000';
-$csmm_bg_overlay_opacity  = isset( $csmm_content['bg_overlay_opacity'] ) ? floatval( $csmm_content['bg_overlay_opacity'] ) : 0;
-$csmm_bg_blur             = isset( $csmm_content['bg_blur'] ) ? intval( $csmm_content['bg_blur'] ) : 0;
+$default_overlay             = in_array( $csmm_bg_type, array( 'custom', 'solid' ), true ) ? 'none' : 'solid';
+$csmm_bg_overlay_type        = ( isset( $csmm_content['bg_overlay_type'] ) && '' !== $csmm_content['bg_overlay_type'] ) ? $csmm_content['bg_overlay_type'] : $default_overlay;
+$csmm_bg_overlay_color       = isset( $csmm_content['bg_overlay_color'] ) ? $csmm_content['bg_overlay_color'] : '#000000';
+$csmm_bg_overlay_opacity     = isset( $csmm_content['bg_overlay_opacity'] ) ? floatval( $csmm_content['bg_overlay_opacity'] ) : 0;
+$csmm_bg_blur                = isset( $csmm_content['bg_blur'] ) ? intval( $csmm_content['bg_blur'] ) : 0;
 
 // Launch timestamp string (e.g., 'October 25, 2026 10:00:00')
 $csmm_launch_date = date( 'F d, Y', strtotime( $csmm_countdown_date ) );
@@ -447,11 +417,11 @@ $dynamic_css .= ".template-two-countdown, .template-two-content .template-two-co
 $dynamic_css .= ".template-two-countdown .countdown-title { margin-bottom: 1.25rem !important; }\n";
 $dynamic_css .= ".template-two-form, .template-two-content .template-two-form { margin-top: 2.2rem !important; }\n";
 
-// Graphic Background Types - Complete replacement of template background when non-default
-if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'custom', 'slideshow', 'video' ), true ) ) {
+// Graphic Background Types - Complete replacement of template background when non-default (Free supports custom & solid)
+if ( in_array( $csmm_bg_type, array( 'solid', 'custom' ), true ) ) {
 	$dynamic_css .= ".s-home::before, .s-home::after, .s-home--static::before, .s-home--particles::before, .s-home .overlay, .s-home .gradient-overlay, .home-overlay, .grid-overlay, .s-home .grid-overlay, .home-slider, .home-slider-img, .home-slider-img::before, .parallax-mirror, .parallax-slider, .PhotoZoom_iframe__LeuQM, .PhotoZoom_image__iR_Ia, video.PhotoZoom_iframe__LeuQM, #vjs_video_3_html5_api, .video-background, #main-video, #gameCanvas, #gameOver, .blueprint-bg, .blueprint-element, .background-shapes, .background-shapes .shape, .overlay, #network-canvas, #particles-canvas, .image-background, .background-pattern, .background-elements, .hills, .sun, .cloud { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; background-image: none !important; background: none !important; }\n";
 	$dynamic_css .= "#particles-js, .home-particles, .particles-js-canvas-el, #particles-js canvas { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }\n";
-	if ( in_array( $csmm_bg_type, array( 'pattern', 'solid', 'gradient', 'slideshow', 'video' ), true ) ) {
+	if ( 'solid' === $csmm_bg_type ) {
 		$dynamic_css .= ".image-side { display: none !important; opacity: 0 !important; visibility: hidden !important; animation: none !important; }\n";
 		$dynamic_css .= ".split-layout { display: flex !important; align-items: center !important; justify-content: center !important; min-height: 100vh !important; }\n";
 		$dynamic_css .= ".split-layout .content-side { max-width: 620px !important; width: 100% !important; margin: 2rem auto !important; border-radius: 1.25rem !important; position: relative !important; z-index: 2 !important; }\n";
@@ -465,42 +435,6 @@ $video_bg_html = '';
 if ( 'solid' === $csmm_bg_type ) {
 	$dynamic_css .= "html { background-image: none !important; }\n";
 	$dynamic_css .= "body, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$csmm_bg_solid_color} !important; background-color: {$csmm_bg_solid_color} !important; background-image: none !important; }\n";
-} elseif ( 'gradient' === $csmm_bg_type ) {
-	if ( 'radial' === $csmm_bg_gradient_type ) {
-		$grad = "radial-gradient(circle, {$csmm_bg_gradient_color1} 0%, {$csmm_bg_gradient_color2} 100%)";
-	} else {
-		$grad = "linear-gradient({$csmm_bg_gradient_angle}deg, {$csmm_bg_gradient_color1} 0%, {$csmm_bg_gradient_color2} 100%)";
-	}
-	$dynamic_css .= "html { background-image: none !important; }\n";
-	$dynamic_css .= "body, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: {$grad} !important; background-image: {$grad} !important; background-attachment: fixed !important; }\n";
-} elseif ( 'pattern' === $csmm_bg_type ) {
-	$pattern_css_map = array(
-		'hexagons'       => "background-color: #0b1120 !important; background-image: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 0 0, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 0 100%, rgba(99, 102, 241, 0.4) 15%, transparent 16%), radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.4) 15%, transparent 16%) !important; background-size: 40px 40px !important; background-repeat: repeat !important;",
-		'dots'           => "background-color: #0b1120 !important; background-image: radial-gradient(rgba(59, 130, 246, 0.6) 2px, transparent 2px) !important; background-size: 24px 24px !important; background-repeat: repeat !important;",
-		'triangles'      => "background-color: #090e1a !important; background-image: linear-gradient(30deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(150deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(30deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(150deg, #131d33 12%, transparent 12.5%, transparent 87%, #131d33 87.5%, #131d33), linear-gradient(60deg, rgba(30, 58, 138, 0.35) 25%, transparent 25.5%, transparent 75%, rgba(30, 58, 138, 0.35) 75%, rgba(30, 58, 138, 0.35)), linear-gradient(60deg, rgba(30, 58, 138, 0.35) 25%, transparent 25.5%, transparent 75%, rgba(30, 58, 138, 0.35) 75%, rgba(30, 58, 138, 0.35)) !important; background-size: 80px 140px !important; background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px !important; background-repeat: repeat !important;",
-		'carbon'         => "background-color: #0f1117 !important; background-image: linear-gradient(27deg, #151821 5px, transparent 5px), linear-gradient(207deg, #151821 5px, transparent 5px), linear-gradient(27deg, #1e2230 5px, transparent 5px), linear-gradient(207deg, #1e2230 5px, transparent 5px), linear-gradient(90deg, #181c27 10px, transparent 10px), linear-gradient(#1b1e2b 25%, #141722 25%, #141722 50%, transparent 50%, transparent 75%, #232838 75%, #232838) !important; background-size: 20px 20px !important; background-repeat: repeat !important;",
-		'lines'          => "background-color: #0b1120 !important; background-image: repeating-linear-gradient(45deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.25) 2px, transparent 2px, transparent 16px) !important; background-size: auto !important; background-repeat: repeat !important;",
-		'diagonal'       => "background-color: #0b1120 !important; background-image: repeating-linear-gradient(45deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.25) 2px, transparent 2px, transparent 16px) !important; background-size: auto !important; background-repeat: repeat !important;",
-		'stars'          => "background-color: #030712 !important; background-image: radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.9), rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)), radial-gradient(2px 2px at 160px 120px, rgba(147,197,253,0.9), rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 230px 190px, #ffffff, rgba(0,0,0,0)) !important; background-size: 250px 250px !important; background-repeat: repeat !important;",
-		'custom_pattern' => '',
-	);
-
-	if ( 'custom_pattern' === $csmm_bg_pattern || 'custom' === $csmm_bg_pattern ) {
-		$custom_pat_url  = ! empty( $csmm_bg_custom_pattern_url ) ? esc_url( $csmm_bg_custom_pattern_url ) : '';
-		$custom_pat_size = ! empty( $csmm_bg_custom_pattern_size ) ? intval( $csmm_bg_custom_pattern_size ) . 'px' : '60px';
-		$custom_pat_rep  = ! empty( $csmm_bg_custom_pattern_repeat ) ? esc_attr( $csmm_bg_custom_pattern_repeat ) : 'repeat';
-		$custom_pat_bg   = ! empty( $csmm_bg_custom_pattern_bg ) ? esc_attr( $csmm_bg_custom_pattern_bg ) : '#0b1120';
-		if ( ! empty( $custom_pat_url ) ) {
-			$pat_rule = "background-color: {$custom_pat_bg} !important; background-image: url('{$custom_pat_url}') !important; background-size: {$custom_pat_size} !important; background-repeat: {$custom_pat_rep} !important;";
-		} else {
-			$pat_rule = "background-color: {$custom_pat_bg} !important; background-image: none !important;";
-		}
-	} else {
-		$pat_rule = isset( $pattern_css_map[ $csmm_bg_pattern ] ) ? $pattern_css_map[ $csmm_bg_pattern ] : $pattern_css_map['lines'];
-	}
-
-	$dynamic_css .= "html { background-image: none !important; }\n";
-	$dynamic_css .= "body, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container, .site-wrapper, .page-wrapper, .main-container, .wrapper, #wrapper { {$pat_rule} background-attachment: fixed !important; }\n";
 } elseif ( 'custom' === $csmm_bg_type ) {
 	$custom_img_url = '';
 	if ( ! empty( $csmm_bg_custom_images ) && ! empty( $csmm_bg_custom_images[0]['url'] ) ) {
@@ -518,128 +452,8 @@ if ( 'solid' === $csmm_bg_type ) {
 		} elseif ( 'fill' === $csmm_bg_image_size || 'stretch' === $csmm_bg_image_size ) {
 			$bg_size_val = '100% 100%';
 		}
-		if ( in_array( intval( $csmm_template_id ), array( 20, 24, 34, 35 ), true ) ) {
-			// For half-image split templates (Templates 34, 35, 20, 24):
-			// Apply the custom background image ONLY to the half image container (.image-side), preserving the clean white content half!
-			$dynamic_css .= ".image-side, .split-layout .image-side { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; display: block !important; opacity: 1 !important; visibility: visible !important; }\n";
-			$dynamic_css .= ".split-layout { display: grid !important; }\n";
-			$dynamic_css .= "body, html { background: #FFFFFF !important; background-color: #FFFFFF !important; background-image: none !important; }\n";
-			$dynamic_css .= ".content-side, .split-layout .content-side { background-color: #FFFFFF !important; background: #FFFFFF !important; }\n";
-		} else {
-			// Full-screen templates
-			$dynamic_css .= "html { background-image: none !important; background: transparent !important; }\n";
-			$dynamic_css .= "body, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }\n";
-		}
-	}
-} elseif ( 'slideshow' === $csmm_bg_type ) {
-	$dynamic_css .= "body, html, .s-home, main.s-home, section.s-home, #home, .s-home--static, .s-home--particles, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container { background: transparent !important; background-color: transparent !important; background-image: none !important; }\n";
-	$dynamic_css .= ".home-content, .s-home .row, .home-content__main { position: relative !important; z-index: 2 !important; }\n";
-	$dynamic_css .= ".csmm-slideshow-bg { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 0 !important; pointer-events: none !important; overflow: hidden !important; background-color: #000000 !important; }\n";
-	$dynamic_css .= ".csmm-slideshow-slide { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; background-position: center center !important; background-repeat: no-repeat !important; opacity: 0; transition: opacity 1.2s ease-in-out, transform 6s ease-out; transform: scale(1); }\n";
-	$dynamic_css .= ".csmm-slideshow-slide.active { opacity: 1 !important; }\n";
-	$dynamic_css .= ".csmm-slideshow-bg.anim-zoom .csmm-slideshow-slide.active { transform: scale(1.08) !important; }\n";
-	$dynamic_css .= ".csmm-slideshow-bg.anim-slide .csmm-slideshow-slide { transform: translateX(100%); transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s ease-in-out; }\n";
-	$dynamic_css .= ".csmm-slideshow-bg.anim-slide .csmm-slideshow-slide.active { transform: translateX(0) !important; opacity: 1 !important; }\n";
-	$dynamic_css .= ".csmm-slideshow-bg.anim-slide .csmm-slideshow-slide.prev { transform: translateX(-100%) !important; opacity: 0 !important; }\n";
-
-	$slideshow_imgs = array();
-	if ( ! empty( $csmm_bg_slideshow_images ) && is_array( $csmm_bg_slideshow_images ) ) {
-		foreach ( $csmm_bg_slideshow_images as $s ) {
-			if ( is_array( $s ) && ! empty( $s['url'] ) ) {
-				$slideshow_imgs[] = esc_url( $s['url'] );
-			} elseif ( is_string( $s ) && ! empty( $s ) ) {
-				$slideshow_imgs[] = esc_url( $s );
-			}
-		}
-	}
-	if ( empty( $slideshow_imgs ) && ! empty( $slides_data ) ) {
-		foreach ( $slides_data as $s ) {
-			if ( ! empty( $s['url'] ) ) {
-				$slideshow_imgs[] = esc_url( $s['url'] );
-			}
-		}
-	}
-
-	if ( ! empty( $slideshow_imgs ) ) {
-		$scale_val = 'cover';
-		if ( 'contain' === $csmm_bg_slideshow_scale ) {
-			$scale_val = 'contain';
-		} elseif ( 'auto' === $csmm_bg_slideshow_scale ) {
-			$scale_val = 'auto';
-		} elseif ( 'fill' === $csmm_bg_slideshow_scale || 'stretch' === $csmm_bg_slideshow_scale ) {
-			$scale_val = '100% 100%';
-		}
-
-		$anim_class = 'anim-' . ( ! empty( $csmm_bg_slideshow_animation ) ? esc_attr( $csmm_bg_slideshow_animation ) : 'fade' );
-		$slideshow_html = '<div class="csmm-slideshow-bg ' . $anim_class . '">';
-		foreach ( $slideshow_imgs as $idx => $s_url ) {
-			$active_cls = 0 === $idx ? ' active' : '';
-			$slideshow_html .= '<div class="csmm-slideshow-slide' . $active_cls . '" style="background-image: url(\'' . $s_url . '\'); background-size: ' . $scale_val . ';" data-slide-index="' . $idx . '"></div>';
-		}
-		$slideshow_html .= '</div>';
-		$interval_ms = max( 2, intval( $csmm_bg_slideshow_speed ) ) * 1000;
-		$slideshow_html .= '
-<script id="csmm-slideshow-script">
-(function() {
-  function initCsmmSlideshow() {
-    var slides = document.querySelectorAll(".csmm-slideshow-slide");
-    if (slides.length <= 1) return;
-    var current = 0;
-    var intervalMs = ' . $interval_ms . ';
-    setInterval(function() {
-      var prev = current;
-      current = (current + 1) % slides.length;
-      slides.forEach(function(s, i) {
-        s.classList.remove("prev");
-        if (i === prev) s.classList.add("prev");
-        if (i === current) s.classList.add("active");
-        else s.classList.remove("active");
-      });
-    }, intervalMs);
-  }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initCsmmSlideshow);
-  } else {
-    initCsmmSlideshow();
-  }
-})();
-</script>';
-		$video_bg_html = $slideshow_html;
-	}
-} elseif ( 'video' === $csmm_bg_type ) {
-	$dynamic_css .= "body, .s-home, main.s-home, .s-home--static, .s-home--particles, .template-one, #particles-js, .home-particles, #bg, .bg-image, .bg-container, .background-image, .background-gradient { background: transparent !important; background-color: transparent !important; background-image: none !important; }\n";
-	$dynamic_css .= ".home-content, .s-home .row, .home-content__main, .main-content, main, .split-layout, .prospectus-card, .main-card, .content-side { position: relative !important; z-index: 2 !important; }\n";
-	$dynamic_css .= ".image-side, .background-image, .background-gradient { display: none !important; opacity: 0 !important; visibility: hidden !important; animation: none !important; }\n";
-	$dynamic_css .= ".csmm-video-bg { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 0 !important; pointer-events: none !important; overflow: hidden !important; background-color: #000000 !important; }\n";
-	$dynamic_css .= ".csmm-video-bg iframe, .csmm-video-bg video { position: absolute !important; top: 50% !important; left: 50% !important; width: 100vw !important; height: 56.25vw !important; min-height: 100vh !important; min-width: 177.77vh !important; transform: translate(-50%, -50%) !important; pointer-events: none !important; border: 0 !important; }\n";
-
-	if ( ! empty( $csmm_bg_video_poster_url ) ) {
-		$poster_url = esc_url( $csmm_bg_video_poster_url );
-		$dynamic_css .= ".csmm-video-bg { background-image: url('{$poster_url}') !important; background-size: cover !important; background-position: center center !important; }\n";
-	}
-	if ( ! empty( $csmm_bg_video_url ) ) {
-		$v_url = $csmm_bg_video_url;
-		if ( 'youtube' === $csmm_bg_video_source || strpos( $v_url, 'youtube.com' ) !== false || strpos( $v_url, 'youtu.be' ) !== false ) {
-			preg_match( '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $v_url, $yt_matches );
-			$yt_id = ! empty( $yt_matches[1] ) ? $yt_matches[1] : '';
-			if ( $yt_id ) {
-				$loop_param = $csmm_bg_video_loop ? '&loop=1&playlist=' . $yt_id : '&loop=0';
-				$embed_src = 'https://www.youtube.com/embed/' . $yt_id . '?autoplay=1&mute=1&controls=0&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&modestbranding=1&enablejsapi=1' . $loop_param;
-				$video_bg_html = '<div class="csmm-video-bg"><iframe src="' . esc_url( $embed_src ) . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
-			}
-		} elseif ( 'vimeo' === $csmm_bg_video_source || strpos( $v_url, 'vimeo.com' ) !== false ) {
-			preg_match( '/(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)([0-9]+)/i', $v_url, $vm_matches );
-			$vm_id = ! empty( $vm_matches[1] ) ? $vm_matches[1] : '';
-			if ( $vm_id ) {
-				$loop_param = $csmm_bg_video_loop ? '1' : '0';
-				$embed_src = 'https://player.vimeo.com/video/' . $vm_id . '?autoplay=1&loop=' . $loop_param . '&muted=1&background=1&autopause=0';
-				$video_bg_html = '<div class="csmm-video-bg"><iframe src="' . esc_url( $embed_src ) . '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>';
-			}
-		} else {
-			$loop_attr   = $csmm_bg_video_loop ? 'loop="loop" loop onended="this.currentTime=0;this.play();"' : '';
-			$poster_attr = ! empty( $csmm_bg_video_poster_url ) ? 'poster="' . esc_url( $csmm_bg_video_poster_url ) . '"' : '';
-			$video_bg_html = '<div class="csmm-video-bg"><video src="' . esc_url( $v_url ) . '" autoplay muted ' . $loop_attr . ' ' . $poster_attr . ' playsinline webkit-playsinline style="width: 100%; height: 100%; object-fit: cover;"></video></div>';
-		}
+		$dynamic_css .= "html { background-image: none !important; background: transparent !important; }\n";
+		$dynamic_css .= "body, .s-home, main.s-home, section.s-home, #home, .template-one, #particles-js, .home-particles, #bg, .bg-image { background-image: url('{$custom_bg_url}') !important; background-size: {$bg_size_val} !important; background-position: center center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }\n";
 	}
 }
 

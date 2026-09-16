@@ -320,7 +320,7 @@ class CSMM_REST_API {
 			'video_url'            => isset( $content['video_url'] ) ? $content['video_url'] : '',
 			'custom_css'           => '', // Custom CSS Overrides is a Pro feature (disabled in Free)
 			'slides'               => $slides_data,
-			'bg_type'              => isset( $content['bg_type'] ) ? $content['bg_type'] : 'default',
+			'bg_type'              => isset( $content['bg_type'] ) && in_array( $content['bg_type'], array( 'default', 'custom', 'solid' ), true ) ? $content['bg_type'] : 'default',
 			'bg_custom_images'     => isset( $content['bg_custom_images'] ) && is_array( $content['bg_custom_images'] ) ? $content['bg_custom_images'] : ( ! empty( $slides_data ) ? $slides_data : array() ),
 			'bg_image_size'        => isset( $content['bg_image_size'] ) ? $content['bg_image_size'] : 'cover',
 			'bg_slideshow_images'  => isset( $content['bg_slideshow_images'] ) && is_array( $content['bg_slideshow_images'] ) ? $content['bg_slideshow_images'] : ( ! empty( $slides_data ) ? $slides_data : array() ),
@@ -601,9 +601,10 @@ class CSMM_REST_API {
 			$content_array['slide_ids'] = $slide_ids;
 		}
 
-		// Background Settings
-		if (isset($params['bg_type'])) {
-			$content_array['bg_type'] = sanitize_text_field($params['bg_type']);
+		// Background Settings (Free supports 'default', 'custom', 'solid')
+		if ( isset( $params['bg_type'] ) ) {
+			$bg_type = sanitize_text_field( $params['bg_type'] );
+			$content_array['bg_type'] = in_array( $bg_type, array( 'default', 'custom', 'solid' ), true ) ? $bg_type : 'default';
 		}
 		if (isset($params['bg_custom_images']) && is_array($params['bg_custom_images'])) {
 			$sanitized_bg_imgs = array();
