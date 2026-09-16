@@ -308,7 +308,7 @@ class CSMM_REST_API {
 			'countdown_label_font_size'    => isset( $content['countdown_label_font_size'] ) ? intval( $content['countdown_label_font_size'] ) : 14,
 			'countdown_label_color'        => isset( $content['countdown_label_color'] ) ? $content['countdown_label_color'] : '',
 			'countdown_box_bg'             => isset( $content['countdown_box_bg'] ) ? $content['countdown_box_bg'] : '',
-			'susbcriber_form'              => isset( $content['susbcriber_form'] ) ? strval( $content['susbcriber_form'] ) : '1',
+			'susbcriber_form'              => '0', // Email Lead Capture is a Pro feature (disabled in Free)
 			'form_headline_text'           => isset( $content['form_headline_text'] ) ? $content['form_headline_text'] : '',
 			'form_placeholder_text'        => isset( $content['form_placeholder_text'] ) ? $content['form_placeholder_text'] : 'Email Address',
 			'form_btn_text'                => isset( $content['form_btn_text'] ) ? $content['form_btn_text'] : 'Notify Me',
@@ -564,7 +564,7 @@ class CSMM_REST_API {
 			$content_array['countdown_box_bg'] = sanitize_text_field( $params['countdown_box_bg'] );
 		}
 		if ( isset( $params['susbcriber_form'] ) ) {
-			$content_array['susbcriber_form'] = sanitize_text_field( $params['susbcriber_form'] );
+			$content_array['susbcriber_form'] = '0'; // Email Lead Capture is a Pro feature
 		}
 		if ( isset( $params['form_headline_text'] ) ) {
 			$content_array['form_headline_text'] = sanitize_text_field( $params['form_headline_text'] );

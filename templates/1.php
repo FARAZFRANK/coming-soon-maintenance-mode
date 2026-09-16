@@ -73,58 +73,6 @@
                     <h1><?php if($csmm_title != "") { echo esc_html( $csmm_title ); } ?></h1>
                     <p><?php if($csmm_description != "") { echo esc_textarea( stripslashes( $csmm_description ) ); } ?></p>
                     
-                    <?php if($csmm_susbcriber_form == 1) { ?>
-                    <div class="home-content__subscribe">
-                        <form id="mc-form" method="post" class="group">
-                            <input type="email" id="csmm-email" name="csmm-email" class="email" placeholder="<?php esc_attr_e( 'Email Address', 'coming-soon-maintenance-mode' ); ?>" required="">
-                            <input type="hidden" id="csmm-email-nonce" name="csmm-email-nonce" value="<?php echo esc_attr( wp_create_nonce( 'csmm-email-nonce' ) ); ?>">
-                            <input type="submit" name="subscribe" value="<?php esc_attr_e( 'Notify Me', 'coming-soon-maintenance-mode' ); ?>">
-                            <label for="mc-email" class="subscribe-message">
-                            <?php
-                            $csmm_flag = 0;
-                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                //print_r($_POST);
-                                // add new email subscriber start
-                                if ( sanitize_text_field( wp_unslash( isset( $_POST['csmm-email-nonce'] ) ) ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['csmm-email-nonce'] ) ), 'csmm-email-nonce' ) ) {
-                                   $csmm_new_subscriber = sanitize_text_field($_POST['csmm-email']);
-                                    if(filter_var($csmm_new_subscriber, FILTER_VALIDATE_EMAIL) !== false){
-                                        //get saved subscriber list
-                                        $cmss_subscriber_list = array();
-                                        $cmss_subscriber_list = get_option('cmss_subscriber_list');
-                                        
-                                        // if add new subscriber else  // add first subscriber to the list
-                                        if(is_array($cmss_subscriber_list) && count($cmss_subscriber_list)) {
-                                            //check email is already exist
-                                            if(!in_array($csmm_new_subscriber, $cmss_subscriber_list)) {
-                                                // append new email subscriber
-                                                array_push($cmss_subscriber_list, $csmm_new_subscriber);
-                                                update_option('cmss_subscriber_list', $cmss_subscriber_list);
-									if ( class_exists( 'CSMM_Subscribers' ) ) { CSMM_Subscribers::add_subscriber( $csmm_new_subscriber ); }
-									$csmm_flag = 1;
-                                            }
-                                        } else {
-                                            update_option('cmss_subscriber_list', array($csmm_new_subscriber));
-									if ( class_exists( 'CSMM_Subscribers' ) ) { CSMM_Subscribers::add_subscriber( $csmm_new_subscriber ); }
-									$csmm_flag = 1;
-                                        }
-                                    }
-                                }
-                                // add new email subscriber end
-                                
-                                // on countdown end live the site start
-                                if ( sanitize_text_field( wp_unslash( isset( $_POST['nonce'] ) ) ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'csmm-save' ) ) {
-                                    update_option('csmm_settings', array('website_mode' => 3));
-                                    wp_die(); // this is required to terminate immediately and return a proper response
-                                }
-                                // on countdown end live the site end
-                            }
-                            if($csmm_flag == 1 ) echo esc_html_e( 'subscribed', 'coming-soon-maintenance-mode' );
-                            ?>
-                            </label>
-                        </form>
-                    </div>
-                    <?php } ?>
-                    
                 </div>  <!-- end home-content__text -->
             </div>  <!-- end home-content__main -->
             

@@ -28,16 +28,10 @@ if ( isset( $_GET['template_preview'] ) && current_user_can( 'manage_options' ) 
 	}
 }
 
-// Central Subscriber Form Processing & Integrations Pipeline Dispatch
-if ( 'POST' === $_SERVER['REQUEST_METHOD'] && ! empty( $_POST['csmm-email'] ) ) {
-	if ( isset( $_POST['csmm-email-nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['csmm-email-nonce'] ) ), 'csmm-email-nonce' ) ) {
-		$csmm_sub_email = sanitize_email( wp_unslash( $_POST['csmm-email'] ) );
-		if ( is_email( $csmm_sub_email ) ) {
-			if ( class_exists( 'CSMM_Subscribers' ) ) {
-				CSMM_Subscribers::add_subscriber( $csmm_sub_email );
-			}
-		}
-	}
+// On countdown end live the site
+if ( 'POST' === $_SERVER['REQUEST_METHOD'] && isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'csmm-save' ) ) {
+	update_option( 'csmm_settings', array( 'website_mode' => 3 ) );
+	wp_die();
 }
 
 // Logo Setup
@@ -84,10 +78,9 @@ $csmm_countdown_override_enabled = ! empty( $csmm_content['countdown_override_en
 $csmm_countdown_digit_font_size  = isset( $csmm_content['countdown_digit_font_size'] ) ? intval( $csmm_content['countdown_digit_font_size'] ) : 0;
 $csmm_countdown_digit_color      = isset( $csmm_content['countdown_digit_color'] ) ? sanitize_text_field( $csmm_content['countdown_digit_color'] ) : '';
 $csmm_countdown_label_font_size  = isset( $csmm_content['countdown_label_font_size'] ) ? intval( $csmm_content['countdown_label_font_size'] ) : 0;
-$csmm_countdown_label_color      = isset( $csmm_content['countdown_label_color'] ) ? sanitize_text_field( $csmm_content['countdown_label_color'] ) : '';
 $csmm_countdown_box_bg           = isset( $csmm_content['countdown_box_bg'] ) ? sanitize_text_field( $csmm_content['countdown_box_bg'] ) : '';
-$csmm_susbcriber_form = isset( $csmm_content['susbcriber_form'] ) ? $csmm_content['susbcriber_form'] : '1';
-$csmm_video_url       = isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : 'https://player.vimeo.com/video/427528336?title=0&portrait=0&byline=0&autoplay=1&loop=1&muted=true';
+$csmm_susbcriber_form            = '0'; // Email Lead Capture is a Pro feature, disabled in free edition
+$csmm_video_url                  = isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : 'https://player.vimeo.com/video/427528336?title=0&portrait=0&byline=0&autoplay=1&loop=1&muted=true';
 $csmm_custom_css      = isset( $csmm_content['custom_css'] ) ? $csmm_content['custom_css'] : '';
 $csmm_slide_ids       = isset( $csmm_content['slide_ids'] ) && is_array( $csmm_content['slide_ids'] ) ? $csmm_content['slide_ids'] : array();
 

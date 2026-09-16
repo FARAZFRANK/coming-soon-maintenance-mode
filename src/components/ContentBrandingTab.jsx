@@ -45,6 +45,7 @@ import FullscreenRoundedIcon from '@mui/icons-material/FullscreenRounded';
 import PermMediaRoundedIcon from '@mui/icons-material/PermMediaRounded';
 import WallpaperRoundedIcon from '@mui/icons-material/WallpaperRounded';
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded';
+import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
 import ModernDatePicker from './ModernDatePicker';
 import { api } from '../api';
 
@@ -2735,391 +2736,410 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
         </CardContent>
       </Card>
 
-      {/* 4. Email Lead Capture Card */}
+      {/* 4. Email Lead Capture Card (Pro Feature - Displayed Disabled in Free Edition) */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: 2.5 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 1.5 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
               <MarkEmailReadRoundedIcon color="secondary" />
               <div>
-                <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
-                  Email Lead Capture
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
+                    Email Lead Capture
+                  </Typography>
+                  <Box
+                    sx={{
+                      background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                      color: '#ffffff',
+                      borderRadius: '6px',
+                      px: 0.9,
+                      py: 0.2,
+                      fontSize: '0.7rem',
+                      fontWeight: 800,
+                      letterSpacing: '0.5px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 0.4,
+                      boxShadow: '0 2px 6px rgba(245, 158, 11, 0.3)',
+                    }}
+                  >
+                    <WorkspacePremiumRoundedIcon sx={{ fontSize: 13 }} />
+                    PRO
+                  </Box>
+                </Box>
                 <Typography variant="body2" color="text.secondary">
                   Show an email subscription box on your coming soon template to capture visitor leads.
                 </Typography>
               </div>
             </Box>
 
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={String(settings.susbcriber_form) === '1'}
-                  onChange={(e) => onChange('susbcriber_form', e.target.checked ? '1' : '0')}
-                  color="primary"
-                />
-              }
-              label={String(settings.susbcriber_form) === '1' ? 'Active' : 'Hidden'}
-            />
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <Button
+                variant="contained"
+                size="small"
+                component="a"
+                href="https://wpfrank.com/wordpress-plugins/coming-soon-maintenance-mode-pro/"
+                target="_blank"
+                rel="noopener noreferrer"
+                startIcon={<WorkspacePremiumRoundedIcon sx={{ fontSize: 15 }} />}
+                sx={{
+                  background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  borderRadius: '6px',
+                  fontSize: '0.8rem',
+                  textTransform: 'none',
+                  px: 1.8,
+                  py: 0.5,
+                  boxShadow: '0 2px 8px rgba(245, 158, 11, 0.3)',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)',
+                  },
+                }}
+              >
+                Upgrade to Pro
+              </Button>
+              <Tooltip title="Email Lead Capture is available in the Pro version">
+                <span>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={false}
+                        disabled
+                        color="primary"
+                      />
+                    }
+                    label="Disabled"
+                    sx={{ m: 0, color: 'text.secondary' }}
+                  />
+                </span>
+              </Tooltip>
+            </Box>
           </Box>
 
-          {String(settings.susbcriber_form) === '1' && (
-            <Box sx={{ mt: 3, pt: 2.5, borderTop: (theme) => `1px solid ${theme.palette.divider}` }}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2, color: 'text.primary' }}>
-                Subscription Form Appearance & Styling
-              </Typography>
+          <Alert
+            severity="warning"
+            icon={<WorkspacePremiumRoundedIcon sx={{ color: '#f59e0b' }} />}
+            sx={{
+              mt: 2,
+              mb: 1,
+              borderRadius: '8px',
+              backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(245, 158, 11, 0.08)'),
+              border: '1px solid rgba(245, 158, 11, 0.25)',
+              color: (theme) => (theme.palette.mode === 'dark' ? '#fbbf24' : '#b45309'),
+              '& .MuiAlert-icon': { color: '#f59e0b' },
+            }}
+          >
+            <strong>Pro Feature:</strong> Email Lead Capture &amp; visitor subscription styling is available in the Pro version. Upgrade to activate email signups, export subscribers, and integrate with Mailchimp &amp; Webhooks.
+          </Alert>
 
-              <Grid container spacing={2.5}>
-                {/* Headline / Text Above Form */}
-                <Grid item xs={12}>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
-                    Headline / Text Above Form (Supported across templates)
-                  </Typography>
-                  <TextField
-                    size="small"
-                    fullWidth
-                    value={settings.form_headline_text !== undefined ? settings.form_headline_text : ''}
-                    onChange={(e) => onChange('form_headline_text', e.target.value)}
-                    placeholder="e.g. Get the project blueprints first. / Don't miss the party! / Be the first to receive our new prospectus."
-                    helperText="Customize the headline call-to-action text displayed above the subscriber box. Leave empty to use template default."
-                  />
-                </Grid>
+          {/* Form appearance displayed disabled so free users see what is offered */}
+          <Box
+            sx={{
+              mt: 2.5,
+              pt: 2.5,
+              borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+              opacity: 0.72,
+              filter: 'grayscale(0.1)',
+            }}
+          >
+            <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2, color: 'text.primary' }}>
+              Subscription Form Appearance &amp; Styling
+            </Typography>
 
-                {/* Placeholder Text */}
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
-                    Input Placeholder Text
-                  </Typography>
-                  <TextField
-                    size="small"
-                    fullWidth
-                    value={settings.form_placeholder_text !== undefined ? settings.form_placeholder_text : 'Email Address'}
-                    onChange={(e) => onChange('form_placeholder_text', e.target.value)}
-                    placeholder="Email Address"
-                  />
-                </Grid>
+            <Grid container spacing={2.5}>
+              {/* Headline / Text Above Form */}
+              <Grid item xs={12}>
+                <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                  Headline / Text Above Form (Supported across templates)
+                </Typography>
+                <TextField
+                  size="small"
+                  fullWidth
+                  disabled
+                  value={settings.form_headline_text !== undefined ? settings.form_headline_text : ''}
+                  placeholder="e.g. Get the project blueprints first. / Don't miss the party! / Be the first to receive our new prospectus."
+                  helperText="Customize the headline call-to-action text displayed above the subscriber box. Leave empty to use template default."
+                />
+              </Grid>
 
-                {/* Button Text */}
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
-                    Button Label / Text
-                  </Typography>
-                  <TextField
-                    size="small"
-                    fullWidth
-                    value={settings.form_btn_text !== undefined ? settings.form_btn_text : 'Notify Me'}
-                    onChange={(e) => onChange('form_btn_text', e.target.value)}
-                    placeholder="Notify Me"
-                  />
-                </Grid>
+              {/* Placeholder Text */}
+              <Grid item xs={12} sm={6}>
+                <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                  Input Placeholder Text
+                </Typography>
+                <TextField
+                  size="small"
+                  fullWidth
+                  disabled
+                  value={settings.form_placeholder_text !== undefined ? settings.form_placeholder_text : 'Email Address'}
+                  placeholder="Email Address"
+                />
+              </Grid>
 
-                {/* Input Background Color */}
-                <Grid item xs={12} sm={6} md={3}>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
-                    Input Background Color
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                    <Box
-                      component="label"
-                      sx={{
-                        width: 38,
-                        height: 38,
-                        borderRadius: '6px',
-                        border: '1px solid #cbd5e1',
-                        backgroundColor: settings.form_input_bg || '#1e293b',
-                        cursor: 'pointer',
-                        display: 'inline-block',
-                        flexShrink: 0,
-                        overflow: 'hidden',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                      }}
-                    >
-                      <input
-                        type="color"
-                        value={settings.form_input_bg && settings.form_input_bg.startsWith('#') ? settings.form_input_bg : '#1e293b'}
-                        onChange={(e) => onChange('form_input_bg', e.target.value)}
-                        style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
-                      />
-                    </Box>
-                    <TextField
-                      size="small"
-                      fullWidth
-                      value={settings.form_input_bg !== undefined ? settings.form_input_bg : 'rgba(0, 0, 0, 0.7)'}
-                      onChange={(e) => onChange('form_input_bg', e.target.value)}
-                      placeholder="rgba(0, 0, 0, 0.7)"
-                    />
-                  </Box>
-                </Grid>
+              {/* Button Text */}
+              <Grid item xs={12} sm={6}>
+                <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                  Button Label / Text
+                </Typography>
+                <TextField
+                  size="small"
+                  fullWidth
+                  disabled
+                  value={settings.form_btn_text !== undefined ? settings.form_btn_text : 'Notify Me'}
+                  placeholder="Notify Me"
+                />
+              </Grid>
 
-                {/* Input Text & Placeholder Color */}
-                <Grid item xs={12} sm={6} md={3}>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
-                    Input / Placeholder Color
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                    <Box
-                      component="label"
-                      sx={{
-                        width: 38,
-                        height: 38,
-                        borderRadius: '6px',
-                        border: '1px solid #cbd5e1',
-                        backgroundColor: settings.form_input_color || '#FFFFFF',
-                        cursor: 'pointer',
-                        display: 'inline-block',
-                        flexShrink: 0,
-                        overflow: 'hidden',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                      }}
-                    >
-                      <input
-                        type="color"
-                        value={settings.form_input_color && settings.form_input_color.startsWith('#') ? settings.form_input_color : '#FFFFFF'}
-                        onChange={(e) => onChange('form_input_color', e.target.value)}
-                        style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
-                      />
-                    </Box>
-                    <TextField
-                      size="small"
-                      fullWidth
-                      value={settings.form_input_color !== undefined && settings.form_input_color !== '' ? settings.form_input_color : '#FFFFFF'}
-                      onChange={(e) => onChange('form_input_color', e.target.value)}
-                      placeholder="#FFFFFF"
-                    />
-                  </Box>
-                </Grid>
-
-                {/* Button Background Color */}
-                <Grid item xs={12} sm={6} md={3}>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
-                    Button Background Color
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                    <Box
-                      component="label"
-                      sx={{
-                        width: 38,
-                        height: 38,
-                        borderRadius: '6px',
-                        border: '1px solid #cbd5e1',
-                        backgroundColor: settings.form_btn_bg || '#e11d48',
-                        cursor: 'pointer',
-                        display: 'inline-block',
-                        flexShrink: 0,
-                        overflow: 'hidden',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                      }}
-                    >
-                      <input
-                        type="color"
-                        value={settings.form_btn_bg && settings.form_btn_bg.startsWith('#') ? settings.form_btn_bg : '#e11d48'}
-                        onChange={(e) => onChange('form_btn_bg', e.target.value)}
-                        style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
-                      />
-                    </Box>
-                    <TextField
-                      size="small"
-                      fullWidth
-                      value={settings.form_btn_bg !== undefined ? settings.form_btn_bg : '#e11d48'}
-                      onChange={(e) => onChange('form_btn_bg', e.target.value)}
-                      placeholder="#e11d48"
-                    />
-                  </Box>
-                </Grid>
-
-                {/* Button Text Color */}
-                <Grid item xs={12} sm={6} md={3}>
-                  <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
-                    Button Text Color
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                    <Box
-                      component="label"
-                      sx={{
-                        width: 38,
-                        height: 38,
-                        borderRadius: '6px',
-                        border: '1px solid #cbd5e1',
-                        backgroundColor: settings.form_btn_color || '#ffffff',
-                        cursor: 'pointer',
-                        display: 'inline-block',
-                        flexShrink: 0,
-                        overflow: 'hidden',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                      }}
-                    >
-                      <input
-                        type="color"
-                        value={settings.form_btn_color && settings.form_btn_color.startsWith('#') ? settings.form_btn_color : '#ffffff'}
-                        onChange={(e) => onChange('form_btn_color', e.target.value)}
-                        style={{ opacity: 0, width: '100%', height: '100%', cursor: 'pointer' }}
-                      />
-                    </Box>
-                    <TextField
-                      size="small"
-                      fullWidth
-                      value={settings.form_btn_color !== undefined ? settings.form_btn_color : '#ffffff'}
-                      onChange={(e) => onChange('form_btn_color', e.target.value)}
-                      placeholder="#ffffff"
-                    />
-                  </Box>
-                </Grid>
-
-                {/* Border Radius Slider - Compact */}
-                <Grid item xs={12}>
-                  <Box sx={{ maxWidth: 360 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
-                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                        Form & Button Border Radius
-                      </Typography>
-                      <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
-                        {settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px
-                      </Typography>
-                    </Box>
-                    <Slider
-                      value={settings.form_border_radius !== undefined ? Number(settings.form_border_radius) : 0}
-                      onChange={(e, val) => onChange('form_border_radius', val)}
-                      min={0}
-                      max={30}
-                      step={1}
-                      color="primary"
-                      size="small"
-                    />
-                  </Box>
-                </Grid>
-
-                {/* Live Form UI Preview */}
-                <Grid item xs={12}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      Live Form Preview
-                    </Typography>
-                    <Tooltip title="Reset subscription form styling to defaults">
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        startIcon={<RestartAltRoundedIcon fontSize="small" />}
-                        onClick={() => {
-                          onChange('form_headline_text', '');
-                          onChange('form_placeholder_text', 'Email Address');
-                          onChange('form_btn_text', 'Notify Me');
-                          onChange('form_input_bg', 'rgba(0, 0, 0, 0.7)');
-                          onChange('form_input_color', '#FFFFFF');
-                          onChange('form_btn_bg', '#e11d48');
-                          onChange('form_btn_color', '#FFFFFF');
-                          onChange('form_border_radius', 0);
-                        }}
-                        sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.3 }}
-                      >
-                        Reset Form Styling
-                      </Button>
-                    </Tooltip>
-                  </Box>
+              {/* Input Background Color */}
+              <Grid item xs={12} sm={6} md={3}>
+                <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                  Input Background Color
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
                   <Box
                     sx={{
-                      p: { xs: 3, md: 4 },
-                      borderRadius: '8px',
-                      backgroundColor: '#161616',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                      minHeight: 120,
+                      width: 38,
+                      height: 38,
+                      borderRadius: '6px',
+                      border: '1px solid #cbd5e1',
+                      backgroundColor: settings.form_input_bg || 'rgba(0, 0, 0, 0.7)',
+                      display: 'inline-block',
+                      flexShrink: 0,
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
                     }}
+                  />
+                  <TextField
+                    size="small"
+                    fullWidth
+                    disabled
+                    value={settings.form_input_bg !== undefined ? settings.form_input_bg : 'rgba(0, 0, 0, 0.7)'}
+                    placeholder="rgba(0, 0, 0, 0.7)"
+                  />
+                </Box>
+              </Grid>
+
+              {/* Input Text & Placeholder Color */}
+              <Grid item xs={12} sm={6} md={3}>
+                <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                  Input / Placeholder Color
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                  <Box
+                    sx={{
+                      width: 38,
+                      height: 38,
+                      borderRadius: '6px',
+                      border: '1px solid #cbd5e1',
+                      backgroundColor: settings.form_input_color || '#FFFFFF',
+                      display: 'inline-block',
+                      flexShrink: 0,
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                    }}
+                  />
+                  <TextField
+                    size="small"
+                    fullWidth
+                    disabled
+                    value={settings.form_input_color !== undefined && settings.form_input_color !== '' ? settings.form_input_color : '#FFFFFF'}
+                    placeholder="#FFFFFF"
+                  />
+                </Box>
+              </Grid>
+
+              {/* Button Background Color */}
+              <Grid item xs={12} sm={6} md={3}>
+                <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                  Button Background Color
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                  <Box
+                    sx={{
+                      width: 38,
+                      height: 38,
+                      borderRadius: '6px',
+                      border: '1px solid #cbd5e1',
+                      backgroundColor: settings.form_btn_bg || '#e11d48',
+                      display: 'inline-block',
+                      flexShrink: 0,
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                    }}
+                  />
+                  <TextField
+                    size="small"
+                    fullWidth
+                    disabled
+                    value={settings.form_btn_bg !== undefined ? settings.form_btn_bg : '#e11d48'}
+                    placeholder="#e11d48"
+                  />
+                </Box>
+              </Grid>
+
+              {/* Button Text Color */}
+              <Grid item xs={12} sm={6} md={3}>
+                <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.75 }}>
+                  Button Text Color
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                  <Box
+                    sx={{
+                      width: 38,
+                      height: 38,
+                      borderRadius: '6px',
+                      border: '1px solid #cbd5e1',
+                      backgroundColor: settings.form_btn_color || '#ffffff',
+                      display: 'inline-block',
+                      flexShrink: 0,
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                    }}
+                  />
+                  <TextField
+                    size="small"
+                    fullWidth
+                    disabled
+                    value={settings.form_btn_color !== undefined ? settings.form_btn_color : '#ffffff'}
+                    placeholder="#ffffff"
+                  />
+                </Box>
+              </Grid>
+
+              {/* Border Radius Slider - Compact */}
+              <Grid item xs={12}>
+                <Box sx={{ maxWidth: 360 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      Form &amp; Button Border Radius
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 700, color: 'text.secondary', fontSize: '0.85rem' }}>
+                      {settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px
+                    </Typography>
+                  </Box>
+                  <Slider
+                    value={settings.form_border_radius !== undefined ? Number(settings.form_border_radius) : 0}
+                    disabled
+                    min={0}
+                    max={30}
+                    step={1}
+                    color="primary"
+                    size="small"
+                  />
+                </Box>
+              </Grid>
+
+              {/* Live Form UI Preview */}
+              <Grid item xs={12}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    Live Form Preview
+                  </Typography>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    disabled
+                    startIcon={<RestartAltRoundedIcon fontSize="small" />}
+                    sx={{ borderRadius: '6px', fontSize: '0.78rem', textTransform: 'none', py: 0.3 }}
                   >
-                    {settings.form_headline_text && (
-                      <Typography
-                        sx={{
-                          color: '#FFFFFF',
-                          fontSize: '15px',
-                          fontWeight: 600,
-                          mb: 1.75,
-                          textAlign: 'center',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                          letterSpacing: '0.02em',
-                        }}
-                      >
-                        {settings.form_headline_text}
-                      </Typography>
-                    )}
-                    <Box
+                    Reset Form Styling
+                  </Button>
+                </Box>
+                <Box
+                  sx={{
+                    p: { xs: 3, md: 4 },
+                    borderRadius: '8px',
+                    backgroundColor: '#161616',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    minHeight: 120,
+                  }}
+                >
+                  {settings.form_headline_text && (
+                    <Typography
                       sx={{
-                        maxWidth: 540,
-                        width: '100%',
-                        height: 54,
-                        display: 'flex',
-                        alignItems: 'stretch',
-                        borderRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
-                        overflow: 'hidden',
-                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)',
+                        color: '#FFFFFF',
+                        fontSize: '15px',
+                        fontWeight: 600,
+                        mb: 1.75,
+                        textAlign: 'center',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                        letterSpacing: '0.02em',
                       }}
                     >
-                      {/* Left Input Field Box */}
-                      <Box
+                      {settings.form_headline_text}
+                    </Typography>
+                  )}
+                  <Box
+                    sx={{
+                      maxWidth: 540,
+                      width: '100%',
+                      height: 54,
+                      display: 'flex',
+                      alignItems: 'stretch',
+                      borderRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
+                      overflow: 'hidden',
+                      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)',
+                    }}
+                  >
+                    {/* Left Input Field Box */}
+                    <Box
+                      sx={{
+                        flex: 1,
+                        height: '100%',
+                        backgroundColor: settings.form_input_bg || 'rgba(0, 0, 0, 0.7)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        px: 2.5,
+                        fontSize: '15px',
+                        fontWeight: 500,
+                        userSelect: 'none',
+                        borderTopLeftRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
+                        borderBottomLeftRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
+                      }}
+                    >
+                      <Typography
                         sx={{
-                          flex: 1,
-                          height: '100%',
-                          backgroundColor: settings.form_input_bg || 'rgba(0, 0, 0, 0.7)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          px: 2.5,
+                          color: settings.form_input_color || '#FFFFFF',
+                          opacity: 0.9,
                           fontSize: '15px',
                           fontWeight: 500,
-                          userSelect: 'none',
-                          borderTopLeftRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
-                          borderBottomLeftRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
-                          transition: 'background-color 0.2s ease',
-                        }}
-                      >
-                        <Typography
-                          sx={{
-                            color: settings.form_input_color || '#FFFFFF',
-                            opacity: 0.9,
-                            fontSize: '15px',
-                            fontWeight: 500,
-                            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                          }}
-                        >
-                          {settings.form_placeholder_text || 'Email Address'}
-                        </Typography>
-                      </Box>
-
-                      {/* Right Submit Button Box */}
-                      <Box
-                        sx={{
-                          height: '100%',
-                          backgroundColor: settings.form_btn_bg || '#e11d48',
-                          color: settings.form_btn_color || '#ffffff',
-                          px: 3.5,
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontWeight: 700,
-                          fontSize: '13px',
-                          letterSpacing: '0.12em',
-                          textTransform: 'uppercase',
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                          userSelect: 'none',
-                          flexShrink: 0,
-                          borderTopRightRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
-                          borderBottomRightRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
                           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                          transition: 'background-color 0.2s ease, opacity 0.2s ease',
-                          '&:hover': {
-                            opacity: 0.9,
-                          },
                         }}
                       >
-                        {settings.form_btn_text || 'NOTIFY ME'}
-                      </Box>
+                        {settings.form_placeholder_text || 'Email Address'}
+                      </Typography>
+                    </Box>
+
+                    {/* Right Submit Button Box */}
+                    <Box
+                      sx={{
+                        height: '100%',
+                        backgroundColor: settings.form_btn_bg || '#e11d48',
+                        color: settings.form_btn_color || '#ffffff',
+                        px: 3.5,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontWeight: 700,
+                        fontSize: '13px',
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                        whiteSpace: 'nowrap',
+                        userSelect: 'none',
+                        flexShrink: 0,
+                        borderTopRightRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
+                        borderBottomRightRadius: `${settings.form_border_radius !== undefined ? settings.form_border_radius : 0}px`,
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                      }}
+                    >
+                      {settings.form_btn_text || 'NOTIFY ME'}
                     </Box>
                   </Box>
-                </Grid>
+                </Box>
               </Grid>
-            </Box>
-          )}
+            </Grid>
+          </Box>
         </CardContent>
       </Card>
 
