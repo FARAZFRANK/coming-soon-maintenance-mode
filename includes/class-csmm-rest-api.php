@@ -723,6 +723,22 @@ class CSMM_REST_API {
 		// Handle payload if wrapped inside "settings" key from export file
 		$import_data = isset( $params['settings'] ) && is_array( $params['settings'] ) ? $params['settings'] : $params;
 
+		// Sanitize import payload for Free version
+		unset( $import_data['integrations'] );
+		unset( $import_data['custom_css'] );
+		unset( $import_data['video_url'] );
+		unset( $import_data['bg_slideshow_images'] );
+		unset( $import_data['bg_video_url'] );
+		unset( $import_data['bg_pattern'] );
+		unset( $import_data['bg_gradient_type'] );
+
+		if ( isset( $import_data['template_id'] ) ) {
+			$tid = intval( $import_data['template_id'] );
+			if ( ! in_array( $tid, array( 1, 4, 8, 11, 15 ), true ) ) {
+				$import_data['template_id'] = 1;
+			}
+		}
+
 		// Save imported settings through save_settings logic
 		$save_req = new WP_REST_Request( 'POST', '/' . self::NAMESPACE . '/settings' );
 		$save_req->set_body_params( $import_data );

@@ -63,12 +63,36 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
   // 1. Export Settings to JSON file
   const handleExportSettings = () => {
     try {
+      const safeSettings = { ...settings };
+      // Strip Pro and disabled feature settings from Free export
+      delete safeSettings.integrations;
+      delete safeSettings.custom_css;
+      delete safeSettings.susbcriber_form;
+      delete safeSettings.form_headline_text;
+      delete safeSettings.form_placeholder_text;
+      delete safeSettings.form_btn_text;
+      delete safeSettings.form_input_bg;
+      delete safeSettings.form_input_color;
+      delete safeSettings.form_btn_bg;
+      delete safeSettings.form_btn_color;
+      delete safeSettings.form_border_radius;
+      delete safeSettings.video_url;
+      delete safeSettings.bg_slideshow_images;
+      delete safeSettings.bg_video_url;
+      delete safeSettings.bg_pattern;
+      delete safeSettings.bg_pattern_opacity;
+      delete safeSettings.bg_pattern_color;
+      delete safeSettings.bg_gradient_type;
+      delete safeSettings.bg_gradient_color1;
+      delete safeSettings.bg_gradient_color2;
+      delete safeSettings.bg_gradient_angle;
+
       const exportData = {
-        plugin: 'Coming Soon Maintenance Mode Pro',
+        plugin: 'Coming Soon Maintenance Mode',
         version: api.getConfig().version || '1.3.0',
         site_url: api.getConfig().siteUrl || '',
         exported_at: new Date().toISOString(),
-        settings: settings || {},
+        settings: safeSettings,
       };
 
       const jsonStr = JSON.stringify(exportData, null, 2);
@@ -77,12 +101,12 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
       const link = document.createElement('a');
       const dateStr = new Date().toISOString().split('T')[0];
       link.href = url;
-      link.download = `csmm-pro-settings-${dateStr}.json`;
+      link.download = `csmm-free-settings-${dateStr}.json`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-      showToast('Settings exported successfully to JSON file.', 'success');
+      showToast('Free settings exported successfully to JSON backup.', 'success');
     } catch (e) {
       showToast('Failed to export settings: ' + e.message, 'error');
     }
@@ -106,9 +130,27 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
           throw new Error('Invalid JSON structure.');
         }
 
-        const settingsToImport = parsed.settings || parsed;
-        if (!settingsToImport || typeof settingsToImport !== 'object') {
+        const rawSettings = parsed.settings || parsed;
+        if (!rawSettings || typeof rawSettings !== 'object') {
           throw new Error('No valid settings object found in JSON file.');
+        }
+
+        const settingsToImport = { ...rawSettings };
+        // Strip Pro features on import to protect Free integrity
+        delete settingsToImport.integrations;
+        delete settingsToImport.custom_css;
+        delete settingsToImport.video_url;
+        delete settingsToImport.bg_slideshow_images;
+        delete settingsToImport.bg_video_url;
+        delete settingsToImport.bg_pattern;
+        delete settingsToImport.bg_gradient_type;
+
+        // Ensure template_id belongs to the 5 free templates (1, 4, 8, 11, 15)
+        if (settingsToImport.template_id) {
+          const freeTemplates = [1, 4, 8, 11, 15];
+          if (!freeTemplates.includes(Number(settingsToImport.template_id))) {
+            settingsToImport.template_id = 1;
+          }
         }
 
         setIsImporting(true);
