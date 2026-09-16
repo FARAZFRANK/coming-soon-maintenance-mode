@@ -330,7 +330,7 @@ export default function App() {
               <AccessTimeFilledRoundedIcon sx={{ fontSize: 30 }} />
             </Box>
             <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1.15rem' }}>
-              Coming Soon Pro Studio
+              Coming Soon Studio
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
               Loading workspace settings & templates...

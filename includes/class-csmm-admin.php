@@ -193,7 +193,7 @@ class CSMM_Admin
 					</div>
 					<h3 id="csmm-preloader-title"
 						style="margin: 0 0 8px 0; color: #0f172a; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em;">
-						<?php esc_html_e('Coming Soon Pro Studio', 'coming-soon-maintenance-mode'); ?>
+						<?php esc_html_e('Coming Soon Studio', 'coming-soon-maintenance-mode'); ?>
 					</h3>
 					<p id="csmm-preloader-desc" style="margin: 0 0 24px 0; color: #64748b; font-size: 0.875rem;">
 						<?php esc_html_e('Loading workspace settings & templates...', 'coming-soon-maintenance-mode'); ?>
