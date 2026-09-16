@@ -89,6 +89,7 @@ $csmm_countdown_override_enabled = ! empty( $csmm_content['countdown_override_en
 $csmm_countdown_digit_font_size  = isset( $csmm_content['countdown_digit_font_size'] ) ? intval( $csmm_content['countdown_digit_font_size'] ) : 0;
 $csmm_countdown_digit_color      = isset( $csmm_content['countdown_digit_color'] ) ? sanitize_text_field( $csmm_content['countdown_digit_color'] ) : '';
 $csmm_countdown_label_font_size  = isset( $csmm_content['countdown_label_font_size'] ) ? intval( $csmm_content['countdown_label_font_size'] ) : 0;
+$csmm_countdown_label_color      = isset( $csmm_content['countdown_label_color'] ) ? sanitize_text_field( $csmm_content['countdown_label_color'] ) : '';
 $csmm_countdown_box_bg           = isset( $csmm_content['countdown_box_bg'] ) ? sanitize_text_field( $csmm_content['countdown_box_bg'] ) : '';
 $csmm_susbcriber_form            = '0'; // Email Lead Capture is a Pro feature, disabled in free edition
 $csmm_video_url                  = isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : 'https://player.vimeo.com/video/427528336?title=0&portrait=0&byline=0&autoplay=1&loop=1&muted=true';
@@ -135,6 +136,13 @@ $csmm_sm_dribbble  = '';
 $csmm_sm_whatsapp  = '';
 $csmm_sm_tiktok    = '';
 $csmm_sm_qq        = '';
+
+// Social Icon Styling & Overrides (Variables initialized safely to avoid undefined warnings)
+$csmm_social_icon_size_enabled  = ! empty( $csmm_social_media['social_icon_size_enabled'] );
+$csmm_social_icon_size          = isset( $csmm_social_media['social_icon_size'] ) ? intval( $csmm_social_media['social_icon_size'] ) : 0;
+$csmm_social_icon_color_enabled = ! empty( $csmm_social_media['social_icon_color_enabled'] );
+$csmm_social_icon_color         = isset( $csmm_social_media['social_icon_color'] ) ? sanitize_text_field( $csmm_social_media['social_icon_color'] ) : '';
+$csmm_social_icon_hover_color   = isset( $csmm_social_media['social_icon_hover_color'] ) ? sanitize_text_field( $csmm_social_media['social_icon_hover_color'] ) : '';
 
 // Subscriber Form UI Settings
 $csmm_form_headline      = isset( $csmm_content['form_headline_text'] ) ? $csmm_content['form_headline_text'] : '';
@@ -294,13 +302,13 @@ if ( ! $csmm_description_enabled ) {
 if ( ! $csmm_social_media_enabled ) {
 	$dynamic_css .= ".home-social, ul.home-social, .social-links, .social-icons, .home-content__social, #social-media, .social-media-container, .social-wrapper, .social, .s-footer .social-list { display: none !important; opacity: 0 !important; visibility: hidden !important; height: 0 !important; margin: 0 !important; padding: 0 !important; pointer-events: none !important; }\n";
 } else {
-	if ( $csmm_social_icon_size_enabled && $csmm_social_icon_size > 0 ) {
+	if ( ! empty( $csmm_social_icon_size_enabled ) && ! empty( $csmm_social_icon_size ) && $csmm_social_icon_size > 0 ) {
 		$dynamic_css .= ".home-social, .social-links, .social-icons, .social-media, .social, .s-footer .social-list { gap: 16px !important; }\n";
 		$dynamic_css .= ".home-social i, .home-social a i, .home-social li a i, .home-social svg, .social-links i, .social-links a i, .social-icons i, .social-icons a i, .social i, .social a i, .s-footer .social-list i, .s-footer .social-list a i { font-size: {$csmm_social_icon_size}px !important; width: auto !important; height: auto !important; line-height: 1 !important; }\n";
 		$dynamic_css .= ".home-social a, .home-social li a, .social-links a, .social-icons a, .social a { font-size: {$csmm_social_icon_size}px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; }\n";
 	}
 
-	if ( $csmm_social_icon_color_enabled ) {
+	if ( ! empty( $csmm_social_icon_color_enabled ) ) {
 		if ( ! empty( $csmm_social_icon_color ) ) {
 			$dynamic_css .= ".home-social a, .home-social li a, .home-social i, .home-social a i, .home-social li a i, .home-social span, .home-social svg, .social-links a, .social-links i, .social-links a i, .social-icons a, .social-icons i, .social-icons a i, .social a, .social i, .social a i, .s-footer .social-list a, .s-footer .social-list i, .s-footer .social-list a i, .social-icon, a.social-icon { color: {$csmm_social_icon_color} !important; fill: {$csmm_social_icon_color} !important; -webkit-text-fill-color: {$csmm_social_icon_color} !important; }\n";
 		}
