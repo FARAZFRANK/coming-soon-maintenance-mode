@@ -196,7 +196,7 @@ class CSMM_Activator {
 				'description_color'            => '',
 				'countdown'                    => isset( $old_content['countdown'] ) ? strval( $old_content['countdown'] ) : '1',
 				'countdown_title'              => isset( $old_content['countdown_title'] ) && '' !== $old_content['countdown_title'] ? sanitize_text_field( $old_content['countdown_title'] ) : 'Launching In...',
-				'countdown_date'               => isset( $old_content['countdown_date'] ) && ! empty( $old_content['countdown_date'] ) ? sanitize_text_field( $old_content['countdown_date'] ) : date( 'Y-m-d', strtotime( '+30 days' ) ),
+				'countdown_date'               => ( ! empty( $old_content['countdown_date'] ) && strtotime( $old_content['countdown_date'] ) > time() ) ? sanitize_text_field( $old_content['countdown_date'] ) : date( 'Y-m-d', strtotime( '+30 days' ) ),
 				'countdown_time'               => isset( $old_content['countdown_time'] ) && ! empty( $old_content['countdown_time'] ) ? sanitize_text_field( $old_content['countdown_time'] ) : '10:00',
 				'countdown_override_enabled'   => false,
 				'countdown_digit_font_size'    => 48,
