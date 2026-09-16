@@ -14,12 +14,16 @@ $csmm_social_media   = get_option( 'csmm_social_media', array() );
 $csmm_seo           = get_option( 'csmm_seo', array() );
 
 $csmm_website_mode   = isset( $csmm_settings['website_mode'] ) ? intval( $csmm_settings['website_mode'] ) : 3;
+$csmm_free_templates = array( 1, 4, 8, 11, 15 );
 $csmm_template_id    = isset( $csmm_templates['template_id'] ) ? intval( $csmm_templates['template_id'] ) : 1;
+if ( ! in_array( $csmm_template_id, $csmm_free_templates, true ) ) {
+	$csmm_template_id = 1;
+}
 
 // Allow live template preview override for admins
 if ( isset( $_GET['template_preview'] ) && current_user_can( 'manage_options' ) ) {
 	$preview_id = intval( $_GET['template_preview'] );
-	if ( $preview_id >= 1 && $preview_id <= 36 ) {
+	if ( in_array( $preview_id, $csmm_free_templates, true ) ) {
 		$csmm_template_id = $preview_id;
 	}
 }

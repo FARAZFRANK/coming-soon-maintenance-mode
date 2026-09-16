@@ -230,6 +230,9 @@ class CSMM_REST_API {
 		// Defaults
 		$website_mode = isset( $settings['website_mode'] ) ? intval( $settings['website_mode'] ) : 3;
 		$template_id  = isset( $templates['template_id'] ) ? intval( $templates['template_id'] ) : 1;
+		if ( ! in_array( $template_id, array( 1, 4, 8, 11, 15 ), true ) ) {
+			$template_id = 1;
+		}
 
 		$logo_id  = isset( $content['logo'] ) ? $content['logo'] : '1';
 		$logo_url = '';
@@ -466,7 +469,10 @@ class CSMM_REST_API {
 
 		// 2. Template
 		if ( isset( $params['template_id'] ) ) {
-			$template_id = max( 1, min( 36, intval( $params['template_id'] ) ) );
+			$template_id = intval( $params['template_id'] );
+			if ( ! in_array( $template_id, array( 1, 4, 8, 11, 15 ), true ) ) {
+				$template_id = 1;
+			}
 			update_option( 'csmm_templates', array( 'template_id' => $template_id ) );
 		}
 
@@ -1112,22 +1118,27 @@ class CSMM_REST_API {
 			34 => '34-realestate.webp', 35 => '35-shopping.webp', 36 => '36-travel.webp',
 		);
 
+		$free_template_ids = array( 1, 4, 8, 11, 15 );
+
 		for ( $i = 1; $i <= 36; $i++ ) {
 			$title    = isset( $titles[ $i ] ) ? $titles[ $i ] : "Template #{$i}";
 			$img_file = isset( $img_names[ $i ] ) ? $img_names[ $i ] : "{$i}.webp";
 			$thumb    = CSMM_URL . "admin/assets/img/{$img_file}";
+			$is_free  = in_array( $i, $free_template_ids, true );
 
 			$templates[] = array(
 				'id'          => $i,
 				'title'       => $title,
 				'thumbnail'   => $thumb,
-				'preview_url' => add_query_arg(
+				'is_free'     => $is_free,
+				'pro_url'     => 'https://wpfrank.com/wordpress-plugins/coming-soon-maintenance-mode-pro/',
+				'preview_url' => $is_free ? add_query_arg(
 					array(
 						'csmm'             => 'true',
 						'template_preview' => $i,
 					),
 					home_url( '/' )
-				),
+				) : 'https://wpfrank.com/wordpress-plugins/coming-soon-maintenance-mode-pro/',
 			);
 		}
 
