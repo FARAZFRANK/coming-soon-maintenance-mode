@@ -30,6 +30,7 @@ import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRou
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
+import CompareArrowsRoundedIcon from '@mui/icons-material/CompareArrowsRounded';
 
 function ProBadge() {
   return (
@@ -65,6 +66,7 @@ import SocialMediaTab from './components/SocialMediaTab';
 import IntegrationsTab from './components/IntegrationsTab';
 import SubscribersTab from './components/SubscribersTab';
 import DocumentationTab from './components/DocumentationTab';
+import FreeVsProTab from './components/FreeVsProTab';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -535,27 +537,10 @@ export default function App() {
                 <Tab icon={<DashboardCustomizeRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Templates (36)" />
                 <Tab icon={<PaletteRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Content, Branding & SEO" />
                 <Tab icon={<ShareRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Social Media" />
-                <Tab
-                  icon={<MarkEmailReadRoundedIcon sx={{ fontSize: 19 }} />}
-                  iconPosition="start"
-                  label={
-                    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
-                      Newsletter & Integrations
-                      <ProBadge />
-                    </Box>
-                  }
-                />
-                <Tab
-                  icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />}
-                  iconPosition="start"
-                  label={
-                    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
-                      Subscribers
-                      <ProBadge />
-                    </Box>
-                  }
-                />
+                <Tab icon={<MarkEmailReadRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Newsletter & Integrations" />
+                <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Subscribers" />
                 <Tab icon={<MenuBookRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Documentation" />
+                <Tab icon={<CompareArrowsRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Free vs Pro" />
               </Tabs>
             </Paper>
           </Box>
@@ -618,6 +603,10 @@ export default function App() {
                   }}
                   onNotify={showNotification}
                 />
+              )}
+
+              {tabIndex === 7 && (
+                <FreeVsProTab />
               )}
             </ErrorBoundary>
           </Box>
