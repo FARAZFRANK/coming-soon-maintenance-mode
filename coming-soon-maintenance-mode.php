@@ -63,8 +63,6 @@ final class Coming_Soon_Maintenance_Mode_Pro
 	private function load_dependencies()
 	{
 		require_once CSMM_DIR . 'includes/class-csmm-activator.php';
-		require_once CSMM_DIR . 'includes/class-csmm-subscribers.php';
-		require_once CSMM_DIR . 'includes/class-csmm-integrations.php';
 		require_once CSMM_DIR . 'includes/class-csmm-seo.php';
 		require_once CSMM_DIR . 'includes/class-csmm-rest-api.php';
 		require_once CSMM_DIR . 'includes/class-csmm-frontend.php';
@@ -86,9 +84,6 @@ final class Coming_Soon_Maintenance_Mode_Pro
 
 		// Auto check migration on upgrade
 		add_action('plugins_loaded', array($this, 'check_version_upgrade'));
-
-		// Integrations & SMTP Setup
-		CSMM_Integrations::init();
 
 		// REST API
 		$rest_api = new CSMM_REST_API();

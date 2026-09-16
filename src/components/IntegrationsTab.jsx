@@ -44,7 +44,80 @@ import PhoneIphoneRoundedIcon from '@mui/icons-material/PhoneIphoneRounded';
 import LaptopRoundedIcon from '@mui/icons-material/LaptopRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import CampaignRoundedIcon from '@mui/icons-material/CampaignRounded';
+import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
 import { api } from '../api';
+
+function ProBadge() {
+  return (
+    <Box
+      component="span"
+      sx={{
+        background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+        color: '#ffffff',
+        borderRadius: '4px',
+        px: 0.6,
+        py: 0.15,
+        fontSize: '0.62rem',
+        fontWeight: 800,
+        letterSpacing: '0.5px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 0.3,
+        boxShadow: '0 1px 4px rgba(245, 158, 11, 0.3)',
+        ml: 0.8,
+      }}
+    >
+      <WorkspacePremiumRoundedIcon sx={{ fontSize: 11 }} />
+      PRO
+    </Box>
+  );
+}
+
+function ProFeatureAlert({ title, description }) {
+  return (
+    <Alert
+      severity="warning"
+      icon={<WorkspacePremiumRoundedIcon sx={{ color: '#f59e0b' }} />}
+      action={
+        <Button
+          variant="contained"
+          size="small"
+          component="a"
+          href="https://wpfrank.com/wordpress-plugins/coming-soon-maintenance-mode-pro/"
+          target="_blank"
+          rel="noopener noreferrer"
+          startIcon={<WorkspacePremiumRoundedIcon sx={{ fontSize: 14 }} />}
+          sx={{
+            background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+            color: '#ffffff',
+            fontWeight: 700,
+            borderRadius: '6px',
+            fontSize: '0.75rem',
+            textTransform: 'none',
+            px: 1.6,
+            py: 0.4,
+            boxShadow: '0 2px 6px rgba(245, 158, 11, 0.3)',
+            '&:hover': {
+              background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)',
+            },
+          }}
+        >
+          Upgrade to Pro
+        </Button>
+      }
+      sx={{
+        borderRadius: '8px',
+        backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(245, 158, 11, 0.08)'),
+        border: '1px solid rgba(245, 158, 11, 0.25)',
+        color: (theme) => (theme.palette.mode === 'dark' ? '#fbbf24' : '#b45309'),
+        '& .MuiAlert-icon': { color: '#f59e0b' },
+        alignItems: 'center',
+      }}
+    >
+      <strong>{title}</strong> {description || 'is a Pro feature. Upgrade to Pro to unlock this option.'}
+    </Alert>
+  );
+}
 
 // Pixel-perfect Color Picker Field seamlessly aligned with standard MUI TextFields
 function ColorPickerField({ label, value, defaultValue = '#ffffff', onChange, helperText }) {
@@ -487,8 +560,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3.5 }}>
-      {/* 1. Mailchimp Integration Card */}
-      <Card sx={{ borderRadius: '10px' }}>
+      <ProFeatureAlert
+        title="Newsletter & Marketing Integrations"
+        description="is a Pro feature. Upgrade to Pro to connect Mailchimp, Brevo, MailerLite, Custom Webhooks, custom SMTP mail delivery, and automated email notifications."
+      />
+
+      <Box sx={{ opacity: 0.55, pointerEvents: 'none', userSelect: 'none', display: 'flex', flexDirection: 'column', gap: 3.5 }}>
+        {/* 1. Mailchimp Integration Card */}
+        <Card sx={{ borderRadius: '10px' }}>
         <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
@@ -1674,6 +1753,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
           </Button>
         </DialogActions>
       </Dialog>
+      </Box>
     </Box>
   );
 }

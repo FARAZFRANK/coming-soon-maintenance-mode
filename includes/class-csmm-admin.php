@@ -17,7 +17,6 @@ class CSMM_Admin
 		add_action('admin_menu', array($this, 'register_menu'));
 		add_action('admin_print_scripts', array($this, 'print_admin_early_scripts'), 1);
 		add_action('admin_enqueue_scripts', array($this, 'enqueue_assets'));
-		add_action('admin_post_csmm_export_subscribers', array('CSMM_Subscribers', 'export_csv'));
 	}
 
 	/**

@@ -29,6 +29,32 @@ import MarkEmailReadRoundedIcon from '@mui/icons-material/MarkEmailReadRounded';
 import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRounded';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
+import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
+
+function ProBadge() {
+  return (
+    <Box
+      component="span"
+      sx={{
+        background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+        color: '#ffffff',
+        borderRadius: '4px',
+        px: 0.6,
+        py: 0.15,
+        fontSize: '0.62rem',
+        fontWeight: 800,
+        letterSpacing: '0.5px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 0.3,
+        boxShadow: '0 1px 4px rgba(245, 158, 11, 0.3)',
+      }}
+    >
+      <WorkspacePremiumRoundedIcon sx={{ fontSize: 11 }} />
+      PRO
+    </Box>
+  );
+}
 
 import { api } from './api';
 import { getTheme } from './theme';
@@ -376,7 +402,7 @@ export default function App() {
                 <Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
                     <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1.2 }}>
-                      Coming Soon Maintenance Mode Pro
+                      Coming Soon Maintenance Mode
                     </Typography>
                     <Chip
                       label={`v${api.getConfig().version || '1.3.0'}`}
@@ -509,8 +535,26 @@ export default function App() {
                 <Tab icon={<DashboardCustomizeRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Templates (36)" />
                 <Tab icon={<PaletteRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Content, Branding & SEO" />
                 <Tab icon={<ShareRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Social Media" />
-                <Tab icon={<MarkEmailReadRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Newsletter & Integrations" />
-                <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Subscribers" />
+                <Tab
+                  icon={<MarkEmailReadRoundedIcon sx={{ fontSize: 19 }} />}
+                  iconPosition="start"
+                  label={
+                    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                      Newsletter & Integrations
+                      <ProBadge />
+                    </Box>
+                  }
+                />
+                <Tab
+                  icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />}
+                  iconPosition="start"
+                  label={
+                    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                      Subscribers
+                      <ProBadge />
+                    </Box>
+                  }
+                />
                 <Tab icon={<MenuBookRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Documentation" />
               </Tabs>
             </Paper>
