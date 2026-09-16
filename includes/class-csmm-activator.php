@@ -135,12 +135,12 @@ class CSMM_Activator {
 				array(
 					'logo'            => '1',
 					'title'           => 'Coming Soon',
-					'description'     => 'Thank you for visiting our website! We are currently working on creating a new and exciting online experience for you. While we finish up the final touches, please sign up for our newsletter to receive exclusive updates and offers.',
+					'description'     => 'Thank you for visiting our website! We are currently working on creating a new and exciting online experience for you. We will be back soon with our brand new website!',
 					'countdown'       => '1',
 					'countdown_title' => 'Launching In...',
 					'countdown_date'  => $countdown_date,
 					'countdown_time'  => '10:00',
-					'susbcriber_form'       => '1',
+					'susbcriber_form'       => '0',
 					'form_headline_text'    => '',
 					'form_placeholder_text' => 'Email Address',
 					'form_btn_text'         => 'Notify Me',
@@ -149,7 +149,7 @@ class CSMM_Activator {
 					'form_btn_bg'           => '#e11d48',
 					'form_btn_color'        => '#FFFFFF',
 					'form_border_radius'    => 0,
-					'video_url'             => 'https://player.vimeo.com/video/427528336?title=0&portrait=0&byline=0&autoplay=1&loop=1&muted=true',
+					'video_url'             => '',
 					'slide_ids'             => array(),
 					'custom_css'            => '',
 				)
@@ -162,7 +162,7 @@ class CSMM_Activator {
 				array(
 					'csmm_sm_facebook'  => '#',
 					'csmm_sm_twitter'   => '#',
-					'csmm_sm_youtube'   => '#',
+					'csmm_sm_youtube'   => '',
 					'csmm_sm_instagram' => '#',
 					'csmm_sm_linkedin'  => '',
 					'csmm_sm_pinterest' => '',
@@ -186,26 +186,6 @@ class CSMM_Activator {
 					'robots_meta'         => 'auto',
 					'google_analytics_id' => '',
 					'og_image_id'         => '',
-				)
-			);
-		}
-
-		if ( false === get_option( 'csmm_integrations' ) ) {
-			update_option(
-				'csmm_integrations',
-				array(
-					'mailchimp_enabled'     => false,
-					'mailchimp_api_key'     => '',
-					'mailchimp_list_id'     => '',
-					'webhook_enabled'       => false,
-					'webhook_url'           => '',
-					'admin_email_enabled'   => true,
-					'admin_email_recipient' => get_bloginfo( 'admin_email' ),
-					'admin_email_subject'   => 'New Subscriber Lead Captured on {site_name} 🎉',
-					'admin_email_body'      => "<h2>New Subscriber Lead!</h2>\n<p>A new visitor has subscribed to your Coming Soon newsletter:</p>\n<p><strong>Email:</strong> {subscriber_email}<br><strong>IP Address:</strong> {ip_address}<br><strong>Date:</strong> {date}</p>",
-					'welcome_email_enabled' => true,
-					'welcome_email_subject' => 'Thank you for subscribing to {site_name}! 🚀',
-					'welcome_email_body'    => "<h2>Welcome to {site_name}!</h2>\n<p>Hi there,</p>\n<p>Thank you for subscribing to our newsletter! We are currently working hard behind the scenes to launch our brand new website.</p>\n<p>You'll be the very first to know when we go live on <strong>{launch_date}</strong>!</p>\n<p>Best regards,<br>The {site_name} Team</p>",
 				)
 			);
 		}

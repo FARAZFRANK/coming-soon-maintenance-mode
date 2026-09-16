@@ -177,12 +177,12 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
                 <AutoAwesomeRoundedIcon sx={{ color: '#38bdf8', fontSize: 32 }} />
                 <Typography variant="h5" sx={{ fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
-                  Coming Soon Maintenance Mode Pro Studio
+                  Coming Soon Maintenance Mode Studio
                 </Typography>
                 <Chip label="v1.3.0" color="primary" size="small" sx={{ fontWeight: 800, borderRadius: '6px' }} />
               </Box>
               <Typography variant="body1" sx={{ color: '#94a3b8', maxWidth: 780, lineHeight: 1.6 }}>
-                Comprehensive user guide, implementation workflows, newsletter integrations, SEO configuration, and real-world use cases.
+                Comprehensive user guide, implementation workflows, SEO configuration, and real-world use cases.
               </Typography>
             </Box>
             <Button
@@ -244,7 +244,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                     📦 Export & Import Settings
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    Save a full snapshot of your website mode, active template, content, logo, timer dates, form designs, custom CSS, SEO, and social links.
+                    Save a full snapshot of your website mode, active template, content, logo, timer date, SEO, and social media links.
                   </Typography>
                 </Box>
 
@@ -296,7 +296,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
                     </Typography>
                   </Box>
                   <Typography variant="body2" color="text.secondary">
-                    Restore all Coming Soon, content branding, styling, and integration settings back to original factory defaults.
+                    Restore all Coming Soon, content branding, countdown timer, and SEO settings back to original factory defaults.
                   </Typography>
                 </Box>
 
@@ -347,7 +347,7 @@ export default function DocumentationTab({ settings, onSettingsUpdate, onNotify 
 
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: '10px !important' }}>
           <Alert severity="error" sx={{ borderRadius: '8px', fontWeight: 500 }}>
-            <strong>Warning:</strong> This action will permanently erase all your custom headlines, backgrounds, logo configurations, custom CSS styles, subscriber form designs, and third-party integrations. All settings will be restored to fresh installation defaults.
+            <strong>Warning:</strong> This action will permanently erase all your custom headlines, countdown timer, background styling, logo configurations, social links, and SEO settings. All settings will be restored to fresh installation defaults.
           </Alert>
 
           <Alert severity="info" sx={{ borderRadius: '8px', fontWeight: 500 }}>

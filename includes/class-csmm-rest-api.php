@@ -753,6 +753,8 @@ class CSMM_REST_API {
 		delete_option( 'csmm_content' );
 		delete_option( 'csmm_social_media' );
 		delete_option( 'csmm_advanced' );
+		delete_option( 'csmm_seo' );
+		delete_option( 'csmm_integrations' );
 
 		CSMM_Activator::set_default_options();
 
