@@ -191,6 +191,19 @@ For support questions, please visit the WordPress.org support forum for this plu
 
 == Changelog ==
 
+= 1.3.0 - September 16, 2026 =
+*   New: Modern React 18, Vite, Material UI (MUI v5), and WordPress REST API Single Page Application (SPA) admin dashboard.
+*   New: Automated backward compatibility and settings migration engine for users upgrading from v1.2.0 (comisoma_*) to v1.3.0 (csmm_*) without losing settings.
+*   New: Dedicated "Free vs Pro" feature comparison tab with callouts and upgrade guidance.
+*   New: Settings Backup, JSON Export, JSON Import, and Factory Reset capabilities tailored for Free edition.
+*   New: Legacy v1.2.0 export JSON backup file import support directly in v1.3.0.
+*   Improvement: Streamlined 5 free responsive templates (Templates 1, 4, 8, 11, and 15) with interactive responsive live previews.
+*   Improvement: Graphic Background streamlined for Free version (Default Media, Custom Background Images, and Solid Color).
+*   Improvement: Free edition social media profiles focused on Facebook, Twitter / X, and Instagram.
+*   Fix: Resolved undefined variable warnings in loader.php for social icon overrides and countdown label colors.
+*   Fix: Re-engineered countdown timer calculation in client-side visitor timezone, eliminating UTC offset gaps and preventing infinite reload loops on timer expiration.
+*   Security: Zero remote CDN dependencies and full adherence to WordPress.org security and sanitization guidelines.
+
 = 1.2.0 =
 *   New: Added dedicated "Our Plugins" and "Our Themes" dashboard pages with responsive showcase grids (June 29, 2026).
 *   Security: Bundled SweetAlert2 locally to eliminate remote CDN script execution for WP.org compliance (June 29, 2026).
@@ -292,6 +305,9 @@ For support questions, please visit the WordPress.org support forum for this plu
 *   starter version
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+*   Major upgrade with React 18 dashboard, automated v1.2.0 settings migration, performance optimizations, and bug fixes.
 
 = 1.1.0 =
 *   Standard update with bug fixes and improvements.

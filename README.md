@@ -94,14 +94,21 @@ npm run build
 ## 📋 Changelog
 
 ### = 1.3.0 = (16 September 2026)
-* **Initial Free Version Alignment**: Forked and prepared lightweight Free edition v1.3.0 with unified React 18 admin studio, template engine, and countdown timer.
-* **Client-Side Accurate Timezone Countdown Engine**: Re-engineered countdown calculation to parse target datetime directly in visitor's local timezone, eliminating UTC offset gaps (e.g. 5.5 hours discrepancy).
-* **Countdown Expiry Zero-Finish Refresh Loop Guard**: Added `clearInterval` timer detachment, live preview mode immunity, and `sessionStorage` single-reload latch to prevent infinite reload loops upon timer completion.
-* **PHP 8.4+ CSV Streaming Compatibility**: Explicitly passed escape parameters to `fputcsv()`, cleared output buffer streams, and added UTF-8 BOM headers for Microsoft Excel compatibility.
-* **Documentation Studio Stability**: Resolved `handleImportClick` and `handleConfirmReset` ReferenceErrors in Settings Import/Export and Factory Reset dialogs.
-* **Modern Glassmorphic DatePicker Component**: Built lightweight, theme-adaptive custom DatePicker with month navigation, click-outside dismiss, and zero external date library bloat.
-* **Subscriber Form Input & Placeholder Styling Default**: Aligned input/placeholder font color default to `#FFFFFF` across admin controls, Live Form Preview, activator, and frontend CSS.
-* **Template-Specific Backgrounds & Custom Background Guidance**: Added clear explanatory guidance and contextual controls for template-specific backgrounds versus custom image/video/pattern/gradient overlays.
+* **Modern React 18 Admin Studio**: Upgraded backend architecture to React 18, Vite, Material UI (MUI v5), and WordPress REST API Single Page Application (SPA).
+* **Automated v1.2.0 Settings Migration Engine**: Built seamless backward compatibility and automated database migration from legacy v1.2.0 (`comisoma_*`) options to modern v1.3.0 (`csmm_*`) options during upgrade without losing user settings.
+* **Legacy JSON Backup Support**: Added direct parsing and automatic migration for v1.2.0 JSON configuration backup exports in the Settings Import tool.
+* **Dedicated "Free vs Pro" Comparison Tab**: Integrated full feature comparison matrix with live upgrade callouts and Pro feature showcases.
+* **Free Edition Feature Streamlining**:
+  * Curated 5 fully responsive free templates (Templates 1, 4, 8, 11, and 15) with live preview modal.
+  * Streamlined Graphic Background settings to focus on Default Media, Custom Background Images, and Solid Color.
+  * Standardized Social Media profiles on Facebook, Twitter / X, and Instagram.
+  * Settings Backup, JSON Export, JSON Import, and Factory Reset tailored specifically for the Free version.
+* **Bug Fixes & Hardening**:
+  * Fixed undefined variable warnings in `loader.php` for social icon customization and countdown label color.
+  * Client-side accurate timezone countdown calculation directly in visitor's local timezone.
+  * Fixed infinite refresh loop on countdown completion with single-reload session guard.
+  * Fixed `handleImportClick` and `handleConfirmReset` handlers in Documentation tools.
+* **Full WordPress.org Guideline Compliance**: Zero remote script dependencies, robust capability checks, and comprehensive input sanitization and output escaping.
 
 ### = 3.2.5 = (02 September 2026)
 * **Social Media Global Visibility Toggle Switch**: Added dedicated Enable/Disable toggle card in the Social Media tab to easily hide or show social icons site-wide with a single click across all 36 templates.
