@@ -540,7 +540,60 @@ export default function App() {
                 <Tab icon={<MarkEmailReadRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Newsletter & Integrations" />
                 <Tab icon={<PeopleAltRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Subscribers" />
                 <Tab icon={<MenuBookRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Documentation" />
-                <Tab icon={<CompareArrowsRoundedIcon sx={{ fontSize: 19 }} />} iconPosition="start" label="Free vs Pro" />
+                <Tab
+                  icon={<CompareArrowsRoundedIcon sx={{ fontSize: 19, color: 'inherit' }} />}
+                  iconPosition="start"
+                  label={
+                    <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.75 }}>
+                      <span>Free vs Pro</span>
+                      <Box
+                        component="span"
+                        sx={{
+                          background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                          color: '#ffffff',
+                          borderRadius: '4px',
+                          px: 0.6,
+                          py: 0.15,
+                          fontSize: '0.62rem',
+                          fontWeight: 800,
+                          letterSpacing: '0.5px',
+                          lineHeight: 1.2,
+                          boxShadow: '0 1px 3px rgba(245, 158, 11, 0.35)',
+                        }}
+                      >
+                        PRO
+                      </Box>
+                    </Box>
+                  }
+                  sx={{
+                    color: (theme) => (theme.palette.mode === 'dark' ? '#fbbf24 !important' : '#d97706 !important'),
+                    fontWeight: '700 !important',
+                    borderRadius: '8px',
+                    my: 'auto',
+                    mx: 0.5,
+                    minHeight: '38px',
+                    height: '38px',
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === 'dark' ? 'rgba(245, 158, 11, 0.14)' : 'rgba(245, 158, 11, 0.09)',
+                    border: (theme) =>
+                      theme.palette.mode === 'dark'
+                        ? '1px solid rgba(245, 158, 11, 0.35)'
+                        : '1px solid rgba(245, 158, 11, 0.28)',
+                    transition: 'all 0.2s ease',
+                    '&:hover': {
+                      backgroundColor: (theme) =>
+                        theme.palette.mode === 'dark' ? 'rgba(245, 158, 11, 0.22)' : 'rgba(245, 158, 11, 0.16)',
+                      borderColor: '#f59e0b',
+                      color: (theme) => (theme.palette.mode === 'dark' ? '#fde68a !important' : '#b45309 !important'),
+                    },
+                    '&.Mui-selected': {
+                      color: (theme) => (theme.palette.mode === 'dark' ? '#fde68a !important' : '#b45309 !important'),
+                      backgroundColor: (theme) =>
+                        theme.palette.mode === 'dark' ? 'rgba(245, 158, 11, 0.26)' : 'rgba(245, 158, 11, 0.18)',
+                      borderColor: '#d97706',
+                    },
+                  }}
+                />
               </Tabs>
             </Paper>
           </Box>
