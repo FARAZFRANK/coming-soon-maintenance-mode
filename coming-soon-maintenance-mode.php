@@ -101,12 +101,15 @@ final class Coming_Soon_Maintenance_Mode_Pro
 	}
 
 	/**
-	 * Automated database update and migration on version bump.
+	 * Automated database update and migration on version bump or upgrade from v1.2.0.
 	 */
 	public function check_version_upgrade()
 	{
 		$installed_version = get_option('csmm_current_version');
-		if ($installed_version !== CSMM_VERSION) {
+		$migrated_v120     = get_option('csmm_v120_migrated');
+		$has_v120_options  = false !== get_option('comisoma_settings') || false !== get_option('comisoma_content');
+
+		if ($installed_version !== CSMM_VERSION || (! $migrated_v120 && $has_v120_options)) {
 			CSMM_Activator::activate();
 		}
 	}

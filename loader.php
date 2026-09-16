@@ -13,6 +13,17 @@ $csmm_content       = get_option( 'csmm_content', array() );
 $csmm_social_media   = get_option( 'csmm_social_media', array() );
 $csmm_seo           = get_option( 'csmm_seo', array() );
 
+// Backward compatibility check for upgrades from v1.2.0 if not triggered yet
+if ( ( empty( $csmm_settings ) || empty( $csmm_content ) ) && ( false !== get_option( 'comisoma_settings' ) || false !== get_option( 'comisoma_content' ) ) ) {
+	if ( class_exists( 'CSMM_Activator' ) ) {
+		CSMM_Activator::migrate_v120_options();
+		$csmm_settings     = get_option( 'csmm_settings', array() );
+		$csmm_templates    = get_option( 'csmm_templates', array() );
+		$csmm_content      = get_option( 'csmm_content', array() );
+		$csmm_social_media  = get_option( 'csmm_social_media', array() );
+	}
+}
+
 $csmm_website_mode   = isset( $csmm_settings['website_mode'] ) ? intval( $csmm_settings['website_mode'] ) : 3;
 $csmm_free_templates = array( 1, 4, 8, 11, 15 );
 $csmm_template_id    = isset( $csmm_templates['template_id'] ) ? intval( $csmm_templates['template_id'] ) : 1;

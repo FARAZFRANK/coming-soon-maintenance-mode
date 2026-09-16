@@ -42,6 +42,12 @@ class CSMM_Frontend {
 		}
 
 		$settings     = get_option( 'csmm_settings', array() );
+		if ( empty( $settings ) && ( false !== get_option( 'comisoma_settings' ) || false !== get_option( 'comisoma_content' ) ) ) {
+			if ( class_exists( 'CSMM_Activator' ) ) {
+				CSMM_Activator::migrate_v120_options();
+				$settings = get_option( 'csmm_settings', array() );
+			}
+		}
 		$website_mode = isset( $settings['website_mode'] ) ? intval( $settings['website_mode'] ) : 3;
 
 		// Mode 3 = Live (Disabled)

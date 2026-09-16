@@ -89,6 +89,12 @@ class CSMM_REST_API {
 	 */
 	public function get_settings() {
 		$settings     = get_option( 'csmm_settings', array() );
+		if ( empty( $settings ) && ( false !== get_option( 'comisoma_settings' ) || false !== get_option( 'comisoma_content' ) ) ) {
+			if ( class_exists( 'CSMM_Activator' ) ) {
+				CSMM_Activator::migrate_v120_options();
+				$settings = get_option( 'csmm_settings', array() );
+			}
+		}
 		$templates    = get_option( 'csmm_templates', array() );
 		$content      = get_option( 'csmm_content', array() );
 		$social_media = get_option( 'csmm_social_media', array() );
@@ -718,6 +724,22 @@ class CSMM_REST_API {
 		$params = $request->get_json_params();
 		if ( empty( $params ) || ! is_array( $params ) ) {
 			return new WP_Error( 'invalid_data', __( 'Invalid or empty settings data provided for import.', 'coming-soon-maintenance-mode' ), array( 'status' => 400 ) );
+		}
+
+		// Check if payload is from legacy v1.2.0 export
+		if ( isset( $params['comisoma_settings'] ) || isset( $params['comisoma_content'] ) || isset( $params['comisoma_templates'] ) || isset( $params['comisoma_social_media'] ) ) {
+			CSMM_Activator::migrate_v120_options( true, $params );
+
+			$updated      = $this->get_settings();
+			$updated_data = is_a( $updated, 'WP_REST_Response' ) ? $updated->get_data() : $updated;
+
+			return rest_ensure_response(
+				array(
+					'success' => true,
+					'message' => __( 'Legacy v1.2.0 settings imported and migrated successfully!', 'coming-soon-maintenance-mode' ),
+					'data'    => $updated_data,
+				)
+			);
 		}
 
 		// Handle payload if wrapped inside "settings" key from export file

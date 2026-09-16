@@ -30,10 +30,10 @@ class CSMM_Admin
 		}
 		?>
 		<script>
-		window.wp = window.wp || {};
-		if ('scrollRestoration' in history) {
-			history.scrollRestoration = 'manual';
-		}
+			window.wp = window.wp || {};
+			if ('scrollRestoration' in history) {
+				history.scrollRestoration = 'manual';
+			}
 		</script>
 		<?php
 	}
@@ -44,8 +44,8 @@ class CSMM_Admin
 	public function register_menu()
 	{
 		add_menu_page(
-			__('Coming Soon Pro', 'coming-soon-maintenance-mode'),
-			__('Coming Soon Pro', 'coming-soon-maintenance-mode'),
+			__('Coming Soon', 'coming-soon-maintenance-mode'),
+			__('Coming Soon', 'coming-soon-maintenance-mode'),
 			'manage_options',
 			'wpfrank-csmm',
 			array($this, 'render_admin_app'),
@@ -98,13 +98,13 @@ class CSMM_Admin
 
 			$rest_api = new CSMM_REST_API();
 			$settings_res = $rest_api->get_settings();
-			$initial_settings = is_a( $settings_res, 'WP_REST_Response' ) ? $settings_res->get_data() : $settings_res;
+			$initial_settings = is_a($settings_res, 'WP_REST_Response') ? $settings_res->get_data() : $settings_res;
 
 			$templates_res = $rest_api->get_templates();
-			$templates = is_a( $templates_res, 'WP_REST_Response' ) ? $templates_res->get_data() : $templates_res;
+			$templates = is_a($templates_res, 'WP_REST_Response') ? $templates_res->get_data() : $templates_res;
 
 			$target_res = $rest_api->get_target_items();
-			$target_items = is_a( $target_res, 'WP_REST_Response' ) ? $target_res->get_data() : $target_res;
+			$target_items = is_a($target_res, 'WP_REST_Response') ? $target_res->get_data() : $target_res;
 
 			// Pass context & REST configuration to React
 			wp_localize_script(
@@ -138,41 +138,46 @@ class CSMM_Admin
 	{
 		?>
 		<style>
-		/* Ensure no unwanted page horizontal scrollbars while preserving sticky headers */
-		.toplevel_page_wpfrank-csmm html,
-		.toplevel_page_wpfrank-csmm body {
-			overflow-x: clip !important;
-		}
-		.toplevel_page_wpfrank-csmm #wpcontent,
-		.toplevel_page_wpfrank-csmm #wpbody,
-		.toplevel_page_wpfrank-csmm #wpbody-content {
-			overflow: visible !important;
-		}
-		.toplevel_page_wpfrank-csmm #wpcontent {
-			padding-left: 0 !important;
-			padding-right: 0 !important;
-		}
-		.toplevel_page_wpfrank-csmm #wpbody-content {
-			padding-bottom: 0 !important;
-		}
-		.toplevel_page_wpfrank-csmm #wpfooter {
-			display: none !important;
-		}
-		@keyframes csmm-spin {
-			to {
-				transform: rotate(360deg);
+			/* Ensure no unwanted page horizontal scrollbars while preserving sticky headers */
+			.toplevel_page_wpfrank-csmm html,
+			.toplevel_page_wpfrank-csmm body {
+				overflow-x: clip !important;
 			}
-		}
+
+			.toplevel_page_wpfrank-csmm #wpcontent,
+			.toplevel_page_wpfrank-csmm #wpbody,
+			.toplevel_page_wpfrank-csmm #wpbody-content {
+				overflow: visible !important;
+			}
+
+			.toplevel_page_wpfrank-csmm #wpcontent {
+				padding-left: 0 !important;
+				padding-right: 0 !important;
+			}
+
+			.toplevel_page_wpfrank-csmm #wpbody-content {
+				padding-bottom: 0 !important;
+			}
+
+			.toplevel_page_wpfrank-csmm #wpfooter {
+				display: none !important;
+			}
+
+			@keyframes csmm-spin {
+				to {
+					transform: rotate(360deg);
+				}
+			}
 		</style>
 		<div id="csmm-react-root"
 			style="margin: 0; padding: 0; width: 100%; box-sizing: border-box; overflow-x: clip; background: transparent;">
 			<script>
-			(function() {
-				var mode = localStorage.getItem('csmm_theme_mode') || 'light';
-				if (mode === 'dark') {
-					document.write('<style>#csmm-preloader-bg { background-color: #0b0f19 !important; } #csmm-preloader-card { background: #1e293b !important; border-color: #334155 !important; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4) !important; } #csmm-preloader-title { color: #f8fafc !important; } #csmm-preloader-desc { color: #94a3b8 !important; } #csmm-preloader-spinner { border-color: #334155 !important; border-top-color: #3b82f6 !important; }</style>');
-				}
-			})();
+				(function () {
+					var mode = localStorage.getItem('csmm_theme_mode') || 'light';
+					if (mode === 'dark') {
+						document.write('<style>#csmm-preloader-bg { background-color: #0b0f19 !important; } #csmm-preloader-card { background: #1e293b !important; border-color: #334155 !important; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4) !important; } #csmm-preloader-title { color: #f8fafc !important; } #csmm-preloader-desc { color: #94a3b8 !important; } #csmm-preloader-spinner { border-color: #334155 !important; border-top-color: #3b82f6 !important; }</style>');
+					}
+				})();
 			</script>
 			<div id="csmm-preloader-bg"
 				style="display: flex; align-items: center; justify-content: center; height: calc(100vh - 32px); min-height: 480px; width: 100%; padding: 20px; box-sizing: border-box; overflow: hidden; background-color: #ececec; transition: background-color 0.2s ease;">
