@@ -86,38 +86,8 @@
 					<?php if(empty($csmm_sm_twitter) == false) { ?>
 					<li><a href="<?php echo esc_url($csmm_sm_twitter); ?>" target="_blank"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
 					<?php } ?>
-					<?php if(empty($csmm_sm_youtube) == false) { ?>
-					<li><a href="<?php echo esc_url($csmm_sm_youtube); ?>" target="_blank"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a></li>
-					<?php } ?>
 					<?php if(empty($csmm_sm_instagram) == false) { ?>
 					<li><a href="<?php echo esc_url($csmm_sm_instagram); ?>" target="_blank"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></li>
-					<?php } ?>
-					<?php if(empty($csmm_sm_linkedin) == false) { ?>
-					<li><a href="<?php echo esc_url($csmm_sm_linkedin); ?>" target="_blank"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a></li>
-					<?php } ?>
-					<?php if(empty($csmm_sm_pinterest) == false) { ?>
-					<li><a href="<?php echo esc_url($csmm_sm_pinterest); ?>" target="_blank"><i class="fa-brands fa-pinterest" aria-hidden="true"></i></a></li>
-					<?php } ?>
-					<?php if(empty($csmm_sm_tumblr) == false) { ?>
-					<li><a href="<?php echo esc_url($csmm_sm_tumblr); ?>" target="_blank"><i class="fa-brands fa-tumblr" aria-hidden="true"></i></a></li>
-					<?php } ?>
-					<?php if(empty($csmm_sm_snapchat) == false) { ?>
-					<li><a href="<?php echo esc_url($csmm_sm_snapchat); ?>" target="_blank"><i class="fa-brands fa-snapchat" aria-hidden="true"></i></a></li>
-					<?php } ?>
-					<?php if(empty($csmm_sm_behance) == false) { ?>
-					<li><a href="<?php echo esc_url($csmm_sm_behance); ?>" target="_blank"><i class="fa-brands fa-behance" aria-hidden="true"></i></a></li>
-					<?php } ?>
-					<?php if(empty($csmm_sm_dribbble) == false) { ?>
-					<li><a href="<?php echo esc_url($csmm_sm_dribbble); ?>" target="_blank"><i class="fa-brands fa-dribbble" aria-hidden="true"></i></a></li>
-					<?php } ?>
-					<?php if(empty($csmm_sm_whatsapp) == false) { ?>
-					<li><a href="<?php echo esc_url($csmm_sm_whatsapp); ?>" target="_blank"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></li>
-					<?php } ?>
-					<?php if(empty($csmm_sm_tiktok) == false) { ?>
-					<li><a href="<?php echo esc_url($csmm_sm_tiktok); ?>" target="_blank"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a></li>
-					<?php } ?>
-					<?php if(empty($csmm_sm_qq) == false) { ?>
-					<li><a href="<?php echo esc_url($csmm_sm_qq); ?>" target="_blank"><i class="fa-brands fa-qq" aria-hidden="true"></i></a></li>
 					<?php } ?>
 				</ul> <!-- end home-social -->
 

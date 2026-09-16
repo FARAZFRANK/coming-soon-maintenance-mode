@@ -368,23 +368,7 @@ class CSMM_REST_API {
 				'enabled'   => ! isset( $social_media['enabled'] ) || ! empty( $social_media['enabled'] ),
 				'facebook'  => isset( $social_media['csmm_sm_facebook'] ) ? $social_media['csmm_sm_facebook'] : '#',
 				'twitter'   => isset( $social_media['csmm_sm_twitter'] ) ? $social_media['csmm_sm_twitter'] : '#',
-				'youtube'   => isset( $social_media['csmm_sm_youtube'] ) && '' !== $social_media['csmm_sm_youtube'] && '#' !== $social_media['csmm_sm_youtube'] ? $social_media['csmm_sm_youtube'] : 'https://www.youtube.com/watch?v=91AcVUR0O8I',
 				'instagram' => isset( $social_media['csmm_sm_instagram'] ) ? $social_media['csmm_sm_instagram'] : '#',
-				'linkedin'  => isset( $social_media['csmm_sm_linkedin'] ) ? $social_media['csmm_sm_linkedin'] : '',
-				'pinterest' => isset( $social_media['csmm_sm_pinterest'] ) ? $social_media['csmm_sm_pinterest'] : '',
-				'tumblr'    => isset( $social_media['csmm_sm_tumblr'] ) ? $social_media['csmm_sm_tumblr'] : '',
-				'snapchat'  => isset( $social_media['csmm_sm_snapchat'] ) ? $social_media['csmm_sm_snapchat'] : '',
-				'behance'   => isset( $social_media['csmm_sm_behance'] ) ? $social_media['csmm_sm_behance'] : '',
-				'dribbble'  => isset( $social_media['csmm_sm_dribbble'] ) ? $social_media['csmm_sm_dribbble'] : '',
-				'whatsapp'  => isset( $social_media['csmm_sm_whatsapp'] ) ? $social_media['csmm_sm_whatsapp'] : '',
-				'tiktok'    => isset( $social_media['csmm_sm_tiktok'] ) ? $social_media['csmm_sm_tiktok'] : '',
-				'qq'        => isset( $social_media['csmm_sm_qq'] ) ? $social_media['csmm_sm_qq'] : '',
-				'social_icon_size_enabled' => ! empty( $social_media['social_icon_size_enabled'] ),
-				'social_icon_size'         => isset( $social_media['social_icon_size'] ) ? intval( $social_media['social_icon_size'] ) : 24,
-				'social_icon_color_enabled' => ! empty( $social_media['social_icon_color_enabled'] ),
-				'social_icon_color'         => isset( $social_media['social_icon_color'] ) ? sanitize_hex_color( $social_media['social_icon_color'] ) : '',
-				'social_icon_hover_color'   => isset( $social_media['social_icon_hover_color'] ) ? sanitize_hex_color( $social_media['social_icon_hover_color'] ) : '',
-				'custom_channels' => isset( $social_media['custom_channels'] ) && is_array( $social_media['custom_channels'] ) ? $social_media['custom_channels'] : array(),
 			),
 			'seo'                  => array(
 				'meta_title'          => isset( $seo['meta_title'] ) ? $seo['meta_title'] : '',
@@ -717,61 +701,15 @@ class CSMM_REST_API {
 
 		update_option('csmm_content', $content_array);
 
-		// 4. Social Media
+		// 4. Social Media (Free version: Facebook, Twitter / X, Instagram only)
 		if ( isset( $params['social_media'] ) && is_array( $params['social_media'] ) ) {
 			$sm = $params['social_media'];
 			$social_array = array(
 				'enabled'           => ! isset( $sm['enabled'] ) || ! empty( $sm['enabled'] ),
 				'csmm_sm_facebook'  => isset( $sm['facebook'] ) ? esc_url_raw( $sm['facebook'] ) : '',
 				'csmm_sm_twitter'   => isset( $sm['twitter'] ) ? esc_url_raw( $sm['twitter'] ) : '',
-				'csmm_sm_youtube'   => isset( $sm['youtube'] ) ? esc_url_raw( $sm['youtube'] ) : '',
 				'csmm_sm_instagram' => isset( $sm['instagram'] ) ? esc_url_raw( $sm['instagram'] ) : '',
-				'csmm_sm_linkedin'  => isset( $sm['linkedin'] ) ? esc_url_raw( $sm['linkedin'] ) : '',
-				'csmm_sm_pinterest' => isset( $sm['pinterest'] ) ? esc_url_raw( $sm['pinterest'] ) : '',
-				'csmm_sm_tumblr'    => isset( $sm['tumblr'] ) ? esc_url_raw( $sm['tumblr'] ) : '',
-				'csmm_sm_snapchat'  => isset( $sm['snapchat'] ) ? esc_url_raw( $sm['snapchat'] ) : '',
-				'csmm_sm_behance'   => isset( $sm['behance'] ) ? esc_url_raw( $sm['behance'] ) : '',
-				'csmm_sm_dribbble'  => isset( $sm['dribbble'] ) ? esc_url_raw( $sm['dribbble'] ) : '',
-				'csmm_sm_whatsapp'  => isset( $sm['whatsapp'] ) ? sanitize_text_field( $sm['whatsapp'] ) : '',
-				'csmm_sm_tiktok'    => isset( $sm['tiktok'] ) ? esc_url_raw( $sm['tiktok'] ) : '',
-				'csmm_sm_qq'        => isset( $sm['qq'] ) ? sanitize_text_field( $sm['qq'] ) : '',
 			);
-
-			if ( isset( $sm['custom_channels'] ) && is_array( $sm['custom_channels'] ) ) {
-				$sanitized_custom = array();
-				foreach ( $sm['custom_channels'] as $ch ) {
-					if ( is_array( $ch ) ) {
-						$url = isset( $ch['url'] ) ? esc_url_raw( trim( $ch['url'] ) ) : '';
-						if ( ! empty( $url ) ) {
-							$sanitized_custom[] = array(
-								'id'    => isset( $ch['id'] ) ? sanitize_text_field( $ch['id'] ) : uniqid( 'csmm_soc_' ),
-								'title' => isset( $ch['title'] ) ? sanitize_text_field( $ch['title'] ) : '',
-								'icon'  => isset( $ch['icon'] ) ? sanitize_text_field( $ch['icon'] ) : 'fa-solid fa-globe',
-								'url'   => $url,
-							);
-						}
-					}
-				}
-				$social_array['custom_channels'] = $sanitized_custom;
-			} else {
-				$social_array['custom_channels'] = array();
-			}
-
-			if ( isset( $sm['social_icon_size_enabled'] ) ) {
-				$social_array['social_icon_size_enabled'] = ! empty( $sm['social_icon_size_enabled'] );
-			}
-			if ( isset( $sm['social_icon_size'] ) ) {
-				$social_array['social_icon_size'] = max( 12, min( 64, intval( $sm['social_icon_size'] ) ) );
-			}
-			if ( isset( $sm['social_icon_color_enabled'] ) ) {
-				$social_array['social_icon_color_enabled'] = ! empty( $sm['social_icon_color_enabled'] );
-			}
-			if ( isset( $sm['social_icon_color'] ) ) {
-				$social_array['social_icon_color'] = sanitize_hex_color( $sm['social_icon_color'] );
-			}
-			if ( isset( $sm['social_icon_hover_color'] ) ) {
-				$social_array['social_icon_hover_color'] = sanitize_hex_color( $sm['social_icon_hover_color'] );
-			}
 
 			update_option( 'csmm_social_media', $social_array );
 		}
