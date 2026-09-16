@@ -39,9 +39,9 @@ The admin dashboard is completely built with **React 18, Vite, Material UI (MUI 
   * Global visibility toggle switch (Enable/Disable across all templates).
   * 1-Click quick presets for Discord, Telegram, GitHub, Threads, Twitch, Spotify, Medium, Slack, Patreon, Vimeo, and custom Website links.
   * FontAwesome icon picker with live preview.
-* **Launch Countdown Timer & Auto-Launch**:
+* **Launch Countdown Timer**:
   * Real-time zero-flicker launch countdown timer.
-  * Automatically unlocks live website when the countdown hits zero.
+  * Auto-Launch feature to automatically unlock live website on expiration available in Pro version.
 * **Secure Lead Management**:
   * Dedicated indexed MySQL table (`wp_csmm_subscribers`).
   * Search, pagination, deletion, and formula injection sanitized streaming CSV exports.

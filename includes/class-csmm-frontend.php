@@ -41,9 +41,6 @@ class CSMM_Frontend {
 			return;
 		}
 
-		// Check countdown expiration
-		$this->check_countdown_expiration();
-
 		$settings     = get_option( 'csmm_settings', array() );
 		$website_mode = isset( $settings['website_mode'] ) ? intval( $settings['website_mode'] ) : 3;
 
@@ -132,33 +129,6 @@ class CSMM_Frontend {
 		return false;
 	}
 
-	/**
-	 * Auto flip to live if countdown reaches zero.
-	 */
-	private function check_countdown_expiration() {
-		$content = get_option( 'csmm_content', array() );
-		if ( ! empty( $content['countdown'] ) && '1' === strval( $content['countdown'] ) ) {
-			$countdown_date = isset( $content['countdown_date'] ) ? $content['countdown_date'] : '';
-			$countdown_time = isset( $content['countdown_time'] ) ? $content['countdown_time'] : '00:00';
-
-			if ( $countdown_date ) {
-				try {
-					$tz = wp_timezone();
-					$launch_dt = new DateTime( "$countdown_date $countdown_time", $tz );
-					$launch_timestamp = $launch_dt->getTimestamp();
-				} catch ( Exception $e ) {
-					$launch_timestamp = strtotime( "$countdown_date $countdown_time" );
-				}
-				$now_timestamp = time();
-
-				if ( $now_timestamp >= $launch_timestamp ) {
-					$settings = get_option( 'csmm_settings', array() );
-					$settings['website_mode'] = 3;
-					update_option( 'csmm_settings', $settings );
-				}
-			}
-		}
-	}
 
 	/**
 	 * Load template loader file.

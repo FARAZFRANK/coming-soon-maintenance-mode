@@ -1455,8 +1455,49 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
               </Grid>
 
               <Grid item xs={12}>
-                <Alert severity="success" sx={{ borderRadius: '8px' }}>
-                  <strong>Auto-Launch Feature:</strong> When the countdown clock reaches zero, the website mode will automatically switch to <strong>Live / Disabled</strong> so your visitors can access your live website immediately!
+                <Alert
+                  severity="warning"
+                  icon={<WorkspacePremiumRoundedIcon sx={{ color: '#f59e0b' }} />}
+                  action={
+                    <Button
+                      variant="contained"
+                      size="small"
+                      component="a"
+                      href="https://wpfrank.com/wordpress-plugins/coming-soon-maintenance-mode-pro/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      startIcon={<WorkspacePremiumRoundedIcon sx={{ fontSize: 14 }} />}
+                      sx={{
+                        background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                        color: '#ffffff',
+                        fontWeight: 700,
+                        borderRadius: '6px',
+                        fontSize: '0.75rem',
+                        textTransform: 'none',
+                        px: 1.6,
+                        py: 0.4,
+                        boxShadow: '0 2px 6px rgba(245, 158, 11, 0.3)',
+                        '&:hover': {
+                          background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)',
+                        },
+                      }}
+                    >
+                      Upgrade to Pro
+                    </Button>
+                  }
+                  sx={{
+                    borderRadius: '8px',
+                    backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(245, 158, 11, 0.08)'),
+                    border: '1px solid rgba(245, 158, 11, 0.25)',
+                    color: (theme) => (theme.palette.mode === 'dark' ? '#fbbf24' : '#b45309'),
+                    '& .MuiAlert-icon': { color: '#f59e0b' },
+                    alignItems: 'center',
+                  }}
+                >
+                  <Box sx={{ display: 'inline-flex', alignItems: 'center', flexWrap: 'wrap', gap: 0.5 }}>
+                    <strong>Auto-Launch Feature (Pro):</strong>
+                    <span>When the countdown clock reaches zero, the website mode will automatically switch to <strong>Live / Disabled</strong> so your visitors can access your live website immediately! <em>(Available in Pro version)</em></span>
+                  </Box>
                 </Alert>
               </Grid>
             </Grid>

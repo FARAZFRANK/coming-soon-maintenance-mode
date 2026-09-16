@@ -112,7 +112,7 @@ Yes, the plugin offers extensive customization options. You can change backgroun
 
 = How do I schedule my site to go live automatically? =
 
-The plugin includes an auto-launch feature. In the settings, you can set a specific date and time for your site to automatically switch from coming soon mode to live mode without manual intervention.
+The auto-launch feature is available in the Pro version. In the Pro version settings, you can set a specific date and time for your site to automatically switch from coming soon mode to live mode without manual intervention.
 
 = Does this plugin affect SEO? =
 

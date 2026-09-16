@@ -700,29 +700,6 @@ if ( '1' === strval( $csmm_countdown ) ) {
         clearInterval(timerInterval);
         timerInterval = null;
       }
-
-      // Never auto-reload or loop in Live Preview mode
-      var isPreview = (window.location.search.indexOf("csmm=true") !== -1 || window.location.search.indexOf("preview=true") !== -1);
-      if (isPreview) {
-        return;
-      }
-
-      // Safe single reload for frontend visitors once timer finishes
-      if (!window._csmmAutoLaunched) {
-        window._csmmAutoLaunched = true;
-        try {
-          if (!sessionStorage.getItem("csmm_auto_launch_attempted")) {
-            sessionStorage.setItem("csmm_auto_launch_attempted", "1");
-            setTimeout(function() {
-              window.location.reload();
-            }, 1200);
-          }
-        } catch(e) {}
-      }
-    } else {
-      try {
-        sessionStorage.removeItem("csmm_auto_launch_attempted");
-      } catch(e) {}
     }
   }
 
