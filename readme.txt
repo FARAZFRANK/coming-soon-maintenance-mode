@@ -33,7 +33,7 @@ Search engine optimization is a key consideration for this plugin. It allows sea
 *   **Responsive Design:** Templates are built to adapt to different screen sizes.
 *   **Customization:** Adjust background images, colors, and text to align with your content.
 *   **SEO Protection:** Emits intelligent HTTP status codes (200 OK for Coming Soon, 503 for Maintenance) so search engines know exactly how to handle your site without dropping your rankings.
-*   **Bootstrap 5 Interface:** Uses a modern interface for backend settings.
+*   **React 18 Admin Interface:** Modern, lightning-fast SPA interface for backend settings.
 *   **Countdown Timer:** Optionally display a timer to indicate when the site will be live.
 *   **Auto Launch:** Schedule your site to go live automatically.
 *   **Import & Export Settings:** Easily export your plugin configurations as a JSON file and import them to another site.
@@ -68,14 +68,26 @@ Use the Coming Soon mode when you are building a new website and want to collect
 
 == Third-Party Libraries ==
 
-This plugin utilizes several third-party libraries to provide its features. In accordance with WordPress.org guidelines, the source code for these libraries is documented below:
+This plugin utilizes several third-party libraries and assets to provide its features. In accordance with WordPress.org guidelines, the source code and licenses for these libraries are documented below:
 
-*   **Bootstrap** (v5.2.3 and v3.3.7): https://github.com/twbs/bootstrap - License: MIT
-*   **Font Awesome Free** (v6.2.1): https://github.com/FortAwesome/Font-Awesome - License: CC BY 4.0, SIL OFL 1.1, MIT
+*   **Font Awesome Free** (v6.2.1): https://github.com/FortAwesome/Font-Awesome - License: CC BY 4.0 (Icons), SIL OFL 1.1 (Fonts), MIT (Code)
 *   **Particles.js** (v2.0.0): https://github.com/VincentGarreau/particles.js - License: MIT
 *   **Slick Carousel** (v1.6.0): https://github.com/kenwheeler/slick - License: MIT
 *   **jQuery Countdown** (v2.2.0): https://github.com/hilios/jQuery.countdown - License: MIT
-*   **jQuery Placeholder** (v2.1.2): https://github.com/mathiasbynens/jquery-placeholder - License: MIT
+*   **HTML5 Placeholder jQuery Plugin** (v2.1.2): https://github.com/mathiasbynens/jquery-placeholder - License: MIT
+*   **Modernizr** (v3.3.1 Custom Build): https://github.com/Modernizr/Modernizr - License: MIT
+*   **Pace.js** (v1.0.0): https://github.com/CodeByZach/pace - License: MIT
+*   **Lity** (v1.6.6): https://github.com/jsorgalla/lity - License: MIT
+*   **Normalize.css** (v5.0.0): https://github.com/necolas/normalize.css - License: MIT
+
+### Bundled Web Fonts
+
+*   **Roboto**: https://fonts.google.com/specimen/Roboto - License: Apache 2.0 / SIL OFL 1.1
+*   **Montserrat**: https://fonts.google.com/specimen/Montserrat - License: SIL OFL 1.1
+*   **Open Sans**: https://fonts.google.com/specimen/Open+Sans - License: Apache 2.0 / SIL OFL 1.1
+*   **Monoton**: https://fonts.google.com/specimen/Monoton - License: SIL OFL 1.1
+*   **Metropolis**: https://github.com/chrismsimpson/Metropolis - License: SIL OFL 1.1
+*   **Domine**: https://fonts.google.com/specimen/Domine - License: SIL OFL 1.1
 
 == Installation ==
 
