@@ -87,16 +87,17 @@ body {
   font-size: 1.4rem;
   line-height: 1.286;
   letter-spacing: .3rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: #000000;
   margin-top: 3rem;
   position: relative;
 }
 
-.home-content h1 {
+.home-content h1,
+.home-content__text h1 {
   margin-top: 3rem;
   font-size: 6.4rem;
   line-height: 1.219;
-  color: #FFFFFF;
+  color: #000000;
   letter-spacing: 0;
   font-family: metropolis-bold;
 }
@@ -106,9 +107,12 @@ body {
   position: relative;
 }
 
-.home-content__text p {
+.home-content__text p,
+.home-content__text .csmm-description-content,
+.home-content__text .csmm-description-content p,
+.home-content p {
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.85);
+  color: #000000;
   max-width: 800px;
 }
 
