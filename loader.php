@@ -81,7 +81,7 @@ $csmm_countdown_label_font_size  = isset( $csmm_content['countdown_label_font_si
 $csmm_countdown_box_bg           = isset( $csmm_content['countdown_box_bg'] ) ? sanitize_text_field( $csmm_content['countdown_box_bg'] ) : '';
 $csmm_susbcriber_form            = '0'; // Email Lead Capture is a Pro feature, disabled in free edition
 $csmm_video_url                  = isset( $csmm_content['video_url'] ) ? $csmm_content['video_url'] : 'https://player.vimeo.com/video/427528336?title=0&portrait=0&byline=0&autoplay=1&loop=1&muted=true';
-$csmm_custom_css      = isset( $csmm_content['custom_css'] ) ? $csmm_content['custom_css'] : '';
+$csmm_custom_css                 = ''; // Custom CSS Overrides is a Pro feature, disabled in free edition
 $csmm_slide_ids       = isset( $csmm_content['slide_ids'] ) && is_array( $csmm_content['slide_ids'] ) ? $csmm_content['slide_ids'] : array();
 
 // Graphic Background Settings

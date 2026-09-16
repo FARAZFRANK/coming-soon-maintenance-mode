@@ -3227,33 +3227,98 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
         </CardContent>
       </Card>
 
-      {/* Custom CSS Editor */}
+      {/* Custom CSS Editor (Pro Feature - Displayed Disabled in Free Edition) */}
       <Card elevation={0} sx={{ borderRadius: '10px !important' }}>
         <CardContent sx={{ p: 2.5 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1, flexWrap: 'wrap', gap: 1.5 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
               <CodeRoundedIcon color="secondary" />
-              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
-                Custom CSS Overrides
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.1rem' }}>
+                  Custom CSS Overrides
+                </Typography>
+                <Box
+                  sx={{
+                    background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                    color: '#ffffff',
+                    borderRadius: '6px',
+                    px: 0.9,
+                    py: 0.2,
+                    fontSize: '0.7rem',
+                    fontWeight: 800,
+                    letterSpacing: '0.5px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 0.4,
+                    boxShadow: '0 2px 6px rgba(245, 158, 11, 0.3)',
+                  }}
+                >
+                  <WorkspacePremiumRoundedIcon sx={{ fontSize: 13 }} />
+                  PRO
+                </Box>
+              </Box>
             </Box>
-            <Chip
-              label="custom.css"
-              size="small"
-              sx={{
-                fontFamily: 'monospace',
-                fontWeight: 600,
-                fontSize: '0.75rem',
-                height: 22,
-                borderRadius: '4px',
-                backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#334155' : '#f1f5f9'),
-                color: (theme) => (theme.palette.mode === 'dark' ? '#f8fafc' : '#475569'),
-              }}
-            />
+
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <Button
+                variant="contained"
+                size="small"
+                component="a"
+                href="https://wpfrank.com/wordpress-plugins/coming-soon-maintenance-mode-pro/"
+                target="_blank"
+                rel="noopener noreferrer"
+                startIcon={<WorkspacePremiumRoundedIcon sx={{ fontSize: 15 }} />}
+                sx={{
+                  background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  borderRadius: '6px',
+                  fontSize: '0.8rem',
+                  textTransform: 'none',
+                  px: 1.8,
+                  py: 0.5,
+                  boxShadow: '0 2px 8px rgba(245, 158, 11, 0.3)',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)',
+                  },
+                }}
+              >
+                Upgrade to Pro
+              </Button>
+              <Chip
+                label="custom.css"
+                size="small"
+                sx={{
+                  fontFamily: 'monospace',
+                  fontWeight: 600,
+                  fontSize: '0.75rem',
+                  height: 24,
+                  borderRadius: '4px',
+                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#334155' : '#f1f5f9'),
+                  color: (theme) => (theme.palette.mode === 'dark' ? '#f8fafc' : '#475569'),
+                }}
+              />
+            </Box>
           </Box>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
             Add custom CSS styles to fine-tune colors, fonts, or layout tweaks on your selected template.
           </Typography>
+
+          <Alert
+            severity="warning"
+            icon={<WorkspacePremiumRoundedIcon sx={{ color: '#f59e0b' }} />}
+            sx={{
+              mb: 2,
+              borderRadius: '8px',
+              backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(245, 158, 11, 0.08)'),
+              border: '1px solid rgba(245, 158, 11, 0.25)',
+              color: (theme) => (theme.palette.mode === 'dark' ? '#fbbf24' : '#b45309'),
+              '& .MuiAlert-icon': { color: '#f59e0b' },
+            }}
+          >
+            <strong>Pro Feature:</strong> Custom CSS Overrides is locked in the Free edition. Upgrade to Pro to write custom CSS rules, override template styling, and inject bespoke frontend styles.
+          </Alert>
 
           <Paper
             variant="outlined"
@@ -3262,6 +3327,9 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
               overflow: 'hidden',
               border: '1px solid #334155',
               backgroundColor: '#0f172a',
+              opacity: 0.72,
+              filter: 'grayscale(0.1)',
+              position: 'relative',
             }}
           >
             <Box
@@ -3272,23 +3340,25 @@ export default function ContentBrandingTab({ settings = {}, onChange }) {
                 borderBottom: '1px solid #334155',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 1,
+                justifyContent: 'space-between',
               }}
             >
-              <Box sx={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#ef4444' }} />
-              <Box sx={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#f59e0b' }} />
-              <Box sx={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#10b981' }} />
-              <Typography variant="caption" sx={{ color: '#94a3b8', fontFamily: 'monospace', ml: 1, fontSize: '0.75rem' }}>
-                CSS Stylesheet
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#ef4444' }} />
+                <Box sx={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#f59e0b' }} />
+                <Box sx={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: '#10b981' }} />
+                <Typography variant="caption" sx={{ color: '#94a3b8', fontFamily: 'monospace', ml: 1, fontSize: '0.75rem' }}>
+                  CSS Stylesheet (Pro Only)
+                </Typography>
+              </Box>
             </Box>
 
             <TextField
               fullWidth
               multiline
+              disabled
               rows={8}
-              value={settings.custom_css || ''}
-              onChange={(e) => onChange('custom_css', e.target.value)}
+              value=""
               placeholder={`/* Custom CSS Overrides */\n.home-content h1 {\n  font-family: 'Poppins', sans-serif;\n  color: #ffffff;\n}\n\nbody {\n  background-color: #0f172a;\n}`}
               sx={{
                 '& .MuiOutlinedInput-root': {

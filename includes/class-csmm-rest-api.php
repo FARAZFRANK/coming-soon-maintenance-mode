@@ -318,7 +318,7 @@ class CSMM_REST_API {
 			'form_btn_color'               => isset( $content['form_btn_color'] ) && '' !== $content['form_btn_color'] ? $content['form_btn_color'] : '#FFFFFF',
 			'form_border_radius'   => isset( $content['form_border_radius'] ) ? intval( $content['form_border_radius'] ) : 0,
 			'video_url'            => isset( $content['video_url'] ) ? $content['video_url'] : '',
-			'custom_css'           => isset( $content['custom_css'] ) ? $content['custom_css'] : '',
+			'custom_css'           => '', // Custom CSS Overrides is a Pro feature (disabled in Free)
 			'slides'               => $slides_data,
 			'bg_type'              => isset( $content['bg_type'] ) ? $content['bg_type'] : 'default',
 			'bg_custom_images'     => isset( $content['bg_custom_images'] ) && is_array( $content['bg_custom_images'] ) ? $content['bg_custom_images'] : ( ! empty( $slides_data ) ? $slides_data : array() ),
@@ -594,7 +594,7 @@ class CSMM_REST_API {
 			$content_array['video_url'] = esc_url_raw( $params['video_url'] );
 		}
 		if ( isset( $params['custom_css'] ) ) {
-			$content_array['custom_css'] = wp_strip_all_tags( $params['custom_css'] );
+			$content_array['custom_css'] = ''; // Custom CSS is a Pro feature
 		}
 		if (isset($params['slide_ids'])) {
 			$slide_ids = is_array($params['slide_ids']) ? array_map('intval', $params['slide_ids']) : array();

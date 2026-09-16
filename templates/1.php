@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="<?php echo esc_url( CSMM_URL.'templates/css/main.css' ); ?>">
     <link rel="stylesheet" href="<?php echo esc_url( CSMM_URL.'templates/css/1.css' ); ?>">
     <link rel="stylesheet" href="<?php echo esc_url( CSMM_URL.'admin/assets/fontawesome-free-6.2.1-web/css/all.min.css' ); ?>">
-    <style><?php echo $csmm_custom_css; ?></style>
     <!-- script
     ================================================== -->
     <script src="<?php echo esc_url( CSMM_URL.'templates/js/modernizr.js' ); ?>"></script>
