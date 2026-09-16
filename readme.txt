@@ -192,7 +192,7 @@ For support questions, please visit the WordPress.org support forum for this plu
 == Changelog ==
 
 = 1.3.0 - September 16, 2026 =
-*   New: Modern React 18, Vite, Material UI (MUI v5), and WordPress REST API Single Page Application (SPA) admin dashboard.
+*   New: Modern admin dashboard.
 *   New: Automated backward compatibility and settings migration engine for users upgrading from v1.2.0 (comisoma_*) to v1.3.0 (csmm_*) without losing settings.
 *   New: Dedicated "Free vs Pro" feature comparison tab with callouts and upgrade guidance.
 *   New: Settings Backup, JSON Export, JSON Import, and Factory Reset capabilities tailored for Free edition.
