@@ -1,5 +1,5 @@
 === Coming Soon Maintenance Mode ===
-Contributors: awordpresslife, razipathhan, hanif0991, muhammadshahid, fkfaisalkhan007, sharikkhan007, zishlife, FARAZFRANK
+Contributors: FARAZFRANK, awordpresslife, razipathhan, hanif0991, muhammadshahid, fkfaisalkhan007, sharikkhan007, zishlife
 Tags: coming soon, maintenance mode, landing page, under construction page, SEO friendly
 Requires at least: 5.0
 Tested up to: 7.1

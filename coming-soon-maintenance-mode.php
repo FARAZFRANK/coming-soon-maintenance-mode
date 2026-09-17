@@ -6,7 +6,7 @@
  * Version:           1.3.0
  * Requires at least: 5.0
  * Requires PHP:      7.2
- * Author:            Faraz Frank
+ * Author:            FARAZFRANK
  * Author URI:        https://wpfrank.com
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -106,10 +106,10 @@ final class Coming_Soon_Maintenance_Mode_Pro
 	public function check_version_upgrade()
 	{
 		$installed_version = get_option('csmm_current_version');
-		$migrated_v120     = get_option('csmm_v120_migrated');
-		$has_v120_options  = false !== get_option('comisoma_settings') || false !== get_option('comisoma_content');
+		$migrated_v120 = get_option('csmm_v120_migrated');
+		$has_v120_options = false !== get_option('comisoma_settings') || false !== get_option('comisoma_content');
 
-		if ($installed_version !== CSMM_VERSION || (! $migrated_v120 && $has_v120_options)) {
+		if ($installed_version !== CSMM_VERSION || (!$migrated_v120 && $has_v120_options)) {
 			CSMM_Activator::activate();
 		}
 	}
