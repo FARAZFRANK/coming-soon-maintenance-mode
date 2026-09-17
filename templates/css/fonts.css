@@ -96,15 +96,6 @@
     font-style: normal;
 }
 
-
-@font-face {
-  font-family: "Arcade";
-  src: url("../fonts/arcade/ARCADE.TTF") format("truetype");
-  font-style: normal;
-  font-weight: normal;
-}
-
-
 /* montserrat-regular - latin */
 /* montserrat-regular - latin */
 @font-face {

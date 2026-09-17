@@ -77,26 +77,47 @@ Use the Coming Soon mode when you are building a new website and want to collect
 
 == Third-Party Libraries ==
 
-This plugin utilizes several third-party libraries and assets to provide its features. In accordance with WordPress.org guidelines, the source code and licenses for these libraries are documented below:
+This plugin utilizes several third-party libraries and bundled assets to provide its features. In accordance with WordPress.org guidelines, the source code and licenses for these libraries are documented below:
 
-*   **Font Awesome Free** (v6.2.1): https://github.com/FortAwesome/Font-Awesome - License: CC BY 4.0 (Icons), SIL OFL 1.1 (Fonts), MIT (Code)
-*   **Particles.js** (v2.0.0): https://github.com/VincentGarreau/particles.js - License: MIT
-*   **Slick Carousel** (v1.6.0): https://github.com/kenwheeler/slick - License: MIT
-*   **jQuery Countdown** (v2.2.0): https://github.com/hilios/jQuery.countdown - License: MIT
-*   **HTML5 Placeholder jQuery Plugin** (v2.1.2): https://github.com/mathiasbynens/jquery-placeholder - License: MIT
-*   **Modernizr** (v3.3.1 Custom Build): https://github.com/Modernizr/Modernizr - License: MIT
-*   **Pace.js** (v1.0.0): https://github.com/CodeByZach/pace - License: MIT
-*   **Lity** (v1.6.6): https://github.com/jsorgalla/lity - License: MIT
-*   **Normalize.css** (v5.0.0): https://github.com/necolas/normalize.css - License: MIT
+*   **Font Awesome Free** (v6.2.1): https://github.com/FortAwesome/Font-Awesome
+    License: CC BY 4.0 (Icons), SIL OFL 1.1 (Fonts), MIT (Code) - https://fontawesome.com/license/free
+*   **Particles.js** (v2.0.0): https://github.com/VincentGarreau/particles.js
+    License: MIT - https://github.com/VincentGarreau/particles.js/blob/master/LICENSE.md
+*   **Slick Carousel** (v1.6.0): https://github.com/kenwheeler/slick
+    License: MIT - https://github.com/kenwheeler/slick/blob/master/LICENSE
+*   **The Final Countdown for jQuery** (v2.2.0): https://github.com/hilios/jQuery.countdown
+    License: MIT - https://github.com/hilios/jQuery.countdown/blob/master/LICENSE.md
+*   **HTML5 Placeholder jQuery Plugin** (v2.1.2): https://github.com/mathiasbynens/jquery-placeholder
+    License: MIT - https://github.com/mathiasbynens/jquery-placeholder/blob/master/LICENSE.txt
+*   **Modernizr** (v3.3.1 Custom Build): https://github.com/Modernizr/Modernizr
+    License: MIT - https://modernizr.com/license/
+*   **Pace.js** (v1.0.0): https://github.com/CodeByZach/pace
+    License: MIT - https://github.com/CodeByZach/pace/blob/master/LICENSE
+*   **Lity** (v1.6.6): https://github.com/jsorgalla/lity
+    License: MIT - https://github.com/jsorgalla/lity/blob/master/LICENSE
+*   **Normalize.css** (v5.0.0): https://github.com/necolas/normalize.css
+    License: MIT - https://github.com/necolas/normalize.css/blob/master/LICENSE.md
+*   **React & React DOM** (v18.2.0): https://github.com/facebook/react
+    License: MIT - https://github.com/facebook/react/blob/main/LICENSE
+*   **Material-UI (MUI)** (v5.15.6): https://github.com/mui/material-ui
+    License: MIT - https://github.com/mui/material-ui/blob/master/LICENSE
 
 ### Bundled Web Fonts
 
-*   **Roboto**: https://fonts.google.com/specimen/Roboto - License: Apache 2.0 / SIL OFL 1.1
-*   **Montserrat**: https://fonts.google.com/specimen/Montserrat - License: SIL OFL 1.1
-*   **Open Sans**: https://fonts.google.com/specimen/Open+Sans - License: Apache 2.0 / SIL OFL 1.1
-*   **Monoton**: https://fonts.google.com/specimen/Monoton - License: SIL OFL 1.1
-*   **Metropolis**: https://github.com/chrismsimpson/Metropolis - License: SIL OFL 1.1
-*   **Domine**: https://fonts.google.com/specimen/Domine - License: SIL OFL 1.1
+*   **Acari Sans**: https://github.com/cssobral2013/acari-sans
+    License: SIL OFL 1.1 - http://scripts.sil.org/OFL
+*   **Domine**: https://fonts.google.com/specimen/Domine
+    License: SIL OFL 1.1 - http://scripts.sil.org/OFL
+*   **Metropolis**: https://github.com/chrismsimpson/Metropolis
+    License: SIL OFL 1.1 - http://scripts.sil.org/OFL
+*   **Monoton**: https://fonts.google.com/specimen/Monoton
+    License: SIL OFL 1.1 - http://scripts.sil.org/OFL
+*   **Montserrat**: https://fonts.google.com/specimen/Montserrat
+    License: SIL OFL 1.1 - http://scripts.sil.org/OFL
+*   **Open Sans**: https://fonts.google.com/specimen/Open+Sans
+    License: Apache 2.0 / SIL OFL 1.1 - http://scripts.sil.org/OFL
+*   **Roboto**: https://fonts.google.com/specimen/Roboto
+    License: Apache 2.0 - http://www.apache.org/licenses/LICENSE-2.0
 
 == Installation ==
 
