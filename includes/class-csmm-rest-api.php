@@ -88,13 +88,15 @@ class CSMM_REST_API {
 	 * Get full settings data.
 	 */
 	public function get_settings() {
-		$settings     = get_option( 'csmm_settings', array() );
-		if ( empty( $settings ) && ( false !== get_option( 'comisoma_settings' ) || false !== get_option( 'comisoma_content' ) ) ) {
+		$has_v120    = false !== get_option( 'comisoma_settings' ) || false !== get_option( 'comisoma_content' );
+		$is_migrated = get_option( 'csmm_v120_migrated' );
+		if ( $has_v120 && ! $is_migrated ) {
 			if ( class_exists( 'CSMM_Activator' ) ) {
-				CSMM_Activator::migrate_v120_options();
-				$settings = get_option( 'csmm_settings', array() );
+				CSMM_Activator::migrate_v120_options( true );
 			}
 		}
+		$settings = get_option( 'csmm_settings', array() );
+
 		$templates    = get_option( 'csmm_templates', array() );
 		$content      = get_option( 'csmm_content', array() );
 		$social_media = get_option( 'csmm_social_media', array() );

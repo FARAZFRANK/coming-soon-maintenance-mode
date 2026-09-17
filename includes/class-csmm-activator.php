@@ -12,7 +12,7 @@ class CSMM_Activator {
 	 * Run activation logic.
 	 */
 	public static function activate() {
-		self::migrate_v120_options();
+		self::migrate_v120_options( true );
 		self::update_version();
 		self::create_tables();
 		self::migrate_legacy_data();
