@@ -39,12 +39,6 @@ if ( isset( $_GET['template_preview'] ) && current_user_can( 'manage_options' ) 
 	}
 }
 
-// On countdown end live the site
-if ( 'POST' === $_SERVER['REQUEST_METHOD'] && isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'csmm-save' ) ) {
-	update_option( 'csmm_settings', array( 'website_mode' => 3 ) );
-	wp_die();
-}
-
 // Logo Setup
 $csmm_logo_type           = isset( $csmm_content['logo_type'] ) ? $csmm_content['logo_type'] : 'graphic';
 $csmm_logo_enabled        = isset( $csmm_content['logo_enabled'] ) ? ( '1' === strval( $csmm_content['logo_enabled'] ) ) : ( 'disabled' !== $csmm_logo_type );
