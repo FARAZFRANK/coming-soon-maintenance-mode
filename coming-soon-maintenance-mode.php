@@ -5,7 +5,7 @@
  * Description:       A modern, responsive, and robust plugin to create stunning Coming Soon and Maintenance Mode landing pages with lead capture.
  * Version:           1.3.0
  * Requires at least: 5.0
- * Requires PHP:      7.2
+ * Requires PHP:      5.6
  * Author:            FARAZFRANK
  * Author URI:        https://wpfrank.com
  * License:           GPL v2 or later
