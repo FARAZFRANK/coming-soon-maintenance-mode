@@ -32,7 +32,7 @@
 
 .home-logo a.logo-dark {
   width: auto;
-  height: 90px;
+  height: auto;
   border-radius: 50%;
   display: flex;
   flex-wrap: nowrap;
@@ -476,8 +476,17 @@
     display: none;
   }
   
+  .frame-ipad .col-six {
+    display: none !important;
+  }
+
+  .frame-ipad .text-wrap,
   .frame-ipad .col-eight {
-    width:100%;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
   }
   html,body { overflow:visible }
 
@@ -494,29 +503,145 @@
   }
 
   .home-content__counter {
-    padding-right: 15px;
+    padding-right: 0 !important;
+    margin: 2rem auto !important;
+    width: 100% !important;
+    text-align: center !important;
   }
 
-  .home-content__counter .days {
-    font-size: 9rem;
-  }
-
- .home-social { display:block; }
-  
-  html,body { overflow:visible }
-  .home-social {
-		    position: relative !important;
-    bottom: 0 !important;
-    /* right: 0 !important; */
-    top: 0 !important;
+  .home-content__clock {
     display: flex !important;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin-right: 0;
-    /* left: 0;*/
-	}
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px 18px !important;
+    margin: 0 auto !important;
+  }
 
+  .home-content__counter .time,
+  .home-content__counter .time.days,
+  .home-content__counter .time.hours,
+  .home-content__counter .time.minutes,
+  .home-content__counter .time.seconds {
+    font-size: 2.8rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    min-width: auto !important;
+    margin: 0 8px !important;
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    color: #1a1a1a !important;
+  }
+
+  .home-content__counter .time span {
+    font-size: 1.8rem !important;
+    font-weight: 600 !important;
+    margin-left: 4px !important;
+    color: #333333 !important;
+  }
+
+  html,body { overflow:visible }
+
+  .frame-ipad {
+    padding: 3.5rem 2rem 2.5rem 2rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .frame-ipad .col-six {
+    display: none !important;
+  }
+
+  .frame-ipad .text-wrap,
+  .frame-ipad .col-eight {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .home-logo {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 1.5rem auto 2rem auto !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+  }
+
+  .home-logo a,
+  .home-logo a.logo-dark {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  .home-logo a img,
+  .home-logo a.logo-dark img,
+  .home-logo img {
+    margin: 0 auto !important;
+    display: block !important;
+    max-height: 110px !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  .home-social {
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 20px !important;
+    margin: 2.5rem auto 1.5rem auto !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .home-social li {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    position: relative !important;
+  }
+
+  .home-social li a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    text-decoration: none !important;
+    color: #111111 !important;
+  }
+
+  .home-social i,
+  .home-social li a i {
+    position: static !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    height: auto !important;
+    color: inherit !important;
+  }
 
 }
 
@@ -530,13 +655,19 @@
     max-width: 490px;
   }
 
-  .home-content__counter .time {
-    font-size: 2rem;
-    min-width: 3rem;
+  .home-content__counter .time,
+  .home-content__counter .time.days,
+  .home-content__counter .time.hours,
+  .home-content__counter .time.minutes,
+  .home-content__counter .time.seconds {
+    font-size: 2.6rem !important;
+    font-weight: 700 !important;
+    min-width: auto !important;
   }
 
   .home-content__counter .time span {
-    font-size: 1.6rem;
+    font-size: 1.7rem !important;
+    font-weight: 600 !important;
   }
 
 }
@@ -620,13 +751,39 @@
     min-height: 630px;
   }
 
-  .home-logo {
-    right: 30px;
+  .frame-ipad {
+    padding: 3rem 1.5rem 2rem 1.5rem !important;
   }
 
-  .home-logo img {
-    width: 70px;
-    height: 70px;
+  .home-logo {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    right: auto !important;
+    left: auto !important;
+    margin: 1.2rem auto 1.8rem auto !important;
+    width: 100% !important;
+  }
+
+  .home-logo a,
+  .home-logo a.logo-dark {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  .home-logo img,
+  .home-logo a.logo-dark img {
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 90px !important;
+    margin: 0 auto !important;
+    display: block !important;
   }
 
   .home-content h1 {
@@ -643,6 +800,38 @@
 
   .home-content__text p {
     font-size: 1.6rem;
+  }
+
+  .home-content__counter .time,
+  .home-content__counter .time.days,
+  .home-content__counter .time.hours,
+  .home-content__counter .time.minutes,
+  .home-content__counter .time.seconds {
+    font-size: 2.4rem !important;
+    font-weight: 700 !important;
+    margin: 0 6px !important;
+  }
+
+  .home-content__counter .time span {
+    font-size: 1.6rem !important;
+    font-weight: 600 !important;
+  }
+
+  .home-social {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    right: auto !important;
+    left: auto !important;
+    margin: 2rem auto 1rem auto !important;
+    width: 100% !important;
+    gap: 18px !important;
+  }
+
+  .home-social i,
+  .home-social li a i {
+    font-size: 22px !important;
   }
 
   .home-copyright {
