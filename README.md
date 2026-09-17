@@ -23,16 +23,21 @@ The admin dashboard is built with **React 18, Vite, Material UI (MUI v5), and th
 * **Selective Page & Post Targeting**:
   * Apply Coming Soon / Maintenance mode site-wide or restrict it to specific Posts, Pages, Home, or Front Page.
   * Logged-in administrators always have full access to view and test the front-end.
-* **5 Free Fully-Responsive Templates**:
-  * Includes professionally crafted templates: **Template 1, Template 4, Template 8, Template 11, and Template 15**.
-  * Interactive live preview modal with Desktop, Tablet, and Mobile viewport switchers.
+* **5 Free Fully-Responsive Designer Templates**:
+  * Includes professionally crafted templates: **Template 1 (Minimal Clean), Template 4 (Geometric Tech Blue), Template 8 (Abstract Vibrant Gradient), Template 11 (Elegant Luxury Gold), and Template 15 (Aurora Borealis Glow)**.
+  * Interactive live preview modal with Desktop (100%), Tablet (768px), and Mobile (375px) device viewport switchers.
+* **Mobile-First Responsive Polish**:
+  * **Template 4**: Perfectly centered logo and social icons on all mobile devices.
+  * **Template 8**: Generous content box padding, top spacing above logo, enlarged centered social icons, and bold, readable countdown numbers on mobile.
+  * **Template 1**: Robust vertical and horizontal flex centering across all viewports.
 * **Real-Time Universal Launch Countdown**:
   * Zero-flicker client-side countdown clock counting down to your target launch date and time.
-  * Works smoothly across all templates with automated timezone support.
+  * Works smoothly across all templates with automated timezone support and past-date fallback protection.
+  * Interactive glassmorphic DatePicker component with calendar month navigation.
 * **Branding & Content Customization**:
   * **Logo Customizer**: Upload a custom graphic logo with height constraint and custom link, or display a stylized text logo.
   * **Custom Headlines & Typography**: Customize title text, font size, and text colors.
-  * **Rich Description Content**: Full support for WordPress shortcodes, auto-embeds, HTML, and rich formatting.
+  * **Rich Description Content**: Full support for WordPress shortcodes, auto-embeds (YouTube, Vimeo, etc.), HTML, and rich formatting.
 * **Flexible Background Styles**:
   * Default template background with particle animations.
   * **Custom Background Images**: Upload multiple background images with cover, contain, or tiled sizing.
@@ -44,7 +49,7 @@ The admin dashboard is built with **React 18, Vite, Material UI (MUI v5), and th
   * Dark Mode and Light Mode support with smooth theme transitions.
 * **Backup, Migration & Reset Tools**:
   * **Automated v1.2.0 Migration Engine**: Effortlessly upgrades existing v1.2.0 settings to v1.3.0 without configuration loss.
-  * **Settings JSON Export & Import**: Export plugin configurations to JSON or import from another site.
+  * **Settings JSON Export & Import**: Export plugin configurations to JSON or import from another site (supports legacy v1.2.0 JSON files).
   * **Factory Reset**: One-click restore to fresh default settings.
 
 ---
@@ -56,6 +61,7 @@ The admin dashboard is built with **React 18, Vite, Material UI (MUI v5), and th
 | **Website Modes (Live, Coming Soon, Maintenance)** | ✅ Included | ✅ Included |
 | **Selective Page & Post Targeting** | ✅ Included | ✅ Included |
 | **Responsive Designer Templates** | 5 Free Templates | 36+ All Templates |
+| **Multi-Device Live Preview (Desktop/Tablet/Mobile)**| ✅ Included | ✅ Included |
 | **Real-Time Countdown Timer** | ✅ Included | ✅ Included |
 | **Auto-Launch on Countdown Expiry** | Pro Only | ✅ Included |
 | **Email Lead Capture & Subscriber Forms** | Pro Only | ✅ Included |
@@ -113,13 +119,17 @@ npm run build
 
 ## 📋 Changelog
 
-### = 1.3.0 = (16 September 2026)
+### = 1.3.0 = (17 September 2026)
 * **Modern React 18 Admin Dashboard**: Complete rewrite of the admin dashboard using React 18, Vite, Material UI (MUI v5), and WordPress REST API.
+* **Light & Dark Theme Studio**: Seamless dark/light theme switching with instant localStorage persistence.
 * **Automated v1.2.0 Settings Migration Engine**: Built backward compatibility and automated database migration from legacy v1.2.0 (`comisoma_*`) options to modern v1.3.0 (`csmm_*`) options during upgrade.
 * **Legacy JSON Backup Support**: Direct parsing and automatic migration for v1.2.0 JSON configuration backup exports in the Settings Import tool.
 * **5 Curated Free Templates**: Fully responsive templates (1, 4, 8, 11, 15) with live preview modal (desktop, tablet, mobile).
-* **Template 1 Layout Refinement**: Fixed vertical and horizontal centering for Template 1 content on all viewports.
-* **Universal Countdown Engine**: Real-time launch countdown with safe auto-renew fallback for expired/past target dates across all free templates.
+* **Mobile-First Responsive Layouts**:
+  * **Template 4**: Fixed logo and social media icons centering on mobile viewports.
+  * **Template 8**: Added content box padding, top spacing above logo, enlarged and centered social icons, and increased countdown timer font size on mobile screens.
+  * **Template 1**: Perfected vertical and horizontal flex centering across all viewports.
+* **Universal Countdown Engine**: Real-time launch countdown with safe auto-renew fallback for expired/past target dates and accurate client-side timezone calculation.
 * **Dedicated Free vs Pro Tab**: Interactive comparison matrix showcasing Pro features, demos, and upgrade benefits.
 * **Bug Fixes & UI Polishing**:
   * Removed duplicate rocket icon and fixed button hover contrast in light theme mode.

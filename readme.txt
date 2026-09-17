@@ -27,38 +27,47 @@ Search engine optimization is a key consideration for this plugin. It allows sea
 
 ### Key Features
 
-*   **Coming Soon Mode:** Activate a coming soon page to inform visitors about your upcoming site launch.
-*   **Multiple templates:** Comes with 35+ prebuilt templates ready to shine.
-*   **Maintenance Mode:** Display a maintenance message when performing updates or fixing issues.
-*   **Responsive Design:** Templates are built to adapt to different screen sizes.
-*   **Customization:** Adjust background images, colors, and text to align with your content.
-*   **SEO Protection:** Emits intelligent HTTP status codes (200 OK for Coming Soon, 503 for Maintenance) so search engines know exactly how to handle your site without dropping your rankings.
-*   **React 18 Admin Interface:** Modern, lightning-fast SPA interface for backend settings.
-*   **Countdown Timer:** Optionally display a timer to indicate when the site will be live.
-*   **Auto Launch:** Schedule your site to go live automatically.
-*   **Import & Export Settings:** Easily export your plugin configurations as a JSON file and import them to another site.
-*   **Factory Reset:** Reset all plugin settings, template selections, and social media data to default state.
+*   **Coming Soon Mode:** Activate a coming soon page with an HTTP 200 status code to announce your upcoming launch while building your new site.
+*   **Maintenance Mode:** Display a temporary maintenance screen with an HTTP 503 status code to safeguard search engine rankings during site updates.
+*   **Selective Page & Post Targeting:** Apply coming soon or maintenance mode site-wide, or restrict it to specific Pages, Posts, or Front Page.
+*   **5 Free Responsive Templates:** Includes 5 professionally crafted, mobile-optimized templates (Templates 1, 4, 8, 11, and 15) with live preview switchers (Desktop, Tablet, Mobile).
+*   **React 18 Admin Dashboard:** Modern, lightning-fast Single Page Application (SPA) powered by React 18, Vite, Material UI (MUI v5), and WordPress REST API.
+*   **Dark Mode & Light Mode:** Seamlessly switch between dark and light themes in the admin studio.
+*   **Universal Real-Time Countdown Timer:** Client-side accurate launch timer with automated timezone calculation and fallback mechanisms.
+*   **Branding & Content Control:** Upload a custom logo (graphic with height slider and link, or stylized text logo), custom headline, and rich description supporting WordPress shortcodes, HTML, and auto-embeds.
+*   **Background Styles:** Choose from default template graphics, custom background images via Media Library, or a clean solid color canvas.
+*   **Social Media Links:** Connect your Facebook, Twitter / X, and Instagram accounts to build your audience before launch.
+*   **Settings Backup & Migration:** Export your settings as a JSON file, import backups from other sites (including legacy v1.2.0 files), or one-click Factory Reset.
+*   **Automated Database Migration:** Effortlessly upgrades existing v1.2.0 (comisoma_*) settings to v1.3.0 (csmm_*) without configuration loss.
+*   **Zero Remote CDN Dependencies:** 100% locally bundled assets for superior privacy, GDPR compliance, and fast loading.
 
 ### What You Get in the Free Version
 
-*   **One Click Setup:** Get started quickly without complicated configuration steps.
-*   **Super Fast and Handy:** Lightweight plugin that won't slow down your site.
-*   **Minimal Design:** Clean, distraction-free templates that focus on your message.
-*   **Free Responsive Templates:** Choose from professionally designed templates that work on all devices.
-*   **Customization Settings:** Personalize colors, backgrounds, and content to match your brand.
-*   **Website Auto Launch:** Set a date and time for your site to go live automatically.
-*   **Settings Management:** Full support for exporting, importing, and factory resetting plugin settings.
+*   **1-Click Mode Activation:** Switch between Live, Coming Soon, and Maintenance Mode in seconds.
+*   **Selective Targeting:** Choose whether the mode applies to the entire website or selected pages/posts.
+*   **5 Designer Free Templates:** Fully responsive, modern templates ready to use without writing code.
+*   **Interactive Multi-Device Previews:** Test how your page looks on Desktop, Tablet, and Mobile directly inside the admin modal.
+*   **Mobile-First Responsive Polish:** Carefully optimized mobile layouts for clean centering, balanced spacing, and legibility.
+*   **Logo & Headline Customization:** Add your brand logo, adjust sizes, and configure custom typography.
+*   **Real-Time Launch Countdown:** Countdown to your launch date with client-side accurate timezone handling.
+*   **Social Profiles:** Display icons and links for Facebook, Twitter / X, and Instagram.
+*   **JSON Import & Export:** Easily migrate or backup your plugin settings across websites.
+*   **One-Click Factory Reset:** Safely restore plugin settings to default values at any time.
 
 ### Upgrade to Pro for More Power
 
 The Pro version includes everything in the free version, plus:
 
-*   **35+ Premium Templates:** Access a wide variety of professionally designed templates.
-*   **Video Support:** Add background videos to make your page more engaging.
-*   **Pre Built Templates:** Ready-to-use designs that require minimal setup.
-*   **Advanced Plugin Settings:** Fine-tune every aspect of your coming soon page.
-*   **Social Media Profiling:** Connect your social accounts to build your audience before launch.
-*   **Custom CSS:** Add your own styles for complete design control.
+*   **36+ Premium Designer Templates:** Access the complete library of 36+ niche-specific templates (Agency, SaaS, Portfolio, Restaurant, Real Estate, E-Commerce, etc.).
+*   **Website Auto Launch:** Automatically switch your website live when the countdown timer hits zero.
+*   **Email Lead Capture & Newsletter Integrations:** Collect visitor leads and auto-sync directly to Mailchimp (v3), Brevo (v3), MailerLite, or custom Webhooks.
+*   **Automated Email Notifications:** Send instant Welcome Emails, Admin New Lead Alerts, and Site Launch Announcements via authenticated custom SMTP.
+*   **Lead Manager & CSV Export:** View, search, filter, and export captured subscriber leads to CSV directly from the dashboard.
+*   **Video Backgrounds:** Add stunning fullscreen background videos from YouTube, Vimeo, or self-hosted MP4 files.
+*   **Advanced Backgrounds:** Linear/radial gradients, 7 geometric background patterns, and live backdrop blur filter.
+*   **12+ Social Media Channels:** Add YouTube, LinkedIn, Pinterest, TikTok, Discord, Telegram, WhatsApp, and more.
+*   **Custom CSS Code Studio:** Write custom CSS with live injection for pixel-perfect design control.
+*   **Priority Support & Lifetime Updates:** Get dedicated expert support and regular feature updates.
 
 ### Video Tutorial - Pro Version
 
@@ -178,31 +187,34 @@ For support questions, please visit the WordPress.org support forum for this plu
 
 == Screenshots ==
 
-1.  Free Template 1
-2.  Free Template 2
-3.  Free Template 3
-4.  Free Template 4
-5.  Free Template 5
-6.  Coming Soon Mode Setting
-7.  Maintenance Mode Settings
-8.  Template Settings
-9.  Content Configuration Settings
-10. Social Media Settings
+1. Modern React 18 Admin Dashboard (Light & Dark Theme Studio)
+2. Free Template 01 - Minimal Clean Countdown
+3. Free Template 04 - Geometric Tech Blue
+4. Free Template 08 - Abstract Vibrant Gradient
+5. Free Template 11 - Elegant Luxury Gold
+6. Free Template 15 - Aurora Borealis Glow
+7. Interactive Multi-Device Live Preview (Desktop, Tablet, Mobile)
+8. Content & Branding Configuration (Logo, Headline, Rich Description)
+9. Selective Page & Post Targeting Controls
+10. Dedicated Free vs Pro Feature Comparison Matrix
 
 == Changelog ==
 
-= 1.3.0 - September 16, 2026 =
-*   New: Modern admin dashboard.
-*   New: Automated backward compatibility and settings migration engine for users upgrading from v1.2.0 (comisoma_*) to v1.3.0 (csmm_*) without losing settings.
-*   New: Dedicated "Free vs Pro" feature comparison tab with callouts and upgrade guidance.
-*   New: Settings Backup, JSON Export, JSON Import, and Factory Reset capabilities tailored for Free edition.
-*   New: Legacy v1.2.0 export JSON backup file import support directly in v1.3.0.
-*   Improvement: Streamlined 5 free responsive templates (Templates 1, 4, 8, 11, and 15) with interactive responsive live previews.
-*   Improvement: Graphic Background streamlined for Free version (Default Media, Custom Background Images, and Solid Color).
-*   Improvement: Free edition social media profiles focused on Facebook, Twitter / X, and Instagram.
-*   Fix: Resolved undefined variable warnings in loader.php for social icon overrides and countdown label colors.
-*   Fix: Re-engineered countdown timer calculation in client-side visitor timezone, eliminating UTC offset gaps and preventing infinite reload loops on timer expiration.
-*   Security: Zero remote CDN dependencies and full adherence to WordPress.org security and sanitization guidelines.
+= 1.3.0 - September 17, 2026 =
+*   New: Modern React 18 single-page application (SPA) admin dashboard powered by Material UI (MUI v5) and WordPress REST API.
+*   New: Seamless Light Mode & Dark Mode switchers with smooth theme transitions.
+*   New: 5 Curated free responsive templates (Templates 1, 4, 8, 11, and 15) with live preview switchers (Desktop, Tablet, Mobile).
+*   New: Selective Page & Post targeting (target whole site, specific pages, posts, or front page).
+*   New: Settings Backup (JSON export), JSON restore/import, and one-click Factory Reset.
+*   New: Automated database migration engine from v1.2.0 (comisoma_*) to v1.3.0 (csmm_*) without losing user settings.
+*   New: Backward-compatible support for importing legacy v1.2.0 JSON backup files.
+*   New: Dedicated Free vs Pro interactive comparison tab with upgrade guidance.
+*   Enhancement: Optimized mobile responsive layout for Template 4 (centered logo and social icons).
+*   Enhancement: Optimized mobile responsive layout for Template 8 (improved content box padding, top spacing above logo, bigger centered social icons, and larger readable countdown timer).
+*   Enhancement: Perfected Template 1 flexbox vertical & horizontal centering across all viewports.
+*   Enhancement: Real-time countdown timer with automated client-side timezone calculation and safe fallback for past dates.
+*   Enhancement: Rich description support with WordPress auto-embeds, shortcodes, and HTML formatting.
+*   Performance & Security: 100% locally bundled assets with zero remote CDN dependencies, strict capability checks, and robust data sanitization.
 
 = 1.2.0 =
 *   New: Added dedicated "Our Plugins" and "Our Themes" dashboard pages with responsive showcase grids (June 29, 2026).
